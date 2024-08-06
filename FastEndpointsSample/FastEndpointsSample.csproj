@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Features\" />
-    <Folder Include="Features\Users\" />
   </ItemGroup>
 
 </Project>

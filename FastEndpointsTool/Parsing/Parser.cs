@@ -1,4 +1,4 @@
-namespace FastEndpointsTool;
+namespace FastEndpointsTool.Parsing;
 
 public class Parser
 {
@@ -6,10 +6,10 @@ public class Parser
     {
         if (args.Length < 2)
             throw new Exception($"Invalidate arguments.");
-        
+
         if (args[0] == "endpoint" || args[0] == "ep")
         {
-            var argument = new EndpointArgument { Type = EndpointType.Endpoint };
+            var argument = new ParseEndpointArgument { Type = EndpointType.Endpoint };
             var endpointArguments = ToDictionary(SubArray(args, 1));
 
             SetEndpointArguments(argument, endpointArguments);
@@ -18,16 +18,16 @@ public class Parser
         }
         if (args[0] == "endpointwithoutmapper" || args[0] == "epwm")
         {
-            var argument = new EndpointArgument { Type = EndpointType.EndpointWithoutMapper };
+            var argument = new ParseEndpointArgument { Type = EndpointType.EndpointWithoutMapper };
             var endpointArguments = ToDictionary(SubArray(args, 1));
 
-            SetEndpointArguments(argument, endpointArguments );
+            SetEndpointArguments(argument, endpointArguments);
 
             return argument;
         }
         if (args[0] == "endpointwithoutresponse" || args[0] == "epwr")
         {
-            var argument = new EndpointArgument { Type = EndpointType.EndpointWithoutResponse };
+            var argument = new ParseEndpointArgument { Type = EndpointType.EndpointWithoutResponse };
             var endpointArguments = ToDictionary(SubArray(args, 1));
 
             SetEndpointArguments(argument, endpointArguments);
@@ -36,7 +36,7 @@ public class Parser
         }
         if (args[0] == "endpointwithoutrequest" || args[0] == "epwreq")
         {
-            var argument = new EndpointArgument { Type = EndpointType.EndpointWithoutRequest };
+            var argument = new ParseEndpointArgument { Type = EndpointType.EndpointWithoutRequest };
             var endpointArguments = ToDictionary(SubArray(args, 1));
 
             SetEndpointArguments(argument, endpointArguments);
@@ -45,7 +45,7 @@ public class Parser
         }
         if (args[0] == "endpointwithoutresponseandrequest" || args[0] == "epwrreq")
         {
-            var argument = new EndpointArgument { Type = EndpointType.EndpointWithoutResponseAndRequest };
+            var argument = new ParseEndpointArgument { Type = EndpointType.EndpointWithoutResponseAndRequest };
             var endpointArguments = ToDictionary(SubArray(args, 1));
 
             SetEndpointArguments(argument, endpointArguments);
@@ -58,7 +58,7 @@ public class Parser
 
     #region Helpers
 
-    private void SetEndpointArguments(EndpointArgument argument, Dictionary<string, string> endpointArguments)
+    private void SetEndpointArguments(ParseEndpointArgument argument, Dictionary<string, string> endpointArguments)
     {
         if (endpointArguments.ContainsKey("-n"))
             argument.Name = endpointArguments["-n"];
@@ -80,9 +80,9 @@ public class Parser
         else if (endpointArguments.ContainsKey("--entity") && argument.Type == EndpointType.Endpoint)
             argument.Entity = endpointArguments["--entity"];
 
-        if (endpointArguments.ContainsKey("-o") && argument.Type == EndpointType.Endpoint)
+        if (endpointArguments.ContainsKey("-o"))
             argument.Output = endpointArguments["-o"];
-        else if (endpointArguments.ContainsKey("--output") && argument.Type == EndpointType.Endpoint)
+        else if (endpointArguments.ContainsKey("--output"))
             argument.Output = endpointArguments["--output"];
 
         if (string.IsNullOrWhiteSpace(argument.Name))
@@ -119,29 +119,5 @@ public class Parser
     }
 
     #endregion
-}
-
-public class ParseArgument
-{
-    
-}
-
-public class EndpointArgument : ParseArgument
-{
-    public EndpointType Type { get; set; }
-    public string Name { get; set; } = null!;
-    public string Method { get; set; } = null!;
-    public string Url { get; set; } = null!;
-    public string Entity { get; set; } = null!;
-    public string Output { get; set; } = null!;
-}
-
-public enum EndpointType
-{
-    Endpoint = 1,
-    EndpointWithoutMapper = 2,
-    EndpointWithoutResponse = 3,
-    EndpointWithoutRequest = 4,
-    EndpointWithoutResponseAndRequest = 5,
 }
 

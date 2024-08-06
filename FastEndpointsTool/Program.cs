@@ -1,3 +1,4 @@
+using FastEndpointsTool.Generator;
 using System.Reflection;
 
 namespace FastEndpointsTool;
@@ -35,7 +36,7 @@ internal class Program
     static void ShowHelp()
     {
         Console.WriteLine("  fetool help");
-        var arguments = Helpers.Arguments();
+        var arguments = Argument.Arguments();
         foreach (var arg in arguments)
         {
             Console.WriteLine($"  {arg.Name}, {arg.ShortName}, {arg.Description}");

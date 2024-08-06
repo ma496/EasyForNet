@@ -1,9 +1,10 @@
 using FastEndpointsTool.Extensions;
+using FastEndpointsTool.Parsing;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace FastEndpointsTool;
+namespace FastEndpointsTool.Generator;
 
 public class CodeGenerator
 {
@@ -11,7 +12,7 @@ public class CodeGenerator
     {
         var argument = new Parser().Parse(args);
 
-        if (argument is EndpointArgument endpointArgument)
+        if (argument is ParseEndpointArgument endpointArgument)
         {
             var directory = Directory.GetCurrentDirectory();
             var (setting, dir) = await GetSetting(directory);
@@ -22,14 +23,17 @@ public class CodeGenerator
                 Directory.CreateDirectory(endpointDir);
             var filePath = Path.Combine(endpointDir, fileName);
 
-            var txt = await File.ReadAllTextAsync(Path.Combine(directory, "Templates/Endpoint.txt"));
+            var templatePath = Path.Combine(directory, $"Templates/{endpointArgument.Type}.txt");
+            if (!File.Exists(templatePath))
+                throw new Exception($"{templatePath} not found.");
+            var templateText = await File.ReadAllTextAsync(templatePath);
             var templateBuilder = new StringBuilder();
             var entityClassNamespace = GetEntityClassNamespace(projectDir, setting.Project.Name, endpointArgument.Entity);
             if (!string.IsNullOrWhiteSpace(entityClassNamespace))
                 templateBuilder.AppendLine($"using {entityClassNamespace};{Environment.NewLine}");
             templateBuilder.AppendLine($"namespace {GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, endpointArgument.Output)};");
             templateBuilder.AppendLine();
-            templateBuilder.AppendLine(txt);
+            templateBuilder.AppendLine(templateText);
             templateBuilder.Replace("${Name}", endpointArgument.Name);
             templateBuilder.Replace("${HttpMethod}", endpointArgument.Method.ToPascalCase());
             templateBuilder.Replace("${Url}", endpointArgument.Url);
@@ -44,13 +48,14 @@ public class CodeGenerator
             throw new Exception("Invalid args.");
     }
 
-    
+
 
     #region Helpers
 
     private static string GetEndpointDir(string projectDir, string endpointPath, string output)
     {
-        return Path.Combine(projectDir, endpointPath, output ?? string.Empty);
+        var endpointDir = Path.Combine(projectDir, endpointPath, output ?? string.Empty);
+        return endpointDir;
     }
 
     private string? GetEntityClassNamespace(string projectDir, string projectName, string entity)
