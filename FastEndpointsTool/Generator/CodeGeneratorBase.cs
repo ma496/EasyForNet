@@ -42,13 +42,7 @@ public abstract class CodeGeneratorBase<TArgument>
 
     protected Assembly GetProjectAssembly(string projectDir, string projectName)
     {
-#if DEBUG
-        var config = "Debug";
-#else
-        var config = "Release";
-#endif
-
-        var assemblyPath = Path.Combine(projectDir, "bin", config, "net8.0", $"{projectName}.dll");
+        var assemblyPath = Path.Combine(projectDir, "bin", "Debug", "net8.0", $"{projectName}.dll");
         var loadedAssembly = Assembly.LoadFrom(assemblyPath);
 
         return loadedAssembly;

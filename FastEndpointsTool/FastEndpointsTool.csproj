@@ -11,4 +11,8 @@
     <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+
 </Project>
