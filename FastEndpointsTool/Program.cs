@@ -38,6 +38,7 @@ internal class Program
     static void ShowHelp()
     {
         Console.WriteLine("  fetool help");
+        Console.WriteLine("  name, shortname, description");
         var arguments = ArgumentInfo.Arguments();
         foreach (var arg in arguments)
         {
