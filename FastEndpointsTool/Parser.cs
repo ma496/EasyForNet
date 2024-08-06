@@ -80,6 +80,11 @@ public class Parser
         else if (endpointArguments.ContainsKey("--entity") && argument.Type == EndpointType.Endpoint)
             argument.Entity = endpointArguments["--entity"];
 
+        if (endpointArguments.ContainsKey("-o") && argument.Type == EndpointType.Endpoint)
+            argument.Output = endpointArguments["-o"];
+        else if (endpointArguments.ContainsKey("--output") && argument.Type == EndpointType.Endpoint)
+            argument.Output = endpointArguments["--output"];
+
         if (string.IsNullOrWhiteSpace(argument.Name))
             throw new Exception("-n or --name can not be empty.");
         if (string.IsNullOrWhiteSpace(argument.Method))
@@ -128,6 +133,7 @@ public class EndpointArgument : ParseArgument
     public string Method { get; set; } = null!;
     public string Url { get; set; } = null!;
     public string Entity { get; set; } = null!;
+    public string Output { get; set; } = null!;
 }
 
 public enum EndpointType

@@ -5,7 +5,16 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool", "FastEndpointsTool\FastEndpointsTool.csproj", "{7D38BB35-1543-4AE4-849F-1282D4D227BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastEndpointsTool.Tests", "FastEndpointsTool.Tests\FastEndpointsTool.Tests.csproj", "{1C1B060B-ABEF-4CCD-9302-906E09514D5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool.Tests", "FastEndpointsTool.Tests\FastEndpointsTool.Tests.csproj", "{1C1B060B-ABEF-4CCD-9302-906E09514D5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsSample", "FastEndpointsSample\FastEndpointsSample.csproj", "{9913BC99-3052-4FC5-AF98-46AF69E204C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9BF56EB-DB41-44F8-94C1-8298EC97695A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		fetool.json = fetool.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +30,10 @@ Global
 		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

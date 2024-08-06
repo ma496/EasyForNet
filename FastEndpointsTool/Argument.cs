@@ -14,4 +14,5 @@ public class ArgumentOption
     public string ShortName { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string Value { get; set; } = null!;
+    public string Output { get; set; } = null !;
 }

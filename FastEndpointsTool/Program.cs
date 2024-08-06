@@ -4,7 +4,7 @@ namespace FastEndpointsTool;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         var versionString = Assembly.GetEntryAssembly()?
                                     .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
@@ -29,7 +29,7 @@ internal class Program
         //    return;
         //}
 
-        new CodeGenerator().Generate(args);
+        await new CodeGenerator().Generate(args);
     }
 
     static void ShowHelp()

@@ -36,6 +36,12 @@ public static class Helpers
                         Name = "--entity",
                         ShortName = "-e",
                         Description = "Name of entity class."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint."
                     }
                 }
             },
@@ -63,6 +69,12 @@ public static class Helpers
                         Name = "--url",
                         ShortName = "-u",
                         Description = "Url of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint."
                     }
                 }
             },
@@ -90,6 +102,12 @@ public static class Helpers
                         Name = "--url",
                         ShortName = "-u",
                         Description = "Url of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint."
                     }
                 }
             },
@@ -117,6 +135,12 @@ public static class Helpers
                         Name = "--url",
                         ShortName = "-u",
                         Description = "Url of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint."
                     }
                 }
             },
@@ -144,6 +168,12 @@ public static class Helpers
                         Name = "--url",
                         ShortName = "-u",
                         Description = "Url of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint."
                     }
                 }
             }
