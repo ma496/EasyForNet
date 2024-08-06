@@ -1,4 +1,5 @@
 using FastEndpointsTool.Generator;
+using FastEndpointsTool.Parsing;
 using System.Reflection;
 
 namespace FastEndpointsTool;
@@ -30,13 +31,14 @@ internal class Program
         //    return;
         //}
 
-        await new CodeGenerator().Generate(args);
+        var argument = new Parser().Parse(args);
+        await new CodeGenerator().Generate(argument);
     }
 
     static void ShowHelp()
     {
         Console.WriteLine("  fetool help");
-        var arguments = Argument.Arguments();
+        var arguments = ArgumentInfo.Arguments();
         foreach (var arg in arguments)
         {
             Console.WriteLine($"  {arg.Name}, {arg.ShortName}, {arg.Description}");

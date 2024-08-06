@@ -1,6 +1,6 @@
 namespace FastEndpointsTool.Parsing;
 
-public class ParseEndpointArgument : ParseArgument
+public class EndpointArgument : Argument
 {
     public EndpointType Type { get; set; }
     public string Name { get; set; } = null!;

@@ -1,17 +1,17 @@
 namespace FastEndpointsTool;
 
-public class Argument
+public class ArgumentInfo
 {
     public string Name { get; set; } = null!;
     public string ShortName { get; set; } = null!;
     public string Description { get; set; } = null!;
     public IList<ArgumentOption> Options { get; set; } = null!;
 
-    public static IList<Argument> Arguments()
+    public static IList<ArgumentInfo> Arguments()
     {
-        return new List<Argument>
+        return new List<ArgumentInfo>
         {
-            new Argument
+            new ArgumentInfo
             {
                 Name = "endpoint",
                 ShortName = "ep",
@@ -50,7 +50,7 @@ public class Argument
                     }
                 }
             },
-            new Argument
+            new ArgumentInfo
             {
                 Name = "endpointwithoutmapper",
                 ShortName = "epwm",
@@ -83,7 +83,7 @@ public class Argument
                     }
                 }
             },
-            new Argument
+            new ArgumentInfo
             {
                 Name = "endpointwithoutresponse",
                 ShortName = "epwr",
@@ -116,7 +116,7 @@ public class Argument
                     }
                 }
             },
-            new Argument
+            new ArgumentInfo
             {
                 Name = "endpointwithoutrequest",
                 ShortName = "epwreq",
@@ -149,7 +149,7 @@ public class Argument
                     }
                 }
             },
-            new Argument
+            new ArgumentInfo
             {
                 Name = "endpointwithoutresponseandrequest",
                 ShortName = "epwrreq",

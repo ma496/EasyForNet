@@ -22,9 +22,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.Endpoint, endpointArgument.Type);
@@ -42,9 +42,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.Endpoint, endpointArgument.Type);
@@ -62,9 +62,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutMapper, endpointArgument.Type);
@@ -81,9 +81,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutMapper, endpointArgument.Type);
@@ -100,9 +100,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutResponse, endpointArgument.Type);
@@ -119,9 +119,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutResponse, endpointArgument.Type);
@@ -138,9 +138,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutRequest, endpointArgument.Type);
@@ -157,9 +157,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutRequest, endpointArgument.Type);
@@ -176,9 +176,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
@@ -195,9 +195,9 @@ public class ParserTests
 
         var result = parser.Parse(args);
 
-        Assert.IsType<ParseEndpointArgument>(result);
+        Assert.IsType<EndpointArgument>(result);
 
-        var endpointArgument = result as ParseEndpointArgument;
+        var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
         Assert.Equal(EndpointType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
