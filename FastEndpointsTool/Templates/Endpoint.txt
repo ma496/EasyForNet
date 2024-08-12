@@ -1,4 +1,4 @@
-sealed class ${Name}Endpoint : Endpoint<${Name}Request, ${Name}Response>
+sealed class ${Name}Endpoint : Endpoint<${Name}Request, ${Name}Response, ${Name}Mapper>
 {
     public override void Configure()
     {

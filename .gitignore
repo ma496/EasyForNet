@@ -236,3 +236,6 @@ _Pvt_Extensions
 /EasyForNet.ndproj
 /.mfractor
 src/WebUI/ClientApp/package-lock.json
+
+# Custom Files
+publish-package.bat
