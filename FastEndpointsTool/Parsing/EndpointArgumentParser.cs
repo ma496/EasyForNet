@@ -81,6 +81,11 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
         else if (endpointArguments.ContainsKey("--output"))
             argument.Output = endpointArguments["--output"];
 
+        if (endpointArguments.ContainsKey("-g"))
+            argument.Group = GroupName(endpointArguments["-g"]);
+        else if (endpointArguments.ContainsKey("--group"))
+            argument.Group = GroupName(endpointArguments["--group"]);
+
         if (string.IsNullOrWhiteSpace(argument.Name))
             throw new Exception("-n or --name can not be empty.");
         if (string.IsNullOrWhiteSpace(argument.Method))
@@ -89,5 +94,10 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
             throw new Exception("-u or --url can not be empty.");
         if (string.IsNullOrWhiteSpace(argument.Entity) && argument.Type == EndpointType.Endpoint)
             throw new Exception("-e or --entity can not be empty.");
+    }
+
+    private string GroupName(string group)
+    {
+        return group.EndsWith("Group") ? group : $"{group}Group";
     }
 }

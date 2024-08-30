@@ -22,16 +22,33 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             throw new Exception($"{templatePath} not found.");
         var templateText = await File.ReadAllTextAsync(templatePath);
         var templateBuilder = new StringBuilder();
-        var entityClassNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
-        if (!string.IsNullOrWhiteSpace(entityClassNamespace))
-            templateBuilder.AppendLine($"using {entityClassNamespace};{Environment.NewLine}");
-        templateBuilder.AppendLine($"namespace {GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output)};");
+
+        var namespaces = new List<string?>
+        {
+            GetClassNamespace(projectDir, setting.Project.Name, argument.Entity),
+            GetClassNamespace(projectDir, setting.Project.Name, argument.Group)
+        };
+        var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
+        var uniqueNamespaces = namespaces
+            .Where(x => !string.IsNullOrWhiteSpace(x) && x != endpointNamespace)
+            .Distinct()
+            .ToList();
+        var lastNamespaceIndex = uniqueNamespaces.Count - 1;
+        var currentNamespaceIndex = 0;
+        uniqueNamespaces.ForEach(x =>
+        {
+            templateBuilder.AppendLine($"using {x};{(currentNamespaceIndex == lastNamespaceIndex ? Environment.NewLine : "")}");
+            currentNamespaceIndex++;
+        });
+
+        templateBuilder.AppendLine($"namespace {endpointNamespace};");
         templateBuilder.AppendLine();
         templateBuilder.AppendLine(templateText);
         templateBuilder.Replace("${Name}", argument.Name);
         templateBuilder.Replace("${HttpMethod}", argument.Method.ToPascalCase());
         templateBuilder.Replace("${Url}", argument.Url);
         templateBuilder.Replace("${Entity}", argument.Entity);
+        templateBuilder.Replace("${Group}", argument.Group);
         var template = templateBuilder.ToString();
 
         await File.WriteAllTextAsync(filePath, template);

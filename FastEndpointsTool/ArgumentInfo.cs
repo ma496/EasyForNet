@@ -47,6 +47,12 @@ public class ArgumentInfo
                         Name = "--output",
                         ShortName = "-o",
                         Description = "Path of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group."
                     }
                 }
             },

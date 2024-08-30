@@ -8,6 +8,7 @@ public class EndpointArgument : Argument
     public string Url { get; set; } = null!;
     public string Entity { get; set; } = null!;
     public string Output { get; set; } = null!;
+    public string Group { get; set; } = null!;
 }
 
 public enum EndpointType
