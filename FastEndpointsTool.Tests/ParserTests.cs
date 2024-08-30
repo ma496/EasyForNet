@@ -57,7 +57,7 @@ public class ParserTests
     [Fact]
     public void EndpointWithoutMapperTest()
     {
-        var args = new[] { "endpointwithoutmapper", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "User" };
+        var args = new[] { "endpointwithoutmapper", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -76,7 +76,7 @@ public class ParserTests
     [Fact]
     public void EpwmTest()
     {
-        var args = new[] { "epwm", "-n", "GetUsers", "-m", "post", "-u", "get-users", "-e", "User" };
+        var args = new[] { "epwm", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -95,7 +95,7 @@ public class ParserTests
     [Fact]
     public void EndpointEithoutResponseTest()
     {
-        var args = new[] { "endpointwithoutresponse", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "User" };
+        var args = new[] { "endpointwithoutresponse", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -114,7 +114,7 @@ public class ParserTests
     [Fact]
     public void EpwrTest()
     {
-        var args = new[] { "epwr", "-n", "GetUsers", "-m", "post", "-u", "get-users", "-e", "User" };
+        var args = new[] { "epwr", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -133,7 +133,7 @@ public class ParserTests
     [Fact]
     public void EndpointEithoutRequestTest()
     {
-        var args = new[] { "endpointwithoutrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "User" };
+        var args = new[] {"endpointwithoutrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -152,7 +152,7 @@ public class ParserTests
     [Fact]
     public void EpwreqTest()
     {
-        var args = new[] { "epwreq", "-n", "GetUsers", "-m", "post", "-u", "get-users", "-e", "User" };
+        var args = new[] {"epwreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -171,7 +171,7 @@ public class ParserTests
     [Fact]
     public void EndpointWithoutResponseAndRequestTest()
     {
-        var args = new[] { "endpointwithoutresponseandrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "User" };
+        var args = new[] {"endpointwithoutresponseandrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -190,7 +190,7 @@ public class ParserTests
     [Fact]
     public void EpwrreqTest()
     {
-        var args = new[] { "epwrreq", "-n", "GetUsers", "-m", "post", "-u", "get-users", "-e", "User" };
+        var args = new[] {"epwrreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -218,7 +218,7 @@ public class ParserTests
 
         var exception = Assert.Throws<Exception>(() => parser.Parse(args));
 
-        _outputHelper.WriteLine(exception.Message);
+        Assert.Equal("Invalidate arguments.", exception.Message);
     }
 
     [Fact]

@@ -1,0 +1,24 @@
+sealed class ${Name}Endpoint : Endpoint<${Name}Request>
+{
+    public override void Configure()
+    {
+        ${HttpMethod}("${Url}");
+    }
+
+    public override async Task HandleAsync(${Name}Request request, CancellationToken cancellationToken)
+    {
+    }
+}
+
+sealed class ${Name}Request
+{
+    // Define request properties here
+}
+
+sealed class ${Name}Validator : Validator<${Name}Request>
+{
+    public ${Name}Validator()
+    {
+        // Add validation rules here
+    }
+}

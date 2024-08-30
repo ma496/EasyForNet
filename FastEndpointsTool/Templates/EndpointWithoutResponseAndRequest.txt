@@ -1,0 +1,11 @@
+sealed class ${Name}Endpoint : EndpointWithoutRequest
+{
+    public override void Configure()
+    {
+        ${HttpMethod}("${Url}");
+    }
+
+    public override async Task HandleAsync(CancellationToken cancellationToken)
+    {
+    }
+}
