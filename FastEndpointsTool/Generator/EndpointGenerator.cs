@@ -1,5 +1,6 @@
-using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
+using FastEndpointsTool.Templates;
+using System.Reflection;
 using System.Text;
 
 namespace FastEndpointsTool.Generator;
@@ -17,10 +18,6 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             Directory.CreateDirectory(endpointDir);
         var filePath = Path.Combine(endpointDir, fileName);
 
-        var templatePath = Path.Combine(directory, $"Templates/{argument.Type}.txt");
-        if (!File.Exists(templatePath))
-            throw new Exception($"{templatePath} not found.");
-        var templateText = await File.ReadAllTextAsync(templatePath);
         var templateBuilder = new StringBuilder();
 
         var namespaces = new List<string?>
@@ -42,17 +39,32 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         });
 
         templateBuilder.AppendLine($"namespace {endpointNamespace};");
-        templateBuilder.AppendLine();
-        templateBuilder.AppendLine(templateText);
-        templateBuilder.Replace("${Name}", argument.Name);
-        templateBuilder.Replace("${HttpMethod}", argument.Method.ToPascalCase());
-        templateBuilder.Replace("${Url}", argument.Url);
-        templateBuilder.Replace("${Entity}", argument.Entity);
-        templateBuilder.Replace("${Group}", argument.Group);
-        var template = templateBuilder.ToString();
 
+        var templateType = GetTypesImplementingInterface(typeof(ITemplate<>))
+            .Where(t => t.Name == $"{argument.Type}Template")
+            .SingleOrDefault();
+        if (templateType == null)
+            throw new Exception($"{argument.Type}Template class not found.");
+        var templateObj = Activator.CreateInstance(templateType);
+        var templateMethod = templateType.GetMethod("Template");
+        if (templateMethod == null)
+            throw new Exception($"{templateType.FullName} not implement Template method.");
+        var templateResult = templateMethod.Invoke(templateObj, [argument]);
+        var templateText = templateResult as string;
+        if (string.IsNullOrWhiteSpace(templateText))
+            throw new Exception($"{templateType.FullName}.{templateMethod.Name} return empty template.");
+        templateBuilder.AppendLine(templateText);
+
+        var template = templateBuilder.ToString();
         await File.WriteAllTextAsync(filePath, template);
 
         Console.WriteLine($"{fileName} file created under {endpointDir}");
+    }
+
+    static IEnumerable<Type> GetTypesImplementingInterface(Type genericInterfaceType)
+    {
+        return Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.GetInterfaces()
+                         .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericInterfaceType));
     }
 }
