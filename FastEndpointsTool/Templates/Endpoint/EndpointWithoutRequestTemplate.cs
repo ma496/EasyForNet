@@ -1,14 +1,14 @@
 using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 
-namespace FastEndpointsTool.Templates;
+namespace FastEndpointsTool.Templates.Endpoint;
 
-public class EndpointWithoutResponseAndRequestTemplate : TemplateBase<EndpointArgument>
+public class EndpointWithoutRequestTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
         var template = $@"
-sealed class {arg.Name}Endpoint : EndpointWithoutRequest
+sealed class {arg.Name}Endpoint : EndpointWithoutRequest<{arg.Name}Response>
 {{
     public override void Configure()
     {{
@@ -18,7 +18,16 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {{
+        await SendAsync(new {arg.Name}Response
+        {{
+            // Add your response properties here
+        }});
     }}
+}}
+
+sealed class {arg.Name}Response
+{{
+    // Define response properties here
 }}
 ";
 

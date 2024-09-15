@@ -1,7 +1,7 @@
 using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 
-namespace FastEndpointsTool.Templates;
+namespace FastEndpointsTool.Templates.Endpoint;
 
 public class EndpointWithoutResponseTemplate : TemplateBase<EndpointArgument>
 {

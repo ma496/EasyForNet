@@ -1,14 +1,14 @@
 using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 
-namespace FastEndpointsTool.Templates;
+namespace FastEndpointsTool.Templates.Endpoint;
 
-public class EndpointWithoutMapperTemplate : TemplateBase<EndpointArgument>
+public class EndpointTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
         var template = $@"
-sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response>
+sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response, {arg.Name}Mapper>
 {{
     public override void Configure()
     {{
@@ -41,6 +41,11 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
 sealed class {arg.Name}Response
 {{
     // Define response properties here
+}}
+
+sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {arg.Entity}>
+{{
+    // Define mapping here
 }}
 ";
 

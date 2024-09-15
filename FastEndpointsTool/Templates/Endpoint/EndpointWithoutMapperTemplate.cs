@@ -1,14 +1,14 @@
 using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 
-namespace FastEndpointsTool.Templates;
+namespace FastEndpointsTool.Templates.Endpoint;
 
-public class EndpointWithoutRequestTemplate : TemplateBase<EndpointArgument>
+public class EndpointWithoutMapperTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
         var template = $@"
-sealed class {arg.Name}Endpoint : EndpointWithoutRequest<{arg.Name}Response>
+sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response>
 {{
     public override void Configure()
     {{
@@ -16,12 +16,25 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest<{arg.Name}Response>
         {arg.Method.ToPascalCase()}(""{arg.Url}"");
     }}
 
-    public override async Task HandleAsync(CancellationToken cancellationToken)
+    public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         await SendAsync(new {arg.Name}Response
         {{
             // Add your response properties here
         }});
+    }}
+}}
+
+sealed class {arg.Name}Request
+{{
+    // Define request properties here
+}}
+
+sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
+{{
+    public {arg.Name}Validator()
+    {{
+        // Add validation rules here
     }}
 }}
 

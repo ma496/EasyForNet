@@ -86,6 +86,12 @@ public class ArgumentInfo
                         Name = "--output",
                         ShortName = "-o",
                         Description = "Path of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group."
                     }
                 }
             },
@@ -119,6 +125,12 @@ public class ArgumentInfo
                         Name = "--output",
                         ShortName = "-o",
                         Description = "Path of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group."
                     }
                 }
             },
@@ -152,6 +164,12 @@ public class ArgumentInfo
                         Name = "--output",
                         ShortName = "-o",
                         Description = "Path of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group."
                     }
                 }
             },
@@ -185,6 +203,12 @@ public class ArgumentInfo
                         Name = "--output",
                         ShortName = "-o",
                         Description = "Path of endpoint."
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group."
                     }
                 }
             }
@@ -197,6 +221,4 @@ public class ArgumentOption
     public string Name { get; set; } = null!;
     public string ShortName { get; set; } = null!;
     public string Description { get; set; } = null!;
-    public string Value { get; set; } = null!;
-    public string Output { get; set; } = null !;
 }

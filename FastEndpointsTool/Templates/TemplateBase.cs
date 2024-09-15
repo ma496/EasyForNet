@@ -7,7 +7,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
 
     protected string DeleteLine(string input, int lineIndex)
     {
-        string[] lines = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        string?[] lines = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
         if (lineIndex < 0 || lineIndex >= lines.Length)
         {
