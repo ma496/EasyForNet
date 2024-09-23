@@ -1,4 +1,5 @@
 using FastEndpointsTool.Parsing;
+using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool.Generator;
 

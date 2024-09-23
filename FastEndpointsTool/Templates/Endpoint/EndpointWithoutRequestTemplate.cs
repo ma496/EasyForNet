@@ -1,5 +1,5 @@
 using FastEndpointsTool.Extensions;
-using FastEndpointsTool.Parsing;
+using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool.Templates.Endpoint;
 

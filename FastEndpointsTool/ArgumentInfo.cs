@@ -1,11 +1,14 @@
+using FastEndpointsTool.Parsing.Endpoint;
+
 namespace FastEndpointsTool;
 
 public class ArgumentInfo
 {
-    public string Name { get; set; } = null!;
-    public string ShortName { get; set; } = null!;
-    public string Description { get; set; } = null!;
-    public IList<ArgumentOption> Options { get; set; } = null!;
+    public Enum Type { get; init; } = null!;
+    public string Name { get; init; } = null!;
+    public string ShortName { get; init; } = null!;
+    public string Description { get; init; } = null!;
+    public IList<ArgumentOption> Options { get; init; } = null!;
 
     public static IList<ArgumentInfo> Arguments()
     {
@@ -13,6 +16,7 @@ public class ArgumentInfo
         {
             new ArgumentInfo
             {
+                Type = EndpointType.Endpoint,
                 Name = "endpoint",
                 ShortName = "ep",
                 Description = "Creaete endpoint with request, response, validator and mapper.",
@@ -22,42 +26,49 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes."
+                        Description = "Name of endpoint classes.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--method",
                         ShortName = "-m",
-                        Description = "Http method."
+                        Description = "Http method.",
+                        Required= true,
                     },
                     new ArgumentOption
                     {
                         Name = "--url",
                         ShortName = "-u",
-                        Description = "Url of endpoint."
+                        Description = "Url of endpoint.",
+                        Required= true,
                     },
                     new ArgumentOption
                     {
                         Name = "--entity",
                         ShortName = "-e",
-                        Description = "Name of entity class."
+                        Description = "Name of entity class.",
+                        Required= true,
                     },
                     new ArgumentOption
                     {
                         Name = "--output",
                         ShortName = "-o",
-                        Description = "Path of endpoint."
+                        Description = "Path of endpoint.",
+                        Required = false,
                     },
                     new ArgumentOption
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group."
+                        Description = "Endpoint group.",
+                        Required = false,
                     }
                 }
             },
             new ArgumentInfo
             {
+                Type = EndpointType.EndpointWithoutMapper,
                 Name = "endpointwithoutmapper",
                 ShortName = "epwm",
                 Description = "Creaete endpoint with request, response and validator.",
@@ -67,36 +78,42 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes."
+                        Description = "Name of endpoint classes.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--method",
                         ShortName = "-m",
-                        Description = "Http method."
+                        Description = "Http method.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--url",
                         ShortName = "-u",
-                        Description = "Url of endpoint."
+                        Description = "Url of endpoint.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--output",
                         ShortName = "-o",
-                        Description = "Path of endpoint."
+                        Description = "Path of endpoint.",
+                        Required = false,
                     },
                     new ArgumentOption
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group."
+                        Description = "Endpoint group.",
+                        Required = false,
                     }
                 }
             },
             new ArgumentInfo
             {
+                Type = EndpointType.EndpointWithoutResponse,
                 Name = "endpointwithoutresponse",
                 ShortName = "epwr",
                 Description = "Creaete endpoint with request and validator.",
@@ -106,36 +123,42 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes."
+                        Description = "Name of endpoint classes.",
+                        Required= true,
                     },
                     new ArgumentOption
                     {
                         Name = "--method",
                         ShortName = "-m",
-                        Description = "Http method."
+                        Description = "Http method.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--url",
                         ShortName = "-u",
-                        Description = "Url of endpoint."
+                        Description = "Url of endpoint.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--output",
                         ShortName = "-o",
-                        Description = "Path of endpoint."
+                        Description = "Path of endpoint.",
+                        Required = false,
                     },
                     new ArgumentOption
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group."
+                        Description = "Endpoint group.",
+                        Required = false,
                     }
                 }
             },
             new ArgumentInfo
             {
+                Type = EndpointType.EndpointWithoutRequest,
                 Name = "endpointwithoutrequest",
                 ShortName = "epwreq",
                 Description = "Creaete endpoint with response.",
@@ -145,36 +168,42 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes."
+                        Description = "Name of endpoint classes.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--method",
                         ShortName = "-m",
-                        Description = "Http method."
+                        Description = "Http method.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--url",
                         ShortName = "-u",
-                        Description = "Url of endpoint."
+                        Description = "Url of endpoint.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--output",
                         ShortName = "-o",
-                        Description = "Path of endpoint."
+                        Description = "Path of endpoint.",
+                        Required = false,
                     },
                     new ArgumentOption
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group."
+                        Description = "Endpoint group.",
+                        Required = false,
                     }
                 }
             },
             new ArgumentInfo
             {
+                Type = EndpointType.EndpointWithoutResponseAndRequest,
                 Name = "endpointwithoutresponseandrequest",
                 ShortName = "epwrreq",
                 Description = "Creaete endpoint.",
@@ -184,41 +213,103 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes."
+                        Description = "Name of endpoint classes.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--method",
                         ShortName = "-m",
-                        Description = "Http method."
+                        Description = "Http method.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--url",
                         ShortName = "-u",
-                        Description = "Url of endpoint."
+                        Description = "Url of endpoint.",
+                        Required = true,
                     },
                     new ArgumentOption
                     {
                         Name = "--output",
                         ShortName = "-o",
-                        Description = "Path of endpoint."
+                        Description = "Path of endpoint.",
+                        Required = false,
                     },
                     new ArgumentOption
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group."
+                        Description = "Endpoint group.",
+                        Required = false,
+                    }
+                },
+            },
+            new ArgumentInfo
+            {
+                Type = EndpointType.CreateEndpoint,
+                Name = "createendpoint",
+                ShortName = "cep",
+                Description = "Creaete endpoint with request, response, validator and mapper.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--name",
+                        ShortName = "-n",
+                        Description = "Name of endpoint classes.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--method",
+                        ShortName = "-m",
+                        Description = "Http method.",
+                        Required = true,
+                        Default = "post",
+                        IsInternal = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--url",
+                        ShortName = "-u",
+                        Description = "Url of endpoint.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--entity",
+                        ShortName = "-e",
+                        Description = "Name of entity class.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint.",
+                        Required = false,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group.",
+                        Required = false,
                     }
                 }
-            }
+            },
         };
     }
 }
 
 public class ArgumentOption
 {
-    public string Name { get; set; } = null!;
-    public string ShortName { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string Name { get; init; } = null!;
+    public string ShortName { get; init; } = null!;
+    public string Description { get; init; } = null!;
+    public bool Required { get; init; }
+    public string Default { get; set; } = null!;
+    public bool IsInternal { get; set; }
 }

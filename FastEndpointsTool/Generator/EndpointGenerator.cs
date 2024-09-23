@@ -1,4 +1,4 @@
-using FastEndpointsTool.Parsing;
+using FastEndpointsTool.Parsing.Endpoint;
 using FastEndpointsTool.Templates;
 using System.Reflection;
 using System.Text;
@@ -10,9 +10,8 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
     public override async Task Generate(EndpointArgument argument)
     {
         var directory = Directory.GetCurrentDirectory();
-        var (setting, dir) = await GetSetting(directory);
-        var fileName = $"{argument.Name}Endpoint.cs";
-        var projectDir = Path.Combine(dir, setting.Project.Name);
+        var (setting, projectDir) = await Helpers.GetSetting(directory);
+        var fileName = $"{Helpers.GetEndpointName(argument.Name, argument.Type)}Endpoint.cs";
         var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
         if (!Directory.Exists(endpointDir))
             Directory.CreateDirectory(endpointDir);
@@ -20,10 +19,15 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
         var templateBuilder = new StringBuilder();
 
+        var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
+        var groupNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Group);
+        argument.EntityFullName = $"{entityNamespace}.{argument.Entity}";
+        argument.GroupFullName = $"{groupNamespace}.{argument.Group}";
+
         var namespaces = new List<string?>
         {
-            GetClassNamespace(projectDir, setting.Project.Name, argument.Entity),
-            GetClassNamespace(projectDir, setting.Project.Name, argument.Group)
+            entityNamespace,
+            groupNamespace
         };
         var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
         var uniqueNamespaces = namespaces
