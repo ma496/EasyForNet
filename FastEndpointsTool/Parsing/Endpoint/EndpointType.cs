@@ -1,4 +1,4 @@
-﻿namespace FastEndpointsTool.Parsing.Endpoint;
+namespace FastEndpointsTool.Parsing.Endpoint;
 
 public enum EndpointType
 {
@@ -8,5 +8,6 @@ public enum EndpointType
     EndpointWithoutRequest = 4,
     EndpointWithoutResponseAndRequest = 5,
     CreateEndpoint = 6,
+    UpdateEndpoint = 7,
 }
 

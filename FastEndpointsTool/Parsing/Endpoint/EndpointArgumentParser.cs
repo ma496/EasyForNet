@@ -58,60 +58,16 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
 
             return argument;
         }
+        if (args[0] == "updateendpoint" || args[0] == "uep")
+        {
+            var argument = new EndpointArgument { Type = EndpointType.UpdateEndpoint };
+            var endpointArguments = ToKeyValue(GetOptions(args));
+
+            SetEndpointArguments(EndpointType.UpdateEndpoint, argument, endpointArguments);
+
+            return argument;
+        }
 
         return null;
-    }
-
-    //protected override void SetEndpointArguments(EndpointArgument argument, Dictionary<string, string> endpointArguments)
-    //{
-    //    if (endpointArguments.ContainsKey("-n"))
-    //        argument.Name = endpointArguments["-n"];
-    //    else if (endpointArguments.ContainsKey("--name"))
-    //        argument.Name = endpointArguments["--name"];
-
-    //    if (endpointArguments.ContainsKey("-m"))
-    //        argument.Method = endpointArguments["-m"];
-    //    else if (endpointArguments.ContainsKey("--method"))
-    //        argument.Method = endpointArguments["--method"];
-
-    //    if (endpointArguments.ContainsKey("-u"))
-    //        argument.Url = endpointArguments["-u"];
-    //    else if (endpointArguments.ContainsKey("--url"))
-    //        argument.Url = endpointArguments["--url"];
-
-    //    if (endpointArguments.ContainsKey("-e") && IsEntityRequired(argument.Type))
-    //        argument.Entity = endpointArguments["-e"];
-    //    else if (endpointArguments.ContainsKey("--entity") && IsEntityRequired(argument.Type))
-    //        argument.Entity = endpointArguments["--entity"];
-
-    //    if (endpointArguments.ContainsKey("-o"))
-    //        argument.Output = endpointArguments["-o"];
-    //    else if (endpointArguments.ContainsKey("--output"))
-    //        argument.Output = endpointArguments["--output"];
-
-    //    if (endpointArguments.ContainsKey("-g"))
-    //        argument.Group = GroupName(endpointArguments["-g"]);
-    //    else if (endpointArguments.ContainsKey("--group"))
-    //        argument.Group = GroupName(endpointArguments["--group"]);
-
-    //    if (string.IsNullOrWhiteSpace(argument.Name))
-    //        throw new Exception("-n or --name can not be empty.");
-    //    if (string.IsNullOrWhiteSpace(argument.Method))
-    //        throw new Exception("-m or --method can not be empty.");
-    //    if (string.IsNullOrWhiteSpace(argument.Url))
-    //        throw new Exception("-u or --url can not be empty.");
-    //    if (string.IsNullOrWhiteSpace(argument.Entity) && IsEntityRequired(argument.Type))
-    //        throw new Exception("-e or --entity can not be empty.");
-    //}
-
-    private string GroupName(string group)
-    {
-        return group.EndsWith("Group") ? group : $"{group}Group";
-    }
-
-    private bool IsEntityRequired(EndpointType endpointType)
-    {
-        return endpointType == EndpointType.Endpoint
-            || endpointType == EndpointType.CreateEndpoint;
     }
 }

@@ -14,14 +14,6 @@ public static class Helpers
         return loadedAssembly;
     }
 
-    public static string GetEndpointName(string name, EndpointType type)
-    {
-        if (type == EndpointType.CreateEndpoint)
-            return $"{name}Create";
-
-        return name;
-    }
-
     public static async Task<(FeToolSetting setting, string projectDir)> GetSetting(string? directory = null)
     {
         if (string.IsNullOrWhiteSpace(directory))
@@ -42,5 +34,20 @@ public static class Helpers
         {
             return await GetSetting(dirInfo.Parent?.FullName);
         }
+    }
+
+    public static string EndpointName(string name, EndpointType type)
+    {
+        if (type == EndpointType.CreateEndpoint && !name.EndsWith("Create"))
+            return $"{name}Create";
+        if (type == EndpointType.UpdateEndpoint && !name.EndsWith("Update"))
+            return $"{name}Update";
+
+        return name;
+    }
+
+    public static string GroupName(string group)
+    {
+        return group.EndsWith("Group") ? group : $"{group}Group";
     }
 }

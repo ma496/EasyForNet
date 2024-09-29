@@ -3,7 +3,7 @@ using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool.Templates.Endpoint.Crud;
 
-public class CreateEndpointTemplate : TemplateBase<EndpointArgument>
+public class UpdateEndpointTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
@@ -31,7 +31,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 
 sealed class {name}Request
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, false))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true))}
 }}
 
 sealed class {name}Validator : Validator<{name}Request>

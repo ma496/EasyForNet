@@ -11,7 +11,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
     {
         var directory = Directory.GetCurrentDirectory();
         var (setting, projectDir) = await Helpers.GetSetting(directory);
-        var fileName = $"{Helpers.GetEndpointName(argument.Name, argument.Type)}Endpoint.cs";
+        var fileName = $"{Helpers.EndpointName(argument.Name, argument.Type)}Endpoint.cs";
         var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
         if (!Directory.Exists(endpointDir))
             Directory.CreateDirectory(endpointDir);

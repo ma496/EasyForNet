@@ -12,8 +12,8 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest
 {{
     public override void Configure()
     {{
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
         {arg.Method.ToPascalCase()}(""{arg.Url}"");
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
     }}
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest
 ";
 
         if (string.IsNullOrWhiteSpace(arg.Group))
-            template = DeleteLine(template, 5);
+            template = DeleteLine(template, 6);
         return template;
     }
 }

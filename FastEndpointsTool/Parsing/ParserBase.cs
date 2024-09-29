@@ -46,6 +46,7 @@ public abstract class ParserBase<TArgument>
 
     private static void SetProperty(TArgument argument, string value, ArgumentOption opt)
     {
+        value = opt.NormalizeMethod != null ? opt.NormalizeMethod.Invoke(value) : value;
         var propertyName = opt.Name.Substring(2).ToPascalCase();
         var property = argument.GetType().GetProperty(propertyName);
         if (property == null)
@@ -76,6 +77,7 @@ public abstract class ParserBase<TArgument>
 
     protected Dictionary<string, string> ToKeyValue(string[] array)
     {
+        Console.WriteLine(string.Join(", ", array));
         if (array.Length % 2 != 0)
             throw new Exception("Invalidate args.");
 

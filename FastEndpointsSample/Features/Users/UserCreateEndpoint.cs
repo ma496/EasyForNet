@@ -7,6 +7,7 @@ sealed class UserCreateEndpoint : Endpoint<UserCreateRequest, UserCreateResponse
     public override void Configure()
     {
         Post("/");
+        Group<AdminGroup>();
     }
 
     public override async Task HandleAsync(UserCreateRequest request, CancellationToken cancellationToken)

@@ -12,8 +12,8 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
 {{
     public override void Configure()
     {{
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
         {arg.Method.ToPascalCase()}(""{arg.Url}"");
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
     }}
 
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
@@ -50,7 +50,7 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {a
 ";
 
         if (string.IsNullOrWhiteSpace(arg.Group))
-            template = DeleteLine(template, 5);
+            template = DeleteLine(template, 6);
         return template;
     }
 }
