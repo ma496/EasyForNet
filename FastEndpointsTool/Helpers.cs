@@ -42,6 +42,8 @@ public static class Helpers
             return $"{name}Create";
         if (type == EndpointType.UpdateEndpoint && !name.EndsWith("Update"))
             return $"{name}Update";
+        if (type == EndpointType.GetEndpoint && !name.EndsWith("Get"))
+            return $"{name}Get";
 
         return name;
     }

@@ -9,5 +9,5 @@ public enum EndpointType
     EndpointWithoutResponseAndRequest = 5,
     CreateEndpoint = 6,
     UpdateEndpoint = 7,
+    GetEndpoint = 8,
 }
-

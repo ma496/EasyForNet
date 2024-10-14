@@ -134,7 +134,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var index = 0;
         foreach (var p in properties)
         {
-            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(p.PropertyType.Name)} {p.Name} {{ get; set;}}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
+            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(p.PropertyType.Name)} {p.Name} {{ get; set; }}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
             index++;
         }
         return builder.ToString();

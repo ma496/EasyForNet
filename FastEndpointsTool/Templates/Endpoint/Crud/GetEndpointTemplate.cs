@@ -3,7 +3,7 @@ using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool.Templates.Endpoint.Crud;
 
-public class UpdateEndpointTemplate : TemplateBase<EndpointArgument>
+public class GetEndpointTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
@@ -16,7 +16,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 {{
     public override void Configure()
     {{
-        {arg.Method.ToPascalCase()}(""{Path.Combine(arg.Url, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
+        Get(""{Path.Combine(arg.Url, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
         AllowAnonymous();
     }}
@@ -24,14 +24,13 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
     {{
         var entity = new {arg.Entity}(); // get entity from db
-        Map.UpdateEntity(request, entity);
         await SendAsync(Map.FromEntity(entity));
     }}
 }}
 
 sealed class {name}Request
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true))}
+    public {ConvertToAlias(GetIdProperty(assembly, arg.Entity, arg.EntityFullName).PropertyType.Name)} {GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name} {{ get; set; }}
 }}
 
 sealed class {name}Validator : Validator<{name}Request>
@@ -49,13 +48,6 @@ sealed class {name}Response
 
 sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
 {{
-    public override {arg.Entity} UpdateEntity({name}Request r, {arg.Entity} e)
-    {{
-        {UpdatePropertiesCode(assembly, arg.Entity, arg.EntityFullName, "r", false, "e")}
-
-        return e;
-    }}
-
     public override {name}Response FromEntity({arg.Entity} e)
     {{
         return new {name}Response
@@ -65,6 +57,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
     }}
 }}
 ";
+
 
         if (string.IsNullOrWhiteSpace(arg.Group))
             template = DeleteLine(template, 6);

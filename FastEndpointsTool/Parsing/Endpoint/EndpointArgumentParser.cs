@@ -67,6 +67,15 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
 
             return argument;
         }
+        if (args[0] == "getendpoint" || args[0] == "gep")
+        {
+            var argument = new EndpointArgument { Type = EndpointType.GetEndpoint };
+            var endpointArguments = ToKeyValue(GetOptions(args));
+
+            SetEndpointArguments(EndpointType.GetEndpoint, argument, endpointArguments);
+
+            return argument;
+        }
 
         return null;
     }

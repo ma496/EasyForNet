@@ -9,6 +9,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
     {
         Put("/{id}/");
         Group<AdminGroup>();
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(UserUpdateRequest request, CancellationToken cancellationToken)

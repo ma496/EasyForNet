@@ -3,6 +3,7 @@ using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool;
 
+
 public class ArgumentInfo
 {
     public Enum Type { get; init; } = null!;
@@ -329,6 +330,61 @@ public class ArgumentInfo
                         Description = "Http method.",
                         Required = true,
                         Default = "put",
+                        IsInternal = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--url",
+                        ShortName = "-u",
+                        Description = "Url of endpoint.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--entity",
+                        ShortName = "-e",
+                        Description = "Name of entity class.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint.",
+                        Required = false,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group.",
+                        Required = false,
+                        NormalizeMethod = Helpers.GroupName,
+                    }
+                }
+            },
+            new ArgumentInfo
+            {
+                Type = EndpointType.GetEndpoint,
+                Name = "getendpoint",
+                ShortName = "gep",
+                Description = "Get endpoint with request, response, validator and mapper.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--name",
+                        ShortName = "-n",
+                        Description = "Name of endpoint classes.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--method",
+                        ShortName = "-m",
+                        Description = "Http method.",
+                        Required = true,
+                        Default = "get",
                         IsInternal = true,
                     },
                     new ArgumentOption
