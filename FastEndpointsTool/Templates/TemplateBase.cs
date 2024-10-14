@@ -25,35 +25,107 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return string.Join(Environment.NewLine, lines.Where(line => line != null));
     }
 
-    protected string GetScalarPropertiesCode(Type type)
-    {
-        var properties = type.GetProperties()
-            .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
-        var builder = new StringBuilder();
-        foreach (var p in properties)
-        {
-            builder.AppendLine($"public {p.PropertyType} {p.Name} {{get; set;}}");
-        }
-        return builder.ToString();
-    }
-
     protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId)
     {
+        var entityType = SingleType(assembly, entityFullName);
+        var properties = entityType.GetProperties()
+            .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
+            .WhereIf(!includeId, p => !IsId(p.Name, entityName))
+            .ToList();
+        return properties;
+    }
+
+    protected string MappingPropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string? leftParameter = null)
+    {
+        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId);
+        var codeBuilder = new StringBuilder();
+
+        for (int i = 0; i < properties.Count; i++)
+        {
+            var p = properties[i];
+            var propertyName = string.IsNullOrWhiteSpace(leftParameter) ? p.Name : $"{leftParameter}.{p.Name}";
+            var line = $"{propertyName} = {parameter}.{p.Name},";
+
+            if (i == 0)
+            {
+                codeBuilder.AppendLine(line);
+            }
+            else if (i == properties.Count - 1)
+            {
+                codeBuilder.Append($"\t\t\t{line}");
+            }
+            else
+            {
+                codeBuilder.AppendLine($"\t\t\t{line}");
+            }
+        }
+
+        return codeBuilder.ToString();
+    }
+
+    protected string UpdatePropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string? leftParameter = null)
+    {
+        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId);
+        var codeBuilder = new StringBuilder();
+
+        for (int i = 0; i < properties.Count; i++)
+        {
+            var p = properties[i];
+            var propertyName = string.IsNullOrWhiteSpace(leftParameter) ? p.Name : $"{leftParameter}.{p.Name}";
+            var line = $"{propertyName} = {parameter}.{p.Name};";
+
+            if (i == 0)
+            {
+                codeBuilder.AppendLine(line);
+            }
+            else if (i == properties.Count - 1)
+            {
+                codeBuilder.Append($"\t\t{line}");
+            }
+            else
+            {
+                codeBuilder.AppendLine($"\t\t{line}");
+            }
+        }
+
+        return codeBuilder.ToString();
+    }
+
+    protected Type SingleType(Assembly assembly, string fullName)
+    {
         var types = assembly.GetTypes()
-            .Where(t => t.FullName == entityFullName)
+            .Where(t => t.FullName == fullName)
             .ToList();
 
         if (types.Count == 0)
-            throw new Exception($"No entity found of type {entityFullName}.");
+            throw new Exception($"{fullName} type not found.");
         if (types.Count > 1)
-            throw new Exception($"Multiple entities found of type {entityFullName}.");
+            throw new Exception($"{fullName} multiple types found.");
 
-        var entityType = types[0];
-        var properties = entityType.GetProperties()
-            .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
-            .WhereIf(!includeId, p => p.Name != "Id" && p.Name != $"{entityName}Id")
+        return types[0];
+    }
+
+    protected bool IsId(string propertyName, string entityName)
+    {
+        return propertyName == "Id" || propertyName == $"{entityName}Id";
+    }
+
+    protected PropertyInfo GetIdProperty(Assembly assembly, string entityName, string entityFullName)
+    {
+        var type = SingleType(assembly, entityFullName);
+
+        var idProperties = 
+            type.GetProperties()
+            .Where(p => IsId(p.Name, entityName))
             .ToList();
-        return properties;
+
+        if (idProperties.Count == 0)
+            throw new Exception($"No id found in {entityFullName}");
+
+        if (idProperties.Count > 1)
+            throw new Exception($"More then one ids found in {entityFullName}");
+
+        return idProperties[0];
     }
 
     protected string GetPropertiesCode(List<PropertyInfo> properties, int tab = 1)
@@ -62,7 +134,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var index = 0;
         foreach (var p in properties)
         {
-            builder.AppendLine($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(p.PropertyType.Name)} {p.Name} {{get; set;}}");
+            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(p.PropertyType.Name)} {p.Name} {{ get; set;}}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
             index++;
         }
         return builder.ToString();

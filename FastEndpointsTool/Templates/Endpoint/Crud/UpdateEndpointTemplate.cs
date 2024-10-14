@@ -16,16 +16,15 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 {{
     public override void Configure()
     {{
-        {arg.Method.ToPascalCase()}(""{arg.Url}"");
+        {arg.Method.ToPascalCase()}(""{Path.Combine(arg.Url, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
     {{
-        await SendAsync(new {name}Response
-        {{
-            // Add your response properties here
-        }});
+        var entity = new {arg.Entity}(); // get entity from db
+        Map.UpdateEntity(request, entity);
+        await SendAsync(Map.FromEntity(entity));
     }}
 }}
 
@@ -49,7 +48,20 @@ sealed class {name}Response
 
 sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
 {{
-    // Define mapping here
+    public override {arg.Entity} UpdateEntity({name}Request r, {arg.Entity} e)
+    {{
+        {UpdatePropertiesCode(assembly, arg.Entity, arg.EntityFullName, "r", false, "e")}
+
+        return e;
+    }}
+
+    public override {name}Response FromEntity({arg.Entity} e)
+    {{
+        return new {name}Response
+        {{
+            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true)}
+        }};
+    }}
 }}
 ";
 
