@@ -76,6 +76,15 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
 
             return argument;
         }
+        if (args[0] == "listendpoint" || args[0] == "lep")
+        {
+            var argument = new EndpointArgument { Type = EndpointType.ListEndpoint };
+            var endpointArguments = ToKeyValue(GetOptions(args));
+
+            SetEndpointArguments(EndpointType.ListEndpoint, argument, endpointArguments);
+
+            return argument;
+        }
 
         return null;
     }

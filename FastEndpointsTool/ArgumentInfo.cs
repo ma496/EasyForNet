@@ -418,6 +418,61 @@ public class ArgumentInfo
                     }
                 }
             },
+            new ArgumentInfo
+            {
+                Type = EndpointType.ListEndpoint,
+                Name = "listendpoint",
+                ShortName = "lep",
+                Description = "Create list endpoint with request, response, validator and mapper.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--name",
+                        ShortName = "-n",
+                        Description = "Name of endpoint classes.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--method",
+                        ShortName = "-m",
+                        Description = "Http method.",
+                        Required = true,
+                        Default = "get",
+                        IsInternal = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--url",
+                        ShortName = "-u",
+                        Description = "Url of endpoint.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--entity",
+                        ShortName = "-e",
+                        Description = "Name of entity class.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoint.",
+                        Required = false,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--group",
+                        ShortName = "-g",
+                        Description = "Endpoint group.",
+                        Required = false,
+                        NormalizeMethod = Helpers.GroupName,
+                    }
+                }
+            },
         };
     }
 }
