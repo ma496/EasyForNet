@@ -85,6 +85,15 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
 
             return argument;
         }
+        if (args[0] == "deleteendpoint" || args[0] == "dep")
+        {
+            var argument = new EndpointArgument { Type = EndpointType.DeleteEndpoint };
+            var endpointArguments = ToKeyValue(GetOptions(args));
+
+            SetEndpointArguments(EndpointType.DeleteEndpoint, argument, endpointArguments);
+
+            return argument;
+        }
 
         return null;
     }

@@ -6,7 +6,7 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, List<UserListResponse>
 {
     public override void Configure()
     {
-        Get("/");
+        Get("/list");
         Group<AdminGroup>();
         AllowAnonymous();
     }

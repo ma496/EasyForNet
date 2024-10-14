@@ -46,6 +46,8 @@ public static class Helpers
             return $"{name}Get";
         if (type == EndpointType.ListEndpoint && !name.EndsWith("List"))
             return $"{name}List";
+        if (type == EndpointType.DeleteEndpoint && !name.EndsWith("Delete"))
+            return $"{name}Delete";
 
         return name;
     }
