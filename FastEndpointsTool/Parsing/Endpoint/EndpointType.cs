@@ -12,4 +12,5 @@ public enum EndpointType
     GetEndpoint = 8,
     ListEndpoint = 9,
     DeleteEndpoint = 10,
+    CrudEndpoint = 11,
 }

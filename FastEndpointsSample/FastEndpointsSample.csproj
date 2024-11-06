@@ -11,4 +11,8 @@
     <PackageReference Include="FastEndpoints.Swagger" Version="5.29.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Admin\" />
+  </ItemGroup>
+
 </Project>

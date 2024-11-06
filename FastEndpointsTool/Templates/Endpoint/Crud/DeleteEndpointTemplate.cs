@@ -16,7 +16,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response>
 {{
     public override void Configure()
     {{
-        Delete(""{Path.Combine(arg.Url, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
+        Delete(""{Path.Combine(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
         AllowAnonymous();
     }}

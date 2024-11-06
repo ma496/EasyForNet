@@ -94,6 +94,15 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
 
             return argument;
         }
+        if (args[0] == "crudendpoint" || args[0] == "crud")
+        {
+            var argument = new EndpointArgument { Type = EndpointType.CrudEndpoint };
+            var endpointArguments = ToKeyValue(GetOptions(args));
+
+            SetEndpointArguments(EndpointType.CrudEndpoint, argument, endpointArguments);
+
+            return argument;
+        }
 
         return null;
     }

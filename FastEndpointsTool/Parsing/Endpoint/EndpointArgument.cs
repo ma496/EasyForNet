@@ -1,6 +1,6 @@
 namespace FastEndpointsTool.Parsing.Endpoint;
 
-public class EndpointArgument : Argument
+public class EndpointArgument : Argument, ICloneable
 {
     public EndpointType Type { get; set; }
     public string Name { get; set; } = null!;
@@ -11,5 +11,11 @@ public class EndpointArgument : Argument
     public string Output { get; set; } = null!;
     public string Group { get; set; } = null!;
     public string GroupFullName { get; set; } = null!;
+    public string PluralName { get; set; } = null!;
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
 

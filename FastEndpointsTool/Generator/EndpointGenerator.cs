@@ -11,12 +11,70 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
     {
         var directory = Directory.GetCurrentDirectory();
         var (setting, projectDir) = await Helpers.GetSetting(directory);
+            
+        if (argument.Type == EndpointType.CrudEndpoint)
+        {
+            argument.Output = Path.Combine(argument.Output ?? string.Empty, argument.PluralName);
+            var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
+            if (!Directory.Exists(endpointDir))
+                Directory.CreateDirectory(endpointDir);
+
+            // Create endpoint
+            var createEndpointArgument = (EndpointArgument) argument.Clone();
+            createEndpointArgument.Type = EndpointType.CreateEndpoint;
+            createEndpointArgument.Method = "post";
+            await GenerateEndpoint(createEndpointArgument, setting, projectDir, endpointDir);
+
+            // Create update endpoint
+            var updateEndpointArgument = (EndpointArgument) argument.Clone();
+            updateEndpointArgument.Type = EndpointType.UpdateEndpoint;
+            updateEndpointArgument.Method = "put";
+            await GenerateEndpoint(updateEndpointArgument, setting, projectDir, endpointDir);
+
+            // Create list endpoint
+            var listEndpointArgument = (EndpointArgument) argument.Clone();
+            listEndpointArgument.Type = EndpointType.ListEndpoint;
+            listEndpointArgument.Method = "get";
+            await GenerateEndpoint(listEndpointArgument, setting, projectDir, endpointDir);
+
+            // Create get endpoint
+            var getEndpointArgument = (EndpointArgument) argument.Clone();
+            getEndpointArgument.Type = EndpointType.GetEndpoint;
+            getEndpointArgument.Method = "get";
+            await GenerateEndpoint(getEndpointArgument, setting, projectDir, endpointDir);
+
+            // Create delete endpoint
+            var deleteEndpointArgument = (EndpointArgument) argument.Clone();
+            deleteEndpointArgument.Type = EndpointType.DeleteEndpoint;
+            deleteEndpointArgument.Method = "delete";
+            await GenerateEndpoint(deleteEndpointArgument, setting, projectDir, endpointDir);
+        }
+        else
+        {   
+            var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
+            if (!Directory.Exists(endpointDir))
+                Directory.CreateDirectory(endpointDir);
+                
+            await GenerateEndpoint(argument, setting, projectDir, endpointDir);
+        }
+    }
+
+    #region Helpers
+
+    private async Task GenerateEndpoint(EndpointArgument argument, FeToolSetting setting, string projectDir, string endpointDir)
+    {
         var fileName = $"{Helpers.EndpointName(argument.Name, argument.Type)}Endpoint.cs";
-        var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
-        if (!Directory.Exists(endpointDir))
-            Directory.CreateDirectory(endpointDir);
         var filePath = Path.Combine(endpointDir, fileName);
 
+        var template = GenerateCode(argument, setting, projectDir);
+
+        await File.WriteAllTextAsync(filePath, template);
+
+        Console.WriteLine($"{fileName} file created under {endpointDir}");
+    }
+
+    private string GenerateCode(EndpointArgument argument, FeToolSetting setting, string projectDir)
+    {
         var templateBuilder = new StringBuilder();
 
         var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
@@ -59,16 +117,15 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             throw new Exception($"{templateType.FullName}.{templateMethod.Name} return empty template.");
         templateBuilder.AppendLine(templateText);
 
-        var template = templateBuilder.ToString();
-        await File.WriteAllTextAsync(filePath, template);
-
-        Console.WriteLine($"{fileName} file created under {endpointDir}");
+        return templateBuilder.ToString();
     }
 
-    static IEnumerable<Type> GetTypesImplementingInterface(Type genericInterfaceType)
+    private IEnumerable<Type> GetTypesImplementingInterface(Type genericInterfaceType)
     {
         return Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.GetInterfaces()
                          .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericInterfaceType));
     }
+
+    #endregion
 }

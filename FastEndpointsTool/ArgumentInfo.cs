@@ -527,6 +527,44 @@ public class ArgumentInfo
                         NormalizeMethod = Helpers.GroupName,
                     }
                 }
+            },
+            new ArgumentInfo
+            {
+                Type = EndpointType.CrudEndpoint,
+                Name = "crudendpoint",
+                ShortName = "crud",
+                Description = "Create CRUD endpoints (Create, Read, Update, Delete, List) for an entity.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--name",
+                        ShortName = "-n",
+                        Description = "Name of the entity for CRUD operations.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--entity",
+                        ShortName = "-e",
+                        Description = "Name of entity class.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of endpoints.",
+                        Required = false,
+                    }
+                }
             }
         };
     }
