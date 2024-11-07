@@ -16,7 +16,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 {{
     public override void Configure()
     {{
-        {arg.Method.ToPascalCase()}(""{Path.Combine(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}/"");
+        {arg.Method.ToPascalCase()}(""{Path.Combine(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
         AllowAnonymous();
     }}

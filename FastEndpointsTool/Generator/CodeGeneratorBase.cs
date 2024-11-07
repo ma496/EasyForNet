@@ -13,15 +13,15 @@ public abstract class CodeGeneratorBase<TArgument>
         return endpointDir;
     }
 
-    protected string? GetClassNamespace(string projectDir, string projectName, string className)
+    protected string GetClassNamespace(string projectDir, string projectName, string className)
     {
         var assembly = Helpers.GetProjectAssembly(projectDir, projectName);
         var types = assembly.GetTypes()
             .Where(t => t.Name == className)
             .ToArray();
 
-        if (types.Length == 0) return null;
-        if (types.Length == 1) return types[0].Namespace;
+        if (types.Length == 0) return string.Empty;
+        if (types.Length == 1) return types[0].Namespace ?? string.Empty;
         Console.WriteLine("Multiple types found.");
         var index = 0;
         foreach (var t in types)
@@ -34,7 +34,7 @@ public abstract class CodeGeneratorBase<TArgument>
         if (!isInteger)
             throw new Exception("input is not integer.");
         if (selectIndex >= 0 && selectIndex < index)
-            return types[selectIndex].Namespace;
+            return types[selectIndex].Namespace ?? string.Empty;
         throw new Exception("input number out of range");
     }
 
