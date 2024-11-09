@@ -15,6 +15,6 @@ bld.Services
     });
 
 var app = bld.Build();
-app.UseFastEndpoints()
+app.UseFastEndpoints(x => x.Endpoints.RoutePrefix = "api/v1")
     .UseSwaggerGen();
 app.Run();

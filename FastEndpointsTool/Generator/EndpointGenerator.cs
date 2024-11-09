@@ -19,8 +19,11 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             if (!Directory.Exists(endpointDir))
                 Directory.CreateDirectory(endpointDir);
 
+            await GenerateCrudGroup(argument, setting, endpointDir);
+            argument.Group = $"{argument.PluralName}Group";
+
             var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
-            var groupNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Group);
+            var groupNamespace = string.Empty;
 
             // Create endpoint
             var createEndpointArgument = (EndpointArgument) argument.Clone();
@@ -38,6 +41,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var listEndpointArgument = (EndpointArgument) argument.Clone();
             listEndpointArgument.Type = EndpointType.ListEndpoint;
             listEndpointArgument.Method = "get";
+            listEndpointArgument.Url = "list";
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
 
             // Create get endpoint
@@ -72,14 +76,26 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var fileName = $"{Helpers.EndpointName(argument.Name, argument.Type)}Endpoint.cs";
         var filePath = Path.Combine(endpointDir, fileName);
 
-        var template = GenerateCode(argument, setting, entityNamespace, groupNamespace);
+        var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace);
 
         await File.WriteAllTextAsync(filePath, template);
 
         Console.WriteLine($"{fileName} file created under {endpointDir}");
     }
 
-    private string GenerateCode(EndpointArgument argument, FeToolSetting setting, string entityNamespace, string groupNamespace)
+    private async Task GenerateCrudGroup(EndpointArgument argument, FeToolSetting setting, string endpointDir)
+    {
+        var fileName = $"{argument.PluralName}Group.cs";
+        var filePath = Path.Combine(endpointDir, fileName);
+
+        var template = GenerateCrudGroupCode(argument, setting);
+
+        await File.WriteAllTextAsync(filePath, template);
+
+        Console.WriteLine($"{fileName} file created under {endpointDir}");
+    }
+
+    private string GenerateEndpointCode(EndpointArgument argument, FeToolSetting setting, string entityNamespace, string groupNamespace)
     {
         var templateBuilder = new StringBuilder();
 
@@ -123,6 +139,32 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
         return templateBuilder.ToString();
     }
+
+    private string GenerateCrudGroupCode(EndpointArgument argument, FeToolSetting setting)
+    {
+        var templateBuilder = new StringBuilder();
+
+        var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
+        templateBuilder.AppendLine($"namespace {endpointNamespace};");
+
+        var templateType = GetTypesImplementingInterface(typeof(ITemplate<>))
+            .Where(t => t.Name == "CrudGroupTemplate")
+            .SingleOrDefault();
+        if (templateType == null)
+            throw new Exception("CrudGroupTemplate class not found.");
+        var templateObj = Activator.CreateInstance(templateType);
+        var templateMethod = templateType.GetMethod("Template");
+        if (templateMethod == null)
+            throw new Exception($"{templateType.FullName} not implement Template method.");
+        var templateResult = templateMethod.Invoke(templateObj, [argument]);
+        var templateText = templateResult as string;
+        if (string.IsNullOrWhiteSpace(templateText))
+            throw new Exception($"{templateType.FullName}.{templateMethod.Name} return empty template.");
+        templateBuilder.AppendLine(templateText);
+
+        return templateBuilder.ToString();
+    }
+
 
     private IEnumerable<Type> GetTypesImplementingInterface(Type genericInterfaceType)
     {

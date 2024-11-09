@@ -77,7 +77,6 @@ public abstract class ParserBase<TArgument>
 
     protected Dictionary<string, string> ToKeyValue(string[] array)
     {
-        Console.WriteLine(string.Join(", ", array));
         if (array.Length % 2 != 0)
             throw new Exception("Invalidate args.");
 
