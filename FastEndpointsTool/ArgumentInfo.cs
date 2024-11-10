@@ -270,6 +270,13 @@ public class ArgumentInfo
                     },
                     new ArgumentOption
                     {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
                         Name = "--method",
                         ShortName = "-m",
                         Description = "Http method.",
@@ -305,6 +312,13 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             },
@@ -321,6 +335,13 @@ public class ArgumentInfo
                         Name = "--name",
                         ShortName = "-n",
                         Description = "Name of endpoint classes.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -360,6 +381,13 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             },
@@ -380,6 +408,13 @@ public class ArgumentInfo
                     },
                     new ArgumentOption
                     {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
                         Name = "--method",
                         ShortName = "-m",
                         Description = "Http method.",
@@ -415,6 +450,13 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             },
@@ -435,6 +477,13 @@ public class ArgumentInfo
                     },
                     new ArgumentOption
                     {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
                         Name = "--method",
                         ShortName = "-m",
                         Description = "Http method.",
@@ -470,6 +519,13 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             },
@@ -486,6 +542,13 @@ public class ArgumentInfo
                         Name = "--name",
                         ShortName = "-n",
                         Description = "Name of endpoint classes.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--pluralName",
+                        ShortName = "-pn",
+                        Description = "Plural name of the entity for CRUD operations.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -525,6 +588,13 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             },
@@ -563,6 +633,13 @@ public class ArgumentInfo
                         ShortName = "-o",
                         Description = "Path of endpoints.",
                         Required = false,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--dataContext",
+                        ShortName = "-dc",
+                        Description = "DataContext class name.",
+                        Required = false
                     }
                 }
             }

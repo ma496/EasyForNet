@@ -12,7 +12,9 @@ public class EndpointArgument : Argument, ICloneable
     public string Group { get; set; } = null!;
     public string GroupFullName { get; set; } = null!;
     public string PluralName { get; set; } = null!;
-
+    public string DataContext { get; set; } = null!;
+    public string DataContextFullName { get; set; } = null!;
+    
     public object Clone()
     {
         return MemberwiseClone();

@@ -9,6 +9,8 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
 {
     public abstract string Template(TArgument arg);
 
+    protected List<int> RemoveLineIndexes { get; set; } = new List<int>();
+
     protected string DeleteLine(string input, int lineIndex)
     {
         string?[] lines = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
@@ -23,6 +25,31 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
 
         // Reconstruct the string without the null (deleted) line
         return string.Join(Environment.NewLine, lines.Where(line => line != null));
+    }
+
+    protected string DeleteLines(string input)
+    {
+        string?[] lines = input.Split(["\r\n", "\r", "\n"], StringSplitOptions.None);
+
+        foreach (var lineIndex in RemoveLineIndexes)
+        {
+            if (lineIndex < 0 || lineIndex >= lines.Length)
+            {
+                continue;
+            }
+
+            // Remove the specified line
+            lines[lineIndex] = null;
+        }
+
+        // Reconstruct the string without the null (deleted) line
+        return string.Join(Environment.NewLine, lines.Where(line => line != null));
+    }
+
+    protected string RemoveLine(params int[] lineIndexes)
+    {
+        RemoveLineIndexes.AddRange(lineIndexes);
+        return string.Empty;
     }
 
     protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId)

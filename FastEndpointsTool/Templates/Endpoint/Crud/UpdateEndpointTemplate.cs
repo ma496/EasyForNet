@@ -10,21 +10,42 @@ public class UpdateEndpointTemplate : TemplateBase<EndpointArgument>
         var name = Helpers.EndpointName(arg.Name, arg.Type);
         var (setting, projectDir) = Helpers.GetSetting(Directory.GetCurrentDirectory()).Result;
         var assembly = Helpers.GetProjectAssembly(projectDir, setting.Project.Name);
+        var constructorParams = new string[] 
+        { 
+            !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty 
+        };
 
         var template = $@"
 sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapper>
 {{
+    {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(3, 4))}
+
+    public {name}Endpoint({string.Join(", ", constructorParams)})
+    {{
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext = context;" : RemoveLine(7))}
+    }}
+
     public override void Configure()
     {{
         {arg.Method.ToPascalCase()}(""{Path.Combine(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
         AllowAnonymous();
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
     {{
-        var entity = new {arg.Entity}(); // get entity from db
+        // get entity from db
+        var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync(request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}, cancellationToken);" : $"new {arg.Entity}()")}; 
+        if (entity == null)
+        {{
+            await SendNotFoundAsync();
+            return;
+        }}
+
         Map.UpdateEntity(request, entity);
+
+        // save entity to db
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine(30))}
         await SendAsync(Map.FromEntity(entity));
     }}
 }}
@@ -66,8 +87,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
 }}
 ";
 
-        if (string.IsNullOrWhiteSpace(arg.Group))
-            template = DeleteLine(template, 6);
+        template = DeleteLines(template);
         return template;
     }
 }

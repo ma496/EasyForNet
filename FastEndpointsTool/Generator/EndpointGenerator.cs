@@ -24,37 +24,38 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
             var groupNamespace = string.Empty;
+            var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);   
 
             // Create endpoint
             var createEndpointArgument = (EndpointArgument) argument.Clone();
             createEndpointArgument.Type = EndpointType.CreateEndpoint;
             createEndpointArgument.Method = "post";
-            await GenerateEndpoint(createEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(createEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create update endpoint
             var updateEndpointArgument = (EndpointArgument) argument.Clone();
             updateEndpointArgument.Type = EndpointType.UpdateEndpoint;
             updateEndpointArgument.Method = "put";
-            await GenerateEndpoint(updateEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(updateEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create list endpoint
             var listEndpointArgument = (EndpointArgument) argument.Clone();
             listEndpointArgument.Type = EndpointType.ListEndpoint;
             listEndpointArgument.Method = "get";
             listEndpointArgument.Url = "list";
-            await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create get endpoint
             var getEndpointArgument = (EndpointArgument) argument.Clone();
             getEndpointArgument.Type = EndpointType.GetEndpoint;
             getEndpointArgument.Method = "get";
-            await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create delete endpoint
             var deleteEndpointArgument = (EndpointArgument) argument.Clone();
             deleteEndpointArgument.Type = EndpointType.DeleteEndpoint;
             deleteEndpointArgument.Method = "delete";
-            await GenerateEndpoint(deleteEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(deleteEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
         else
         {   
@@ -64,19 +65,21 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
             var groupNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Group);
+            var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);
                 
-            await GenerateEndpoint(argument, setting, endpointDir, entityNamespace, groupNamespace);
+            await GenerateEndpoint(argument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
     }
 
     #region Helpers
 
-    private async Task GenerateEndpoint(EndpointArgument argument, FeToolSetting setting, string endpointDir, string entityNamespace, string groupNamespace)
+    private async Task GenerateEndpoint(EndpointArgument argument, FeToolSetting setting, string endpointDir, string entityNamespace,
+        string groupNamespace, string dataContextNamespace)
     {
         var fileName = $"{Helpers.EndpointName(argument.Name, argument.Type)}Endpoint.cs";
         var filePath = Path.Combine(endpointDir, fileName);
 
-        var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace);
+        var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace, dataContextNamespace);
 
         await File.WriteAllTextAsync(filePath, template);
 
@@ -95,17 +98,20 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         Console.WriteLine($"{fileName} file created under {endpointDir}");
     }
 
-    private string GenerateEndpointCode(EndpointArgument argument, FeToolSetting setting, string entityNamespace, string groupNamespace)
+    private string GenerateEndpointCode(EndpointArgument argument, FeToolSetting setting, string entityNamespace,
+        string groupNamespace, string dataContextNamespace)
     {
         var templateBuilder = new StringBuilder();
 
         argument.EntityFullName = $"{entityNamespace}{(!string.IsNullOrWhiteSpace(entityNamespace) ? "." : string.Empty)}{argument.Entity}";
         argument.GroupFullName = $"{groupNamespace}{(!string.IsNullOrWhiteSpace(groupNamespace) ? "." : string.Empty)}{argument.Group}";
+        argument.DataContextFullName = $"{dataContextNamespace}{(!string.IsNullOrWhiteSpace(dataContextNamespace) ? "." : string.Empty)}{argument.DataContext}";
 
         var namespaces = new List<string?>
         {
             entityNamespace,
-            groupNamespace
+            groupNamespace,
+            dataContextNamespace
         };
         var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
         var uniqueNamespaces = namespaces

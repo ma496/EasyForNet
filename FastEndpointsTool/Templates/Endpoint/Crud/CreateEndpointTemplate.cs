@@ -10,14 +10,25 @@ public class CreateEndpointTemplate : TemplateBase<EndpointArgument>
         var name = Helpers.EndpointName(arg.Name, arg.Type);
         var (setting, projectDir) = Helpers.GetSetting(Directory.GetCurrentDirectory()).Result;
         var assembly = Helpers.GetProjectAssembly(projectDir, setting.Project.Name);
+        var constructorParams = new string[] 
+        { 
+            !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty 
+        };
 
         var template = $@"
 sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapper>
 {{
+    {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(3, 4))}
+
+    public {name}Endpoint({string.Join(", ", constructorParams)})
+    {{
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext = context;" : RemoveLine(7))}
+    }}
+
     public override void Configure()
     {{
         {arg.Method.ToPascalCase()}(""{arg.Url}"");
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
         AllowAnonymous();
     }}
 
@@ -25,6 +36,8 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     {{
         var entity = Map.ToEntity(request);
         // save entity to db
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.AddAsync(entity, cancellationToken);" : RemoveLine(21))}
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine(22))}
         await SendAsync(Map.FromEntity(entity));
     }}
 }}
@@ -67,8 +80,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
 }}
 ";
 
-        if (string.IsNullOrWhiteSpace(arg.Group))
-            template = DeleteLine(template, 6);
+        template = DeleteLines(template);
         return template;
     }
 }
