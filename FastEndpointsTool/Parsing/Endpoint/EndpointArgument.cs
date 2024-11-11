@@ -14,6 +14,8 @@ public class EndpointArgument : Argument, ICloneable
     public string PluralName { get; set; } = null!;
     public string DataContext { get; set; } = null!;
     public string DataContextFullName { get; set; } = null!;
+    public string Namespace { get; set; } = null!;
+    public List<string> UsingNamespaces { get; set; } = new();
     
     public object Clone()
     {

@@ -1,3 +1,5 @@
+using FastEndpoints;
+
 namespace FastEndpointsSample.Features.Users;
 
 sealed class UsersGroup : Group
@@ -7,4 +9,5 @@ sealed class UsersGroup : Group
         Configure("users", ep => ep.Description(x => x.WithTags("Users")));
     }
 }
+
 

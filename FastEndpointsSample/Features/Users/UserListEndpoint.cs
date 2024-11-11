@@ -1,5 +1,8 @@
+using FastEndpoints;
+using FluentValidation;
 using FastEndpointsSample.Data.Entities;
 using FastEndpointsSample.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastEndpointsSample.Features.Users;
 
@@ -67,4 +70,5 @@ sealed class UserListMapper : Mapper<UserListRequest, List<UserListResponse>, Li
         }).ToList();
     }
 }
+
 

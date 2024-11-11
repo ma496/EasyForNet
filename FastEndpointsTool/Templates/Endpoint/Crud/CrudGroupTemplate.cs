@@ -17,6 +17,7 @@ sealed class {arg.PluralName}Group : Group
 }}
 ";
 
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }

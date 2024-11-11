@@ -1,3 +1,5 @@
+using FastEndpoints;
+using FluentValidation;
 using FastEndpointsSample.Data.Entities;
 using FastEndpointsSample.Data;
 
@@ -87,4 +89,5 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
         };
     }
 }
+
 

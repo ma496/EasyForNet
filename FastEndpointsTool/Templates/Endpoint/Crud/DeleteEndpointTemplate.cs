@@ -67,6 +67,7 @@ sealed class {name}Response
 ";
 
         template = DeleteLines(template);
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }

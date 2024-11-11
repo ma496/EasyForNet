@@ -36,6 +36,20 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return string.Empty;
     }
 
+    protected string Merge(List<string> usingNamespaces, string @namespace, string code)
+    {
+        var builder = new StringBuilder();
+        if (usingNamespaces != null)
+        {
+            usingNamespaces.ForEach(x => builder.AppendLine($"using {x};"));
+            if (usingNamespaces.Count > 0)
+                builder.AppendLine();
+        }
+        builder.AppendLine($"namespace {@namespace};");
+        builder.AppendLine(code);
+        return builder.ToString();
+    }
+
     protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId)
     {
         var entityType = SingleType(assembly, entityFullName);

@@ -1,3 +1,5 @@
+using FastEndpoints;
+
 namespace FastEndpointsSample.Features
 {
     public class AdminGroup : Group

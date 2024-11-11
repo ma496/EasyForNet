@@ -1,3 +1,4 @@
+using FastEndpoints;
 using FastEndpoints.Swagger;
 using FastEndpointsSample.Data;
 using Microsoft.EntityFrameworkCore;

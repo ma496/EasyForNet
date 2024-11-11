@@ -50,6 +50,7 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {a
 ";
 
         template = DeleteLines(template);
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }

@@ -36,6 +36,7 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
 ";
 
         template = DeleteLines(template);
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }

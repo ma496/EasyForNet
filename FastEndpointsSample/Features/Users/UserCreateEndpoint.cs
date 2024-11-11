@@ -1,3 +1,5 @@
+using FastEndpoints;
+using FluentValidation;
 using FastEndpointsSample.Data.Entities;
 using FastEndpointsSample.Data;
 
@@ -79,4 +81,5 @@ sealed class UserCreateMapper : Mapper<UserCreateRequest, UserCreateResponse, Us
         };
     }
 }
+
 

@@ -109,6 +109,8 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
         var namespaces = new List<string?>
         {
+            "FastEndpoints",
+            "FluentValidation",
             entityNamespace,
             groupNamespace,
             dataContextNamespace
@@ -116,17 +118,12 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
         var uniqueNamespaces = namespaces
             .Where(x => !string.IsNullOrWhiteSpace(x) && x != endpointNamespace)
+            .Select(x => x!)
             .Distinct()
             .ToList();
-        var lastNamespaceIndex = uniqueNamespaces.Count - 1;
-        var currentNamespaceIndex = 0;
-        uniqueNamespaces.ForEach(x =>
-        {
-            templateBuilder.AppendLine($"using {x};{(currentNamespaceIndex == lastNamespaceIndex ? Environment.NewLine : "")}");
-            currentNamespaceIndex++;
-        });
 
-        templateBuilder.AppendLine($"namespace {endpointNamespace};");
+        argument.UsingNamespaces = uniqueNamespaces;
+        argument.Namespace = endpointNamespace;
 
         var templateType = GetTypesImplementingInterface(typeof(ITemplate<>))
             .Where(t => t.Name == $"{argument.Type}Template")
@@ -151,7 +148,9 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var templateBuilder = new StringBuilder();
 
         var endpointNamespace = GetEndpointNamespace(setting.Project.RootNamespace, setting.Project.EndpointPath, argument.Output);
-        templateBuilder.AppendLine($"namespace {endpointNamespace};");
+
+        argument.UsingNamespaces = new List<string> { "FastEndpoints" };
+        argument.Namespace = endpointNamespace;
 
         var templateType = GetTypesImplementingInterface(typeof(ITemplate<>))
             .Where(t => t.Name == "CrudGroupTemplate")

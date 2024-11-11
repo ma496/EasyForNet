@@ -88,6 +88,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
 ";
 
         template = DeleteLines(template);
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }

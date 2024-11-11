@@ -1,3 +1,5 @@
+using FastEndpoints;
+using FluentValidation;
 using FastEndpointsSample.Data.Entities;
 using FastEndpointsSample.Data;
 
@@ -69,4 +71,5 @@ sealed class UserGetMapper : Mapper<UserGetRequest, UserGetResponse, User>
         };
     }
 }
+
 

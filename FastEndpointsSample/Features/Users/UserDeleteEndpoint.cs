@@ -1,3 +1,5 @@
+using FastEndpoints;
+using FluentValidation;
 using FastEndpointsSample.Data.Entities;
 using FastEndpointsSample.Data;
 
@@ -54,4 +56,5 @@ sealed class UserDeleteResponse
     public bool Success { get; set; }
     public string Message { get; set; }
 }
+
 

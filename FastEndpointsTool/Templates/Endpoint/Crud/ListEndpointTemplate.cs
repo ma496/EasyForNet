@@ -9,6 +9,7 @@ public class ListEndpointTemplate : TemplateBase<EndpointArgument>
         var name = Helpers.EndpointName(arg.Name, arg.Type);
         var (setting, projectDir) = Helpers.GetSetting(Directory.GetCurrentDirectory()).Result;
         var assembly = Helpers.GetProjectAssembly(projectDir, setting.Project.Name);
+        arg.UsingNamespaces.Add("Microsoft.EntityFrameworkCore");
         var constructorParams = new string[] { !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty };
 
         var template = $@"
@@ -71,6 +72,7 @@ sealed class {name}Mapper : Mapper<{name}Request, List<{name}Response>, List<{ar
 ";
 
         template = DeleteLines(template);
+        template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }
 }
