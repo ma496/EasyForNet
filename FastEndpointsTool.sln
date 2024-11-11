@@ -3,19 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool", "FastEndpointsTool\FastEndpointsTool.csproj", "{7D38BB35-1543-4AE4-849F-1282D4D227BE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool.Tests", "FastEndpointsTool.Tests\FastEndpointsTool.Tests.csproj", "{1C1B060B-ABEF-4CCD-9302-906E09514D5C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsSample", "FastEndpointsSample\FastEndpointsSample.csproj", "{9913BC99-3052-4FC5-AF98-46AF69E204C8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9BF56EB-DB41-44F8-94C1-8298EC97695A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		fetool.json = fetool.json
-		publish-package.bat = publish-package.bat
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool", "Tool", "{E69122AC-CA2D-4369-A9FD-D6CBD5FAA2ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool", "Tool\FastEndpointsTool\FastEndpointsTool.csproj", "{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsTool.Tests", "Tool\FastEndpointsTool.Tests\FastEndpointsTool.Tests.csproj", "{B2F26B59-F06C-4822-9D60-B921D6425D99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEndpointsSample", "Tool\FastEndpointsSample\FastEndpointsSample.csproj", "{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,21 +24,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7D38BB35-1543-4AE4-849F-1282D4D227BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D38BB35-1543-4AE4-849F-1282D4D227BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D38BB35-1543-4AE4-849F-1282D4D227BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D38BB35-1543-4AE4-849F-1282D4D227BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C1B060B-ABEF-4CCD-9302-906E09514D5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9913BC99-3052-4FC5-AF98-46AF69E204C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F26B59-F06C-4822-9D60-B921D6425D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F26B59-F06C-4822-9D60-B921D6425D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F26B59-F06C-4822-9D60-B921D6425D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F26B59-F06C-4822-9D60-B921D6425D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5FFEE9A4-9F26-4B1D-BE6E-210C083C9845} = {E69122AC-CA2D-4369-A9FD-D6CBD5FAA2ED}
+		{B2F26B59-F06C-4822-9D60-B921D6425D99} = {E69122AC-CA2D-4369-A9FD-D6CBD5FAA2ED}
+		{64578A31-8CE3-4FFE-BE60-2FC48EB8DFDA} = {E69122AC-CA2D-4369-A9FD-D6CBD5FAA2ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B84E30D5-A40C-4773-88D1-4B1191EF5197}

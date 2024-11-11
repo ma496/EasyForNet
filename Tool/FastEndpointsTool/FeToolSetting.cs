@@ -8,6 +8,8 @@ public class FeToolSetting
     {
         if (Project == null)
             throw new Exception($"{nameof(Project)} can not be null.");
+        if (Project.Directory == null)
+            throw new Exception($"{nameof(Project)}.{nameof(Project.Directory)} can not be null.");
         if (string.IsNullOrWhiteSpace(Project.Name))
             throw new Exception($"{nameof(Project)}.{nameof(Project.Name)} can not be empty.");
         if (string.IsNullOrWhiteSpace(Project.EndpointPath))
@@ -19,6 +21,7 @@ public class FeToolSetting
 
 public class ProjectSetting
 {
+    public string Directory { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string EndpointPath { get; set; } = null!;
     public string RootNamespace { get; set; } = null!;

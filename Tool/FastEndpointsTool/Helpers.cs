@@ -28,7 +28,7 @@ public static class Helpers
             if (setting == null)
                 throw new Exception("Invalid fetool.json");
             setting.Validate();
-            return (setting, Path.Combine(directory, setting.Project.Name));
+            return (setting, Path.Combine(directory, setting.Project.Directory, setting.Project.Name));
         }
         else
         {

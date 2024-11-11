@@ -1,5 +1,6 @@
 {
   "Project": {
+    "Directory": "Tool",
     "Name": "FastEndpointsSample",
     "EndpointPath": "Features",
     "RootNamespace": "FastEndpointsSample"
