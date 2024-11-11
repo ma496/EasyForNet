@@ -219,7 +219,7 @@ public class ParserTests
 
         var exception = Assert.Throws<Exception>(() => parser.Parse(args));
 
-        Assert.Equal("Invalidate arguments.", exception.Message);
+        Assert.Equal("endpoints is not a valid command.", exception.Message);
     }
 
     [Fact]
