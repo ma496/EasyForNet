@@ -42,7 +42,6 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var listEndpointArgument = (EndpointArgument) argument.Clone();
             listEndpointArgument.Type = EndpointType.ListEndpoint;
             listEndpointArgument.Method = "get";
-            listEndpointArgument.Url = "list";
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create get endpoint

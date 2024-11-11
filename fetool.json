@@ -1,8 +1,8 @@
 {
   "Project": {
-    "Directory": "Tool",
-    "Name": "FastEndpointsSample",
+    "Directory": "Template/Backend/Source",
+    "Name": "Backend",
     "EndpointPath": "Features",
-    "RootNamespace": "FastEndpointsSample"
+    "RootNamespace": "Backend"
   }
 }

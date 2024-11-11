@@ -32,7 +32,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, List<{name}Response>, {nam
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
     {{
         // get entities from db
-        var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.OrderByDescending(x => x.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}).ToPage(request.Page, request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
+        var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.OrderByDescending(x => x.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
         await SendAsync(Map.FromEntity(entities));
     }}
 }}
