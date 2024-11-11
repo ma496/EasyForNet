@@ -2,7 +2,7 @@ namespace FastEndpointsTool.Parsing.Endpoint;
 
 public class EndpointArgumentParser : ParserBase<EndpointArgument>
 {
-    public override Argument? Parse(string[] args)
+    public override Argument Parse(string[] args)
     {
         if (args[0] == "endpoint" || args[0] == "ep")
         {
@@ -104,6 +104,6 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
             return argument;
         }
 
-        return null;
+        throw new Exception($"{args[0]} is not a valid command.");
     }
 }

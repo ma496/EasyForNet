@@ -5,7 +5,7 @@ namespace FastEndpointsTool.Parsing;
 public abstract class ParserBase<TArgument>
     where TArgument : Argument
 {
-    public abstract Argument? Parse(string[] args);
+    public abstract Argument Parse(string[] args);
 
     //protected abstract void SetEndpointArguments(TArgument argument, Dictionary<string, string> endpointArguments);
 

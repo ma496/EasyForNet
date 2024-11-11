@@ -13,7 +13,7 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
     public override void Configure()
     {{
         {arg.Method.ToPascalCase()}(""{arg.Url}"");
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : string.Empty)}
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(6))}
     }}
 
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
@@ -44,8 +44,7 @@ sealed class {arg.Name}Response
 }}
 ";
 
-        if (string.IsNullOrWhiteSpace(arg.Group))
-            template = DeleteLine(template, 6);
+        template = DeleteLines(template);
         return template;
     }
 }
