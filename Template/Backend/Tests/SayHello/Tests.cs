@@ -1,4 +1,4 @@
-using SayHello;
+using Backend.Features.SayHello;
 
 namespace Tests.SayHello;
 

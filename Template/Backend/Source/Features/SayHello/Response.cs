@@ -1,4 +1,4 @@
-﻿namespace SayHello;
+﻿namespace Backend.Features.SayHello;
 
 sealed class Response
 {

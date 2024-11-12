@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-namespace Tests.SayHello;
+namespace Tests;
 
 public class App : AppFixture<Program>
 {
