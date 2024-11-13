@@ -5,7 +5,8 @@ sealed class Endpoint : Endpoint<Request, Response>
     public override void Configure()
     {
         Post("/api/hello");
-        AllowAnonymous();
+        // AllowAnonymous();
+        Roles("Admin");
     }
 
     public override async Task HandleAsync(Request r, CancellationToken c)

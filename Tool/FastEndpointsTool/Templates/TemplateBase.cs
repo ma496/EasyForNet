@@ -1,4 +1,5 @@
 using FastEndpointsTool.Extensions;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
@@ -54,6 +55,13 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
     {
         var entityType = SingleType(assembly, entityFullName);
         var properties = entityType.GetProperties()
+            .Where(p => 
+            {
+                var attribute = p.GetCustomAttribute<BrowsableAttribute>();
+                if (attribute == null || attribute.Browsable)
+                    return true;
+                return false;
+            })
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
             .WhereIf(!includeId, p => !IsId(p.Name, entityName))
             .ToList();
@@ -159,10 +167,34 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var index = 0;
         foreach (var p in properties)
         {
-            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(p.PropertyType.Name)} {p.Name} {{ get; set; }}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
+            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(GetPropertyName(p))} {p.Name} {{ get; set; }}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
             index++;
         }
         return builder.ToString();
+    }
+
+    protected string GetPropertyName(PropertyInfo property)
+    {
+        var type = property.PropertyType;
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            var underlyingType = Nullable.GetUnderlyingType(type);
+            return $"{underlyingType!.Name}?";
+        }
+        else
+        {
+            var typeName = type.Name;
+            if (type == typeof(string))
+            {
+                var nullabilityContext = new NullabilityInfoContext();
+                var nullabilityInfo = nullabilityContext.Create(property);
+                if (nullabilityInfo.WriteState is NullabilityState.Nullable)
+                {
+                    typeName += "?";
+                }
+            }
+            return typeName;
+        }
     }
 
     protected string ConvertToAlias(string typeName)
@@ -171,20 +203,35 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var typeAliasMap = new Dictionary<string, string>
         {
             { "Boolean", "bool" },
+            { "Boolean?", "bool?" },
             { "Byte", "byte" },
+            { "Byte?", "byte?" },
             { "SByte", "sbyte" },
+            { "SByte?", "sbyte?" },
             { "Char", "char" },
+            { "Char?", "char?" },
             { "Decimal", "decimal" },
+            { "Decimal?", "decimal?" },
             { "Double", "double" },
+            { "Double?", "double?" },
             { "Single", "float" },
+            { "Single?", "float?" },
             { "Int32", "int" },
+            { "Int32?", "int?" },
             { "UInt32", "uint" },
+            { "UInt32?", "uint?" },
             { "Int64", "long" },
+            { "Int64?", "long?" },
             { "UInt64", "ulong" },
+            { "UInt64?", "ulong?" },
             { "Int16", "short" },
+            { "Int16?", "short?" },
             { "UInt16", "ushort" },
+            { "UInt16?", "ushort?" },
             { "String", "string" },
-            { "Object", "object" }
+            { "String?", "string?" },
+            { "Object", "object" },
+            { "Object?", "object?" }
         };
 
         // Try to get the alias, return the original typeName if no alias is found
