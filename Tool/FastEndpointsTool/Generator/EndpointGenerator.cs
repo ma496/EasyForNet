@@ -81,9 +81,24 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var filePath = Path.Combine(endpointDir, fileName);
 
         var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace, dataContextNamespace);
-
+        
+        if (File.Exists(filePath))
+        {
+            Console.Write($"File {fileName} already exists. Do you want to overwrite it? (y/n): ");
+            var response = Console.ReadLine()?.ToLower();
+            if (response == "y")
+            {
+                await File.WriteAllTextAsync(filePath, template);
+                Console.WriteLine($"{fileName} file overwritten under {endpointDir}");
+                return;
+            }
+            else
+            {
+                Console.WriteLine($"Skipping {fileName}");
+                return;
+            }
+        }
         await File.WriteAllTextAsync(filePath, template);
-
         Console.WriteLine($"{fileName} file created under {endpointDir}");
     }
 
@@ -94,8 +109,23 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
         var template = GenerateCrudGroupCode(argument, setting);
 
+        if (File.Exists(filePath))
+        {
+            Console.Write($"File {fileName} already exists. Do you want to overwrite it? (y/n): ");
+            var response = Console.ReadLine()?.ToLower();
+            if (response == "y")
+            {
+                await File.WriteAllTextAsync(filePath, template);
+                Console.WriteLine($"{fileName} file overwritten under {endpointDir}");
+                return;
+            }
+            else
+            {
+                Console.WriteLine($"Skipping {fileName}");
+                return;
+            }
+        }
         await File.WriteAllTextAsync(filePath, template);
-
         Console.WriteLine($"{fileName} file created under {endpointDir}");
     }
 

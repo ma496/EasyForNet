@@ -24,7 +24,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, List<{name}Response>, {nam
 
     public override void Configure()
     {{
-        Get(""{arg.Url}"");
+        Get(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
         AllowAnonymous();
     }}

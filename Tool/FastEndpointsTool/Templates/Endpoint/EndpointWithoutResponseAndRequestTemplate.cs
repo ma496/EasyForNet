@@ -12,7 +12,7 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest
 {{
     public override void Configure()
     {{
-        {arg.Method.ToPascalCase()}(""{arg.Url}"");
+        {arg.Method.ToPascalCase()}(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(6))}
     }}
 

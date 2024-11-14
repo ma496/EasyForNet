@@ -59,6 +59,6 @@ public static class Helpers
 
     public static string JoinUrl(params string[] parts)
     {
-        return string.Join("/", parts.Select(p => p.Trim('/')));
+        return string.Join("/", parts.Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p.Trim('/')));
     }
 }

@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace FastEndpointsTool.Parsing.Endpoint;
 
 public class EndpointArgumentParser : ParserBase<EndpointArgument>
@@ -75,8 +73,7 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
             var endpointArguments = ToKeyValue(GetOptions(args));
 
             SetEndpointArguments(EndpointType.GetEndpoint, argument, endpointArguments);
-            Console.WriteLine(endpointArguments);
-            Console.WriteLine(argument.BaseProperties);
+
             return argument;
         }
         if (args[0] == "listendpoint" || args[0] == "lep")
@@ -103,8 +100,7 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
             var endpointArguments = ToKeyValue(GetOptions(args));
 
             SetEndpointArguments(EndpointType.CrudEndpoint, argument, endpointArguments);
-            Console.WriteLine(JsonSerializer.Serialize(endpointArguments));
-            Console.WriteLine(argument.BaseProperties);
+            
             return argument;
         }
 
