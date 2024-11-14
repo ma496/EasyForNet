@@ -1,48 +1,45 @@
-//using Backend.Data.Entities;
-//using Microsoft.AspNetCore.Identity;
+using Backend.Extensions;
+using Backend.Services.Identity;
 
-//namespace Backend.Features;
+namespace Backend.Features;
 
-//public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
-//{
-//    private readonly UserManager<User> _userManager;
-//    private readonly SignInManager<User> _signInManager;
+public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
+{
+    private readonly IUserService _userService;
 
-//    public LoginEndpoint(UserManager<User> userManager, SignInManager<User> signInManager)
-//    {
-//        _userManager = userManager;
-//        _signInManager = signInManager;
-//    }
+    public LoginEndpoint(IUserService userService)
+    {
+        _userService = userService;
+    }
 
-//    public override void Configure()
-//    {
-//        Post("login");
-//        AllowAnonymous();
-//    }
+    public override void Configure()
+    {
+        Post("login");
+        AllowAnonymous();
+    }
 
-//    public override async Task HandleAsync(LoginRequest req, CancellationToken c)
-//    {
-//        var user = await _userManager.FindByNameAsync(req.Username);
-//        if (user == null)
-//            ThrowError(r => r.Username, "Invalid username or password");
+    public override async Task HandleAsync(LoginRequest req, CancellationToken c)
+    {
+        var user = await _userService.GetByUsernameAsync(req.Username);
+        if (user == null)
+            ThrowError(r => r.Username, "Invalid username or password");
 
-//        var result = await _signInManager.PasswordSignInAsync(req.Username, req.Password, false, false);
-//        if (!result.Succeeded)
-//            ThrowError(r => r.Username, "Invalid username or password");
+        var result = await _userService.ValidatePasswordAsync(user, req.Password);
+        if (!result)
+            ThrowError(r => r.Username, "Invalid username or password");
 
-//        var roles = await _userManager.GetRolesAsync(user);
-//        var claims = await _userManager.GetClaimsAsync(user);
+        var roles = await _userService.GetUserRolesAsync(user.Id);
+        var permissions = await _userService.GetUserPermissionsAsync(user.Id);
 
-//        Response = await CreateTokenWith<TokenService>(user.Id, u =>
-//        {
-//            u.Roles.AddRange(roles);
-//            u.Claims.AddRange(claims);
-//        });
-//    }
-//}
+        Response = await CreateTokenWith<TokenService>(user.Id.ToString(), u =>
+        {
+            u.AddUserClaims(user, roles, permissions);
+        });
+    }
+}
 
-//public class LoginRequest
-//{
-//    public string Username { get; set; } = string.Empty;
-//    public string Password { get; set; } = string.Empty;
-//}
+public class LoginRequest
+{
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+}
