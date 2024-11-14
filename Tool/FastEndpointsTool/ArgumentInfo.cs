@@ -1,4 +1,3 @@
-using FastEndpointsTool.Parsing;
 using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool;
@@ -457,6 +456,15 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--baseProperties",
+                        ShortName = "-bp",
+                        Description = "Base properties.",
+                        IsInternal = true,
+                        Required = true,
+                        Default = "true"
                     }
                 }
             },
@@ -526,6 +534,15 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--baseProperties",
+                        ShortName = "-bp",
+                        Description = "Base properties.",
+                        IsInternal = true,
+                        Required = true,
+                        Default = "true"
                     }
                 }
             },

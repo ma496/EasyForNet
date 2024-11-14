@@ -2,7 +2,7 @@ using Backend.Data.Entities.Base;
 
 namespace Backend.Data.Entities.Identity;
 
-public class User : BaseEntity<Guid>
+public class User : BaseEntity<Guid>, IExcludeProperties
 {
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -13,4 +13,13 @@ public class User : BaseEntity<Guid>
     public DateTime? LastLoginAt { get; set; }
     
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+    public static List<string> ExcludeProperties()
+    {
+        return new List<string> 
+        { 
+            nameof(PasswordHash),
+            nameof(LastLoginAt) 
+        };
+    }
 }

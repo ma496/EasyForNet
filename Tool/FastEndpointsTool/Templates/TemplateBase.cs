@@ -1,5 +1,3 @@
-using FastEndpointsTool.Extensions;
-using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
@@ -51,26 +49,35 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return builder.ToString();
     }
 
-    protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId)
+    protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId, string baseProperties)
     {
         var entityType = SingleType(assembly, entityFullName);
+        var excludePropertiesMethod = entityType.GetMethod("ExcludeProperties");
+        var excludeProperties = new List<string>();
+        if (baseProperties == "false")
+        {
+            excludeProperties.Add("CreatedAt");
+            excludeProperties.Add("CreatedBy");
+            excludeProperties.Add("UpdatedAt");
+            excludeProperties.Add("UpdatedBy");
+        }
+        if (excludePropertiesMethod != null)
+        {
+            excludeProperties.AddRange(excludePropertiesMethod.Invoke(null, null) as List<string> ?? new List<string>());
+        }
         var properties = entityType.GetProperties()
-            .Where(p => 
-            {
-                var attribute = p.GetCustomAttribute<BrowsableAttribute>();
-                if (attribute == null || attribute.Browsable)
-                    return true;
-                return false;
-            })
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
-            .WhereIf(!includeId, p => !IsId(p.Name, entityName))
+            .Where(p => !IsId(p.Name, entityName))
+            .Where(p => !excludeProperties.Contains(p.Name))
             .ToList();
+        if (includeId)
+            properties.Insert(0, GetIdProperty(assembly, entityName, entityFullName));
         return properties;
     }
 
-    protected string MappingPropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string? leftParameter = null)
+    protected string MappingPropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string baseProperties, string? leftParameter = null)
     {
-        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId);
+        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId, baseProperties);
         var codeBuilder = new StringBuilder();
 
         for (int i = 0; i < properties.Count; i++)
@@ -96,9 +103,9 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return codeBuilder.ToString();
     }
 
-    protected string UpdatePropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string? leftParameter = null)
+    protected string UpdatePropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string baseProperties, string? leftParameter = null)
     {
-        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId);
+        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId, baseProperties);
         var codeBuilder = new StringBuilder();
 
         for (int i = 0; i < properties.Count; i++)

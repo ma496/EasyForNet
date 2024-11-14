@@ -25,7 +25,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 
     public override void Configure()
     {{
-        Get(""{Path.Combine(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
+        Get(""{Helpers.JoinUrl(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
         AllowAnonymous();
     }}
@@ -59,7 +59,7 @@ sealed class {name}Validator : Validator<{name}Request>
 
 sealed class {name}Response
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true, arg.BaseProperties))}
 }}
 
 sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
@@ -68,7 +68,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
     {{
         return new {name}Response
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true)}
+            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true, arg.BaseProperties)}
         }};
     }}
 }}

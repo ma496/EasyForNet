@@ -16,6 +16,7 @@ public class EndpointArgument : Argument, ICloneable
     public string DataContextFullName { get; set; } = null!;
     public string Namespace { get; set; } = null!;
     public List<string> UsingNamespaces { get; set; } = new();
+    public string BaseProperties { get; set; } = "false"; // "true" or "false"
     
     public object Clone()
     {

@@ -44,7 +44,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
 
 sealed class {name}Request
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, false))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, false, arg.BaseProperties))}
 }}
 
 sealed class {name}Validator : Validator<{name}Request>
@@ -57,7 +57,7 @@ sealed class {name}Validator : Validator<{name}Request>
 
 sealed class {name}Response
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true, arg.BaseProperties))}
 }}
 
 sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
@@ -66,7 +66,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
     {{
         return new {arg.Entity}
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "r", false)}
+            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "r", false, arg.BaseProperties)}
         }};
     }}
 
@@ -74,7 +74,7 @@ sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
     {{
         return new {name}Response
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true)}
+            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true, arg.BaseProperties)}
         }};
     }}
 }}

@@ -42,12 +42,14 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var listEndpointArgument = (EndpointArgument) argument.Clone();
             listEndpointArgument.Type = EndpointType.ListEndpoint;
             listEndpointArgument.Method = "get";
+            listEndpointArgument.BaseProperties = "true";
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create get endpoint
             var getEndpointArgument = (EndpointArgument) argument.Clone();
             getEndpointArgument.Type = EndpointType.GetEndpoint;
             getEndpointArgument.Method = "get";
+            getEndpointArgument.BaseProperties = "true";
             await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create delete endpoint

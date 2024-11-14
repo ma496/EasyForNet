@@ -56,4 +56,9 @@ public static class Helpers
     {
         return group.EndsWith("Group") ? group : $"{group}Group";
     }
+
+    public static string JoinUrl(params string[] parts)
+    {
+        return string.Join("/", parts.Select(p => p.Trim('/')));
+    }
 }

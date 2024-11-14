@@ -56,7 +56,7 @@ sealed class {name}Validator : Validator<{name}Request>
 
 sealed class {name}Response
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true, arg.BaseProperties))}
 }}
 
 sealed class {name}Mapper : Mapper<{name}Request, List<{name}Response>, List<{arg.Entity}>>
@@ -65,7 +65,7 @@ sealed class {name}Mapper : Mapper<{name}Request, List<{name}Response>, List<{ar
     {{
         return e.Select(entity => new {name}Response
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "entity", true)}
+            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "entity", true, arg.BaseProperties)}
         }}).ToList();
     }}
 }}
