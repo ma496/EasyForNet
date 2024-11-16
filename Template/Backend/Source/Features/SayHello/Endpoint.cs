@@ -1,4 +1,6 @@
-﻿namespace Backend.Features.SayHello;
+﻿using Backend.Auth;
+
+namespace Backend.Features.SayHello;
 
 sealed class Endpoint : Endpoint<Request, Response>
 {
@@ -7,6 +9,8 @@ sealed class Endpoint : Endpoint<Request, Response>
         Post("/api/hello");
         // AllowAnonymous();
         Roles("Admin");
+        // auto generate permission
+        AccessControl(keyName: "Article_Delete", behavior: Apply.ToThisEndpoint);
     }
 
     public override async Task HandleAsync(Request r, CancellationToken c)

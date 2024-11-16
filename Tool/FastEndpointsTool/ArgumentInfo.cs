@@ -65,6 +65,14 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -111,6 +119,14 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -157,6 +173,14 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -203,6 +227,14 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -249,6 +281,14 @@ public class ArgumentInfo
                         Description = "Endpoint group.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 },
             },
@@ -318,6 +358,14 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -387,6 +435,14 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -465,6 +521,14 @@ public class ArgumentInfo
                         IsInternal = true,
                         Required = true,
                         Default = "true"
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -543,6 +607,14 @@ public class ArgumentInfo
                         IsInternal = true,
                         Required = true,
                         Default = "true"
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -612,6 +684,14 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             },
@@ -657,6 +737,14 @@ public class ArgumentInfo
                         ShortName = "-dc",
                         Description = "DataContext class name.",
                         Required = false
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--authorization",
+                        ShortName = "-auth",
+                        Description = "Permission based authorization.",
+                        Required = false,
+                        Default = "false",
                     }
                 }
             }

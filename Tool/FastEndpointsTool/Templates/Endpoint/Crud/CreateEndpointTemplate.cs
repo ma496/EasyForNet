@@ -29,7 +29,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     {{
         {arg.Method.ToPascalCase()}(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        AllowAnonymous();
+        {(arg.Authorization.ToLower() == "true" ? $"AccessControl(keyName: \"{name}\", behavior: Apply.ToThisEndpoint);" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)

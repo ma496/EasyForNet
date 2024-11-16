@@ -14,6 +14,7 @@ sealed class {arg.Name}Endpoint : EndpointWithoutRequest<{arg.Name}Response>
     {{
         {arg.Method.ToPascalCase()}(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(6))}
+        {(arg.Authorization.ToLower() == "true" ? $"AccessControl(keyName: \"{arg.Name}\", behavior: Apply.ToThisEndpoint);" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync(CancellationToken cancellationToken)

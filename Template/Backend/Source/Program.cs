@@ -30,6 +30,8 @@ app.UseAuthentication()
            c.Binding.ReflectionCache.AddFromBackend();
            c.Errors.UseProblemDetails();
            c.Endpoints.RoutePrefix = "api/v1";
+           c.Security.PermissionsClaimType = ClaimConstants.Permission;
+           c.Security.RoleClaimType = ClaimConstants.Role;
        })
    .UseSwaggerGen();
 

@@ -26,7 +26,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response>
     {{
         Delete(""{Helpers.JoinUrl(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        AllowAnonymous();
+        {(arg.Authorization.ToLower() == "true" ? $"AccessControl(keyName: \"{name}\", behavior: Apply.ToThisEndpoint);" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
