@@ -34,7 +34,7 @@ namespace Backend.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasColumnType("text");
 

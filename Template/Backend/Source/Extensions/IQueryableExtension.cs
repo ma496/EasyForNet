@@ -1,4 +1,4 @@
-namespace Backend.Data.Extensions;
+namespace Backend.Extensions;
 
 public static class IQueryableExtension
 {

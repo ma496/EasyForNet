@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241114000707_Identity")]
+    [Migration("20241118230441_Identity")]
     partial class Identity
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Backend.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasColumnType("text");
 

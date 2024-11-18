@@ -1,3 +1,4 @@
+using Backend.Auth;
 using Backend.Data;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +18,13 @@ bld.Services.AddHttpContextAccessor();
 
 bld.Services.AddScoped<IUserService, UserService>();
 bld.Services.AddScoped<IRoleService, RoleService>();
+bld.Services.AddScoped<IPermissionService, PermissionService>();
 bld.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 bld.Services.AddScoped<DataSeeder>();
+bld.Services.AddSingleton<PermissionDefinitionContext>();
+bld.Services.AddScoped<PermissionDefinitionProvider>();
+bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
+
 
 var app = bld.Build();
 
