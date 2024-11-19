@@ -47,6 +47,9 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
+    var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
+    var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
+    permissionDefinitionProvider.Define(permissionDefinitionContext);
     var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
     await seeder.SeedAsync();
 }

@@ -52,26 +52,9 @@ public class DataSeeder
 
         var adminUser = await _userService.GetByUsernameAsync("admin") ??
             await _userService.CreateAsync(new User { Username = "admin", Email = "admin@example.com" }, "Admin#123");
-
         if (!await _userService.IsInRoleAsync(adminUser.Id, adminRole.Id))
         {
             await _userService.AssignRoleAsync(adminUser.Id, adminRole.Id);
-        }
-
-        var userRole = await _roleService.GetByNameAsync("User") ??
-            await _roleService.CreateAsync(new Role { Name = "User" });
-        var userPermissions = await _permissionService.GetRolePermissionsAsync(userRole.Id);
-        var userPermissionsToAssign = permissions.Where(p => !userPermissions.Any(ap => ap.Name == p.Name)).ToList();
-        foreach (var permission in userPermissionsToAssign)
-        {
-            await _roleService.AssignPermissionAsync(userRole.Id, permission.Id);
-        }
-        var user = await _userService.GetByUsernameAsync("user") ??
-            await _userService.CreateAsync(new User { Username = "user", Email = "user@example.com" }, "User#123");
-
-        if (!await _userService.IsInRoleAsync(user.Id, userRole.Id))
-        {
-            await _userService.AssignRoleAsync(user.Id, userRole.Id);
         }
     }
 }

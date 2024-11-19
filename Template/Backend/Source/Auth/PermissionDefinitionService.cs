@@ -18,11 +18,15 @@ public class PermissionDefinitionService : IPermissionDefinitionService
 
     private IEnumerable<FlattenedPermission> GetPermissions(PermissionDefinition permission)
     {
-        yield return new FlattenedPermission
+        if (!permission.Children.Any())
         {
-            Name = permission.Name,
-            DisplayName = permission.DisplayName
-        };
+            yield return new FlattenedPermission
+            {
+                Name = permission.Name,
+                DisplayName = permission.DisplayName
+            };
+            yield break;
+        }
 
         foreach (var child in permission.Children)
         {
