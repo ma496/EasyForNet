@@ -1,5 +1,6 @@
 using Backend.Auth;
 using Backend.Data;
+using Backend.Infrastructure;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,7 @@ bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService
 
 var app = bld.Build();
 
+app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
 app.UseAuthentication()
    .UseAuthorization()
    .UseFastEndpoints(
