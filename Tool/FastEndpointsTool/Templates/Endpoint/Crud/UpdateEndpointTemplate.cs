@@ -29,7 +29,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     {{
         {arg.Method.ToPascalCase()}(""{Helpers.JoinUrl(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{Helpers.PermissionName(arg.Name)});" : "AllowAnonymous();")}
+        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{name});" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)

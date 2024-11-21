@@ -1,7 +1,6 @@
 using FastEndpointsTool.Parsing.Endpoint;
 using System.Reflection;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace FastEndpointsTool;
 
@@ -61,11 +60,5 @@ public static class Helpers
     public static string JoinUrl(params string[] parts)
     {
         return string.Join("/", parts.Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p.Trim('/')));
-    }
-
-    public static string PermissionName(string name)
-    {
-        // split name on everty capital letter then join with _
-        return string.Join("_", Regex.Split(name, "(?<!^)(?=[A-Z])"));
     }
 }

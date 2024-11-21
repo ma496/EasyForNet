@@ -26,7 +26,7 @@ sealed class {name}Endpoint : Endpoint<{name}Request, List<{name}Response>, {nam
     {{
         Get(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{Helpers.PermissionName(arg.Name)});" : "AllowAnonymous();")}
+        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{name});" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
