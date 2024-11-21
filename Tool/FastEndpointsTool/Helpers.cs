@@ -1,6 +1,7 @@
 using FastEndpointsTool.Parsing.Endpoint;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace FastEndpointsTool;
 
@@ -60,5 +61,18 @@ public static class Helpers
     public static string JoinUrl(params string[] parts)
     {
         return string.Join("/", parts.Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p.Trim('/')));
+    }
+
+    public static string PermissionName(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+
+        // Convert PascalCase (GetUser) or camelCase (getUser) to (get_User)
+        var snakeCase = Regex.Replace(input, "(?<!^)([A-Z])", "_$1");
+        if (snakeCase.EndsWith("List"))
+            return snakeCase.Replace("List", "View");
+        if (snakeCase.EndsWith("Get"))
+            return snakeCase.Replace("Get", "View");
+        return snakeCase;
     }
 }
