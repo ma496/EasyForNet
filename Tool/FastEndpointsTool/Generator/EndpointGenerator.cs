@@ -142,6 +142,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         {
             "FastEndpoints",
             "FluentValidation",
+            setting.Project.PermissionsNamespace,
             entityNamespace,
             groupNamespace,
             dataContextNamespace

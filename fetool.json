@@ -3,6 +3,8 @@
     "Directory": "Template/Backend/Source",
     "Name": "Backend",
     "EndpointPath": "Features",
-    "RootNamespace": "Backend"
+    "RootNamespace": "Backend",
+    "PermissionsNamespace": "Backend.Auth",
+    "SortingColumn": "CreatedAt"
   }
 }

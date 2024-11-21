@@ -26,13 +26,13 @@ sealed class {name}Endpoint : Endpoint<{name}Request, List<{name}Response>, {nam
     {{
         Get(""{Helpers.JoinUrl(arg.Url)}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        {(arg.Authorization.ToLower() == "true" ? $"AccessControl(keyName: \"{name}\", behavior: Apply.ToThisEndpoint);" : "AllowAnonymous();")}
+        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{Helpers.PermissionName(arg.Name)});" : "AllowAnonymous();")}
     }}
 
     public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
     {{
         // get entities from db
-        var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.OrderByDescending(x => x.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
+        var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.AsNoTracking().OrderByDescending(x => x.{(!string.IsNullOrWhiteSpace(setting.Project.SortingColumn) ? setting.Project.SortingColumn : "CreatedAt")}).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
         await SendAsync(Map.FromEntity(entities));
     }}
 }}
