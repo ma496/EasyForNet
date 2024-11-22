@@ -75,4 +75,9 @@ public static class Helpers
             return snakeCase.Replace("Get", "View");
         return snakeCase;
     }
+
+    public static string UnderscoreToDot(string input)
+    {
+        return input.Replace("_", ".");
+    }
 }

@@ -5,6 +5,7 @@
     "EndpointPath": "Features",
     "RootNamespace": "Backend",
     "PermissionsNamespace": "Backend.Auth",
-    "SortingColumn": "CreatedAt"
+    "SortingColumn": "CreatedAt",
+    "AllowClassPath": "Auth/Allow.cs"
   }
 }

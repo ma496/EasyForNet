@@ -42,4 +42,32 @@ public abstract class CodeGeneratorBase<TArgument>
     {
         return $"{rootNamespace}.{endpointPath}" + (string.IsNullOrWhiteSpace(output) ? string.Empty : $".{output}");
     }
+
+    protected void AddPermissionToAllowClass(string filePath, string permissionName)
+    {
+        // Read the existing Allow.cs file
+        var fileContent = File.ReadAllText(filePath);
+
+        // Prepare the new permission string
+        var newPermission = $"    public const string {permissionName} = \"{Helpers.UnderscoreToDot(permissionName)}\";";
+
+        // Check if the permission already exists
+        if (fileContent.Contains(permissionName))
+        {
+            return;
+        }
+
+        // Insert the new permission before the closing brace of the class
+        var classEndIndex = fileContent.LastIndexOf("}");
+        if (classEndIndex == -1)
+        {
+            throw new InvalidOperationException("Invalid Allow.cs class format.");
+        }
+
+        // Add the new permission just before the closing brace
+        var updatedFileContent = fileContent.Substring(0, classEndIndex) + Environment.NewLine + newPermission + Environment.NewLine + fileContent.Substring(classEndIndex);
+
+        // Save the modified file
+        File.WriteAllText(filePath, updatedFileContent);
+    }
 }

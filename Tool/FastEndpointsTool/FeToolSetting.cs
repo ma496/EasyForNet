@@ -27,4 +27,5 @@ public class ProjectSetting
     public string RootNamespace { get; set; } = null!;
     public string PermissionsNamespace { get; set; } = null!;
     public string SortingColumn { get; set; } = null!;
+    public string AllowClassPath { get; set; } = null!;
 }

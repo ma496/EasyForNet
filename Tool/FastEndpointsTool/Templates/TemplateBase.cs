@@ -154,7 +154,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
     {
         var type = SingleType(assembly, entityFullName);
 
-        var idProperties = 
+        var idProperties =
             type.GetProperties()
             .Where(p => IsId(p.Name, entityName))
             .ToList();
