@@ -108,14 +108,6 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var groupNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Group);
             var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);
 
-            if (argument.Type == EndpointType.CreateEndpoint
-                || argument.Type == EndpointType.UpdateEndpoint
-                || argument.Type == EndpointType.DeleteEndpoint
-                || argument.Type == EndpointType.GetEndpoint
-                || argument.Type == EndpointType.ListEndpoint)
-            {
-                argument.Name = Helpers.EndpointName(argument.Name, argument.Type);
-            }
             if (argument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(argument.Permission))
             {
                 argument.Permission = Helpers.PermissionName(argument.Name);

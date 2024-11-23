@@ -77,7 +77,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     },
@@ -138,7 +138,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -199,7 +199,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -260,7 +260,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -321,7 +321,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -405,7 +405,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -489,7 +489,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -582,7 +582,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -675,7 +675,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
@@ -759,7 +759,7 @@ public class ArgumentInfo
                     new ArgumentOption
                     {
                         Name = "--permission",
-                        ShortName = "-p",
+                        ShortName = "-per",
                         Description = "Permission name.",
                         Required = false,
                     }
