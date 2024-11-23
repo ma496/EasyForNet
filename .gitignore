@@ -237,5 +237,39 @@ _Pvt_Extensions
 /.mfractor
 src/WebUI/ClientApp/package-lock.json
 
+# IDE and Editor Files
+.vscode/
+*.swp
+*.swo
+*.swn
+.DS_Store
+Thumbs.db
+
+# Logs and Databases
+logs/
+*.sqlite
+*.sqlite3
+*.db
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# Distribution / Build output
+dist/
+out/
+build/
+coverage/
+
+# Temporary files
+temp/
+tmp/
+.temp/
+.tmp/
+
+# Local configuration
+config.local.js
+settings.local.json
+
 # Custom Files
 publish-package.bat
