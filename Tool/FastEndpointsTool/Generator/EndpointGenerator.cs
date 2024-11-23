@@ -11,7 +11,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
     {
         var directory = Directory.GetCurrentDirectory();
         var (setting, projectDir) = await Helpers.GetSetting(directory);
-            
+
         if (argument.Type == EndpointType.CrudEndpoint)
         {
             argument.Output = Path.Combine(argument.Output ?? string.Empty, argument.PluralName);
@@ -24,82 +24,82 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
             var groupNamespace = string.Empty;
-            var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);   
+            var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);
 
             // Create endpoint
-            var createEndpointArgument = (EndpointArgument) argument.Clone();
+            var createEndpointArgument = (EndpointArgument)argument.Clone();
             createEndpointArgument.Type = EndpointType.CreateEndpoint;
             createEndpointArgument.Method = "post";
             createEndpointArgument.Name = Helpers.EndpointName(createEndpointArgument.Name, createEndpointArgument.Type);
-            if (string.IsNullOrWhiteSpace(createEndpointArgument.Permission))
+            if (createEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(createEndpointArgument.Permission))
             {
                 createEndpointArgument.Permission = Helpers.PermissionName(createEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), createEndpointArgument.Permission);
             }
-            else 
+            else if (!string.IsNullOrWhiteSpace(createEndpointArgument.Permission))
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), createEndpointArgument.Permission);
             await GenerateEndpoint(createEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create update endpoint
-            var updateEndpointArgument = (EndpointArgument) argument.Clone();
+            var updateEndpointArgument = (EndpointArgument)argument.Clone();
             updateEndpointArgument.Type = EndpointType.UpdateEndpoint;
             updateEndpointArgument.Method = "put";
             updateEndpointArgument.Name = Helpers.EndpointName(updateEndpointArgument.Name, updateEndpointArgument.Type);
-            if (string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
+            if (updateEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
             {
                 updateEndpointArgument.Permission = Helpers.PermissionName(updateEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission);
             }
-            else 
+            else if (!string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission);
             await GenerateEndpoint(updateEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create list endpoint
-            var listEndpointArgument = (EndpointArgument) argument.Clone();
+            var listEndpointArgument = (EndpointArgument)argument.Clone();
             listEndpointArgument.Type = EndpointType.ListEndpoint;
             listEndpointArgument.Method = "get";
             listEndpointArgument.BaseProperties = "true";
             listEndpointArgument.Name = Helpers.EndpointName(listEndpointArgument.Name, listEndpointArgument.Type);
-            if (string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
+            if (listEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
             {
                 listEndpointArgument.Permission = Helpers.PermissionName(listEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission);
             }
-            else 
+            else if (!string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission);
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create get endpoint
-            var getEndpointArgument = (EndpointArgument) argument.Clone();
+            var getEndpointArgument = (EndpointArgument)argument.Clone();
             getEndpointArgument.Type = EndpointType.GetEndpoint;
             getEndpointArgument.Method = "get";
             getEndpointArgument.BaseProperties = "true";
             getEndpointArgument.Name = Helpers.EndpointName(getEndpointArgument.Name, getEndpointArgument.Type);
-            if (string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
+            if (getEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
             {
                 getEndpointArgument.Permission = Helpers.PermissionName(getEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission);
             }
-            else 
+            else if (!string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission);
             await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create delete endpoint
-            var deleteEndpointArgument = (EndpointArgument) argument.Clone();
+            var deleteEndpointArgument = (EndpointArgument)argument.Clone();
             deleteEndpointArgument.Type = EndpointType.DeleteEndpoint;
             deleteEndpointArgument.Method = "delete";
             deleteEndpointArgument.Name = Helpers.EndpointName(deleteEndpointArgument.Name, deleteEndpointArgument.Type);
-            if (string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
+            if (deleteEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
             {
                 deleteEndpointArgument.Permission = Helpers.PermissionName(deleteEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission);
             }
-            else 
+            else if (!string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission);
             await GenerateEndpoint(deleteEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
         else
-        {   
+        {
             var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
             if (!Directory.Exists(endpointDir))
                 Directory.CreateDirectory(endpointDir);
@@ -107,7 +107,22 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var entityNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Entity);
             var groupNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.Group);
             var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);
-                
+
+            if (argument.Type == EndpointType.CreateEndpoint
+                || argument.Type == EndpointType.UpdateEndpoint
+                || argument.Type == EndpointType.DeleteEndpoint
+                || argument.Type == EndpointType.GetEndpoint
+                || argument.Type == EndpointType.ListEndpoint)
+            {
+                argument.Name = Helpers.EndpointName(argument.Name, argument.Type);
+            }
+            if (argument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(argument.Permission))
+            {
+                argument.Permission = Helpers.PermissionName(argument.Name);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), argument.Permission);
+            }
+            else if (!string.IsNullOrWhiteSpace(argument.Permission))
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), argument.Permission);
             await GenerateEndpoint(argument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
     }
@@ -121,7 +136,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var filePath = Path.Combine(endpointDir, fileName);
 
         var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace, dataContextNamespace);
-        
+
         if (File.Exists(filePath))
         {
             Console.Write($"File {fileName} already exists. Do you want to overwrite it? (y/n): ");

@@ -8,17 +8,16 @@ public class GetEndpointTemplate : TemplateBase<EndpointArgument>
 {
     public override string Template(EndpointArgument arg)
     {
-        var name = Helpers.EndpointName(arg.Name, arg.Type);
         var (setting, projectDir) = Helpers.GetSetting(Directory.GetCurrentDirectory()).Result;
         var assembly = Helpers.GetProjectAssembly(projectDir, setting.Project.Name);
         var constructorParams = new string[] { !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty };
 
         var template = $@"
-sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapper>
+sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response, {arg.Name}Mapper>
 {{
     {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(3, 4))}
 
-    public {name}Endpoint({string.Join(", ", constructorParams)})
+    public {arg.Name}Endpoint({string.Join(", ", constructorParams)})
     {{
         {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext = context;" : RemoveLine(7))}
     }}
@@ -27,10 +26,10 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     {{
         Get(""{Helpers.JoinUrl(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
         {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
-        {(arg.Authorization.ToLower() == "true" ? $"Permissions(Allow.{Helpers.PermissionName(name)});" : "AllowAnonymous();")}
+        {(!string.IsNullOrWhiteSpace(arg.Permission) ? $"Permissions(Allow.{arg.Permission});" : "AllowAnonymous();")}
     }}
 
-    public override async Task HandleAsync({name}Request request, CancellationToken cancellationToken)
+    public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         // get entity from db
         var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync(request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}, cancellationToken);" : $"new {arg.Entity}()")}; 
@@ -44,29 +43,29 @@ sealed class {name}Endpoint : Endpoint<{name}Request, {name}Response, {name}Mapp
     }}
 }}
 
-sealed class {name}Request
+sealed class {arg.Name}Request
 {{
     public {ConvertToAlias(GetIdProperty(assembly, arg.Entity, arg.EntityFullName).PropertyType.Name)} {GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name} {{ get; set; }}
 }}
 
-sealed class {name}Validator : Validator<{name}Request>
+sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
 {{
-    public {name}Validator()
+    public {arg.Name}Validator()
     {{
         // Add validation rules here
     }}
 }}
 
-sealed class {name}Response
+sealed class {arg.Name}Response
 {{
     {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true, arg.BaseProperties))}
 }}
 
-sealed class {name}Mapper : Mapper<{name}Request, {name}Response, {arg.Entity}>
+sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {arg.Entity}>
 {{
-    public override {name}Response FromEntity({arg.Entity} e)
+    public override {arg.Name}Response FromEntity({arg.Entity} e)
     {{
-        return new {name}Response
+        return new {arg.Name}Response
         {{
             {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true, arg.BaseProperties)}
         }};

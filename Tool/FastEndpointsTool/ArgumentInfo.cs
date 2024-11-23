@@ -73,7 +73,14 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
-                    }
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
+                    },
                 }
             },
             new ArgumentInfo
@@ -127,6 +134,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -181,6 +195,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -235,6 +256,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -289,6 +317,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 },
             },
@@ -366,6 +401,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -443,6 +485,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -529,6 +578,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -615,6 +671,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
@@ -692,6 +755,13 @@ public class ArgumentInfo
                         Description = "Permission based authorization.",
                         Required = false,
                         Default = "false",
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--permission",
+                        ShortName = "-p",
+                        Description = "Permission name.",
+                        Required = false,
                     }
                 }
             },
