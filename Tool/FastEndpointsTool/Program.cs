@@ -37,17 +37,16 @@ internal class Program
     {
         Console.WriteLine("  use like this");
         Console.WriteLine("  fet {command} {options}");
-        Console.WriteLine("  name, shortname, description");
         var arguments = ArgumentInfo.Arguments();
         foreach (var arg in arguments)
         {
-            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine();
             Console.WriteLine("  command");
             Console.WriteLine($"  {arg.Name}, {arg.ShortName}, {arg.Description}");
             Console.WriteLine("  options");
             foreach (var opt in arg.Options)
             {
-                Console.WriteLine($"    {opt.Name}, {opt.ShortName}, {opt.Description}");
+                Console.WriteLine($"    {opt.Name}, {opt.ShortName}, Required: {opt.Required}, {opt.Description}");
             }
         }
     }

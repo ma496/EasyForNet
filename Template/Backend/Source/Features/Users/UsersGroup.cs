@@ -1,5 +1,3 @@
-using FastEndpoints;
-
 namespace Backend.Features.Users;
 
 sealed class UsersGroup : Group

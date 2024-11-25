@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Backend.Auth;
 
 public class PermissionDefinition
@@ -5,6 +7,7 @@ public class PermissionDefinition
     public string Name { get; set; } = string.Empty;
     public string DisplayName { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public PermissionDefinition? Parent { get; set; }
     public IList<PermissionDefinition> Children { get; set; } = [];
 

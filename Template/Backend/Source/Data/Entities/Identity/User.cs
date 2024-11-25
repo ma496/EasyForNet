@@ -4,6 +4,7 @@ namespace Backend.Data.Entities.Identity;
 
 public class User : BaseEntity<Guid>, IExcludeProperties
 {
+    public bool Default { get; set; }
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
@@ -11,15 +12,16 @@ public class User : BaseEntity<Guid>, IExcludeProperties
     public string LastName { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
     public DateTime? LastLoginAt { get; set; }
-    
+
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
     public static List<string> ExcludeProperties()
     {
-        return new List<string> 
-        { 
+        return new List<string>
+        {
+            nameof(Default),
             nameof(PasswordHash),
-            nameof(LastLoginAt) 
+            nameof(LastLoginAt)
         };
     }
 }

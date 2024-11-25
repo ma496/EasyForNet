@@ -68,6 +68,7 @@ public abstract class CodeGeneratorBase<TArgument>
         var updatedFileContent = fileContent.Substring(0, classEndIndex) + Environment.NewLine + newPermission + Environment.NewLine + fileContent.Substring(classEndIndex);
 
         // Save the modified file
+        Console.WriteLine($"Add permission {permissionName} to {filePath}");
         File.WriteAllText(filePath, updatedFileContent);
     }
 }

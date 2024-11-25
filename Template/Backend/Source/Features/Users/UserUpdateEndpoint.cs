@@ -1,5 +1,4 @@
 using Backend.Auth;
-using Backend.Data;
 using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +8,10 @@ namespace Backend.Features.Users;
 sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse, UserUpdateMapper>
 {
     private readonly IUserService _userService;
-    private readonly AppDbContext _dbContext;
 
-    public UserUpdateEndpoint(IUserService userService, AppDbContext dbContext)
+    public UserUpdateEndpoint(IUserService userService)
     {
         _userService = userService;
-        _dbContext = dbContext;
     }
 
     public override void Configure()
@@ -35,6 +32,8 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             await SendNotFoundAsync();
             return;
         }
+        if (entity.Default)
+            ThrowError("Default user can not be updated.");
 
         Map.UpdateEntity(request, entity);
         // update user roles based on request and already assigned roles
@@ -58,12 +57,12 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
 sealed class UserUpdateRequest
 {
     public Guid Id { get; set; }
-	public string Username { get; set; }
-	public string Email { get; set; }
-	public string FirstName { get; set; }
-	public string LastName { get; set; }
-	public bool IsActive { get; set; }
-	public List<Guid> Roles { get; set; } = new();
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public bool IsActive { get; set; }
+    public List<Guid> Roles { get; set; } = new();
 }
 
 sealed class UserUpdateValidator : Validator<UserUpdateRequest>
@@ -77,12 +76,12 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 sealed class UserUpdateResponse
 {
     public Guid Id { get; set; }
-	public string Username { get; set; }
-	public string Email { get; set; }
-	public string FirstName { get; set; }
-	public string LastName { get; set; }
-	public bool IsActive { get; set; }
-	public List<Guid> Roles { get; set; } = new();
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public bool IsActive { get; set; }
+    public List<Guid> Roles { get; set; } = new();
 }
 
 sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, User>
@@ -90,10 +89,10 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
     public override User UpdateEntity(UserUpdateRequest r, User e)
     {
         e.Username = r.Username;
-		e.Email = r.Email;
-		e.FirstName = r.FirstName;
-		e.LastName = r.LastName;
-		e.IsActive = r.IsActive;
+        e.Email = r.Email;
+        e.FirstName = r.FirstName;
+        e.LastName = r.LastName;
+        e.IsActive = r.IsActive;
 
         return e;
     }
@@ -103,11 +102,11 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
         return new UserUpdateResponse
         {
             Id = e.Id,
-			Username = e.Username,
-			Email = e.Email,
-			FirstName = e.FirstName,
-			LastName = e.LastName,
-			IsActive = e.IsActive,
+            Username = e.Username,
+            Email = e.Email,
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            IsActive = e.IsActive,
             Roles = e.UserRoles.Select(x => x.RoleId).ToList(),
         };
     }

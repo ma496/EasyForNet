@@ -42,7 +42,7 @@ public class DataSeeder
         var permissions = await _permissionService.Permissions().ToListAsync();
 
         var adminRole = await _roleService.GetByNameAsync("Admin") ??
-            await _roleService.CreateAsync(new Role { Name = "Admin" });
+            await _roleService.CreateAsync(new Role { Default = true, Name = "Admin" });
         var adminPermissions = await _permissionService.GetRolePermissionsAsync(adminRole.Id);
         var adminPermissionsToAssign = permissions.Where(p => !adminPermissions.Any(ap => ap.Name == p.Name)).ToList();
         foreach (var permission in adminPermissionsToAssign)
@@ -51,7 +51,7 @@ public class DataSeeder
         }
 
         var adminUser = await _userService.GetByUsernameAsync("admin") ??
-            await _userService.CreateAsync(new User { Username = "admin", Email = "admin@example.com" }, "Admin#123");
+            await _userService.CreateAsync(new User { Default = true, Username = "admin", Email = "admin@example.com" }, "Admin#123");
         if (!await _userService.IsInRoleAsync(adminUser.Id, adminRole.Id))
         {
             await _userService.AssignRoleAsync(adminUser.Id, adminRole.Id);

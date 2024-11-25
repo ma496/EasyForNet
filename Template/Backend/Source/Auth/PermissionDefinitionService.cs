@@ -9,9 +9,11 @@ public class PermissionDefinitionService : IPermissionDefinitionService
         _context = context;
     }
 
+    public IReadOnlyList<PermissionDefinition> GetPermissions() => _context.GetPermissions();
+
     public IReadOnlyList<FlattenedPermission> GetFlattenedPermissions()
     {
-        return _context.Permissions.SelectMany(GetPermissions).ToList();
+        return GetPermissions().SelectMany(GetPermissions).ToList();
     }
 
     #region Helpers

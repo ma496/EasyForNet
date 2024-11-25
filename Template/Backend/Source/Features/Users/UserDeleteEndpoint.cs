@@ -29,6 +29,8 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
             await SendNotFoundAsync();
             return;
         }
+        if (entity.Default)
+            ThrowError("Default user can not be deleted.");
 
         // Delete the entity from the db
         await _userService.DeleteAsync(request.Id);
