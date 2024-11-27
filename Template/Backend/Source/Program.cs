@@ -48,6 +48,11 @@ app.UseAuthentication()
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    if (app.Environment.IsEnvironment("Testing"))
+    {
+        if (dbContext.Database.CanConnect())
+            dbContext.Database.EnsureDeleted();
+    }
     dbContext.Database.Migrate();
     var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
     var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
