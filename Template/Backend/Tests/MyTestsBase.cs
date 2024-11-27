@@ -8,26 +8,27 @@ namespace Tests;
 public abstract class MyTestsBase(App app) : TestBase<App>
 {
     protected readonly App App = app;
-    protected string? AdminToken;
 
-    protected async Task<string> GetAdminToken()
+    protected async Task SetAuthToken(string username = "admin", string password = "Admin#123")
     {
-        if (AdminToken != null) return AdminToken;
+        var token = await GetNewAuthToken(username, password);
+        App.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
 
+    protected void ClearAuthToken()
+    {
+        App.Client.DefaultRequestHeaders.Authorization = null;
+    }
+
+    private async Task<string> GetNewAuthToken(string username = "admin", string password = "Admin#123")
+    {
         var (_, res) = await App.Client.POSTAsync<LoginEndpoint, LoginRequest, TokenResponse>(
             new()
             {
-                Username = "admin",
-                Password = "Admin#123"
+                Username = username,
+                Password = password
             });
 
-        AdminToken = res.AccessToken;
-        return AdminToken;
-    }
-
-    protected async Task SetAuthToken()
-    {
-        var token = await GetAdminToken();
-        App.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        return res.AccessToken;
     }
 }

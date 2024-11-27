@@ -34,8 +34,8 @@ public class UserCreateTests : MyTestsBase
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
             new()
             {
-                Username = "testuser",
-                Email = "test@example.com",
+                Username = "test123",
+                Email = "test123@example.com",
                 Password = "Password123!",
                 FirstName = "Test",
                 LastName = "User",
@@ -43,8 +43,8 @@ public class UserCreateTests : MyTestsBase
             });
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        res.Username.Should().Be("testuser");
-        res.Email.Should().Be("test@example.com");
+        res.Username.Should().Be("test123");
+        res.Email.Should().Be("test123@example.com");
         res.FirstName.Should().Be("Test");
         res.LastName.Should().Be("User");
         res.IsActive.Should().BeTrue();

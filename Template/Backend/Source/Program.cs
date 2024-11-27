@@ -22,6 +22,7 @@ bld.Services.AddScoped<IRoleService, RoleService>();
 bld.Services.AddScoped<IPermissionService, PermissionService>();
 bld.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 bld.Services.AddScoped<DataSeeder>();
+bld.Services.AddScoped<TestsDataSeeder>();
 bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
@@ -59,6 +60,11 @@ using (var scope = app.Services.CreateScope())
     permissionDefinitionProvider.Define(permissionDefinitionContext);
     var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
     await seeder.SeedAsync();
+    if (app.Environment.IsEnvironment("Testing"))
+    {
+        var testsDataSeeder = scope.ServiceProvider.GetRequiredService<TestsDataSeeder>();
+        await testsDataSeeder.SeedAsync();
+    }
 }
 
 app.Run();
