@@ -5,7 +5,7 @@ using FastEndpoints.Security;
 namespace Tests;
 
 [Collection("SharedContext")]
-public abstract class MyTestsBase(App app) : TestBase<App>
+public abstract class AppTestsBase(App app) : TestBase<App>
 {
     protected readonly App App = app;
 

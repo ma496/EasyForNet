@@ -2,7 +2,7 @@ using Backend.Features.Users;
 
 namespace Tests.Users;
 
-public class UserGetTests : MyTestsBase
+public class UserGetTests : AppTestsBase
 {
     public UserGetTests(App app) : base(app)
     {

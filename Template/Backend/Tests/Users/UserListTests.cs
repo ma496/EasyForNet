@@ -2,7 +2,7 @@ using Backend.Features.Users;
 
 namespace Tests.Users;
 
-public class UserListTests : MyTestsBase
+public class UserListTests : AppTestsBase
 {
     public UserListTests(App app) : base(app)
     {
