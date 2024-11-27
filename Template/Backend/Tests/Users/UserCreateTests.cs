@@ -42,7 +42,7 @@ public class UserCreateTests : MyTestsBase
                 IsActive = true
             });
 
-        rsp.StatusCode.Should().Be(HttpStatusCode.OK, await rsp.Content.ReadAsStringAsync());
+        rsp.StatusCode.Should().Be(HttpStatusCode.OK);
         res.Username.Should().Be("testuser");
         res.Email.Should().Be("test@example.com");
         res.FirstName.Should().Be("Test");

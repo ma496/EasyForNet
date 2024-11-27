@@ -1,13 +1,13 @@
-﻿using Backend.Data;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 
 namespace Tests;
 
 public class App : AppFixture<Program>
 {
-    protected override async Task SetupAsync()
+    protected override Task SetupAsync()
     {
-
+        // place one-time setup for the fixture here
+        return Task.CompletedTask;
     }
 
     protected override void ConfigureApp(IWebHostBuilder a)
@@ -20,10 +20,9 @@ public class App : AppFixture<Program>
         // do test service registration here
     }
 
-    protected override async Task TearDownAsync()
+    protected override Task TearDownAsync()
     {
-        // using var scope = Services.CreateScope();
-        // var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        // await dbContext.Database.EnsureDeletedAsync();
+        // do cleanups here
+        return Task.CompletedTask;
     }
 }
