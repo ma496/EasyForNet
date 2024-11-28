@@ -1,4 +1,6 @@
 using Backend.Features.Users;
+using Backend.Services.Identity;
+using Tests.Seeder;
 
 namespace Tests.Users;
 
@@ -55,5 +57,25 @@ public class UserDeleteTests : AppTestsBase
             });
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task Cannot_Delete_Default_User()
+    {
+        // Get the default user (admin from seeder)
+        var userService = App.Services.GetRequiredService<IUserService>();
+        var defaultUser = await userService.GetByUsernameAsync(UserConst.Test);
+        defaultUser.Should().NotBeNull();
+
+        // Try to delete the default user
+        var (deleteRsp, res) = await App.Client.DELETEAsync<UserDeleteEndpoint, UserDeleteRequest, ProblemDetails>(
+            new()
+            {
+                Id = defaultUser!.Id
+            });
+
+        deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        res.Errors.Should().ContainSingle();
+        res.Errors.First().Reason.Should().Be("Default user can not be deleted.");
     }
 }

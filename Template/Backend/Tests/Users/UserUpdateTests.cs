@@ -1,5 +1,6 @@
 using Backend.Features.Users;
 using Backend.Services.Identity;
+using Microsoft.EntityFrameworkCore;
 using Tests.Seeder;
 namespace Tests.Users;
 
@@ -64,5 +65,31 @@ public class UserUpdateTests : AppTestsBase
             });
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task Update_Default_User_Should_Fail()
+    {
+        // Get the default user
+        var defaultUser = await App.Services.GetRequiredService<IUserService>()
+            .Users()
+            .FirstAsync(u => u.Default);
+
+        var roleService = App.Services.GetRequiredService<IRoleService>();
+        var (updateRsp, res) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, ProblemDetails>(
+            new()
+            {
+                Id = defaultUser.Id,
+                Username = "modified_default_user",
+                Email = "modified_default@example.com",
+                FirstName = "Modified",
+                LastName = "Default",
+                IsActive = false,
+                Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
+            });
+
+        updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        res.Errors.Should().ContainSingle();
+        res.Errors.First().Reason.Should().Be("Default user can not be updated.");
     }
 }
