@@ -27,7 +27,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -95,7 +95,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -156,7 +156,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required= true,
                     },
                     new ArgumentOption
@@ -217,7 +217,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -278,7 +278,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -339,7 +339,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -423,7 +423,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -507,7 +507,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -600,7 +600,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -693,7 +693,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of endpoint classes.",
+                        Description = "Name of endpoint class.",
                         Required = true,
                     },
                     new ArgumentOption
@@ -777,7 +777,7 @@ public class ArgumentInfo
                     {
                         Name = "--name",
                         ShortName = "-n",
-                        Description = "Name of the entity for CRUD operations.",
+                        Description = "Name of the class for CRUD operations.",
                         Required = true,
                     },
                     new ArgumentOption
