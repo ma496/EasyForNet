@@ -100,10 +100,10 @@ public class EndpointArgumentParser : ParserBase<EndpointArgument>
             var endpointArguments = ToKeyValue(GetOptions(args));
 
             SetEndpointArguments(EndpointType.CrudEndpoint, argument, endpointArguments);
-            
+
             return argument;
         }
 
-        throw new Exception($"{args[0]} is not a valid command.");
+        throw new UserFriendlyException($"{args[0]} is not a valid command.");
     }
 }

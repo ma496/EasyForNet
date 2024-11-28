@@ -12,6 +12,6 @@ public class CodeGenerator
             await new EndpointGenerator().Generate(endpointArgument);
         }
         else
-            throw new Exception("Invalid args.");
+            throw new UserFriendlyException("Invalid args.");
     }
 }

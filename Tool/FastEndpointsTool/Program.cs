@@ -9,28 +9,45 @@ internal class Program
 {
     static async Task Main(string[] args)
     {
-        if (args.Length == 0)
+        try
         {
-            Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
-            Console.WriteLine("-------------");
-            Console.WriteLine("\nUsage:");
-            ShowHelp();
-            return;
-        }
-        if (args.Length == 1 && (args[0] == "--help" || args[0] == "-h"))
-        {
-            Console.WriteLine("Usage:");
-            ShowHelp();
-            return;
-        }
-        if (args.Length == 1 && (args[0] == "--version" || args[0] == "-v"))
-        {
-            Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
-            return;
-        }
+            if (args.Length == 0)
+            {
+                Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
+                Console.WriteLine("-------------");
+                Console.WriteLine("\nUsage:");
+                ShowHelp();
+                return;
+            }
+            if (args.Length == 1 && (args[0] == "--help" || args[0] == "-h"))
+            {
+                Console.WriteLine("Usage:");
+                ShowHelp();
+                return;
+            }
+            if (args.Length == 1 && (args[0] == "--version" || args[0] == "-v"))
+            {
+                Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
+                return;
+            }
 
-        var argument = new Parser().Parse(args);
-        await new CodeGenerator().Generate(argument);
+            var argument = new Parser().Parse(args);
+            await new CodeGenerator().Generate(argument);
+        }
+        catch (UserFriendlyException ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error: {ex.Message}");
+            Console.ResetColor();
+        }
+        catch (TargetInvocationException ex)
+        {
+            if (ex.InnerException == null || !(ex.InnerException is UserFriendlyException))
+                throw;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            Console.ResetColor();
+        }
     }
 
     static void ShowHelp()

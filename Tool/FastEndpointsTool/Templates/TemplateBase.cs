@@ -138,9 +138,9 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
             .ToList();
 
         if (types.Count == 0)
-            throw new Exception($"{fullName} type not found.");
+            throw new UserFriendlyException($"{fullName} type not found.");
         if (types.Count > 1)
-            throw new Exception($"{fullName} multiple types found.");
+            throw new UserFriendlyException($"{fullName} multiple types found.");
 
         return types[0];
     }
@@ -160,10 +160,10 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
             .ToList();
 
         if (idProperties.Count == 0)
-            throw new Exception($"No id found in {entityFullName}");
+            throw new UserFriendlyException($"No id found in {entityFullName}");
 
         if (idProperties.Count > 1)
-            throw new Exception($"More then one ids found in {entityFullName}");
+            throw new UserFriendlyException($"More then one ids found in {entityFullName}");
 
         return idProperties[0];
     }

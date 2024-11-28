@@ -35,12 +35,12 @@ public abstract class ParserBase<TArgument>
                 SetProperty(argument, opt.Default, opt);
             }
             else if (!opt.IsInternal && opt.Required)
-                throw new Exception($"{opt.ShortName} or {opt.Name} option can not be empty.");
+                throw new UserFriendlyException($"{opt.ShortName} or {opt.Name} option can not be empty.");
         }
         foreach (var item in endpointArguments)
         {
             if (!usedArguments.Contains(item.Key))
-                throw new Exception($"{item.Key} is unknown option.");
+                throw new UserFriendlyException($"{item.Key} is unknown option.");
         }
     }
 
@@ -54,14 +54,14 @@ public abstract class ParserBase<TArgument>
         if (string.IsNullOrWhiteSpace(value))
             value = opt.Default;
         if (opt.Required && string.IsNullOrWhiteSpace(value))
-            throw new Exception($"{opt.ShortName} or {opt.Name} can not be empty.");
+            throw new UserFriendlyException($"{opt.ShortName} or {opt.Name} can not be empty.");
         property.SetValue(argument, value);
     }
 
     protected string[] GetOptions(string[] array)
     {
         if (array.Length == 1)
-            throw new Exception("Please provide options.");
+            throw new UserFriendlyException("Please provide options.");
         return SubArray(array, 1);
     }
 
@@ -78,7 +78,7 @@ public abstract class ParserBase<TArgument>
     protected Dictionary<string, string> ToKeyValue(string[] array)
     {
         if (array.Length % 2 != 0)
-            throw new Exception("Invalidate args.");
+            throw new UserFriendlyException("Invalidate args.");
 
         var dict = new Dictionary<string, string>();
         for (var i = 0; i < array.Length; i += 2)

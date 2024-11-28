@@ -18,7 +18,7 @@ public static class Helpers
     public static async Task<(FeToolSetting setting, string projectDir)> GetSetting(string? directory = null)
     {
         if (string.IsNullOrWhiteSpace(directory))
-            throw new Exception("No fetool.json file found.");
+            throw new UserFriendlyException("No fetool.json file found.");
 
         var dirInfo = new DirectoryInfo(directory);
         var path = Path.Combine(directory, "fetool.json");
@@ -27,7 +27,7 @@ public static class Helpers
             var json = await File.ReadAllTextAsync(path);
             var setting = JsonSerializer.Deserialize<FeToolSetting>(json);
             if (setting == null)
-                throw new Exception("Invalid fetool.json");
+                throw new UserFriendlyException("Invalid fetool.json");
             setting.Validate();
             return (setting, Path.Combine(directory, setting.Project.Directory));
         }

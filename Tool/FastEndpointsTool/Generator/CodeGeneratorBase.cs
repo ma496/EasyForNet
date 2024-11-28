@@ -32,10 +32,10 @@ public abstract class CodeGeneratorBase<TArgument>
         var indexStr = Console.ReadLine();
         var isInteger = int.TryParse(indexStr, out var selectIndex);
         if (!isInteger)
-            throw new Exception("input is not integer.");
+            throw new UserFriendlyException("input is not integer.");
         if (selectIndex >= 0 && selectIndex < index)
             return types[selectIndex].Namespace ?? string.Empty;
-        throw new Exception("input number out of range");
+        throw new UserFriendlyException("input number out of range");
     }
 
     protected string GetEndpointNamespace(string rootNamespace, string endpointPath, string output)
