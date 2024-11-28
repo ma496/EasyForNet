@@ -12,36 +12,36 @@ public class UserUpdateTests : AppTestsBase
     [Fact]
     public async Task Update_User()
     {
-        // First create a user
-        var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
-            new()
-            {
-                Username = "updateuser",
-                Email = "update@example.com",
-                Password = "Password123!",
-                FirstName = "Update",
-                LastName = "User",
-                IsActive = true
-            });
+        UserCreateRequest request = new()
+        {
+            Username = "updateuser",
+            Email = "update@example.com",
+            Password = "Password123!",
+            FirstName = "Update",
+            LastName = "User",
+            IsActive = true
+        };
+        var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
-        // Then update the user
-        var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(
-            new()
-            {
-                Id = createRes.Id,
-                Username = "updateuser_modified",
-                Email = "update_modified@example.com",
-                FirstName = "Updated",
-                LastName = "UserModified",
-                IsActive = false
-            });
+        createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        UserUpdateRequest updateRequest = new()
+        {
+            Id = createRes.Id,
+            Username = "updateuser_modified",
+            Email = "update_modified@example.com",
+            FirstName = "Updated",
+            LastName = "UserModified",
+            IsActive = false
+        };
+        var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        updateRes.Username.Should().Be("updateuser_modified");
-        updateRes.Email.Should().Be("update_modified@example.com");
-        updateRes.FirstName.Should().Be("Updated");
-        updateRes.LastName.Should().Be("UserModified");
-        updateRes.IsActive.Should().BeFalse();
+        updateRes.Username.Should().Be(updateRequest.Username);
+        updateRes.Email.Should().Be(updateRequest.Email);
+        updateRes.FirstName.Should().Be(updateRequest.FirstName);
+        updateRes.LastName.Should().Be(updateRequest.LastName);
+        updateRes.IsActive.Should().Be(updateRequest.IsActive);
     }
 
     [Fact]

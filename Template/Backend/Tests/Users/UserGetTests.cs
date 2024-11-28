@@ -12,19 +12,19 @@ public class UserGetTests : AppTestsBase
     [Fact]
     public async Task Get_User()
     {
-        // First create a user
-        var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
-            new()
-            {
-                Username = "getuser",
-                Email = "get@example.com",
-                Password = "Password123!",
-                FirstName = "Get",
-                LastName = "User",
-                IsActive = true
-            });
+        UserCreateRequest request = new()
+        {
+            Username = "getuser",
+            Email = "get@example.com",
+            Password = "Password123!",
+            FirstName = "Get",
+            LastName = "User",
+            IsActive = true
+        };
+        var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
-        // Then get the user
+        createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
+
         var (getRsp, getRes) = await App.Client.GETAsync<UserGetEndpoint, UserGetRequest, UserGetResponse>(
             new()
             {
@@ -32,8 +32,8 @@ public class UserGetTests : AppTestsBase
             });
 
         getRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        getRes.Username.Should().Be("getuser");
-        getRes.Email.Should().Be("get@example.com");
+        getRes.Username.Should().Be(request.Username);
+        getRes.Email.Should().Be(request.Email);
     }
 
     [Fact]
