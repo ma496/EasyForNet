@@ -1,4 +1,6 @@
 using Backend.Features.Users;
+using Backend.Services.Identity;
+using Tests.Seeder;
 
 namespace Tests.Users;
 
@@ -31,6 +33,7 @@ public class UserCreateTests : AppTestsBase
     [Fact]
     public async Task Valid_Input()
     {
+        var roleService = App.Services.GetRequiredService<IRoleService>();
         UserCreateRequest request = new()
         {
             Username = "test123",
@@ -38,7 +41,8 @@ public class UserCreateTests : AppTestsBase
             Password = "Password123!",
             FirstName = "Test",
             LastName = "User",
-            IsActive = true
+            IsActive = true,
+            Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
         };
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
@@ -48,5 +52,6 @@ public class UserCreateTests : AppTestsBase
         res.FirstName.Should().Be(request.FirstName);
         res.LastName.Should().Be(request.LastName);
         res.IsActive.Should().Be(request.IsActive);
+        res.Roles.Should().Equal(request.Roles);
     }
 }

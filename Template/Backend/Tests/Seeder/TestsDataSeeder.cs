@@ -2,7 +2,7 @@ using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests;
+namespace Tests.Seeder;
 
 public class TestsDataSeeder
 {
@@ -21,12 +21,12 @@ public class TestsDataSeeder
     {
         var permissions = await _permissionService.Permissions().ToListAsync();
 
-        await CreateUserWtithRole(permissions, "Test", "test");
-        await CreateUserWtithRole(permissions, "TestOne", "testone");
-        await CreateUserWtithRole(permissions, "TestTwo", "testtwo");
+        await CreateUserWtithRole(permissions, UserConst.Test, RoleConst.Test);
+        await CreateUserWtithRole(permissions, UserConst.TestOne, RoleConst.TestOne);
+        await CreateUserWtithRole(permissions, UserConst.TestTwo, RoleConst.TestTwo);
     }
 
-    private async Task CreateUserWtithRole(List<Permission> permissions, string roleName, string username)
+    private async Task CreateUserWtithRole(List<Permission> permissions, string username, string roleName)
     {
         var role = await _roleService.GetByNameAsync(roleName) ??
             await _roleService.CreateAsync(new Role { Default = true, Name = roleName });

@@ -1,6 +1,7 @@
 using Backend.Auth;
 using Backend.Data;
 using Microsoft.EntityFrameworkCore;
+using Tests.Seeder;
 
 namespace Tests;
 

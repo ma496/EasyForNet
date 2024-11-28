@@ -1,5 +1,6 @@
 using Backend.Features.Users;
-
+using Backend.Services.Identity;
+using Tests.Seeder;
 namespace Tests.Users;
 
 public class UserUpdateTests : AppTestsBase
@@ -12,6 +13,7 @@ public class UserUpdateTests : AppTestsBase
     [Fact]
     public async Task Update_User()
     {
+        var roleService = App.Services.GetRequiredService<IRoleService>();
         UserCreateRequest request = new()
         {
             Username = "updateuser",
@@ -19,7 +21,8 @@ public class UserUpdateTests : AppTestsBase
             Password = "Password123!",
             FirstName = "Update",
             LastName = "User",
-            IsActive = true
+            IsActive = true,
+            Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
         };
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
@@ -32,7 +35,8 @@ public class UserUpdateTests : AppTestsBase
             Email = "update_modified@example.com",
             FirstName = "Updated",
             LastName = "UserModified",
-            IsActive = false
+            IsActive = false,
+            Roles = [(await roleService.GetByNameAsync(RoleConst.TestOne))!.Id, (await roleService.GetByNameAsync(RoleConst.TestTwo))!.Id]
         };
         var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
@@ -42,6 +46,7 @@ public class UserUpdateTests : AppTestsBase
         updateRes.FirstName.Should().Be(updateRequest.FirstName);
         updateRes.LastName.Should().Be(updateRequest.LastName);
         updateRes.IsActive.Should().Be(updateRequest.IsActive);
+        updateRes.Roles.Should().Equal(updateRequest.Roles);
     }
 
     [Fact]

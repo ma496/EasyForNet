@@ -1,6 +1,7 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Features.Users;
@@ -69,7 +70,8 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 {
     public UserUpdateValidator()
     {
-        // Add validation rules here
+        RuleFor(x => x.Username).NotEmpty().MinimumLength(3);
+        RuleFor(x => x.Email).NotEmpty().EmailAddress();
     }
 }
 
