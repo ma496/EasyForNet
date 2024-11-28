@@ -1,7 +1,7 @@
-using FastEndpointsTool.Parsing.Endpoint;
 using FastEndpointsTool.Templates;
 using System.Reflection;
 using System.Text;
+using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool.Generator;
 
@@ -12,7 +12,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
         var directory = Directory.GetCurrentDirectory();
         var (setting, projectDir) = await Helpers.GetSetting(directory);
 
-        if (argument.Type == EndpointType.CrudEndpoint)
+        if (argument.Type == ArgumentType.CrudEndpoint)
         {
             argument.Output = Path.Combine(argument.Output ?? string.Empty, argument.PluralName);
             var endpointDir = GetEndpointDir(projectDir, setting.Project.EndpointPath, argument.Output);
@@ -28,7 +28,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             // Create endpoint
             var createEndpointArgument = (EndpointArgument)argument.Clone();
-            createEndpointArgument.Type = EndpointType.CreateEndpoint;
+            createEndpointArgument.Type = ArgumentType.CreateEndpoint;
             createEndpointArgument.Method = "post";
             createEndpointArgument.Name = Helpers.EndpointName(createEndpointArgument.Name, createEndpointArgument.Type);
             if (createEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(createEndpointArgument.Permission))
@@ -42,7 +42,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             // Create update endpoint
             var updateEndpointArgument = (EndpointArgument)argument.Clone();
-            updateEndpointArgument.Type = EndpointType.UpdateEndpoint;
+            updateEndpointArgument.Type = ArgumentType.UpdateEndpoint;
             updateEndpointArgument.Method = "put";
             updateEndpointArgument.Name = Helpers.EndpointName(updateEndpointArgument.Name, updateEndpointArgument.Type);
             if (updateEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
@@ -56,7 +56,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             // Create list endpoint
             var listEndpointArgument = (EndpointArgument)argument.Clone();
-            listEndpointArgument.Type = EndpointType.ListEndpoint;
+            listEndpointArgument.Type = ArgumentType.ListEndpoint;
             listEndpointArgument.Method = "get";
             listEndpointArgument.BaseProperties = "true";
             listEndpointArgument.Name = Helpers.EndpointName(listEndpointArgument.Name, listEndpointArgument.Type);
@@ -71,7 +71,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             // Create get endpoint
             var getEndpointArgument = (EndpointArgument)argument.Clone();
-            getEndpointArgument.Type = EndpointType.GetEndpoint;
+            getEndpointArgument.Type = ArgumentType.GetEndpoint;
             getEndpointArgument.Method = "get";
             getEndpointArgument.BaseProperties = "true";
             getEndpointArgument.Name = Helpers.EndpointName(getEndpointArgument.Name, getEndpointArgument.Type);
@@ -86,7 +86,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
 
             // Create delete endpoint
             var deleteEndpointArgument = (EndpointArgument)argument.Clone();
-            deleteEndpointArgument.Type = EndpointType.DeleteEndpoint;
+            deleteEndpointArgument.Type = ArgumentType.DeleteEndpoint;
             deleteEndpointArgument.Method = "delete";
             deleteEndpointArgument.Name = Helpers.EndpointName(deleteEndpointArgument.Name, deleteEndpointArgument.Type);
             if (deleteEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))

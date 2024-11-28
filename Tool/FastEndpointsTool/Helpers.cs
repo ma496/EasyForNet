@@ -1,7 +1,7 @@
-using FastEndpointsTool.Parsing.Endpoint;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool;
 
@@ -37,17 +37,17 @@ public static class Helpers
         }
     }
 
-    public static string EndpointName(string name, EndpointType type)
+    public static string EndpointName(string name, ArgumentType type)
     {
-        if (type == EndpointType.CreateEndpoint && !name.EndsWith("Create"))
+        if (type == ArgumentType.CreateEndpoint && !name.EndsWith("Create"))
             return $"{name}Create";
-        if (type == EndpointType.UpdateEndpoint && !name.EndsWith("Update"))
+        if (type == ArgumentType.UpdateEndpoint && !name.EndsWith("Update"))
             return $"{name}Update";
-        if (type == EndpointType.GetEndpoint && !name.EndsWith("Get"))
+        if (type == ArgumentType.GetEndpoint && !name.EndsWith("Get"))
             return $"{name}Get";
-        if (type == EndpointType.ListEndpoint && !name.EndsWith("List"))
+        if (type == ArgumentType.ListEndpoint && !name.EndsWith("List"))
             return $"{name}List";
-        if (type == EndpointType.DeleteEndpoint && !name.EndsWith("Delete"))
+        if (type == ArgumentType.DeleteEndpoint && !name.EndsWith("Delete"))
             return $"{name}Delete";
 
         return name;
@@ -79,5 +79,21 @@ public static class Helpers
     public static string UnderscoreToDot(string input)
     {
         return input.Replace("_", ".");
+    }
+
+    public static string GetVersion()
+    {
+        var versionString = Assembly.GetEntryAssembly()?
+                                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                                    .InformationalVersion
+                                    .ToString();
+        if (string.IsNullOrEmpty(versionString))
+            throw new Exception("No version found.");
+        var pattern = @"\d+\.\d+\.\d+";
+        var match = Regex.Match(versionString, pattern);
+        if (match.Success)
+            return match.Value;
+
+        throw new Exception("No version found.");
     }
 }

@@ -1,7 +1,6 @@
 using FastEndpointsTool.Generator;
 using FastEndpointsTool.Parsing;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace FastEndpointsTool;
 
@@ -13,7 +12,7 @@ internal class Program
         {
             if (args.Length == 0)
             {
-                Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
+                Console.WriteLine($"FastEndpointsTool Version v{Helpers.GetVersion()}");
                 Console.WriteLine("-------------");
                 Console.WriteLine("\nUsage:");
                 ShowHelp();
@@ -27,7 +26,7 @@ internal class Program
             }
             if (args.Length == 1 && (args[0] == "--version" || args[0] == "-v"))
             {
-                Console.WriteLine($"FastEndpointsTool Version v{GetVersion()}");
+                Console.WriteLine($"FastEndpointsTool Version v{Helpers.GetVersion()}");
                 return;
             }
 
@@ -66,21 +65,5 @@ internal class Program
                 Console.WriteLine($"    {opt.Name}, {opt.ShortName}, Required: {opt.Required}, {opt.Description}");
             }
         }
-    }
-
-    static string GetVersion()
-    {
-        var versionString = Assembly.GetEntryAssembly()?
-                                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                                    .InformationalVersion
-                                    .ToString();
-        if (string.IsNullOrEmpty(versionString))
-            throw new Exception("No version found.");
-        var pattern = @"\d+\.\d+\.\d+";
-        var match = Regex.Match(versionString, pattern);
-        if (match.Success)
-            return match.Value;
-        else
-            throw new Exception("No version found.");
     }
 }

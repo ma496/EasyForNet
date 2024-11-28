@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-public class App : AppFixture<Program>
+public class App : AppFixture<Backend.Program>
 {
     protected override Task SetupAsync()
     {

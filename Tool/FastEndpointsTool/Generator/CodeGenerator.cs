@@ -1,5 +1,4 @@
 using FastEndpointsTool.Parsing;
-using FastEndpointsTool.Parsing.Endpoint;
 
 namespace FastEndpointsTool.Generator;
 
@@ -11,7 +10,11 @@ public class CodeGenerator
         {
             await new EndpointGenerator().Generate(endpointArgument);
         }
+        else if (argument is CreateProjectArgument createProjectArgument)
+        {
+            await new CreateProjectGenerator().Generate(createProjectArgument);
+        }
         else
-            throw new UserFriendlyException("Invalid args.");
+            throw new Exception($"Invalid argument type: {argument.Type}");
     }
 }

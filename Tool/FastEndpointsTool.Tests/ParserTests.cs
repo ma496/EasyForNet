@@ -1,5 +1,4 @@
 using FastEndpointsTool.Parsing;
-using FastEndpointsTool.Parsing.Endpoint;
 using Xunit.Abstractions;
 
 namespace FastEndpointsTool.Tests;
@@ -28,7 +27,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.Endpoint, endpointArgument.Type);
+        Assert.Equal(ArgumentType.Endpoint, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -48,7 +47,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.Endpoint, endpointArgument.Type);
+        Assert.Equal(ArgumentType.Endpoint, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -68,7 +67,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutMapper, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutMapper, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -87,7 +86,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutMapper, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutMapper, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -106,7 +105,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutResponse, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutResponse, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -125,7 +124,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutResponse, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutResponse, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -134,7 +133,7 @@ public class ParserTests
     [Fact]
     public void EndpointEithoutRequestTest()
     {
-        var args = new[] {"endpointwithoutrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
+        var args = new[] { "endpointwithoutrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -144,7 +143,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutRequest, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutRequest, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -153,7 +152,7 @@ public class ParserTests
     [Fact]
     public void EpwreqTest()
     {
-        var args = new[] {"epwreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
+        var args = new[] { "epwreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -163,7 +162,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutRequest, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutRequest, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -172,7 +171,7 @@ public class ParserTests
     [Fact]
     public void EndpointWithoutResponseAndRequestTest()
     {
-        var args = new[] {"endpointwithoutresponseandrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
+        var args = new[] { "endpointwithoutresponseandrequest", "--name", "GetUsers", "--method", "post", "--url", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -182,7 +181,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -191,7 +190,7 @@ public class ParserTests
     [Fact]
     public void EpwrreqTest()
     {
-        var args = new[] {"epwrreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
+        var args = new[] { "epwrreq", "-n", "GetUsers", "-m", "post", "-u", "get-users" };
         var parser = new Parser();
 
         var result = parser.Parse(args);
@@ -201,7 +200,7 @@ public class ParserTests
         var endpointArgument = result as EndpointArgument;
 
         Assert.NotNull(endpointArgument);
-        Assert.Equal(EndpointType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
+        Assert.Equal(ArgumentType.EndpointWithoutResponseAndRequest, endpointArgument.Type);
         Assert.Equal("GetUsers", endpointArgument.Name);
         Assert.Equal("post", endpointArgument.Method);
         Assert.Equal("get-users", endpointArgument.Url);
@@ -217,18 +216,18 @@ public class ParserTests
         var args = new[] { "endpoints", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "User" };
         var parser = new Parser();
 
-        var exception = Assert.Throws<Exception>(() => parser.Parse(args));
+        var exception = Assert.Throws<UserFriendlyException>(() => parser.Parse(args));
 
         Assert.Equal("endpoints is not a valid command.", exception.Message);
     }
 
-    [Fact]
+    [Fact]  
     public void EmptyNameTest()
     {
         var args = new[] { "endpoint", "--name", "", "--method", "post", "--url", "get-users", "--entity", "User" };
         var parser = new Parser();
 
-        var exception = Assert.Throws<Exception>(() => parser.Parse(args));
+        var exception = Assert.Throws<UserFriendlyException>(() => parser.Parse(args));
         Assert.Equal("-n or --name can not be empty.", exception.Message);
     }
 
@@ -238,7 +237,7 @@ public class ParserTests
         var args = new[] { "endpoint", "--name", "GetUsers", "--method", "", "--url", "get-users", "--entity", "User" };
         var parser = new Parser();
 
-        var exception = Assert.Throws<Exception>(() => parser.Parse(args));
+        var exception = Assert.Throws<UserFriendlyException>(() => parser.Parse(args));
         Assert.Equal("-m or --method can not be empty.", exception.Message);
     }
 
@@ -248,7 +247,7 @@ public class ParserTests
         var args = new[] { "endpoint", "--name", "GetUsers", "--method", "post", "--url", "", "--entity", "User" };
         var parser = new Parser();
 
-        var exception = Assert.Throws<Exception>(() => parser.Parse(args));
+        var exception = Assert.Throws<UserFriendlyException>(() => parser.Parse(args));
         Assert.Equal("-u or --url can not be empty.", exception.Message);
     }
 
@@ -258,7 +257,7 @@ public class ParserTests
         var args = new[] { "endpoint", "--name", "GetUsers", "--method", "post", "--url", "get-users", "--entity", "" };
         var parser = new Parser();
 
-        var exception = Assert.Throws<Exception>(() => parser.Parse(args));
+        var exception = Assert.Throws<UserFriendlyException>(() => parser.Parse(args));
         Assert.Equal("-e or --entity can not be empty.", exception.Message);
     }
 

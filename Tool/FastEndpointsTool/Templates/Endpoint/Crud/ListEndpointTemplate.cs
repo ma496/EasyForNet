@@ -1,4 +1,4 @@
-using FastEndpointsTool.Parsing.Endpoint;
+using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool.Templates.Endpoint.Crud;
 

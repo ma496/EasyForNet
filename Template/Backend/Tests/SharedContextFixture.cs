@@ -5,7 +5,7 @@ using Tests.Seeder;
 
 namespace Tests;
 
-public class SharedContextFixture : AppFixture<Program>
+public class SharedContextFixture : AppFixture<Backend.Program>
 {
 
     protected override async Task SetupAsync()

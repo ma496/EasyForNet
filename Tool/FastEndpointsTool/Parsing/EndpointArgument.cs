@@ -1,8 +1,7 @@
-namespace FastEndpointsTool.Parsing.Endpoint;
+namespace FastEndpointsTool.Parsing;
 
 public class EndpointArgument : Argument, ICloneable
 {
-    public EndpointType Type { get; set; }
     public string Name { get; set; } = null!;
     public string Method { get; set; } = null!;
     public string Url { get; set; } = null!;
@@ -19,7 +18,7 @@ public class EndpointArgument : Argument, ICloneable
     public string BaseProperties { get; set; } = "false"; // "true" or "false"
     public string Authorization { get; set; } = "false"; // "true" or "false"
     public string Permission { get; set; } = null!;
-    
+
     public object Clone()
     {
         return MemberwiseClone();

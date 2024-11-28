@@ -1,4 +1,4 @@
-using FastEndpointsTool.Parsing.Endpoint;
+using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool;
 
@@ -17,7 +17,31 @@ public class ArgumentInfo
         {
             new ArgumentInfo
             {
-                Type = EndpointType.Endpoint,
+                Type = ArgumentType.CreateProject,
+                Name = "createproject",
+                ShortName = "cp",
+                Description = "Create a new project.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--name",
+                        ShortName = "-n",
+                        Description = "Name of project.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Path of project.",
+                        Required = false,
+                    },
+                }
+            },
+            new ArgumentInfo
+            {
+                Type = ArgumentType.Endpoint,
                 Name = "endpoint",
                 ShortName = "ep",
                 Description = "Creaete endpoint with request, response, validator and mapper.",
@@ -85,7 +109,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.EndpointWithoutMapper,
+                Type = ArgumentType.EndpointWithoutMapper,
                 Name = "endpointwithoutmapper",
                 ShortName = "epwm",
                 Description = "Creaete endpoint with request, response and validator.",
@@ -146,7 +170,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.EndpointWithoutResponse,
+                Type = ArgumentType.EndpointWithoutResponse,
                 Name = "endpointwithoutresponse",
                 ShortName = "epwr",
                 Description = "Creaete endpoint with request and validator.",
@@ -207,7 +231,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.EndpointWithoutRequest,
+                Type = ArgumentType.EndpointWithoutRequest,
                 Name = "endpointwithoutrequest",
                 ShortName = "epwreq",
                 Description = "Creaete endpoint with response.",
@@ -268,7 +292,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.EndpointWithoutResponseAndRequest,
+                Type = ArgumentType.EndpointWithoutResponseAndRequest,
                 Name = "endpointwithoutresponseandrequest",
                 ShortName = "epwrreq",
                 Description = "Creaete endpoint.",
@@ -329,7 +353,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.CreateEndpoint,
+                Type = ArgumentType.CreateEndpoint,
                 Name = "createendpoint",
                 ShortName = "cep",
                 Description = "Creaete endpoint with request, response, validator and mapper.",
@@ -413,7 +437,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.UpdateEndpoint,
+                Type = ArgumentType.UpdateEndpoint,
                 Name = "updateendpoint",
                 ShortName = "uep",
                 Description = "Update endpoint with request, response, validator and mapper.",
@@ -497,7 +521,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.GetEndpoint,
+                Type = ArgumentType.GetEndpoint,
                 Name = "getendpoint",
                 ShortName = "gep",
                 Description = "Get endpoint with request, response, validator and mapper.",
@@ -590,7 +614,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.ListEndpoint,
+                Type = ArgumentType.ListEndpoint,
                 Name = "listendpoint",
                 ShortName = "lep",
                 Description = "Create list endpoint with request, response, validator and mapper.",
@@ -683,7 +707,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.DeleteEndpoint,
+                Type = ArgumentType.DeleteEndpoint,
                 Name = "deleteendpoint",
                 ShortName = "dep",
                 Description = "Create delete endpoint with request, response, and validator.",
@@ -767,7 +791,7 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
-                Type = EndpointType.CrudEndpoint,
+                Type = ArgumentType.CrudEndpoint,
                 Name = "crudendpoint",
                 ShortName = "crud",
                 Description = "Create CRUD endpoints (Create, Read, Update, Delete, List) for an entity.",

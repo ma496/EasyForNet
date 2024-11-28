@@ -2,14 +2,13 @@ using FastEndpointsTool.Extensions;
 
 namespace FastEndpointsTool.Parsing;
 
-public abstract class ParserBase<TArgument>
-    where TArgument : Argument
+public abstract class ParserBase
 {
     public abstract Argument Parse(string[] args);
 
     //protected abstract void SetEndpointArguments(TArgument argument, Dictionary<string, string> endpointArguments);
 
-    protected void SetEndpointArguments(Enum argumentType, TArgument argument, Dictionary<string, string> endpointArguments)
+    protected void SetOptions(Enum argumentType, Argument argument, Dictionary<string, string> options)
     {
         var argumentInfoList = ArgumentInfo.Arguments()
             .Where(x => x.Type.Equals(argumentType))
@@ -21,14 +20,14 @@ public abstract class ParserBase<TArgument>
             throw new Exception($"More then one argument info objects found for {argumentType}");
 
         var argumentInfo = argumentInfoList[0];
-        var usedArguments = new HashSet<string>();
+        var usedOptions = new HashSet<string>();
         foreach (var opt in argumentInfo.Options)
         {
-            if (!opt.IsInternal && (endpointArguments.ContainsKey(opt.Name) || endpointArguments.ContainsKey(opt.ShortName)))
+            if (!opt.IsInternal && (options.ContainsKey(opt.Name) || options.ContainsKey(opt.ShortName)))
             {
-                var key = endpointArguments.ContainsKey(opt.Name) ? opt.Name : opt.ShortName;
-                SetProperty(argument, endpointArguments[key], opt);
-                usedArguments.Add(key);
+                var key = options.ContainsKey(opt.Name) ? opt.Name : opt.ShortName;
+                SetProperty(argument, options[key], opt);
+                usedOptions.Add(key);
             }
             else if (opt.IsInternal)
             {
@@ -37,14 +36,14 @@ public abstract class ParserBase<TArgument>
             else if (!opt.IsInternal && opt.Required)
                 throw new UserFriendlyException($"{opt.ShortName} or {opt.Name} option can not be empty.");
         }
-        foreach (var item in endpointArguments)
+        foreach (var opt in options)
         {
-            if (!usedArguments.Contains(item.Key))
-                throw new UserFriendlyException($"{item.Key} is unknown option.");
+            if (!usedOptions.Contains(opt.Key))
+                throw new UserFriendlyException($"{opt.Key} is unknown option.");
         }
     }
 
-    private static void SetProperty(TArgument argument, string value, ArgumentOption opt)
+    private static void SetProperty(Argument argument, string value, ArgumentOption opt)
     {
         value = opt.NormalizeMethod != null ? opt.NormalizeMethod.Invoke(value) : value;
         var propertyName = opt.Name.Substring(2).ToPascalCase();
