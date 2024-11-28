@@ -22,7 +22,6 @@ bld.Services.AddScoped<IRoleService, RoleService>();
 bld.Services.AddScoped<IPermissionService, PermissionService>();
 bld.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 bld.Services.AddScoped<DataSeeder>();
-bld.Services.AddScoped<TestsDataSeeder>();
 bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
@@ -48,22 +47,15 @@ app.UseAuthentication()
 // migrate database and seed data on startup
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    if (app.Environment.IsEnvironment("Testing"))
+    if (!app.Environment.IsEnvironment("Testing"))
     {
-        if (dbContext.Database.CanConnect())
-            dbContext.Database.EnsureDeleted();
-    }
-    dbContext.Database.Migrate();
-    var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
-    var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
-    permissionDefinitionProvider.Define(permissionDefinitionContext);
-    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-    await seeder.SeedAsync();
-    if (app.Environment.IsEnvironment("Testing"))
-    {
-        var testsDataSeeder = scope.ServiceProvider.GetRequiredService<TestsDataSeeder>();
-        await testsDataSeeder.SeedAsync();
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
+        var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
+        var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
+        permissionDefinitionProvider.Define(permissionDefinitionContext);
+        var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+        await seeder.SeedAsync();
     }
 }
 
