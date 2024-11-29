@@ -41,6 +41,37 @@ public class ArgumentInfo
             },
             new ArgumentInfo
             {
+                Type = ArgumentType.Init,
+                Name = "initialize",
+                ShortName = "init",
+                Description = "create fetool.json file.",
+                Options = new List<ArgumentOption>
+                {
+                    new ArgumentOption
+                    {
+                        Name = "--directory",
+                        ShortName = "-d",
+                        Description = "Directory of project.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--projectName",
+                        ShortName = "-pn",
+                        Description = "Name of project.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--rootNamespace",
+                        ShortName = "-rn",
+                        Description = "Root namespace of project.",
+                        Required = false,
+                    },
+                }
+            },
+            new ArgumentInfo
+            {
                 Type = ArgumentType.Endpoint,
                 Name = "endpoint",
                 ShortName = "ep",

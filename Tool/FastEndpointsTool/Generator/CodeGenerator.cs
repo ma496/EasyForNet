@@ -14,6 +14,10 @@ public class CodeGenerator
         {
             await new CreateProjectGenerator().Generate(createProjectArgument);
         }
+        else if (argument is InitArgument initArgument)
+        {
+            await new InitGenerator().Generate(initArgument);
+        }
         else
             throw new Exception($"Invalid argument type: {argument.Type}");
     }

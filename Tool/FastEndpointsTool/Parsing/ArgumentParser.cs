@@ -13,6 +13,15 @@ public class ArgumentParser : ParserBase
 
             return argument;
         }
+        if (args[0] == "initialize" || args[0] == "init")
+        {
+            var argument = new InitArgument { Type = ArgumentType.Init };
+            var options = ToKeyValue(GetOptions(args));
+
+            SetOptions(ArgumentType.Init, argument, options);
+
+            return argument;
+        }
         if (args[0] == "endpoint" || args[0] == "ep")
         {
             var argument = new EndpointArgument { Type = ArgumentType.Endpoint };
