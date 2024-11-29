@@ -16,6 +16,12 @@ public class FeToolSetting
             throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.EndpointPath)} can not be empty.");
         if (string.IsNullOrWhiteSpace(Project.RootNamespace))
             throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.RootNamespace)} can not be empty.");
+        if (string.IsNullOrWhiteSpace(Project.PermissionsNamespace))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.PermissionsNamespace)} can not be empty.");
+        if (string.IsNullOrWhiteSpace(Project.SortingColumn))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.SortingColumn)} can not be empty.");
+        if (string.IsNullOrWhiteSpace(Project.AllowClassPath))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.AllowClassPath)} can not be empty.");
     }
 }
 

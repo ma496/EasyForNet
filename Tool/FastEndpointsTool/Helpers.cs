@@ -33,6 +33,9 @@ public static class Helpers
         }
         else
         {
+            var slnFiles = Directory.GetFiles(directory, "*.sln");
+            if (slnFiles.Any())
+                throw new UserFriendlyException("No fetool.json file found.");
             return await GetSetting(dirInfo.Parent?.FullName);
         }
     }

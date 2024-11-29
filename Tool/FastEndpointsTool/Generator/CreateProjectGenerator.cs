@@ -1,5 +1,6 @@
 using FastEndpointsTool.Parsing;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace FastEndpointsTool.Generator;
 
@@ -68,6 +69,27 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
             await ReplaceInFiles(targetPath, "Backend", argument.Name);
+
+            Console.WriteLine("Creating fetool.json configuration...");
+            var feToolConfig = new
+            {
+                Project = new
+                {
+                    Directory = "Source",
+                    Name = argument.Name,
+                    EndpointPath = "Features",
+                    RootNamespace = argument.Name,
+                    PermissionsNamespace = $"{argument.Name}.Auth",
+                    SortingColumn = "CreatedAt",
+                    AllowClassPath = "Auth/Allow.cs"
+                }
+            };
+
+            var feToolJson = JsonSerializer.Serialize(feToolConfig, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+            await File.WriteAllTextAsync(Path.Combine(targetPath, "fetool.json"), feToolJson);
 
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(targetPath, $"{argument.Name}.sln");
