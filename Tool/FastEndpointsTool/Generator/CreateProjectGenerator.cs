@@ -18,36 +18,77 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
         try
         {
-            // Check if template exists for current version
             if (!Directory.Exists(versionedTemplateDir))
             {
-                // Create template directory
+                Console.WriteLine("Creating template directory...");
                 Directory.CreateDirectory(versionedTemplateDir);
 
-                // Clone the repository - escape paths with quotes
-                await ExecuteCommand("git", $"clone {gitUrl} \"{versionedTemplateDir}\"");
+                Console.WriteLine("Cloning template repository...");
+                try
+                {
+                    await ExecuteCommand("git", $"clone {gitUrl} \"{versionedTemplateDir}\"");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to clone template repository. Please ensure Git is installed and accessible. Error: {ex.Message}", ex);
+                }
 
-                // Checkout specific version - escape paths with quotes
-                await ExecuteCommand("git", $"-C \"{versionedTemplateDir}\" checkout tags/v{version}");
+                Console.WriteLine($"Checking out version {version}...");
+                try
+                {
+                    await ExecuteCommand("git", $"-C \"{versionedTemplateDir}\" checkout tags/v{version}");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to checkout version {version}. The version might not exist. Error: {ex.Message}", ex);
+                }
+
+                var gitFolder = Path.Combine(versionedTemplateDir, ".git");
+                if (Directory.Exists(gitFolder))
+                {
+                    Directory.Delete(gitFolder, true);
+                }
             }
 
-            // Copy the Backend template to the target directory
+            Console.WriteLine("Copying template files...");
             var templatePath = Path.Combine(versionedTemplateDir, "Template", "Backend");
             var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, argument.Name);
 
-            // Create target directory if it doesn't exist
-            Directory.CreateDirectory(targetPath);
+            if (Directory.Exists(targetPath))
+            {
+                throw new UserFriendlyException($"Directory '{targetPath}' already exists. Please choose a different project name or location.");
+            }
 
-            // Copy template directory recursively
+            Directory.CreateDirectory(targetPath);
             CopyDirectory(templatePath, targetPath, true);
 
-            // Replace "Backend" with the provided project name in all files and directories
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
             await ReplaceInFiles(targetPath, "Backend", argument.Name);
+
+            Console.WriteLine("Customizing project files...");
+            RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
+            await ReplaceInFiles(targetPath, "Backend", argument.Name);
+
+            Console.WriteLine("Creating solution file...");
+            var solutionPath = Path.Combine(targetPath, $"{argument.Name}.sln");
+            await ExecuteCommand("dotnet", $"new sln -n {argument.Name} -o \"{Path.GetDirectoryName(solutionPath)}\"");
+
+            // Add projects to solution
+            var projectFiles = Directory.GetFiles(targetPath, "*.csproj", SearchOption.AllDirectories);
+            foreach (var projectFile in projectFiles)
+            {
+                Console.WriteLine($"Adding project: {Path.GetFileName(projectFile)}");
+                await ExecuteCommand("dotnet", $"sln \"{solutionPath}\" add \"{projectFile}\"");
+            }
+
+            Console.WriteLine("Project creation completed successfully!");
+        }
+        catch (UserFriendlyException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            // Cleanup versioned directory if something went wrong during cloning
             if (Directory.Exists(versionedTemplateDir) && !Directory.EnumerateFileSystemEntries(versionedTemplateDir).Any())
             {
                 Directory.Delete(versionedTemplateDir, true);
@@ -58,26 +99,69 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
     private async Task ExecuteCommand(string command, string arguments)
     {
-        var process = new Process
+        try
         {
-            StartInfo = new ProcessStartInfo
+            var process = new Process
             {
-                FileName = command,
-                Arguments = arguments,
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = command,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            if (command == "git" && !IsGitInstalled())
+            {
+                throw new Exception("Git is not installed or not accessible in the system PATH.");
+            }
+
+            process.Start();
+
+            var timeoutTask = Task.Delay(TimeSpan.FromMinutes(5));
+            var processTask = process.WaitForExitAsync();
+
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
+
+            var completedTask = await Task.WhenAny(processTask, timeoutTask);
+            if (completedTask == timeoutTask)
+            {
+                process.Kill();
+                throw new Exception($"Command timed out after 5 minutes: {command} {arguments}");
+            }
+
+            if (process.ExitCode != 0)
+                throw new Exception($"Command failed with exit code {process.ExitCode}:\nCommand: {command} {arguments}\nError: {error}\nOutput: {output}");
+        }
+        catch (Exception ex) when (ex is not InvalidOperationException)
+        {
+            throw new Exception($"Failed to execute command: {command} {arguments}\nError: {ex.Message}", ex);
+        }
+    }
+
+    private bool IsGitInstalled()
+    {
+        try
+        {
+            using var process = Process.Start(new ProcessStartInfo
+            {
+                FileName = "git",
+                Arguments = "--version",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
-            }
-        };
-
-        process.Start();
-        var output = await process.StandardOutput.ReadToEndAsync();
-        var error = await process.StandardError.ReadToEndAsync();
-        await process.WaitForExitAsync();
-
-        if (process.ExitCode != 0)
-            throw new Exception($"Command failed: {command} {arguments}\nError: {error}\nOutput: {output}");
+            });
+            return process?.WaitForExit(5000) == true && process.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private void CopyDirectory(string sourceDir, string targetDir, bool recursive)
@@ -105,7 +189,6 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
     private void RenameFilesAndDirectories(string directory, string oldValue, string newValue)
     {
-        // Rename files first
         foreach (string filePath in Directory.GetFiles(directory, "*", SearchOption.AllDirectories))
         {
             string newFilePath = filePath.Replace(oldValue, newValue);
@@ -113,7 +196,6 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
                 File.Move(filePath, newFilePath);
         }
 
-        // Rename directories (bottom-up to avoid breaking paths)
         foreach (string dirPath in Directory.GetDirectories(directory, "*", SearchOption.AllDirectories)
                                           .OrderByDescending(d => d.Length))
         {
@@ -123,9 +205,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
-    private async Task ReplaceInFiles(string directory, string oldValue, string newValue)
+    private async Task ReplaceInFiles(string targetPath, string oldValue, string newValue)
     {
-        foreach (string filePath in Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories))
+        foreach (string filePath in Directory.GetFiles(targetPath, "*.*", SearchOption.AllDirectories))
         {
             if (Path.GetExtension(filePath).ToLower() is ".dll" or ".exe" or ".pdb")
                 continue;
@@ -136,6 +218,21 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
                 content = content.Replace(oldValue, newValue);
                 await File.WriteAllTextAsync(filePath, content);
             }
+        }
+
+        // Update connection string in appsettings files
+        var appsettingsFiles = Directory.GetFiles(targetPath, "appsettings*.json", SearchOption.AllDirectories);
+        foreach (var file in appsettingsFiles)
+        {
+            var content = await File.ReadAllTextAsync(file);
+
+            // Replace main database name
+            content = content.Replace("Database=FastEndpointsTemplate", $"Database={newValue}");
+
+            // Replace test database name
+            content = content.Replace("Database=FastEndpointsTemplateTest", $"Database={newValue}Test");
+
+            await File.WriteAllTextAsync(file, content);
         }
     }
 }

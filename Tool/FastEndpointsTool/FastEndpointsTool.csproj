@@ -8,7 +8,7 @@
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>fet</ToolCommandName>
-    <Version>1.0.4</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>
