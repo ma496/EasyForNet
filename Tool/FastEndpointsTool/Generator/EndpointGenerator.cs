@@ -124,7 +124,7 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
     private async Task GenerateEndpoint(EndpointArgument argument, FeToolSetting setting, string endpointDir, string entityNamespace,
         string groupNamespace, string dataContextNamespace)
     {
-        var fileName = $"{Helpers.EndpointName(argument.Name, argument.Type)}Endpoint.cs";
+        var fileName = $"{argument.Name}Endpoint.cs";
         var filePath = Path.Combine(endpointDir, fileName);
 
         var template = GenerateEndpointCode(argument, setting, entityNamespace, groupNamespace, dataContextNamespace);
