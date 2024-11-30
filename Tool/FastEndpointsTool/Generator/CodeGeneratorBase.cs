@@ -62,8 +62,9 @@ public abstract class CodeGeneratorBase<TArgument>
         var newPermission = $"    public const string {permissionName} = \"{Helpers.UnderscoreToDot(permissionName)}\";";
 
         // Check if the permission already exists
-        if (fileContent.Contains(permissionName))
+        if (Regex.IsMatch(fileContent, $@"\s*public\s+const\s+string\s+{permissionName}\s*=\s*""[^""]*""\s*;"))
         {
+            Console.WriteLine($"Permission {permissionName} already exists.");
             return;
         }
 
