@@ -48,10 +48,10 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             if (updateEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
             {
                 updateEndpointArgument.Permission = Helpers.PermissionName(updateEndpointArgument.Name);
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission, false);
             }
             else if (!string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission, false);
             await GenerateEndpoint(updateEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create list endpoint
@@ -63,10 +63,10 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             if (listEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
             {
                 listEndpointArgument.Permission = Helpers.PermissionName(listEndpointArgument.Name);
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission, false);
             }
             else if (!string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission, false);
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create get endpoint
@@ -78,10 +78,10 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             if (getEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
             {
                 getEndpointArgument.Permission = Helpers.PermissionName(getEndpointArgument.Name);
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission, false);
             }
             else if (!string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission, false);
             await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
             // Create delete endpoint
@@ -92,10 +92,10 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             if (deleteEndpointArgument.Authorization.ToLower() == "true" && string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
             {
                 deleteEndpointArgument.Permission = Helpers.PermissionName(deleteEndpointArgument.Name);
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission, false);
             }
             else if (!string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
-                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission);
+                AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission, false);
             await GenerateEndpoint(deleteEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
         else

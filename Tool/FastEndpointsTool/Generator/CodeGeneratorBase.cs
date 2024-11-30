@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool.Generator;
@@ -40,10 +41,19 @@ public abstract class CodeGeneratorBase<TArgument>
 
     protected string GetEndpointNamespace(string rootNamespace, string endpointPath, string output)
     {
+        // replace slash to dot
+        endpointPath = Regex.Replace(endpointPath, @"[\\/]+", ".");
+        output = Regex.Replace(output, @"[\\/]+", ".");
+        // replace multiple dots to one
+        endpointPath = Regex.Replace(endpointPath, @"\.+", ".");
+        output = Regex.Replace(output, @"\.+", ".");
+        // remove dot at the beginning
+        endpointPath = endpointPath.TrimStart('.');
+        output = output.TrimStart('.');
         return $"{rootNamespace}.{endpointPath}" + (string.IsNullOrWhiteSpace(output) ? string.Empty : $".{output}");
     }
 
-    protected void AddPermissionToAllowClass(string filePath, string permissionName)
+    protected void AddPermissionToAllowClass(string filePath, string permissionName, bool newLineBefore = true)
     {
         // Read the existing Allow.cs file
         var fileContent = File.ReadAllText(filePath);
@@ -65,7 +75,7 @@ public abstract class CodeGeneratorBase<TArgument>
         }
 
         // Add the new permission just before the closing brace
-        var updatedFileContent = fileContent.Substring(0, classEndIndex) + Environment.NewLine + newPermission + Environment.NewLine + fileContent.Substring(classEndIndex);
+        var updatedFileContent = fileContent.Substring(0, classEndIndex) + (newLineBefore ? Environment.NewLine : string.Empty) + newPermission + Environment.NewLine + fileContent.Substring(classEndIndex);
 
         // Save the modified file
         Console.WriteLine($"Add permission {permissionName} to {filePath}");
