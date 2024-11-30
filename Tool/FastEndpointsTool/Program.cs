@@ -24,6 +24,11 @@ internal class Program
                 ShowHelp();
                 return;
             }
+            if (args.Length == 2 && (args[1] == "--help" || args[1] == "-h"))
+            {
+                ShowHelp(args[0]);
+                return;
+            }
             if (args.Length == 1 && (args[0] == "--version" || args[0] == "-v"))
             {
                 Console.WriteLine($"FastEndpointsTool Version v{Helpers.GetVersion()}");
@@ -49,11 +54,11 @@ internal class Program
         }
     }
 
-    static void ShowHelp()
+    static void ShowHelp(string? command = null)
     {
         Console.WriteLine("  use like this");
         Console.WriteLine("  fet {command} {options}");
-        var arguments = ArgumentInfo.Arguments();
+        var arguments = ArgumentInfo.Arguments().Where(a => command == null || (a.Name == command || a.ShortName == command));
         foreach (var arg in arguments)
         {
             Console.WriteLine();

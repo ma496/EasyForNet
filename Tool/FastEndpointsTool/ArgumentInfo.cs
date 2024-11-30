@@ -5,7 +5,7 @@ namespace FastEndpointsTool;
 
 public class ArgumentInfo
 {
-    public Enum Type { get; init; } = null!;
+    public ArgumentType Type { get; init; }
     public string Name { get; init; } = null!;
     public string ShortName { get; init; } = null!;
     public string Description { get; init; } = null!;
