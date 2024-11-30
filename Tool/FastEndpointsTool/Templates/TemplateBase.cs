@@ -174,7 +174,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var index = 0;
         foreach (var p in properties)
         {
-            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(GetPropertyName(p))} {p.Name} {{ get; set; }}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
+            builder.Append($"{(index > 0 ? "\t" : "")}public {ConvertToAlias(GetPropertyName(p))} {p.Name} {{ get; set; }}{NullForgiving(p)}{(index == properties.Count - 1 ? string.Empty : Environment.NewLine)}");
             index++;
         }
         return builder.ToString();
@@ -202,6 +202,20 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
             }
             return typeName;
         }
+    }
+
+    protected string NullForgiving(PropertyInfo property)
+    {
+        if (property.PropertyType == typeof(string))
+        {
+            var nullabilityContext = new NullabilityInfoContext();
+            var nullabilityInfo = nullabilityContext.Create(property);
+            if (nullabilityInfo.WriteState is NullabilityState.NotNull)
+            {
+                return " = null!;";
+            }
+        }
+        return string.Empty;
     }
 
     protected string ConvertToAlias(string typeName)
