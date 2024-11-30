@@ -39,17 +39,17 @@ public abstract class CodeGeneratorBase<TArgument>
         throw new UserFriendlyException("input number out of range");
     }
 
-    protected string GetEndpointNamespace(string rootNamespace, string endpointPath, string output)
+    protected string GetEndpointNamespace(string rootNamespace, string endpointPath, string? output)
     {
         // replace slash to dot
         endpointPath = Regex.Replace(endpointPath, @"[\\/]+", ".");
-        output = Regex.Replace(output, @"[\\/]+", ".");
+        output = Regex.Replace(output ?? string.Empty, @"[\\/]+", ".");
         // replace multiple dots to one
         endpointPath = Regex.Replace(endpointPath, @"\.+", ".");
-        output = Regex.Replace(output, @"\.+", ".");
+        output = Regex.Replace(output ?? string.Empty, @"\.+", ".");
         // remove dot at the beginning
         endpointPath = endpointPath.TrimStart('.');
-        output = output.TrimStart('.');
+        output = output?.TrimStart('.');
         return $"{rootNamespace}.{endpointPath}" + (string.IsNullOrWhiteSpace(output) ? string.Empty : $".{output}");
     }
 
