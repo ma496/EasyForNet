@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
 
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>fet</ToolCommandName>
+    <ToolCommandName>dotnet-fet</ToolCommandName>
     <Version>1.1.1</Version>
   </PropertyGroup>
 
