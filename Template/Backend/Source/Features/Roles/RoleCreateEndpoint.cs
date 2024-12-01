@@ -33,7 +33,7 @@ sealed class RoleCreateEndpoint : Endpoint<RoleCreateRequest, RoleCreateResponse
 sealed class RoleCreateRequest
 {
     public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
 }
 
@@ -51,7 +51,7 @@ sealed class RoleCreateResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
 }
 

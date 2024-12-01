@@ -1,6 +1,6 @@
 using Backend.Auth;
 using Backend.Data;
-using Backend.Infrastructure;
+using Backend.DbErrorHandling;
 using Backend.Services.Identity;
 using Backend.Settings;
 using Microsoft.EntityFrameworkCore;

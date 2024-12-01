@@ -59,7 +59,7 @@ sealed class RoleUpdateRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
 }
 
@@ -76,7 +76,7 @@ sealed class RoleUpdateResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
 }
 

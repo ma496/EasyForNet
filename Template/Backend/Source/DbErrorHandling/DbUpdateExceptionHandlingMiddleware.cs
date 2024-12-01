@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Backend.Infrastructure;
+namespace Backend.DbErrorHandling;
 
 public class DbUpdateExceptionHandlingMiddleware
 {
@@ -22,7 +22,7 @@ public class DbUpdateExceptionHandlingMiddleware
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             context.Response.ContentType = "application/json";
-            var error = ex.InnerException is PostgresException pgEx ? DbErrorHandler.GetUniqueViolationMessage(pgEx) : (null, ex.Message);
+            var error = ex.InnerException is PostgresException pgEx ? DbErrorHandler.GetErrorMessage(pgEx) : (null, ex.Message);
             var response = new
             {
                 type = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1",

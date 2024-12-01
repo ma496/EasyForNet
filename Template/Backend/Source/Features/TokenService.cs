@@ -17,8 +17,8 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
         Setup(o =>
         {
             o.TokenSigningKey = _authSetting.JwtKey;
-            o.AccessTokenValidity = _authSetting.AccessTokenValidity;
-            o.RefreshTokenValidity = _authSetting.RefreshTokenValidity;
+            o.AccessTokenValidity = TimeSpan.FromMinutes(_authSetting.AccessTokenValidity);
+            o.RefreshTokenValidity = TimeSpan.FromHours(_authSetting.RefreshTokenValidity);
 
             o.Endpoint("refresh-token", ep =>
             {
