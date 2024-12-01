@@ -27,6 +27,7 @@ bld.Services.AddScoped<DataSeeder>();
 bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
+bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 
 
 var app = bld.Build();

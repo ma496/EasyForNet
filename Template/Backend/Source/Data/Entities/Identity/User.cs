@@ -13,7 +13,8 @@ public class User : AuditableEntity<Guid>, IExcludeProperties
     public bool IsActive { get; set; } = true;
     public DateTime? LastLoginAt { get; set; }
 
-    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public ICollection<UserRole> UserRoles { get; set; } = [];
+    public ICollection<AuthToken> AuthTokens { get; set; } = [];
 
     public static List<string> ExcludeProperties()
     {
