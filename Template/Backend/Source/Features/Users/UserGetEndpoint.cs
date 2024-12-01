@@ -54,17 +54,17 @@ sealed class UserGetValidator : Validator<UserGetRequest>
 sealed class UserGetResponse
 {
     public Guid Id { get; set; }
-	public string Username { get; set; }
-	public string Email { get; set; }
-	public string FirstName { get; set; }
-	public string LastName { get; set; }
+	public string Username { get; set; } = null!;
+	public string Email { get; set; } = null!;
+	public string FirstName { get; set; } = null!;
+	public string LastName { get; set; } = null!;
 	public bool IsActive { get; set; }
 	public DateTime CreatedAt { get; set; }
 	public Guid? CreatedBy { get; set; }
 	public DateTime? UpdatedAt { get; set; }
 	public Guid? UpdatedBy { get; set; }
 
-    public List<Guid> Roles { get; set; } = new();
+    public List<Guid> Roles { get; set; } = [];
 }
 
 sealed class UserGetMapper : Mapper<UserGetRequest, UserGetResponse, User>

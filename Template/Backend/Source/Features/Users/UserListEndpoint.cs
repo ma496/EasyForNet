@@ -56,16 +56,16 @@ sealed class UserListValidator : Validator<UserListRequest>
 sealed class UserListResponse
 {
     public Guid Id { get; set; }
-	public string Username { get; set; }
-	public string Email { get; set; }
-	public string FirstName { get; set; }
-	public string LastName { get; set; }
-	public bool IsActive { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public Guid? CreatedBy { get; set; }
-	public DateTime? UpdatedAt { get; set; }
-	public Guid? UpdatedBy { get; set; }
-    public List<Guid> Roles { get; set; } = new();
+    public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public Guid? CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public Guid? UpdatedBy { get; set; }
+    public List<Guid> Roles { get; set; } = [];
 }
 
 sealed class UserListMapper : Mapper<UserListRequest, List<UserListResponse>, List<User>>
@@ -75,15 +75,15 @@ sealed class UserListMapper : Mapper<UserListRequest, List<UserListResponse>, Li
         return e.Select(entity => new UserListResponse
         {
             Id = entity.Id,
-			Username = entity.Username,
-			Email = entity.Email,
-			FirstName = entity.FirstName,
-			LastName = entity.LastName,
-			IsActive = entity.IsActive,
-			CreatedAt = entity.CreatedAt,
-			CreatedBy = entity.CreatedBy,
-			UpdatedAt = entity.UpdatedAt,
-			UpdatedBy = entity.UpdatedBy,
+            Username = entity.Username,
+            Email = entity.Email,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            IsActive = entity.IsActive,
+            CreatedAt = entity.CreatedAt,
+            CreatedBy = entity.CreatedBy,
+            UpdatedAt = entity.UpdatedAt,
+            UpdatedBy = entity.UpdatedBy,
             Roles = entity.UserRoles.Select(x => x.RoleId).ToList(),
         }).ToList();
     }

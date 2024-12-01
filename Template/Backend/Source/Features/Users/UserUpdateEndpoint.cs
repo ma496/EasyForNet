@@ -58,32 +58,34 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
 sealed class UserUpdateRequest
 {
     public Guid Id { get; set; }
-    public string Username { get; set; }
-    public string Email { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
     public bool IsActive { get; set; }
-    public List<Guid> Roles { get; set; } = new();
+    public List<Guid> Roles { get; set; } = [];
 }
 
 sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 {
     public UserUpdateValidator()
     {
-        RuleFor(x => x.Username).NotEmpty().MinimumLength(3);
-        RuleFor(x => x.Email).NotEmpty().EmailAddress();
+        RuleFor(x => x.Username).NotEmpty().MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(100);
+        RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50);
     }
 }
 
 sealed class UserUpdateResponse
 {
     public Guid Id { get; set; }
-    public string Username { get; set; }
-    public string Email { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
     public bool IsActive { get; set; }
-    public List<Guid> Roles { get; set; } = new();
+    public List<Guid> Roles { get; set; } = [];
 }
 
 sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, User>

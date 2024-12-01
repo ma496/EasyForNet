@@ -58,8 +58,8 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
 sealed class RoleUpdateRequest
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public List<Guid> Permissions { get; set; } = [];
 }
 
@@ -67,16 +67,16 @@ sealed class RoleUpdateValidator : Validator<RoleUpdateRequest>
 {
     public RoleUpdateValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().MaximumLength(256);
-        RuleFor(x => x.Description).MaximumLength(1024);
+        RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.Description).MinimumLength(10).MaximumLength(255);
     }
 }
 
 sealed class RoleUpdateResponse
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public List<Guid> Permissions { get; set; } = [];
 }
 

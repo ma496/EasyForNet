@@ -61,7 +61,7 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
 sealed class {arg.Name}Response
 {{
     public bool Success {{ get; set; }}
-    public string Message {{ get; set; }}
+    public string Message {{ get; set; }} = null!;
 }}
 ";
 
