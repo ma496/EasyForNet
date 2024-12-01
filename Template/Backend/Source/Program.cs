@@ -2,6 +2,7 @@ using Backend.Auth;
 using Backend.Data;
 using Backend.Infrastructure;
 using Backend.Services.Identity;
+using Backend.Settings;
 using Microsoft.EntityFrameworkCore;
 
 var bld = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ bld.Services.AddAuthenticationJwtBearer(s => s.SigningKey = bld.Configuration["A
 bld.Services.AddAuthorization();
 bld.Services.AddHttpContextAccessor();
 
+bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
 bld.Services.AddScoped<IUserService, UserService>();
 bld.Services.AddScoped<IRoleService, RoleService>();
 bld.Services.AddScoped<IPermissionService, PermissionService>();

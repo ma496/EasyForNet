@@ -1,21 +1,24 @@
 using Backend.Extensions;
 using Backend.Services.Identity;
+using Backend.Settings;
+using Microsoft.Extensions.Options;
 
 namespace Backend.Features;
 
 public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 {
     private readonly IUserService _userService;
+    private readonly AuthSetting _authSetting;
 
-    public TokenService(IConfiguration config, IUserService userService)
+    public TokenService(IUserService userService, IOptions<AuthSetting> authSetting)
     {
         _userService = userService;
-
+        _authSetting = authSetting.Value;
         Setup(o =>
         {
-            o.TokenSigningKey = config["Auth:JwtKey"];
-            o.AccessTokenValidity = TimeSpan.FromMinutes(5);
-            o.RefreshTokenValidity = TimeSpan.FromHours(4);
+            o.TokenSigningKey = _authSetting.JwtKey;
+            o.AccessTokenValidity = _authSetting.AccessTokenValidity;
+            o.RefreshTokenValidity = _authSetting.RefreshTokenValidity;
 
             o.Endpoint("refresh-token", ep =>
             {

@@ -26,8 +26,8 @@ public class UserCreateTests : AppTestsBase
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, ProblemDetails>(request);
 
         rsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        res.Errors.Count().Should().Be(3);
-        res.Errors.Select(e => e.Name).Should().Equal("username", "email", "password");
+        res.Errors.Count().Should().Be(5);
+        res.Errors.Select(e => e.Name).Should().Equal("username", "email", "password", "firstName", "lastName");
     }
 
     [Fact]
