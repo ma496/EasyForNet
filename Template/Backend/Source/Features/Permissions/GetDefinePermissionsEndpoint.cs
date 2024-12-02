@@ -24,7 +24,7 @@ sealed class GetDefinePermissionsEndpoint : EndpointWithoutRequest<GetDefinePerm
         await SendAsync(new GetDefinePermissionsResponse
         {
             Permissions = permissions
-        });
+        }, cancellation: cancellationToken);
     }
 }
 

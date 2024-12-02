@@ -32,7 +32,7 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, List<{arg.Name}Res
     {{
         // get entities from db
         var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.AsNoTracking().OrderByDescending(x => x.{(!string.IsNullOrWhiteSpace(setting.Project.SortingColumn) ? setting.Project.SortingColumn : "CreatedAt")}).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
-        await SendAsync(Map.FromEntity(entities));
+        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
     }}
 }}
 

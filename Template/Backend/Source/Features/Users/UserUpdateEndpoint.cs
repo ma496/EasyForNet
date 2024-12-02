@@ -19,7 +19,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
     {
         Put("{id}");
         Group<UsersGroup>();
-        Permissions(Allow.Users_Update);
+        Permissions(Allow.User_Update);
     }
 
     public override async Task HandleAsync(UserUpdateRequest request, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
@@ -51,7 +51,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
 
         // save entity to db
         await _userService.UpdateAsync(entity);
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 

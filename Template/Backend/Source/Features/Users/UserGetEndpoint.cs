@@ -18,7 +18,7 @@ sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGet
     {
         Get("{id}");
         Group<UsersGroup>();
-        Permissions(Allow.Users_View);
+        Permissions(Allow.User_View);
     }
 
     public override async Task HandleAsync(UserGetRequest request, CancellationToken cancellationToken)
@@ -30,11 +30,11 @@ sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGet
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
 
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 
@@ -54,15 +54,15 @@ sealed class UserGetValidator : Validator<UserGetRequest>
 sealed class UserGetResponse
 {
     public Guid Id { get; set; }
-	public string Username { get; set; } = null!;
-	public string Email { get; set; } = null!;
-	public string? FirstName { get; set; }
-	public string? LastName { get; set; }
-	public bool IsActive { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public Guid? CreatedBy { get; set; }
-	public DateTime? UpdatedAt { get; set; }
-	public Guid? UpdatedBy { get; set; }
+    public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public Guid? CreatedBy { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public Guid? UpdatedBy { get; set; }
 
     public List<Guid> Roles { get; set; } = [];
 }
@@ -74,15 +74,15 @@ sealed class UserGetMapper : Mapper<UserGetRequest, UserGetResponse, User>
         return new UserGetResponse
         {
             Id = e.Id,
-			Username = e.Username,
-			Email = e.Email,
-			FirstName = e.FirstName,
-			LastName = e.LastName,
-			IsActive = e.IsActive,
-			CreatedAt = e.CreatedAt,
-			CreatedBy = e.CreatedBy,
-			UpdatedAt = e.UpdatedAt,
-			UpdatedBy = e.UpdatedBy,
+            Username = e.Username,
+            Email = e.Email,
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            IsActive = e.IsActive,
+            CreatedAt = e.CreatedAt,
+            CreatedBy = e.CreatedBy,
+            UpdatedAt = e.UpdatedAt,
+            UpdatedBy = e.UpdatedBy,
             Roles = e.UserRoles.Select(x => x.RoleId).ToList(),
         };
     }

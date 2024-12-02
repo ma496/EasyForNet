@@ -18,7 +18,7 @@ sealed class UserCreateEndpoint : Endpoint<UserCreateRequest, UserCreateResponse
     {
         Post("");
         Group<UsersGroup>();
-        Permissions(Allow.Users_Create);
+        Permissions(Allow.User_Create);
     }
 
     public override async Task HandleAsync(UserCreateRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ sealed class UserCreateEndpoint : Endpoint<UserCreateRequest, UserCreateResponse
         var entity = Map.ToEntity(request);
         // save entity to db
         await _userService.CreateAsync(entity, request.Password);
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 

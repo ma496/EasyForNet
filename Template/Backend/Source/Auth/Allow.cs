@@ -1,14 +1,15 @@
+// ReSharper disable InconsistentNaming
 namespace Backend.Auth;
 
 public partial class Allow
 {
-    public const string Users_View = "Users.View";
-    public const string Users_Create = "Users.Create";
-    public const string Users_Update = "Users.Update";
-    public const string Users_Delete = "Users.Delete";
+    public const string User_View = "User.View";
+    public const string User_Create = "User.Create";
+    public const string User_Update = "User.Update";
+    public const string User_Delete = "User.Delete";
 
-    public const string Roles_Create = "Roles.Create";
-    public const string Roles_Update = "Roles.Update";
-    public const string Roles_View = "Roles.View";
-    public const string Roles_Delete = "Roles.Delete";
+    public const string Role_View = "Role.View";
+    public const string Role_Create = "Role.Create";
+    public const string Role_Update = "Role.Update";
+    public const string Role_Delete = "Role.Delete";
 }

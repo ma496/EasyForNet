@@ -5,15 +5,15 @@ public class PermissionDefinitionProvider
     public void Define(PermissionDefinitionContext context)
     {
         var usersPermission = context.AddPermission("Users", "Users");
-        usersPermission.AddChild(Allow.Users_View, "View");
-        usersPermission.AddChild(Allow.Users_Create, "Create");
-        usersPermission.AddChild(Allow.Users_Update, "Update");
-        usersPermission.AddChild(Allow.Users_Delete, "Delete");
+        usersPermission.AddChild(Allow.User_View, "View");
+        usersPermission.AddChild(Allow.User_Create, "Create");
+        usersPermission.AddChild(Allow.User_Update, "Update");
+        usersPermission.AddChild(Allow.User_Delete, "Delete");
 
         var rolesPermission = context.AddPermission("Roles", "Roles");
-        rolesPermission.AddChild(Allow.Roles_View, "View");
-        rolesPermission.AddChild(Allow.Roles_Create, "Create");
-        rolesPermission.AddChild(Allow.Roles_Update, "Update");
-        rolesPermission.AddChild(Allow.Roles_Delete, "Delete");
+        rolesPermission.AddChild(Allow.Role_View, "View");
+        rolesPermission.AddChild(Allow.Role_Create, "Create");
+        rolesPermission.AddChild(Allow.Role_Update, "Update");
+        rolesPermission.AddChild(Allow.Role_Delete, "Delete");
     }
 }

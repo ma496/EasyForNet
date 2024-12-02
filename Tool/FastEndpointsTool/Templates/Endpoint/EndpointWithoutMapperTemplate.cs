@@ -22,7 +22,7 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
         await SendAsync(new {arg.Name}Response
         {{
             // Add your response properties here
-        }});
+        }}, cancellation: cancellationToken);
     }}
 }}
 

@@ -19,7 +19,7 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, List<RoleListResponse>
     {
         Get("");
         Group<RolesGroup>();
-        Permissions(Allow.Roles_View);
+        Permissions(Allow.Role_View);
     }
 
     public override async Task HandleAsync(RoleListRequest request, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, List<RoleListResponse>
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
             .ToListAsync(cancellationToken);
-        await SendAsync(Map.FromEntity(entities));
+        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
     }
 }
 

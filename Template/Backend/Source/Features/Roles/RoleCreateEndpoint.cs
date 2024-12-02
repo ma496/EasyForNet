@@ -18,7 +18,7 @@ sealed class RoleCreateEndpoint : Endpoint<RoleCreateRequest, RoleCreateResponse
     {
         Post("");
         Group<RolesGroup>();
-        Permissions(Allow.Roles_Create);
+        Permissions(Allow.Role_Create);
     }
 
     public override async Task HandleAsync(RoleCreateRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ sealed class RoleCreateEndpoint : Endpoint<RoleCreateRequest, RoleCreateResponse
         var entity = Map.ToEntity(request);
         // save entity to db
         await _roleService.CreateAsync(entity);
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 

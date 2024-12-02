@@ -31,17 +31,17 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         // get entity from db
-        var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync(request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}, cancellationToken);" : $"new {arg.Entity}()")}; 
+        var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync([request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}], cancellationToken: cancellationToken);" : $"new {arg.Entity}()")}; 
         if (entity == null)
         {{
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }}
 
         // Delete the entity from the db
         {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext.{arg.PluralName}.Remove(entity);" : RemoveLine(28))}
         {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine(29))}
-        await SendAsync(new {arg.Name}Response {{ Success = true }});
+        await SendAsync(new {arg.Name}Response {{ Success = true }}, cancellation: cancellationToken);
     }}
 }}
 

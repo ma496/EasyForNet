@@ -19,7 +19,7 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, List<UserListResponse>
     {
         Get("");
         Group<UsersGroup>();
-        Permissions(Allow.Users_View);
+        Permissions(Allow.User_View);
     }
 
     public override async Task HandleAsync(UserListRequest request, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, List<UserListResponse>
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
             .ToListAsync(cancellationToken);
-        await SendAsync(Map.FromEntity(entities));
+        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
     }
 }
 

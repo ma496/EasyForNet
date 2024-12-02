@@ -37,7 +37,7 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
         // save entity to db
         {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.AddAsync(entity, cancellationToken);" : RemoveLine(21))}
         {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine(22))}
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }}
 }}
 

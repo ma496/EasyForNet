@@ -19,7 +19,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
     {
         Put("{id}");
         Group<RolesGroup>();
-        Permissions(Allow.Roles_Update);
+        Permissions(Allow.Role_Update);
     }
 
     public override async Task HandleAsync(RoleUpdateRequest request, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
@@ -51,7 +51,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
 
         // save entity to db
         await _roleService.UpdateAsync(entity);
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 

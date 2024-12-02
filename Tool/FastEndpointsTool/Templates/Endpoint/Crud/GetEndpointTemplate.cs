@@ -32,14 +32,14 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         // get entity from db
-        var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync(request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}, cancellationToken);" : $"new {arg.Entity}()")}; 
+        var entity = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.{arg.PluralName}.FindAsync([request.{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name}], cancellationToken: cancellationToken);" : $"new {arg.Entity}()")}; 
         if (entity == null)
         {{
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }}
 
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }}
 }}
 

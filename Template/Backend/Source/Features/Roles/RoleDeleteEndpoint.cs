@@ -17,7 +17,7 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
     {
         Delete("{id}");
         Group<RolesGroup>();
-        Permissions(Allow.Roles_Delete);
+        Permissions(Allow.Role_Delete);
     }
 
     public override async Task HandleAsync(RoleDeleteRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
         var entity = await _roleService.GetByIdAsync(request.Id);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
@@ -34,7 +34,7 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
 
         // Delete the entity from the db
         await _roleService.DeleteAsync(entity);
-        await SendAsync(new RoleDeleteResponse { Success = true });
+        await SendAsync(new RoleDeleteResponse { Success = true }, cancellation: cancellationToken);
     }
 }
 

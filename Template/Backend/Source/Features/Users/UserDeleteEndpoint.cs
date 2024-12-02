@@ -17,7 +17,7 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
     {
         Delete("{id}");
         Group<UsersGroup>();
-        Permissions(Allow.Users_Delete);
+        Permissions(Allow.User_Delete);
     }
 
     public override async Task HandleAsync(UserDeleteRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
         var entity = await _userService.GetByIdAsync(request.Id);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
@@ -34,7 +34,7 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
 
         // Delete the entity from the db
         await _userService.DeleteAsync(request.Id);
-        await SendAsync(new UserDeleteResponse { Success = true });
+        await SendAsync(new UserDeleteResponse { Success = true }, cancellation: cancellationToken);
     }
 }
 

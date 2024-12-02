@@ -18,7 +18,7 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
     {
         Get("{id}");
         Group<RolesGroup>();
-        Permissions(Allow.Roles_View);
+        Permissions(Allow.Role_View);
     }
 
     public override async Task HandleAsync(RoleGetRequest request, CancellationToken cancellationToken)
@@ -29,11 +29,11 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(cancellationToken);
             return;
         }
 
-        await SendAsync(Map.FromEntity(entity));
+        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
     }
 }
 
