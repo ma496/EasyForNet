@@ -24,7 +24,6 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 
             o.Endpoint("account/refresh-token", ep =>
             {
-                ep.Summary(s => s.Summary = "this is the refresh token endpoint");
             });
         });
     }
