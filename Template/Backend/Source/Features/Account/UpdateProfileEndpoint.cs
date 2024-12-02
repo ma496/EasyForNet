@@ -1,15 +1,15 @@
-using FluentValidation;
 using Backend.Data;
 using Backend.Services.Identity;
+using FluentValidation;
 
-namespace Backend.Features.Users;
+namespace Backend.Features.Account;
 
-sealed class UserUpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
+sealed class UpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
 {
     private readonly AppDbContext _dbContext;
     private readonly ICurrentUserService _currentUserService;
 
-    public UserUpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    public UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     {
         _dbContext = dbContext;
         _currentUserService = currentUserService;
@@ -17,8 +17,8 @@ sealed class UserUpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, User
 
     public override void Configure()
     {
-        Put("update-profile");
-        Group<UsersGroup>();
+        Post("update-profile");
+        Group<AccountGroup>();
     }
 
     public override async Task HandleAsync(UserUpdateProfileRequest request, CancellationToken cancellationToken)

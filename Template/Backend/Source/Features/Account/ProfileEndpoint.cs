@@ -2,14 +2,14 @@ using Backend.Data;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Features.Users;
+namespace Backend.Features.Account;
 
-sealed class UserProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
+sealed class ProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
 {
     private readonly AppDbContext _dbContext;
     private readonly ICurrentUserService _currentUserService;
 
-    public UserProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    public ProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     {
         _dbContext = dbContext;
         _currentUserService = currentUserService;
@@ -18,7 +18,7 @@ sealed class UserProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
     public override void Configure()
     {
         Get("profile");
-        Group<UsersGroup>();
+        Group<AccountGroup>();
     }
 
     public override async Task HandleAsync(CancellationToken cancellationToken)

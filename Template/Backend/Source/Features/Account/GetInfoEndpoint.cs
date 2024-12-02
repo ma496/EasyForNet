@@ -2,14 +2,14 @@ using Backend.Data;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Features.Users;
+namespace Backend.Features.Account;
 
-sealed class UserGetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
+sealed class GetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
 {
     private readonly AppDbContext _dbContext;
     private readonly ICurrentUserService _currentUserService;
 
-    public UserGetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    public GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     {
         _dbContext = dbContext;
         _currentUserService = currentUserService;
@@ -18,7 +18,7 @@ sealed class UserGetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
     public override void Configure()
     {
         Get("get-info");
-        Group<UsersGroup>();
+        Group<AccountGroup>();
     }
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
