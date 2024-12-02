@@ -111,6 +111,13 @@ public class UserService : IUserService
         return await _context.UserRoles.AnyAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
     }
 
+    public async Task<User> UpdatePasswordAsync(User user, string password)
+    {
+        user.PasswordHash = HashPassword(password);
+        await UpdateAsync(user);
+        return user;
+    }
+
     private string HashPassword(string password)
     {
         using var sha256 = SHA256.Create();
