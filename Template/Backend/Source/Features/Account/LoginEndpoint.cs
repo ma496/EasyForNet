@@ -1,7 +1,7 @@
 using Backend.Extensions;
 using Backend.Services.Identity;
 
-namespace Backend.Features;
+namespace Backend.Features.Account;
 
 public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
 {
@@ -15,6 +15,7 @@ public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
     public override void Configure()
     {
         Post("login");
+        Group<AccountGroup>();
         AllowAnonymous();
     }
 

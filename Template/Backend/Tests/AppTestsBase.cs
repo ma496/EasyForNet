@@ -1,5 +1,5 @@
 using System.Net.Http.Headers;
-using Backend.Features;
+using Backend.Features.Account;
 using FastEndpoints.Security;
 
 namespace Tests;

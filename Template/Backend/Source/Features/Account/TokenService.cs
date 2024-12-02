@@ -3,7 +3,7 @@ using Backend.Services.Identity;
 using Backend.Settings;
 using Microsoft.Extensions.Options;
 
-namespace Backend.Features;
+namespace Backend.Features.Account;
 
 public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 {
@@ -22,7 +22,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
             o.AccessTokenValidity = TimeSpan.FromMinutes(_authSetting.AccessTokenValidity);
             o.RefreshTokenValidity = TimeSpan.FromHours(_authSetting.RefreshTokenValidity);
 
-            o.Endpoint("refresh-token", ep =>
+            o.Endpoint("account/refresh-token", ep =>
             {
                 ep.Summary(s => s.Summary = "this is the refresh token endpoint");
             });
