@@ -1,6 +1,6 @@
 using Backend.Features.Users;
 
-namespace Tests.Users;
+namespace Tests.Features.Users;
 
 public class UserGetTests : AppTestsBase
 {

@@ -2,7 +2,8 @@ using Backend.Features.Users;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tests.Seeder;
-namespace Tests.Users;
+
+namespace Tests.Features.Users;
 
 public class UserUpdateTests : AppTestsBase
 {

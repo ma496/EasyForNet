@@ -2,7 +2,7 @@ using Backend.Features.Users;
 using Backend.Services.Identity;
 using Tests.Seeder;
 
-namespace Tests.Users;
+namespace Tests.Features.Users;
 
 public class UserDeleteTests : AppTestsBase
 {

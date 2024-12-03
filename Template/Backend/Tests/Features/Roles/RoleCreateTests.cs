@@ -2,7 +2,7 @@ using Backend.Features.Roles;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.Roles;
+namespace Tests.Features.Roles;
 
 public class RoleCreateTests : AppTestsBase
 {
