@@ -3,6 +3,8 @@ using Backend.Data;
 using Backend.DbErrorHandling;
 using Backend.Services.Identity;
 using Backend.Settings;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 
 var bld = WebApplication.CreateBuilder(args);
@@ -18,7 +20,23 @@ bld.Services.AddAuthenticationJwtBearer(s => s.SigningKey = bld.Configuration["A
 bld.Services.AddAuthorization();
 bld.Services.AddHttpContextAccessor();
 
+// Add Hangfire services with PostgreSQL storage
+bld.Services.AddHangfire(config =>
+{
+    config.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+          .UseSimpleAssemblyNameTypeSerializer()
+          .UseRecommendedSerializerSettings()
+          .UsePostgreSqlStorage(options =>
+              options.UseNpgsqlConnection(bld.Configuration.GetConnectionString("DefaultConnection")));
+});
+
+// Add the Hangfire server
+bld.Services.AddHangfireServer();
+
+// configure settings
 bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
+
+// add services
 bld.Services.AddScoped<IUserService, UserService>();
 bld.Services.AddScoped<IRoleService, RoleService>();
 bld.Services.AddScoped<IPermissionService, PermissionService>();
@@ -31,6 +49,12 @@ bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 
 
 var app = bld.Build();
+
+// Configure Hangfire dashboard
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = [] // Replace with real authorization in production
+});
 
 app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
 app.UseAuthentication()
@@ -47,9 +71,9 @@ app.UseAuthentication()
    .UseSwaggerGen();
 
 
-// migrate database and seed data on startup
 using (var scope = app.Services.CreateScope())
 {
+    // migrate database and seed data on startup
     if (!app.Environment.IsEnvironment("Testing"))
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -60,6 +84,8 @@ using (var scope = app.Services.CreateScope())
         var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
         await seeder.SeedAsync();
     }
+    // add recurring jobs
+    RecurringJob.AddOrUpdate<IAuthTokenService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
 }
 
 app.Run();

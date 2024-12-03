@@ -34,4 +34,9 @@ public class AuthTokenService : IAuthTokenService
         return await _dbContext.AuthTokens
             .AnyAsync(at => at.UserId == userId && at.RefreshToken == req.RefreshToken && at.RefreshExpiry > DateTime.UtcNow);
     }
+
+    public async Task DeleteExpiredTokensAsync()
+    {
+        await _dbContext.AuthTokens.Where(at => at.RefreshExpiry < DateTime.UtcNow).ExecuteDeleteAsync();
+    }
 }
