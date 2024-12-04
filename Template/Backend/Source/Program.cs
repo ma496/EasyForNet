@@ -1,3 +1,4 @@
+using System.Text;
 using Backend.Auth;
 using Backend.Data;
 using Backend.DbErrorHandling;
@@ -5,7 +6,10 @@ using Backend.Services.Identity;
 using Backend.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var bld = WebApplication.CreateBuilder(args);
 
@@ -16,7 +20,27 @@ bld.Services
 bld.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(bld.Configuration.GetConnectionString("DefaultConnection")));
 
-bld.Services.AddAuthenticationJwtBearer(s => s.SigningKey = bld.Configuration["Auth:JwtKey"]);
+bld.Services.AddAuthentication(opt =>
+{
+    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(s => s.TokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true,
+    ValidIssuer = bld.Configuration["Auth:Jwt:Issuer"],
+    ValidAudience = bld.Configuration["Auth:Jwt:Audience"],
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(bld.Configuration["Auth:Jwt:Key"] ?? string.Empty))
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+{
+    o.LoginPath = "/account/login";
+    o.ExpireTimeSpan = TimeSpan.FromHours(bld.Configuration.GetValue<int>("Auth:RefreshTokenValidity"));
+    o.SlidingExpiration = true;
+});
 bld.Services.AddAuthorization();
 bld.Services.AddHttpContextAccessor();
 

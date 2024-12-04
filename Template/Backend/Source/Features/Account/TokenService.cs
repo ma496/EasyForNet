@@ -1,4 +1,3 @@
-using Backend.Extensions;
 using Backend.Services.Identity;
 using Backend.Settings;
 using Microsoft.Extensions.Options;
@@ -18,7 +17,9 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
         _authTokenService = authTokenService;
         Setup(o =>
         {
-            o.TokenSigningKey = _authSetting.JwtKey;
+            o.TokenSigningKey = _authSetting.Jwt.Key;
+            o.Issuer = _authSetting.Jwt.Issuer;
+            o.Audience = _authSetting.Jwt.Audience;
             o.AccessTokenValidity = TimeSpan.FromMinutes(_authSetting.AccessTokenValidity);
             o.RefreshTokenValidity = TimeSpan.FromHours(_authSetting.RefreshTokenValidity);
 
@@ -71,6 +72,6 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);
-        privileges.AddUserClaims(user, roles, permissions);
+        privileges.Claims.AddRange(Helper.CreateClaims(user, roles, permissions));
     }
 }
