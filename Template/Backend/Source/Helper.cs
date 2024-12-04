@@ -10,11 +10,11 @@ public static class Helper
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimConstants.UserId, user.Id.ToString()),
-            new Claim(ClaimConstants.Username, user.Username),
-            new Claim(ClaimConstants.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Email, user.Email),
         };
-        claims.AddRange(roles.Select(r => new Claim(ClaimConstants.Role, r)));
+        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
         claims.AddRange(permissions.Select(p => new Claim(ClaimConstants.Permission, p)));
         return claims;
     }

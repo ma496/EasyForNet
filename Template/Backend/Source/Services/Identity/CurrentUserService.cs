@@ -15,18 +15,18 @@ public class CurrentUserService : ICurrentUserService
 
     public Guid? GetCurrentUserId()
     {
-        var userIdClaim = _user?.FindFirst(ClaimConstants.UserId)?.Value;
+        var userIdClaim = _user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         return userIdClaim != null ? Guid.Parse(userIdClaim) : null;
     }
 
     public string? GetCurrentUsername()
     {
-        return _user?.FindFirst(ClaimConstants.Username)?.Value;
+        return _user?.FindFirst(ClaimTypes.Name)?.Value;
     }
 
     public string? GetCurrentEmail()
     {
-        return _user?.FindFirst(ClaimConstants.Email)?.Value;
+        return _user?.FindFirst(ClaimTypes.Email)?.Value;
     }
 
     public bool IsAuthenticated()
@@ -47,7 +47,7 @@ public class CurrentUserService : ICurrentUserService
 
     public IEnumerable<string> GetCurrentUserRoles()
     {
-        var roles = _user?.FindAll(ClaimConstants.Role).Select(x => x.Value);
+        var roles = _user?.FindAll(ClaimTypes.Role).Select(x => x.Value);
         return roles ?? Enumerable.Empty<string>();
     }
 
@@ -56,4 +56,4 @@ public class CurrentUserService : ICurrentUserService
         var permissions = _user?.FindAll(ClaimConstants.Permission).Select(x => x.Value);
         return permissions ?? Enumerable.Empty<string>();
     }
-} 
+}

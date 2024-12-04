@@ -1,4 +1,4 @@
-using System.Text;
+using System.Security.Claims;
 using Backend.Auth;
 using Backend.Data;
 using Backend.DbErrorHandling;
@@ -9,7 +9,7 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 
 var bld = WebApplication.CreateBuilder(args);
 
@@ -20,27 +20,26 @@ bld.Services
 bld.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(bld.Configuration.GetConnectionString("DefaultConnection")));
 
-bld.Services.AddAuthentication(opt =>
-{
-    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(s => s.TokenValidationParameters = new TokenValidationParameters
-{
-    ValidateIssuer = true,
-    ValidateAudience = true,
-    ValidateLifetime = true,
-    ValidateIssuerSigningKey = true,
-    ValidIssuer = bld.Configuration["Auth:Jwt:Issuer"],
-    ValidAudience = bld.Configuration["Auth:Jwt:Audience"],
-    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(bld.Configuration["Auth:Jwt:Key"] ?? string.Empty))
-})
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
-{
-    o.LoginPath = "/account/login";
-    o.ExpireTimeSpan = TimeSpan.FromHours(bld.Configuration.GetValue<int>("Auth:RefreshTokenValidity"));
-    o.SlidingExpiration = true;
-});
+bld.Services
+    .AddAuthenticationCookie(TimeSpan.FromMinutes(bld.Configuration.GetValue<int>("Auth:AccessTokenValidity")))
+    .AddAuthenticationJwtBearer(x => x.SigningKey = bld.Configuration["Auth:Jwt:Key"])
+    .AddAuthentication(o =>
+   {
+       o.DefaultScheme = "Jwt_Or_Cookie";
+       o.DefaultAuthenticateScheme = "Jwt_Or_Cookie";
+   })
+   .AddPolicyScheme("Jwt_Or_Cookie", "Jwt_Or_Cookie", o =>
+   {
+       o.ForwardDefaultSelector = ctx =>
+       {
+           if (ctx.Request.Headers.TryGetValue(HeaderNames.Authorization, out var authHeader) &&
+               authHeader.FirstOrDefault()?.StartsWith("Bearer ") is true)
+           {
+               return JwtBearerDefaults.AuthenticationScheme;
+           }
+           return CookieAuthenticationDefaults.AuthenticationScheme;
+       };
+   });
 bld.Services.AddAuthorization();
 bld.Services.AddHttpContextAccessor();
 
@@ -74,12 +73,6 @@ bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 
 var app = bld.Build();
 
-// Configure Hangfire dashboard
-app.UseHangfireDashboard("/hangfire", new DashboardOptions
-{
-    Authorization = [] // Replace with real authorization in production
-});
-
 app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
 app.UseAuthentication()
    .UseAuthorization()
@@ -89,10 +82,16 @@ app.UseAuthentication()
            c.Binding.ReflectionCache.AddFromBackend();
            c.Errors.UseProblemDetails();
            c.Endpoints.RoutePrefix = "api/v1";
+           c.Security.RoleClaimType = ClaimTypes.Role;
            c.Security.PermissionsClaimType = ClaimConstants.Permission;
-           c.Security.RoleClaimType = ClaimConstants.Role;
        })
    .UseSwaggerGen();
+
+// Configure Hangfire dashboard
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = [new HangfireAuthorizationFilter()]
+});
 
 
 using (var scope = app.Services.CreateScope())

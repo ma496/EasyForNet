@@ -1,7 +1,5 @@
 using System.Security.Claims;
-using Backend.Extensions;
 using Backend.Services.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Backend.Features.Account;
@@ -39,7 +37,10 @@ public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
 
         // for cookie authentication
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        await CookieAuth.SignInAsync(u =>
+        {
+            u.Claims.AddRange(claims);
+        });
 
         // for jwt authentication
         Response = await CreateTokenWith<TokenService>(user.Id.ToString(), u =>
