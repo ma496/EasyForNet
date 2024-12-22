@@ -17,6 +17,18 @@ bld.Services
    .AddFastEndpoints(o => o.SourceGeneratorDiscoveredTypes = DiscoveredTypes.All)
    .SwaggerDocument();
 
+// Add CORS configuration
+bld.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
+    });
+});
+
 bld.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(bld.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -74,7 +86,8 @@ bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 var app = bld.Build();
 
 app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
-app.UseAuthentication()
+app.UseCors()
+   .UseAuthentication()
    .UseAuthorization()
    .UseFastEndpoints(
        c =>

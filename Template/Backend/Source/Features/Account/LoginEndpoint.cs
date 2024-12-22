@@ -1,10 +1,11 @@
 using System.Security.Claims;
 using Backend.Services.Identity;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Backend.Features.Account;
 
-public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
+sealed class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
 {
     private readonly IUserService _userService;
 
@@ -22,13 +23,13 @@ public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken c)
     {
-        var user = await _userService.GetByUsernameAsync(req.Username);
+        var user = await (!req.IsEmail ? _userService.GetByUsernameAsync(req.Username) : _userService.GetByEmailAsync(req.Email));
         if (user == null)
-            ThrowError(r => r.Username, "Invalid username or password");
+            ThrowError(r => r.Username, $"Invalid {(!req.IsEmail ? "username" : "email")} or password");
 
         var result = await _userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
-            ThrowError(r => r.Username, "Invalid username or password");
+            ThrowError(r => r.Username, $"Invalid {(!req.IsEmail ? "username" : "email")} or password");
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);
@@ -50,8 +51,26 @@ public class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
     }
 }
 
-public class LoginRequest
+sealed class LoginRequest
 {
+    public bool IsEmail { get; set; }
     public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
+}
+
+sealed class LoginValidator : Validator<LoginRequest>
+{
+    public LoginValidator()
+    {
+        When(x => !x.IsEmail, () =>
+        {
+            RuleFor(x => x.Username).NotEmpty().MinimumLength(3).MaximumLength(50);
+        });
+        When(x => x.IsEmail, () =>
+        {
+            RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(100);
+        });
+        RuleFor(x => x.Password).NotEmpty().MinimumLength(8).MaximumLength(50);
+    }
 }
