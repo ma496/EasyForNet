@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Features.Users;
 using Backend.Services.Identity;
 using Tests.Seeder;
@@ -16,8 +17,8 @@ public class UserDeleteTests : AppTestsBase
     {
         UserCreateRequest request = new()
         {
-            Username = "deleteuser",
-            Email = "delete@example.com",
+            Username = $"deleteuser{Helper.UniqueNumber()}",
+            Email = $"delete{Helper.UniqueNumber()}@example.com",
             Password = "Password123!",
             FirstName = "Delete",
             LastName = "User",
@@ -60,11 +61,11 @@ public class UserDeleteTests : AppTestsBase
     }
 
     [Fact]
-    public async Task Cannot_Delete_Default_User()
+    public async Task Cannot_Delete_Admin_User()
     {
         // Get the default user (admin from seeder)
         var userService = App.Services.GetRequiredService<IUserService>();
-        var defaultUser = await userService.GetByUsernameAsync(UserConst.Test);
+        var defaultUser = await userService.GetByUsernameAsync("admin");
         defaultUser.Should().NotBeNull();
 
         // Try to delete the default user
@@ -76,6 +77,6 @@ public class UserDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Default user can not be deleted.");
+        res.Errors.First().Reason.Should().Be("Admin user can not be deleted.");
     }
 }

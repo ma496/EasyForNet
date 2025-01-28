@@ -1,8 +1,10 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Template.Backend.Extensions;
 
 namespace Backend.Features.Users;
 
@@ -33,8 +35,8 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Default)
-            ThrowError("Default user can not be updated.");
+        if (entity.Username == "admin")
+            ThrowError("Admin user can not be updated.");
 
         Map.UpdateEntity(request, entity);
         // update user roles based on request and already assigned roles
@@ -55,10 +57,8 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
     }
 }
 
-sealed class UserUpdateRequest
+sealed class UserUpdateRequest : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
-    public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
@@ -70,17 +70,14 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 {
     public UserUpdateValidator()
     {
-        RuleFor(x => x.Username).NotEmpty().MinimumLength(3).MaximumLength(50);
         RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(100);
-        RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50);
-        RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50).When(x => !x.FirstName.IsNullOrEmpty());
+        RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50).When(x => !x.LastName.IsNullOrEmpty());
     }
 }
 
-sealed class UserUpdateResponse
+sealed class UserUpdateResponse : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
-    public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
@@ -92,7 +89,6 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
 {
     public override User UpdateEntity(UserUpdateRequest r, User e)
     {
-        e.Username = r.Username;
         e.Email = r.Email;
         e.FirstName = r.FirstName;
         e.LastName = r.LastName;
@@ -106,7 +102,6 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
         return new UserUpdateResponse
         {
             Id = e.Id,
-            Username = e.Username,
             Email = e.Email,
             FirstName = e.FirstName,
             LastName = e.LastName,

@@ -1,6 +1,7 @@
 using FluentValidation;
 using Backend.Services.Identity;
 using Backend.Auth;
+using Backend.Features.Base.Dto;
 
 namespace Backend.Features.Users;
 
@@ -29,8 +30,8 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Default)
-            ThrowError("Default user can not be deleted.");
+        if (entity.Username == "admin")
+            ThrowError("Admin user can not be deleted.");
 
         // Delete the entity from the db
         await _userService.DeleteAsync(request.Id);
@@ -38,9 +39,8 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
     }
 }
 
-sealed class UserDeleteRequest
+sealed class UserDeleteRequest : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
 }
 
 sealed class UserDeleteValidator : Validator<UserDeleteRequest>

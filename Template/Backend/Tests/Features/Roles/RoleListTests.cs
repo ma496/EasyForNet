@@ -1,6 +1,5 @@
+using Backend;
 using Backend.Features.Roles;
-using Backend.Services.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Features.Roles;
 
@@ -14,23 +13,19 @@ public class RoleListTests : AppTestsBase
     [Fact]
     public async Task List_Roles()
     {
-        var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-
         // Create multiple roles
         for (int i = 0; i < 3; i++)
         {
             await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(
                 new()
                 {
-                    Name = $"ListRole{i}",
+                    Name = $"ListRole{Helper.UniqueNumber()}",
                     Description = $"List Role {i} Description",
-                    Permissions = permissions
                 });
         }
 
         // Get list of roles
-        var (listRsp, listRes) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, List<RoleListResponse>>(
+        var (listRsp, listRes) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, RoleListResponse>(
             new()
             {
                 Page = 1,
@@ -38,30 +33,26 @@ public class RoleListTests : AppTestsBase
             });
 
         listRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        listRes.Should().NotBeEmpty();
-        listRes.Count.Should().BeGreaterThanOrEqualTo(3);
+        listRes.Items.Should().NotBeEmpty();
+        listRes.Items.Count.Should().BeGreaterThanOrEqualTo(3);
     }
 
     [Fact]
     public async Task List_Roles_Pagination()
     {
-        var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-
         // Create multiple roles
         for (int i = 0; i < 5; i++)
         {
             await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(
                 new()
                 {
-                    Name = $"PageRole{i}",
+                    Name = $"PageRole{Helper.UniqueNumber()}",
                     Description = $"Page Role {i} Description",
-                    Permissions = permissions
                 });
         }
 
         // Get first page with 2 roles
-        var (page1Rsp, page1Res) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, List<RoleListResponse>>(
+        var (page1Rsp, page1Res) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, RoleListResponse>(
             new()
             {
                 Page = 1,
@@ -69,10 +60,10 @@ public class RoleListTests : AppTestsBase
             });
 
         page1Rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        page1Res.Count.Should().Be(2);
+        page1Res.Items.Count.Should().Be(2);
 
         // Get second page
-        var (page2Rsp, page2Res) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, List<RoleListResponse>>(
+        var (page2Rsp, page2Res) = await App.Client.GETAsync<RoleListEndpoint, RoleListRequest, RoleListResponse>(
             new()
             {
                 Page = 2,
@@ -80,7 +71,7 @@ public class RoleListTests : AppTestsBase
             });
 
         page2Rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        page2Res.Count.Should().Be(2);
+        page2Res.Items.Count.Should().Be(2);
         page2Res.Should().NotBeEquivalentTo(page1Res);
     }
 }

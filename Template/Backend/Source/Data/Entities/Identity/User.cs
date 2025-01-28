@@ -12,9 +12,11 @@ public class User : AuditableEntity<Guid>, IExcludeProperties
     public string? LastName { get; set; }
     public bool IsActive { get; set; } = true;
     public DateTime? LastLoginAt { get; set; }
+    public Image? Image { get; set; }
 
     public ICollection<UserRole> UserRoles { get; set; } = [];
     public ICollection<AuthToken> AuthTokens { get; set; } = [];
+    public ICollection<Token> Tokens { get; set; } = [];
 
     public static List<string> ExcludeProperties()
     {
@@ -22,7 +24,8 @@ public class User : AuditableEntity<Guid>, IExcludeProperties
         {
             nameof(Default),
             nameof(PasswordHash),
-            nameof(LastLoginAt)
+            nameof(LastLoginAt),
+            nameof(Image)
         };
     }
 }

@@ -2,6 +2,8 @@ using FluentValidation;
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
+using Backend.Features.Base.Dto;
+using Template.Backend.Extensions;
 
 namespace Backend.Features.Roles;
 
@@ -34,7 +36,6 @@ sealed class RoleCreateRequest
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
-    public List<Guid> Permissions { get; set; } = [];
 }
 
 sealed class RoleCreateValidator : Validator<RoleCreateRequest>
@@ -43,16 +44,14 @@ sealed class RoleCreateValidator : Validator<RoleCreateRequest>
     {
         // Add validation rules here
         RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(50);
-        RuleFor(x => x.Description).MinimumLength(10).MaximumLength(255);
+        RuleFor(x => x.Description).MinimumLength(10).MaximumLength(255).When(x => !x.Description.IsNullOrEmpty());
     }
 }
 
-sealed class RoleCreateResponse
+sealed class RoleCreateResponse : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
-    public List<Guid> Permissions { get; set; } = [];
 }
 
 sealed class RoleCreateMapper : Mapper<RoleCreateRequest, RoleCreateResponse, Role>
@@ -63,7 +62,6 @@ sealed class RoleCreateMapper : Mapper<RoleCreateRequest, RoleCreateResponse, Ro
         {
             Name = r.Name,
             Description = r.Description,
-            RolePermissions = r.Permissions.Select(x => new RolePermission { PermissionId = x }).ToList()
         };
     }
 
@@ -74,7 +72,6 @@ sealed class RoleCreateMapper : Mapper<RoleCreateRequest, RoleCreateResponse, Ro
             Id = e.Id,
             Name = e.Name,
             Description = e.Description,
-            Permissions = e.RolePermissions.Select(x => x.PermissionId).ToList()
         };
     }
 }

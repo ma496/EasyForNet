@@ -1,6 +1,7 @@
 using FluentValidation;
 using Backend.Auth;
 using Backend.Services.Identity;
+using Backend.Features.Base.Dto;
 
 namespace Backend.Features.Roles;
 
@@ -29,8 +30,8 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Default)
-            ThrowError("Default role can not be deleted.");
+        if (entity.Name == "Admin")
+            ThrowError("Admin role can not be deleted.");
 
         // Delete the entity from the db
         await _roleService.DeleteAsync(entity);
@@ -38,9 +39,8 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
     }
 }
 
-sealed class RoleDeleteRequest
+sealed class RoleDeleteRequest : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
 }
 
 sealed class RoleDeleteValidator : Validator<RoleDeleteRequest>

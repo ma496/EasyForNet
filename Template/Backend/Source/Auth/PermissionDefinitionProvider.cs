@@ -15,5 +15,6 @@ public class PermissionDefinitionProvider
         rolesPermission.AddChild(Allow.Role_Create, "Create");
         rolesPermission.AddChild(Allow.Role_Update, "Update");
         rolesPermission.AddChild(Allow.Role_Delete, "Delete");
+        rolesPermission.AddChild(Allow.Role_ChangePermissions, "ChangePermissions");
     }
 }

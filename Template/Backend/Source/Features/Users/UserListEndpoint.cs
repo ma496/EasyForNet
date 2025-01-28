@@ -1,12 +1,16 @@
-using FluentValidation;
 using Backend.Data.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Backend.Services.Identity;
 using Backend.Auth;
+using Backend.Features.Base.Dto;
+using Template.Backend.Features.Base.Dto;
+using Template.Backend.Source.Features.Base.Dto;
+using Backend.Extensions;
+using Template.Backend.Source.Features.Base;
 
 namespace Backend.Features.Users;
 
-sealed class UserListEndpoint : Endpoint<UserListRequest, List<UserListResponse>, UserListMapper>
+sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, UserListMapper>
 {
     private readonly IUserService _userService;
 
@@ -25,54 +29,73 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, List<UserListResponse>
     public override async Task HandleAsync(UserListRequest request, CancellationToken cancellationToken)
     {
         // get entities from db
-        var entities = await _userService.Users()
+        var query = _userService.Users()
             .AsNoTracking()
             .Include(x => x.UserRoles)
-            .OrderByDescending(x => x.CreatedAt)
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize)
+            .ThenInclude(x => x.Role)
+            .AsQueryable();
+
+        var search = request.Search?.ToLower();
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(x =>
+                x.Username.ToLower().Contains(search)
+                || x.Email.ToLower().Contains(search)
+                || (x.FirstName != null && x.FirstName.ToLower().Contains(search))
+                || (x.LastName != null && x.LastName.ToLower().Contains(search)));
+        }
+
+        var total = await query.CountAsync(cancellationToken);
+        var items = await query
+            .Process(request)
             .ToListAsync(cancellationToken);
-        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
+
+        var response = new UserListResponse
+        {
+            Items = Map.FromEntity(items),
+            Total = total
+        };
+
+        await SendAsync(response, cancellation: cancellationToken);
     }
 }
 
-sealed class UserListRequest
+sealed class UserListRequest : ListRequestDto
 {
-    public int Page { get; set; } = 1;
-    public int PageSize { get; set; } = 10;
-    // Add any additional filter properties here
 }
 
 sealed class UserListValidator : Validator<UserListRequest>
 {
     public UserListValidator()
     {
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).InclusiveBetween(1, 100);
-        // Add additional validation rules here
+        Include(new ListRequestDtoValidator());
     }
 }
 
-sealed class UserListResponse
+sealed class UserListResponse : ListDto<UserListDto>
 {
-    public Guid Id { get; set; }
+}
+
+sealed class UserListDto : AuditableDto<Guid>
+{
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public Guid? CreatedBy { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public Guid? UpdatedBy { get; set; }
-    public List<Guid> Roles { get; set; } = [];
+    public List<UserRoleDto> Roles { get; set; } = [];
 }
 
-sealed class UserListMapper : Mapper<UserListRequest, List<UserListResponse>, List<User>>
+sealed class UserRoleDto : BaseDto<Guid>
 {
-    public override List<UserListResponse> FromEntity(List<User> e)
+    public string Name { get; set; } = null!;
+}
+
+sealed class UserListMapper : Mapper<UserListRequest, List<UserListDto>, List<User>>
+{
+    public override List<UserListDto> FromEntity(List<User> e)
     {
-        return e.Select(entity => new UserListResponse
+        return e.Select(entity => new UserListDto
         {
             Id = entity.Id,
             Username = entity.Username,
@@ -84,7 +107,12 @@ sealed class UserListMapper : Mapper<UserListRequest, List<UserListResponse>, Li
             CreatedBy = entity.CreatedBy,
             UpdatedAt = entity.UpdatedAt,
             UpdatedBy = entity.UpdatedBy,
-            Roles = entity.UserRoles.Select(x => x.RoleId).ToList(),
+            Roles = entity.UserRoles != null
+             ? entity.UserRoles.Select(x => new UserRoleDto
+             {
+                 Id = x.RoleId,
+                 Name = x.Role.Name
+             }).ToList() : [],
         }).ToList();
     }
 }

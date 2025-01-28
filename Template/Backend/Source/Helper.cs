@@ -18,4 +18,15 @@ public static class Helper
         claims.AddRange(permissions.Select(p => new Claim(ClaimConstants.Permission, p)));
         return claims;
     }
+
+    private static long _lastNumber = 0;
+    private static readonly Lock _lock = new();
+
+    public static long UniqueNumber()
+    {
+        lock (_lock)
+        {
+            return ++_lastNumber;
+        }
+    }
 }

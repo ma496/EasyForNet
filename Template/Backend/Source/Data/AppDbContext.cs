@@ -22,6 +22,7 @@ public class AppDbContext : DbContext
     public DbSet<UserRole> UserRoles => Set<UserRole>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<AuthToken> AuthTokens => Set<AuthToken>();
+    public DbSet<Token> Tokens => Set<Token>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,6 +73,11 @@ public class AppDbContext : DbContext
             .HasOne(at => at.User)
             .WithMany(u => u.AuthTokens)
             .HasForeignKey(at => at.UserId);
+
+        modelBuilder.Entity<Token>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.Tokens)
+            .HasForeignKey(t => t.UserId);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

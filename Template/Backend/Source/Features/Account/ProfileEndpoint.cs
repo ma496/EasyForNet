@@ -1,4 +1,5 @@
 using Backend.Data;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,12 @@ sealed class ProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
                     Email = x.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
+                    Image = x.Image != null ? new ImageDto
+                    {
+                        ImageBase64 = Convert.ToBase64String(x.Image.Data),
+                        ContentType = x.Image.ContentType,
+                        FileName = x.Image.FileName
+                    } : null,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
         if (user is null)
@@ -51,6 +58,7 @@ sealed class UserProfileResponse
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
+    public ImageDto? Image { get; set; }
 }
 
 

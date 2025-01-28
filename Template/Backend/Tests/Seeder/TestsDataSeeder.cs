@@ -21,12 +21,12 @@ public class TestsDataSeeder
     {
         var permissions = await _permissionService.Permissions().ToListAsync();
 
-        await CreateUserWtithRole(permissions, UserConst.Test, RoleConst.Test);
-        await CreateUserWtithRole(permissions, UserConst.TestOne, RoleConst.TestOne);
-        await CreateUserWtithRole(permissions, UserConst.TestTwo, RoleConst.TestTwo);
+        await CreateUserWithRole(permissions, UserConst.Test, RoleConst.Test);
+        await CreateUserWithRole(permissions, UserConst.TestOne, RoleConst.TestOne);
+        await CreateUserWithRole(permissions, UserConst.TestTwo, RoleConst.TestTwo);
     }
 
-    private async Task CreateUserWtithRole(List<Permission> permissions, string username, string roleName)
+    private async Task CreateUserWithRole(List<Permission> permissions, string username, string roleName)
     {
         var role = await _roleService.GetByNameAsync(roleName) ??
             await _roleService.CreateAsync(new Role { Default = true, Name = roleName });

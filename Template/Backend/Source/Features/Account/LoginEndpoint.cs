@@ -30,6 +30,8 @@ sealed class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
         var result = await _userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
             ThrowError(r => r.Username, $"Invalid {(!req.IsEmail ? "username" : "email")} or password");
+        if (!user.IsActive)
+            ThrowError(r => r.Username, $"User is not active");
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

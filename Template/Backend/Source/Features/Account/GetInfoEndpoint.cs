@@ -1,4 +1,5 @@
 using Backend.Data;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,12 @@ sealed class GetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
                 Email = x.Email,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
+                Image = x.Image != null ? new ImageDto
+                {
+                    ImageBase64 = Convert.ToBase64String(x.Image.Data),
+                    FileName = x.Image.FileName,
+                    ContentType = x.Image.ContentType
+                } : null,
                 Roles = x.UserRoles.Select(x => new UserGetInfoResponse.RoleDto
                 {
                     Id = x.RoleId,
@@ -66,6 +73,7 @@ sealed class UserGetInfoResponse
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
+    public ImageDto? Image { get; set; }
 
     public List<RoleDto> Roles { get; set; } = [];
 

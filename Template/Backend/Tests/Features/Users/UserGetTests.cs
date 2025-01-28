@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Features.Users;
 
 namespace Tests.Features.Users;
@@ -14,8 +15,8 @@ public class UserGetTests : AppTestsBase
     {
         UserCreateRequest request = new()
         {
-            Username = "getuser",
-            Email = "get@example.com",
+            Username = $"getuser{Helper.UniqueNumber()}",
+            Email = $"get{Helper.UniqueNumber()}@example.com",
             Password = "Password123!",
             FirstName = "Get",
             LastName = "User",

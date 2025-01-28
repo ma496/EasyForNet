@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Features.Users;
 
 namespace Tests.Features.Users;
@@ -18,8 +19,8 @@ public class UserListTests : AppTestsBase
             await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
                 new()
                 {
-                    Username = $"listuser{i}",
-                    Email = $"list{i}@example.com",
+                    Username = $"listuser{Helper.UniqueNumber()}",
+                    Email = $"list{Helper.UniqueNumber()}@example.com",
                     Password = "Password123!",
                     FirstName = $"List{i}",
                     LastName = "User",
@@ -28,7 +29,7 @@ public class UserListTests : AppTestsBase
         }
 
         // Get list of users
-        var (listRsp, listRes) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, List<UserListResponse>>(
+        var (listRsp, listRes) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, UserListResponse>(
             new()
             {
                 Page = 1,
@@ -36,8 +37,8 @@ public class UserListTests : AppTestsBase
             });
 
         listRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        listRes.Should().NotBeEmpty();
-        listRes.Count.Should().BeGreaterThanOrEqualTo(3);
+        listRes.Items.Should().NotBeEmpty();
+        listRes.Items.Count.Should().BeGreaterThanOrEqualTo(3);
     }
 
     [Fact]
@@ -49,8 +50,8 @@ public class UserListTests : AppTestsBase
             await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
                 new()
                 {
-                    Username = $"pageuser{i}",
-                    Email = $"page{i}@example.com",
+                    Username = $"pageuser{Helper.UniqueNumber()}",
+                    Email = $"page{Helper.UniqueNumber()}@example.com",
                     Password = "Password123!",
                     FirstName = $"Page{i}",
                     LastName = "User",
@@ -59,7 +60,7 @@ public class UserListTests : AppTestsBase
         }
 
         // Get first page with 2 users
-        var (page1Rsp, page1Res) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, List<UserListResponse>>(
+        var (page1Rsp, page1Res) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, UserListResponse>(
             new()
             {
                 Page = 1,
@@ -67,10 +68,10 @@ public class UserListTests : AppTestsBase
             });
 
         page1Rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        page1Res.Count.Should().Be(2);
+        page1Res.Items.Count.Should().Be(2);
 
         // Get second page
-        var (page2Rsp, page2Res) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, List<UserListResponse>>(
+        var (page2Rsp, page2Res) = await App.Client.GETAsync<UserListEndpoint, UserListRequest, UserListResponse>(
             new()
             {
                 Page = 2,
@@ -78,7 +79,7 @@ public class UserListTests : AppTestsBase
             });
 
         page2Rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        page2Res.Count.Should().Be(2);
+        page2Res.Items.Count.Should().Be(2);
         page2Res.Should().NotBeEquivalentTo(page1Res);
     }
 }

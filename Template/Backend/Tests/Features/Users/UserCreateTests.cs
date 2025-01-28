@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Features.Users;
 using Backend.Services.Identity;
 using Tests.Seeder;
@@ -19,8 +20,8 @@ public class UserCreateTests : AppTestsBase
             Username = "a",
             Email = "invalid-email",
             Password = "123",
-            FirstName = "",
-            LastName = "",
+            FirstName = "a",
+            LastName = "a",
             IsActive = true
         };
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, ProblemDetails>(request);
@@ -36,8 +37,8 @@ public class UserCreateTests : AppTestsBase
         var roleService = App.Services.GetRequiredService<IRoleService>();
         UserCreateRequest request = new()
         {
-            Username = "test123",
-            Email = "test123@example.com",
+            Username = $"test123{Helper.UniqueNumber()}",
+            Email = $"test123{Helper.UniqueNumber()}@example.com",
             Password = "Password123!",
             FirstName = "Test",
             LastName = "User",

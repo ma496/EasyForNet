@@ -1,5 +1,6 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,9 +39,8 @@ sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGet
     }
 }
 
-sealed class UserGetRequest
+sealed class UserGetRequest : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
 }
 
 sealed class UserGetValidator : Validator<UserGetRequest>
@@ -51,18 +51,13 @@ sealed class UserGetValidator : Validator<UserGetRequest>
     }
 }
 
-sealed class UserGetResponse
+sealed class UserGetResponse : AuditableDto<Guid>
 {
-    public Guid Id { get; set; }
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public Guid? CreatedBy { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public Guid? UpdatedBy { get; set; }
 
     public List<Guid> Roles { get; set; } = [];
 }

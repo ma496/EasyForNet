@@ -1,6 +1,7 @@
+using Backend;
 using Backend.Features.Roles;
 using Backend.Services.Identity;
-using Microsoft.EntityFrameworkCore;
+using Tests.Seeder;
 
 namespace Tests.Features.Roles;
 
@@ -14,15 +15,11 @@ public class RoleDeleteTests : AppTestsBase
     [Fact]
     public async Task Delete_Role()
     {
-        var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-
         // First create a role
         RoleCreateRequest request = new()
         {
-            Name = "DeleteRole",
+            Name = $"DeleteRole{Helper.UniqueNumber()}",
             Description = "Delete Role Description",
-            Permissions = permissions
         };
         var (createRsp, createRes) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
 
@@ -61,11 +58,11 @@ public class RoleDeleteTests : AppTestsBase
     }
 
     [Fact]
-    public async Task Delete_Default_Role()
+    public async Task Cannot_Delete_Admin_Role()
     {
         // Get a default role (Test role from seeder)
         var roleService = App.Services.GetRequiredService<IRoleService>();
-        var defaultRole = await roleService.GetByNameAsync("Test");
+        var defaultRole = await roleService.GetByNameAsync("Admin");
         defaultRole.Should().NotBeNull();
 
         // Try to delete the default role
@@ -77,6 +74,6 @@ public class RoleDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Default role can not be deleted.");
+        res.Errors.First().Reason.Should().Be("Admin role can not be deleted.");
     }
 }

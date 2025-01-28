@@ -12,4 +12,5 @@ public partial class Allow
     public const string Role_Create = "Role.Create";
     public const string Role_Update = "Role.Update";
     public const string Role_Delete = "Role.Delete";
+    public const string Role_ChangePermissions = "Role.ChangePermissions";
 }

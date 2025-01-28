@@ -1,6 +1,5 @@
+using Backend;
 using Backend.Features.Roles;
-using Backend.Services.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Features.Roles;
 
@@ -18,7 +17,6 @@ public class RoleCreateTests : AppTestsBase
         {
             Name = "",
             Description = new string('x', 1025),
-            Permissions = []
         };
         var (rsp, res) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, ProblemDetails>(request);
 
@@ -30,20 +28,15 @@ public class RoleCreateTests : AppTestsBase
     [Fact]
     public async Task Valid_Input()
     {
-        var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-
         RoleCreateRequest request = new()
         {
-            Name = "TestRole",
+            Name = $"TestRole{Helper.UniqueNumber()}",
             Description = "Test Role Description",
-            Permissions = permissions
         };
         var (rsp, res) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);
         res.Name.Should().Be(request.Name);
         res.Description.Should().Be(request.Description);
-        res.Permissions.Should().Equal(request.Permissions);
     }
 }

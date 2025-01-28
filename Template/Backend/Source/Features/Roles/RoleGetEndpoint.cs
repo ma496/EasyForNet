@@ -1,5 +1,6 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,9 +38,8 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
     }
 }
 
-sealed class RoleGetRequest
+sealed class RoleGetRequest : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
 }
 
 sealed class RoleGetValidator : Validator<RoleGetRequest>
@@ -50,16 +50,11 @@ sealed class RoleGetValidator : Validator<RoleGetRequest>
     }
 }
 
-sealed class RoleGetResponse
+sealed class RoleGetResponse : AuditableDto<Guid>
 {
-    public Guid Id { get; set; }
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
-    public DateTime CreatedAt { get; set; }
-    public Guid? CreatedBy { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public Guid? UpdatedBy { get; set; }
 }
 
 sealed class RoleGetMapper : Mapper<RoleGetRequest, RoleGetResponse, Role>

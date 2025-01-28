@@ -1,7 +1,8 @@
 using System.Security.Claims;
 using Backend.Auth;
 using Backend.Data;
-using Backend.DbErrorHandling;
+using Backend.ErrorHandling;
+using Backend.Services.Email;
 using Backend.Services.Identity;
 using Backend.Settings;
 using Hangfire;
@@ -22,7 +23,7 @@ bld.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder.WithOrigins(bld.Configuration["Web:Url"] ?? "http://localhost:3000")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();
@@ -70,6 +71,7 @@ bld.Services.AddHangfireServer();
 
 // configure settings
 bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
+bld.Services.Configure<WebSetting>(bld.Configuration.GetSection("Web"));
 
 // add services
 bld.Services.AddScoped<IUserService, UserService>();
@@ -81,10 +83,29 @@ bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
 bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
+bld.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+bld.Services.AddScoped<ITokenService, TokenService>();
 
+// Configure email services
+bld.Services.Configure<EmailSettings>(bld.Configuration.GetSection("EmailSettings"));
+bld.Services.AddScoped<IEmailService, EmailService>();
+bld.Services.AddScoped<IEmailBackgroundJobs, EmailBackgroundJobs>();
 
 var app = bld.Build();
 
+// Move database migration before Hangfire initialization
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+    var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
+    var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
+    permissionDefinitionProvider.Define(permissionDefinitionContext);
+    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    await seeder.SeedAsync();
+}
+
+app.UseMiddleware<UnsupportedMediaTypeMiddleware>();
 app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
 app.UseCors()
    .UseAuthentication()
@@ -100,28 +121,17 @@ app.UseCors()
        })
    .UseSwaggerGen();
 
-// Configure Hangfire dashboard
+// Configure Hangfire dashboard after database is ready
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     Authorization = [new HangfireAuthorizationFilter()]
 });
 
-
+// Move recurring jobs setup after database is ready
 using (var scope = app.Services.CreateScope())
 {
-    // migrate database and seed data on startup
-    if (!app.Environment.IsEnvironment("Testing"))
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        dbContext.Database.Migrate();
-        var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
-        var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
-        permissionDefinitionProvider.Define(permissionDefinitionContext);
-        var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-        await seeder.SeedAsync();
-    }
-    // add recurring jobs
     RecurringJob.AddOrUpdate<IAuthTokenService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
+    RecurringJob.AddOrUpdate<ITokenService>("delete-expired-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
 }
 
 app.Run();

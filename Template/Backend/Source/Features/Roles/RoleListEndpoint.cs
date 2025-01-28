@@ -3,10 +3,14 @@ using Backend.Auth;
 using Backend.Data.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Backend.Services.Identity;
+using Backend.Features.Base.Dto;
+using Template.Backend.Source.Features.Base.Dto;
+using Template.Backend.Features.Base.Dto;
+using Backend.Extensions;
 
 namespace Backend.Features.Roles;
 
-sealed class RoleListEndpoint : Endpoint<RoleListRequest, List<RoleListResponse>, RoleListMapper>
+sealed class RoleListEndpoint : Endpoint<RoleListRequest, RoleListResponse, RoleListMapper>
 {
     private readonly IRoleService _roleService;
 
@@ -25,51 +29,68 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, List<RoleListResponse>
     public override async Task HandleAsync(RoleListRequest request, CancellationToken cancellationToken)
     {
         // get entities from db
-        var entities = await _roleService.Roles()
+        var query = _roleService.Roles()
             .AsNoTracking()
             .Include(x => x.RolePermissions)
-            .OrderByDescending(x => x.CreatedAt)
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize)
+            .Include(x => x.UserRoles)
+            .AsQueryable();
+
+        var search = request.Search?.ToLower();
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(x =>
+                x.Name.ToLower().Contains(search)
+                || (x.Description != null && x.Description.ToLower().Contains(search)));
+        }
+
+        var total = await query.CountAsync(cancellationToken);
+        var items = await query
+            .Process(request)
             .ToListAsync(cancellationToken);
-        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
+
+        var response = new RoleListResponse
+        {
+            Items = Map.FromEntity(items),
+            Total = total
+        };
+
+        await SendAsync(response, cancellation: cancellationToken);
     }
 }
 
-sealed class RoleListRequest
+sealed class RoleListRequest : ListRequestDto
 {
-    public int Page { get; set; } = 1;
-    public int PageSize { get; set; } = 10;
-    // Add any additional filter properties here
 }
 
 sealed class RoleListValidator : Validator<RoleListRequest>
 {
     public RoleListValidator()
     {
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).InclusiveBetween(1, 100);
-        // Add additional validation rules here
+        Include(new ListRequestDtoValidator());
     }
 }
 
-sealed class RoleListResponse
+sealed class RoleListResponse : ListDto<RoleListDto>
 {
-    public Guid Id { get; set; }
+}
+
+sealed class RoleListDto : AuditableDto<Guid>
+{
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
-    public DateTime CreatedAt { get; set; }
-    public Guid? CreatedBy { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public Guid? UpdatedBy { get; set; }
+    public List<UserDto> Users { get; set; } = [];
 }
 
-sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListResponse>, List<Role>>
+sealed class UserDto : BaseDto<Guid>
 {
-    public override List<RoleListResponse> FromEntity(List<Role> e)
+}
+
+sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Role>>
+{
+    public override List<RoleListDto> FromEntity(List<Role> e)
     {
-        return e.Select(entity => new RoleListResponse
+        return e.Select(entity => new RoleListDto
         {
             Id = entity.Id,
             Name = entity.Name,
@@ -79,6 +100,10 @@ sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListResponse>, Li
             CreatedBy = entity.CreatedBy,
             UpdatedAt = entity.UpdatedAt,
             UpdatedBy = entity.UpdatedBy,
+            Users = entity.UserRoles.Select(x => new UserDto
+            {
+                Id = x.UserId
+            }).ToList()
         }).ToList();
     }
 }

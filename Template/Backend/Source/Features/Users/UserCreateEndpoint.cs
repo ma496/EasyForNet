@@ -1,7 +1,9 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using FluentValidation;
+using Template.Backend.Extensions;
 
 namespace Backend.Features.Users;
 
@@ -48,14 +50,13 @@ sealed class UserCreateValidator : Validator<UserCreateRequest>
         RuleFor(x => x.Username).NotEmpty().MinimumLength(3).MaximumLength(50);
         RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(100);
         RuleFor(x => x.Password).NotEmpty().MinimumLength(8).MaximumLength(50);
-        RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50);
-        RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50).When(x => !x.FirstName.IsNullOrEmpty());
+        RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50).When(x => !x.LastName.IsNullOrEmpty());
     }
 }
 
-sealed class UserCreateResponse
+sealed class UserCreateResponse : BaseDto<Guid>
 {
-    public Guid Id { get; set; }
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }

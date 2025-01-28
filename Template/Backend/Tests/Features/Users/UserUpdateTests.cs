@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Features.Users;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +19,8 @@ public class UserUpdateTests : AppTestsBase
         var roleService = App.Services.GetRequiredService<IRoleService>();
         UserCreateRequest request = new()
         {
-            Username = "updateuser",
-            Email = "update@example.com",
+            Username = $"updateuser{Helper.UniqueNumber()}",
+            Email = $"update{Helper.UniqueNumber()}@example.com",
             Password = "Password123!",
             FirstName = "Update",
             LastName = "User",
@@ -33,8 +34,7 @@ public class UserUpdateTests : AppTestsBase
         UserUpdateRequest updateRequest = new()
         {
             Id = createRes.Id,
-            Username = "updateuser_modified",
-            Email = "update_modified@example.com",
+            Email = $"update_modified{Helper.UniqueNumber()}@example.com",
             FirstName = "Updated",
             LastName = "UserModified",
             IsActive = false,
@@ -43,7 +43,6 @@ public class UserUpdateTests : AppTestsBase
         var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        updateRes.Username.Should().Be(updateRequest.Username);
         updateRes.Email.Should().Be(updateRequest.Email);
         updateRes.FirstName.Should().Be(updateRequest.FirstName);
         updateRes.LastName.Should().Be(updateRequest.LastName);
@@ -58,7 +57,6 @@ public class UserUpdateTests : AppTestsBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Username = "nonexistent",
                 Email = "nonexistent@example.com",
                 FirstName = "Non",
                 LastName = "Existent",
@@ -69,19 +67,18 @@ public class UserUpdateTests : AppTestsBase
     }
 
     [Fact]
-    public async Task Update_Default_User_Should_Fail()
+    public async Task Update_Admin_User_Should_Fail()
     {
         // Get the default user
         var defaultUser = await App.Services.GetRequiredService<IUserService>()
             .Users()
-            .FirstAsync(u => u.Default);
+            .FirstAsync(u => u.Username == "admin");
 
         var roleService = App.Services.GetRequiredService<IRoleService>();
         var (updateRsp, res) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, ProblemDetails>(
             new()
             {
                 Id = defaultUser.Id,
-                Username = "modified_default_user",
                 Email = "modified_default@example.com",
                 FirstName = "Modified",
                 LastName = "Default",
@@ -91,6 +88,6 @@ public class UserUpdateTests : AppTestsBase
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Default user can not be updated.");
+        res.Errors.First().Reason.Should().Be("Admin user can not be updated.");
     }
 }

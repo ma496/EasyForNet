@@ -1,18 +1,18 @@
 using Backend.Data;
 using Backend.Data.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Backend.Services.Identity;
 
 public class UserService : IUserService
 {
     private readonly AppDbContext _context;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public UserService(AppDbContext context)
+    public UserService(AppDbContext context, IPasswordHasher passwordHasher)
     {
         _context = context;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<User?> GetByIdAsync(Guid id)
@@ -37,7 +37,7 @@ public class UserService : IUserService
 
     public async Task<User> CreateAsync(User user, string password)
     {
-        user.PasswordHash = HashPassword(password);
+        user.PasswordHash = _passwordHasher.HashPassword(password);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return user;
@@ -67,7 +67,7 @@ public class UserService : IUserService
 
     public async Task<bool> ValidatePasswordAsync(User user, string password)
     {
-        return await Task.FromResult(user.PasswordHash == HashPassword(password));
+        return await Task.FromResult(user.PasswordHash == _passwordHasher.HashPassword(password));
     }
 
     public async Task<List<string>> GetUserRolesAsync(Guid userId)
@@ -113,15 +113,8 @@ public class UserService : IUserService
 
     public async Task<User> UpdatePasswordAsync(User user, string password)
     {
-        user.PasswordHash = HashPassword(password);
+        user.PasswordHash = _passwordHasher.HashPassword(password);
         await UpdateAsync(user);
         return user;
-    }
-
-    private string HashPassword(string password)
-    {
-        using var sha256 = SHA256.Create();
-        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-        return Convert.ToBase64String(hashedBytes);
     }
 }
