@@ -1,3 +1,4 @@
+using Backend.Data;
 using Backend.Services.Identity;
 
 namespace Backend.Features.Account;
@@ -7,12 +8,14 @@ sealed class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
     private readonly ITokenService _tokenService;
     private readonly IUserService _userService;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly AppDbContext _dbContext;
 
-    public ResetPasswordEndpoint(ITokenService tokenService, IUserService userService, IPasswordHasher passwordHasher)
+    public ResetPasswordEndpoint(ITokenService tokenService, IUserService userService, IPasswordHasher passwordHasher, AppDbContext dbContext)
     {
         _tokenService = tokenService;
         _userService = userService;
         _passwordHasher = passwordHasher;
+        _dbContext = dbContext;
     }
 
     public override void Configure()
@@ -42,7 +45,11 @@ sealed class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
             return;
         }
         user.PasswordHash = _passwordHasher.HashPassword(request.Password);
+
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
         await _userService.UpdateAsync(user);
+        await _tokenService.UsedTokenAsync(token);
+        await transaction.CommitAsync();
 
         await SendOkAsync(cancellation: cancellationToken);
     }
