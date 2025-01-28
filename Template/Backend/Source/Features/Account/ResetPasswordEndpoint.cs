@@ -46,10 +46,10 @@ sealed class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
         }
         user.PasswordHash = _passwordHasher.HashPassword(request.Password);
 
-        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        await using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
         await _userService.UpdateAsync(user);
         await _tokenService.UsedTokenAsync(token);
-        await transaction.CommitAsync();
+        await transaction.CommitAsync(cancellationToken);
 
         await SendOkAsync(cancellation: cancellationToken);
     }
