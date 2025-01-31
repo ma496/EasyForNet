@@ -9,7 +9,7 @@ public static class Helpers
 {
     public static Assembly GetProjectAssembly(string projectDir, string projectName)
     {
-        var assemblyPath = Path.Combine(projectDir, "bin", "Debug", "net8.0", $"{projectName}.dll");
+        var assemblyPath = Path.Combine(projectDir, "bin", "Debug", "net9.0", $"{projectName}.dll");
         var loadedAssembly = Assembly.LoadFrom(assemblyPath);
 
         return loadedAssembly;

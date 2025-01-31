@@ -292,7 +292,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         }
         
         var namespaceAndClassName = GetNamespaceAndClassName(mapping.Dto);
-        return (namespaceAndClassName.namespaceName, $"{namespaceAndClassName.className}<{string.Join(",", entityBaseType.GetGenericArguments().Select(x => x.Name))}>");
+        return (namespaceAndClassName.namespaceName, $"{namespaceAndClassName.className}<{string.Join(",", entityBaseType.GetGenericArguments().Select(x => ConvertToAlias(x.Name)))}>");
     }
 
     protected (string namespaceName, string className) GetNamespaceAndClassName(string fullName)
