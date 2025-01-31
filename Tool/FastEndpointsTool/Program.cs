@@ -65,7 +65,7 @@ internal class Program
             Console.WriteLine("  command");
             Console.WriteLine($"  {arg.Name}, {arg.ShortName}, {arg.Description}");
             Console.WriteLine("  options");
-            foreach (var opt in arg.Options)
+            foreach (var opt in arg.Options.Where(x => !x.IsInternal))
             {
                 Console.WriteLine($"    {opt.Name}, {opt.ShortName}, Required: {opt.Required}, {opt.Description}");
             }

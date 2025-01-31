@@ -13,6 +13,8 @@ public class CreateEndpointTemplate : TemplateBase<EndpointArgument>
         {
             !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty
         };
+        var dtoMapping = GetDtoMapping(assembly, setting, arg.EntityFullName);
+        var dtoBaseClass = GetDtoClass(dtoMapping.mapping, dtoMapping.entityBaseType);
 
         var template = $@"
 sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response, {arg.Name}Mapper>
@@ -54,9 +56,11 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
     }}
 }}
 
-sealed class {arg.Name}Response
+sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Response" : $"{arg.Name}Response : {dtoBaseClass.className}")}
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, true, arg.BaseProperties))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName,
+        string.IsNullOrWhiteSpace(dtoBaseClass.className), 
+    string.IsNullOrWhiteSpace(dtoBaseClass.className) ? arg.BaseProperties : "false"))}
 }}
 
 sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {arg.Entity}>
@@ -80,6 +84,8 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {a
 ";
 
         template = DeleteLines(template);
+        if (!string.IsNullOrWhiteSpace(dtoBaseClass.namespaceName))
+            arg.UsingNamespaces.Add(dtoBaseClass.namespaceName);
         template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }

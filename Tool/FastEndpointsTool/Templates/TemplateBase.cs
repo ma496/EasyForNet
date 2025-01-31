@@ -35,13 +35,14 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return string.Empty;
     }
 
-    protected string Merge(List<string> usingNamespaces, string @namespace, string code)
+    protected string Merge(List<string> namespaces, string @namespace, string code)
     {
         var builder = new StringBuilder();
-        if (usingNamespaces != null)
+        var uniqueNamespaces = namespaces.Distinct().ToList();
+        if (uniqueNamespaces.Count > 0)
         {
-            usingNamespaces.ForEach(x => builder.AppendLine($"using {x};"));
-            if (usingNamespaces.Count > 0)
+            uniqueNamespaces.ForEach(x => builder.AppendLine($"using {x};"));
+            if (uniqueNamespaces.Count > 0)
                 builder.AppendLine();
         }
         builder.AppendLine($"namespace {@namespace};");
@@ -257,5 +258,46 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
 
         // Try to get the alias, return the original typeName if no alias is found
         return typeAliasMap.TryGetValue(typeName, out var alias) ? alias : typeName;
+    }
+    
+    protected (DtoMapping? mapping, Type? entityBaseType) GetDtoMapping(Assembly assembly, FeToolSetting setting, string entityFullName)
+    {
+        var entityType = assembly.GetType(entityFullName);
+        if (entityType == null)
+        {
+            throw new Exception($"Could not find type '{entityFullName}'");
+        }
+
+        DtoMapping? dtoMapping = null;
+        var baseType = entityType.BaseType;
+        while (baseType != null)
+        {
+            dtoMapping = setting.Project.DtoMappings.Find(x => x.Entity == baseType.FullName 
+                                                               || baseType.FullName!.Contains($"{x.Entity}`"));
+            if (dtoMapping != null)
+                break;
+            baseType = baseType.BaseType;
+        }
+        
+        return (dtoMapping, baseType);
+    }
+
+    protected (string? namespaceName, string? className) GetDtoClass(DtoMapping? mapping, Type? entityBaseType)
+    {
+        if (mapping == null || entityBaseType == null)
+            return (null, null);
+        if (!entityBaseType.IsGenericType)
+        {
+            return GetNamespaceAndClassName(mapping.Dto);
+        }
+        
+        var namespaceAndClassName = GetNamespaceAndClassName(mapping.Dto);
+        return (namespaceAndClassName.namespaceName, $"{namespaceAndClassName.className}<{string.Join(",", entityBaseType.GetGenericArguments().Select(x => x.Name))}>");
+    }
+
+    protected (string namespaceName, string className) GetNamespaceAndClassName(string fullName)
+    {
+        var parts = fullName.Split('.');
+        return (string.Join(".", parts.Take(parts.Length - 1)), parts.Last());
     }
 }
