@@ -288,14 +288,14 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
             return (null, null);
         if (!entityBaseType.IsGenericType)
         {
-            return GetNamespaceAndClassName(mapping.Dto);
+            return GetNamespaceAndMemberName(mapping.Dto);
         }
         
-        var namespaceAndClassName = GetNamespaceAndClassName(mapping.Dto);
+        var namespaceAndClassName = GetNamespaceAndMemberName(mapping.Dto);
         return (namespaceAndClassName.namespaceName, $"{namespaceAndClassName.className}<{string.Join(",", entityBaseType.GetGenericArguments().Select(x => ConvertToAlias(x.Name)))}>");
     }
 
-    protected (string namespaceName, string className) GetNamespaceAndClassName(string fullName)
+    protected (string namespaceName, string className) GetNamespaceAndMemberName(string fullName)
     {
         var parts = fullName.Split('.');
         return (string.Join(".", parts.Take(parts.Length - 1)), parts.Last());

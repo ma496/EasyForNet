@@ -15,9 +15,12 @@ public class ListEndpointTemplate : TemplateBase<EndpointArgument>
         };
         var dtoMapping = GetDtoMapping(assembly, setting, arg.EntityFullName);
         var dtoBaseClass = GetDtoClass(dtoMapping.mapping, dtoMapping.entityBaseType);
+        var requestBaseType = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.RequestBaseType);
+        var responseBaseType = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.ResponseBaseType);
+        var processMethod = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.ProcessMethod);
 
         var template = $@"
-sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, List<{arg.Name}Response>, {arg.Name}Mapper>
+sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response, {arg.Name}Mapper>
 {{
     {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(3, 4))}
 
@@ -36,16 +39,26 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, List<{arg.Name}Res
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         // get entities from db
-        var entities = {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $@"await _dbContext.{arg.PluralName}.AsNoTracking().OrderByDescending(x => x.{(!string.IsNullOrWhiteSpace(setting.Project.SortingColumn) ? setting.Project.SortingColumn : "CreatedAt")}).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToListAsync(cancellationToken);" : $"new List<{arg.Entity}>()")}; 
-        await SendAsync(Map.FromEntity(entities), cancellation: cancellationToken);
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) 
+            ? $"var query = _dbContext.{arg.PluralName}\n\t\t\t.AsNoTracking()\n\t\t\t.AsQueryable();" +
+            "\n\n\t\tvar search = request.Search?.ToLower();" +
+            "\n\t\tif (!string.IsNullOrWhiteSpace(search))\n\t\t{\n\t\t}" +
+            "\n\n\t\tvar total = await query.CountAsync(cancellationToken);" +
+            "\n\t\tvar items = await query\n\t\t\t.Process(request)\n\t\t\t.ToListAsync(cancellationToken);"
+            : $"var items = new List<{arg.Entity}>();")}
+        
+        var response = new {arg.Name}Response
+        {{
+            Items = Map.FromEntity(items),
+            Total = {(string.IsNullOrWhiteSpace(arg.DataContext) ? "0" : "total")}
+        }};
+        
+        await SendAsync(response, cancellation: cancellationToken);
     }}
 }}
 
-sealed class {arg.Name}Request
+sealed class {$"{arg.Name}Request : {requestBaseType.className}"}
 {{
-    public int Page {{ get; set; }} = 1;
-    public int PageSize {{ get; set; }} = 10;
-    // Add any additional filter properties here
 }}
 
 sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
@@ -54,22 +67,25 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
     {{
         RuleFor(x => x.Page).GreaterThan(0);
         RuleFor(x => x.PageSize).InclusiveBetween(1, 100);
-        // Add additional validation rules here
     }}
 }}
 
-sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Response" : $"{arg.Name}Response : {dtoBaseClass.className}")}
+sealed class {$"{arg.Name}Response : {responseBaseType.className}<{arg.Name}Dto>"}
+{{
+}}
+
+sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Dto" : $"{arg.Name}Dto : {dtoBaseClass.className}")}
 {{
     {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName,
         string.IsNullOrWhiteSpace(dtoBaseClass.className), 
         string.IsNullOrWhiteSpace(dtoBaseClass.className) ? arg.BaseProperties : "false"))}
 }}
 
-sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, List<{arg.Name}Response>, List<{arg.Entity}>>
+sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, List<{arg.Name}Dto>, List<{arg.Entity}>>
 {{
-    public override List<{arg.Name}Response> FromEntity(List<{arg.Entity}> e)
+    public override List<{arg.Name}Dto> FromEntity(List<{arg.Entity}> e)
     {{
-        return e.Select(entity => new {arg.Name}Response
+        return e.Select(entity => new {arg.Name}Dto
         {{
             {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "entity", true, arg.BaseProperties)}
         }}).ToList();
@@ -80,6 +96,12 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, List<{arg.Name}Respons
         template = DeleteLines(template);
         if (!string.IsNullOrWhiteSpace(dtoBaseClass.namespaceName))
             arg.UsingNamespaces.Add(dtoBaseClass.namespaceName);
+        if (!string.IsNullOrWhiteSpace(requestBaseType.namespaceName))
+            arg.UsingNamespaces.Add(requestBaseType.namespaceName);
+        if (!string.IsNullOrWhiteSpace(responseBaseType.namespaceName))
+            arg.UsingNamespaces.Add(responseBaseType.namespaceName);
+        if (!string.IsNullOrWhiteSpace(processMethod.namespaceName))
+            arg.UsingNamespaces.Add(processMethod.namespaceName);
         template = Merge(arg.UsingNamespaces, arg.Namespace, template);
         return template;
     }

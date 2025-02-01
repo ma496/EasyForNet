@@ -24,6 +24,13 @@
         "Entity": "Backend.Data.Entities.Base.AuditableEntity",
         "Dto": "Backend.Features.Base.Dto.AuditableDto"
       }
-    ]
+    ],
+    "Endpoints": {
+      "ListEndpoint": {
+        "RequestBaseType": "Template.Backend.Source.Features.Base.Dto.ListRequestDto",
+        "ResponseBaseType": "Template.Backend.Features.Base.Dto.ListDto",
+        "ProcessMethod": "Backend.Extensions.Process"
+      }
+    }
   }
 }

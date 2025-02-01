@@ -22,6 +22,16 @@ public class FeToolSetting
             throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.SortingColumn)} can not be empty.");
         if (string.IsNullOrWhiteSpace(Project.AllowClassPath))
             throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.AllowClassPath)} can not be empty.");
+        if (Project.Endpoints == null)
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.Endpoints)} can not be null.");
+        if (Project.Endpoints.ListEndpoint == null)
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.Endpoints)}.{nameof(Project.Endpoints.ListEndpoint)} can not be null.");
+        if (string.IsNullOrWhiteSpace(Project.Endpoints.ListEndpoint.RequestBaseType))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.Endpoints)}.{nameof(Project.Endpoints.ListEndpoint)}.{nameof(Project.Endpoints.ListEndpoint.RequestBaseType)} can not be empty.");
+        if (string.IsNullOrWhiteSpace(Project.Endpoints.ListEndpoint.ResponseBaseType))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.Endpoints)}.{nameof(Project.Endpoints.ListEndpoint)}.{nameof(Project.Endpoints.ListEndpoint.ResponseBaseType)} can not be empty.");
+        if (string.IsNullOrWhiteSpace(Project.Endpoints.ListEndpoint.ProcessMethod))
+            throw new UserFriendlyException($"{nameof(Project)}.{nameof(Project.Endpoints)}.{nameof(Project.Endpoints.ListEndpoint)}.{nameof(Project.Endpoints.ListEndpoint.ProcessMethod)} can not be empty.");
     }
 }
 
@@ -36,10 +46,23 @@ public class ProjectSetting
     public string AllowClassPath { get; set; } = null!;
     
     public List<DtoMapping> DtoMappings { get; set; } = null!;
+    public Endpoints Endpoints { get; set; } = null!;
 }
 
 public class DtoMapping
 {
     public string Entity { get; set; } = null!;
     public string Dto { get; set; } = null!;
+}
+
+public class Endpoints
+{
+    public ListEndpoint ListEndpoint { get; set; } = null!;
+}
+
+public class ListEndpoint
+{
+    public string RequestBaseType { get; set; } = null!;
+    public string ResponseBaseType { get; set; } = null!;
+    public string ProcessMethod { get; set; } = null!;
 }
