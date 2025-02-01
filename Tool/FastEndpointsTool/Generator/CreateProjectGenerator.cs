@@ -63,34 +63,17 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             Directory.CreateDirectory(targetPath);
             CopyDirectory(templatePath, targetPath, true);
 
-            RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
-            await ReplaceInFiles(targetPath, "Backend", argument.Name);
+            var sourceFeToolConfigPath = Path.Combine(versionedTemplateDir, "fetool.json");
+            var targetFeToolConfigPath = Path.Combine(targetPath, "fetool.json");
+            if (File.Exists(sourceFeToolConfigPath))
+            {
+                File.Copy(sourceFeToolConfigPath, targetFeToolConfigPath);
+            }
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
             await ReplaceInFiles(targetPath, "Backend", argument.Name);
-
-            Console.WriteLine("Creating fetool.json configuration...");
-            var feToolConfig = new
-            {
-                Project = new
-                {
-                    Directory = "Source",
-                    Name = argument.Name,
-                    EndpointPath = "Features",
-                    RootNamespace = argument.Name,
-                    PermissionsNamespace = $"{argument.Name}.Auth",
-                    SortingColumn = "CreatedAt",
-                    AllowClassPath = "Auth/Allow.cs"
-                }
-            };
-
-            var feToolJson = JsonSerializer.Serialize(feToolConfig, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-            await File.WriteAllTextAsync(Path.Combine(targetPath, "fetool.json"), feToolJson);
-
+            
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(targetPath, $"{argument.Name}.sln");
             await ExecuteCommand("dotnet", $"new sln -n {argument.Name} -o \"{Path.GetDirectoryName(solutionPath)}\"");
@@ -249,10 +232,10 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             var content = await File.ReadAllTextAsync(file);
 
             // Replace main database name
-            content = content.Replace("Database=FastEndpointsTemplate", $"Database={newValue}");
+            content = content.Replace("Database=FastEndpoints", $"Database={newValue}");
 
             // Replace test database name
-            content = content.Replace("Database=FastEndpointsTemplateTest", $"Database={newValue}Test");
+            content = content.Replace("Database=FastEndpointsTest", $"Database={newValue}Test");
 
             await File.WriteAllTextAsync(file, content);
         }
