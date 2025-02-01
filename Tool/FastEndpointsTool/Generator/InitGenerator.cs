@@ -9,15 +9,14 @@ public class InitGenerator : CodeGeneratorBase<InitArgument>
     {
         var (isInitialized, directory) = await IsInitialized(Directory.GetCurrentDirectory());
         if (isInitialized)
-            throw new UserFriendlyException("fetool.json already exists.");
+            throw new UserFriendlyException($"fetool.json already exists in {directory}");
         if (directory == null)
-            throw new UserFriendlyException("Failed to find .sln directory.");
+            throw new UserFriendlyException("Failed to find .sln file in directory or any parent directory.");
 
-        Console.WriteLine("Creating fetool.json configuration...");
         var rootNamespace = argument.RootNamespace ?? argument.ProjectName;
-        var feToolConfig = new
+        var feToolConfig = new FeToolSetting
         {
-            Project = new
+            Project = new()
             {
                 Directory = argument.Directory,
                 Name = argument.ProjectName,
@@ -25,7 +24,42 @@ public class InitGenerator : CodeGeneratorBase<InitArgument>
                 RootNamespace = rootNamespace,
                 PermissionsNamespace = $"{rootNamespace}.Auth",
                 SortingColumn = "CreatedAt",
-                AllowClassPath = "Auth/Allow.cs"
+                AllowClassPath = "Auth/Allow.cs",
+                DtoMappings =
+                [
+                    new()
+                    {
+                        Entity = "Backend.Data.Entities.Base.BaseEntity",
+                        Dto = "Backend.Features.Base.Dto.BaseDto"
+                    },
+
+                    new()
+                    {
+                        Entity = "Backend.Data.Entities.Base.CreatableEntity",
+                        Dto = "Backend.Features.Base.Dto.CreatableDto"
+                    },
+
+                    new()
+                    {
+                        Entity = "Backend.Data.Entities.Base.UpdatableEntity",
+                        Dto = "Backend.Features.Base.Dto.UpdatableDto"
+                    },
+
+                    new()
+                    {
+                        Entity = "Backend.Data.Entities.Base.AuditableEntity",
+                        Dto = "Backend.Features.Base.Dto.AuditableDto"
+                    }
+                ],
+                Endpoints = new()
+                {
+                    ListEndpoint = new()
+                    {
+                        RequestBaseType = "Template.Backend.Source.Features.Base.Dto.ListRequestDto",
+                        ResponseBaseType = "Template.Backend.Features.Base.Dto.ListDto",
+                        ProcessMethod = "Backend.Extensions.Process"
+                    }
+                }
             }
         };
 
@@ -34,6 +68,7 @@ public class InitGenerator : CodeGeneratorBase<InitArgument>
             WriteIndented = true
         });
         await File.WriteAllTextAsync(Path.Combine(directory, "fetool.json"), feToolJson);
+        Console.WriteLine($"fetool.json created successfully in {directory}");
     }
 
     public static async Task<(bool isInitialized, string? directory)> IsInitialized(string? directory = null)
