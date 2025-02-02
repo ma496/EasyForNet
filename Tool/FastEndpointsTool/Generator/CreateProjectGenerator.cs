@@ -62,13 +62,8 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
             Directory.CreateDirectory(targetPath);
             CopyDirectory(templatePath, targetPath, true);
-
-            var sourceFeToolConfigPath = Path.Combine(versionedTemplateDir, "fetool.json");
-            var targetFeToolConfigPath = Path.Combine(targetPath, "fetool.json");
-            if (File.Exists(sourceFeToolConfigPath))
-            {
-                File.Copy(sourceFeToolConfigPath, targetFeToolConfigPath);
-            }
+            CopyFilesIfExists(templatePath, targetPath, "fetool.json",
+                ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
@@ -238,6 +233,24 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             content = content.Replace("Database=FastEndpointsTest", $"Database={newValue}Test");
 
             await File.WriteAllTextAsync(file, content);
+        }
+    }
+    
+    private void CopyFilesIfExists(string sourceDirectory, string targetDirectory, params string[] fileNames)
+    {
+        foreach (var fileName in fileNames)
+        {
+            var sourceFilePath = Path.Combine(sourceDirectory, fileName);
+            var targetFilePath = Path.Combine(targetDirectory, fileName);
+
+            if (File.Exists(sourceFilePath))
+            {
+                File.Copy(sourceFilePath, targetFilePath, overwrite: true);
+            }
+            else
+            {
+                throw new UserFriendlyException($"File '{fileName}' does not exist in the source directory '{sourceDirectory}'.");
+            }
         }
     }
 }
