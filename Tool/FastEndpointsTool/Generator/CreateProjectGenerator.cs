@@ -52,7 +52,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             }
 
             Console.WriteLine("Copying template files...");
-            var templatePath = Path.Combine(versionedTemplateDir, "Template", "Backend");
+            var backendProjectPath = Path.Combine(versionedTemplateDir, "Template", "Backend");
             var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, argument.Name);
 
             if (Directory.Exists(targetPath))
@@ -61,9 +61,8 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             }
 
             Directory.CreateDirectory(targetPath);
-            CopyDirectory(templatePath, targetPath, true);
-            CopyFilesIfExists(templatePath, targetPath, "fetool.json",
-                ".editorconfig", ".gitignore");
+            CopyDirectory(backendProjectPath, targetPath, true);
+            CopyFilesIfExists(versionedTemplateDir, targetPath, "fetool.json", ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
