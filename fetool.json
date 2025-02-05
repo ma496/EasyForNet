@@ -27,8 +27,8 @@
     ],
     "Endpoints": {
       "ListEndpoint": {
-        "RequestBaseType": "Template.Backend.Source.Features.Base.Dto.ListRequestDto",
-        "ResponseBaseType": "Template.Backend.Features.Base.Dto.ListDto",
+        "RequestBaseType": "Backend.Features.Base.Dto.ListRequestDto",
+        "ResponseBaseType": "Backend.Features.Base.Dto.ListDto",
         "ProcessMethod": "Backend.Extensions.Process"
       }
     }

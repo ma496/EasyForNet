@@ -4,8 +4,6 @@ using Backend.Data.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Backend.Services.Identity;
 using Backend.Features.Base.Dto;
-using Template.Backend.Source.Features.Base.Dto;
-using Template.Backend.Features.Base.Dto;
 using Backend.Extensions;
 
 namespace Backend.Features.Roles;

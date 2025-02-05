@@ -1,4 +1,4 @@
-namespace Template.Backend.Source.Features.Base;
+namespace Backend.Features.Base;
 
 public enum SortDirection
 {

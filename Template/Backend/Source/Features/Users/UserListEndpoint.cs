@@ -3,10 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Services.Identity;
 using Backend.Auth;
 using Backend.Features.Base.Dto;
-using Template.Backend.Features.Base.Dto;
-using Template.Backend.Source.Features.Base.Dto;
 using Backend.Extensions;
-using Template.Backend.Source.Features.Base;
 
 namespace Backend.Features.Users;
 

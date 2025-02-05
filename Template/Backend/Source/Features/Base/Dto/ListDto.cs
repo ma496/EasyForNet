@@ -1,4 +1,4 @@
-namespace Template.Backend.Features.Base.Dto;
+namespace Backend.Features.Base.Dto;
 
 public class ListDto<T>
 {

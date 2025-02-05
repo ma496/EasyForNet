@@ -1,4 +1,4 @@
-namespace Template.Backend.Extensions;
+namespace Backend.Extensions;
 
 public static class IStringExtension
 {

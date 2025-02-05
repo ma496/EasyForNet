@@ -1,6 +1,5 @@
 using FastEndpointsTool.Parsing;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace FastEndpointsTool.Generator;
 
@@ -62,7 +61,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
             Directory.CreateDirectory(targetPath);
             CopyDirectory(backendProjectPath, targetPath, true);
-            CopyFilesIfExists(versionedTemplateDir, targetPath, "fetool.json", ".editorconfig", ".gitignore");
+            CopyFilesIfExists(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
@@ -79,6 +78,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
                 Console.WriteLine($"Adding project: {Path.GetFileName(projectFile)}");
                 await ExecuteCommand("dotnet", $"sln \"{solutionPath}\" add \"{projectFile}\"");
             }
+
+            // create fetool.json file
+            await FetHelper.CreateFetFile("Source", argument.Name, argument.Name, targetPath);
 
             Console.WriteLine("Project creation completed successfully!");
         }

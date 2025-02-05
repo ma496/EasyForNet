@@ -1,9 +1,9 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.Extensions;
 using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
 using FluentValidation;
-using Template.Backend.Extensions;
 
 namespace Backend.Features.Users;
 
