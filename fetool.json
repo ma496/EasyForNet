@@ -7,6 +7,7 @@
     "PermissionsNamespace": "Backend.Auth",
     "SortingColumn": "CreatedAt",
     "AllowClassPath": "Auth/Allow.cs",
+    "PermissionDefinitionProviderPath": "Auth/PermissionDefinitionProvider.cs",
     "DtoMappings": [
       {
         "Entity": "Backend.Data.Entities.Base.BaseEntity",

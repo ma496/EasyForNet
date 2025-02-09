@@ -44,7 +44,7 @@ public class ProjectSetting
     public string PermissionsNamespace { get; set; } = null!;
     public string SortingColumn { get; set; } = null!;
     public string AllowClassPath { get; set; } = null!;
-    
+    public string PermissionDefinitionProviderPath { get; set; } = null!;
     public List<DtoMapping> DtoMappings { get; set; } = null!;
     public Endpoints Endpoints { get; set; } = null!;
 }

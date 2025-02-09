@@ -2,6 +2,7 @@ using FastEndpointsTool.Templates;
 using System.Reflection;
 using System.Text;
 using FastEndpointsTool.Parsing;
+using FastEndpointsTool.Extensions;
 
 namespace FastEndpointsTool.Generator;
 
@@ -26,7 +27,10 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             var groupNamespace = string.Empty;
             var dataContextNamespace = GetClassNamespace(projectDir, setting.Project.Name, argument.DataContext);
 
-            // Create endpoint
+            // add permission group to permission definition provider
+            AddPermissionGroupToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""), argument.PluralName);
+
+            // create endpoint
             var createEndpointArgument = (EndpointArgument)argument.Clone();
             createEndpointArgument.Type = ArgumentType.CreateEndpoint;
             createEndpointArgument.Method = "post";
@@ -35,12 +39,24 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 createEndpointArgument.Permission = Helpers.PermissionName(createEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), createEndpointArgument.Permission);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, createEndpointArgument.Permission, createEndpointArgument.Permission.SplitReturnLast("_"));
+
+
             }
             else if (!string.IsNullOrWhiteSpace(createEndpointArgument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), createEndpointArgument.Permission);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, createEndpointArgument.Permission, createEndpointArgument.Permission.SplitReturnLast("_"));
+            }
+
+
+
             await GenerateEndpoint(createEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
-            // Create update endpoint
+
+            // update endpoint
             var updateEndpointArgument = (EndpointArgument)argument.Clone();
             updateEndpointArgument.Type = ArgumentType.UpdateEndpoint;
             updateEndpointArgument.Method = "put";
@@ -49,12 +65,24 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 updateEndpointArgument.Permission = Helpers.PermissionName(updateEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, updateEndpointArgument.Permission, updateEndpointArgument.Permission.SplitReturnLast("_"));
+
+
+
             }
             else if (!string.IsNullOrWhiteSpace(updateEndpointArgument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), updateEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, updateEndpointArgument.Permission, updateEndpointArgument.Permission.SplitReturnLast("_"));
+            }
+
+
+
             await GenerateEndpoint(updateEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
-            // Create list endpoint
+            // list endpoint
             var listEndpointArgument = (EndpointArgument)argument.Clone();
             listEndpointArgument.Type = ArgumentType.ListEndpoint;
             listEndpointArgument.Method = "get";
@@ -64,12 +92,24 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 listEndpointArgument.Permission = Helpers.PermissionName(listEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, listEndpointArgument.Permission, listEndpointArgument.Permission.SplitReturnLast("_"));
+
+
+
             }
             else if (!string.IsNullOrWhiteSpace(listEndpointArgument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), listEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, listEndpointArgument.Permission, listEndpointArgument.Permission.SplitReturnLast("_"));
+            }
+
+
+
             await GenerateEndpoint(listEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
-            // Create get endpoint
+            // get endpoint
             var getEndpointArgument = (EndpointArgument)argument.Clone();
             getEndpointArgument.Type = ArgumentType.GetEndpoint;
             getEndpointArgument.Method = "get";
@@ -79,12 +119,24 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 getEndpointArgument.Permission = Helpers.PermissionName(getEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, getEndpointArgument.Permission, getEndpointArgument.Permission.SplitReturnLast("_"));
+
+
+
             }
             else if (!string.IsNullOrWhiteSpace(getEndpointArgument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), getEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, getEndpointArgument.Permission, getEndpointArgument.Permission.SplitReturnLast("_"));
+            }
+
+
+
             await GenerateEndpoint(getEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
 
-            // Create delete endpoint
+            // delete endpoint
             var deleteEndpointArgument = (EndpointArgument)argument.Clone();
             deleteEndpointArgument.Type = ArgumentType.DeleteEndpoint;
             deleteEndpointArgument.Method = "delete";
@@ -93,9 +145,21 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 deleteEndpointArgument.Permission = Helpers.PermissionName(deleteEndpointArgument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, deleteEndpointArgument.Permission, deleteEndpointArgument.Permission.SplitReturnLast("_"));
+
+
+
             }
             else if (!string.IsNullOrWhiteSpace(deleteEndpointArgument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), deleteEndpointArgument.Permission, false);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group.Replace("Group", ""),
+                    argument.PluralName, deleteEndpointArgument.Permission, deleteEndpointArgument.Permission.SplitReturnLast("_"));
+            }
+
+
+
             await GenerateEndpoint(deleteEndpointArgument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
         else
@@ -112,9 +176,18 @@ public class EndpointGenerator : CodeGeneratorBase<EndpointArgument>
             {
                 argument.Permission = Helpers.PermissionName(argument.Name);
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), argument.Permission);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group?.Replace("Group", ""),
+                    argument.PluralName, argument.Permission, argument.Permission.SplitReturnLast("_"));
+
+
             }
             else if (!string.IsNullOrWhiteSpace(argument.Permission))
+            {
                 AddPermissionToAllowClass(Path.Combine(projectDir, setting.Project.AllowClassPath), argument.Permission);
+                AddPermissionToProvider(Path.Combine(projectDir, setting.Project.PermissionDefinitionProviderPath), argument.Group?.Replace("Group", ""),
+                    argument.PluralName, argument.Permission, argument.Permission.SplitReturnLast("_"));
+
+            }
             await GenerateEndpoint(argument, setting, endpointDir, entityNamespace, groupNamespace, dataContextNamespace);
         }
     }

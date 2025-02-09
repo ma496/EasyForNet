@@ -23,6 +23,7 @@ public static class FetHelper
                 PermissionsNamespace = $"{rootNamespace}.Auth",
                 SortingColumn = "CreatedAt",
                 AllowClassPath = "Auth/Allow.cs",
+                PermissionDefinitionProviderPath = "Auth/PermissionDefinitionProvider.cs",
                 DtoMappings =
                 [
                     new()
@@ -68,7 +69,7 @@ public static class FetHelper
         await File.WriteAllTextAsync(Path.Combine(slnDirectory, "fetool.json"), feToolJson);
         Console.WriteLine($"fetool.json created successfully in {slnDirectory}");
     }
-    
+
     private static async Task<(bool isInitialized, string? directory)> IsInitialized(string? directory = null)
     {
         if (string.IsNullOrWhiteSpace(directory))

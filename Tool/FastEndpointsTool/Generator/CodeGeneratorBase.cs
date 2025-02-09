@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 
 namespace FastEndpointsTool.Generator;
@@ -59,14 +60,15 @@ public abstract class CodeGeneratorBase<TArgument>
         var fileContent = File.ReadAllText(filePath);
 
         // Prepare the new permission string
-        var newPermission = $"    public const string {permissionName} = \"{Helpers.UnderscoreToDot(permissionName)}\";";
+        var newPermission = $"\tpublic const string {permissionName} = \"{Helpers.UnderscoreToDot(permissionName)}\";";
 
         // Check if the permission already exists
         if (Regex.IsMatch(fileContent, $@"\s*public\s+const\s+string\s+{permissionName}\s*=\s*""[^""]*""\s*;"))
         {
-            Console.WriteLine($"Permission {permissionName} already exists.");
+            Console.WriteLine($"Permission {permissionName} already defined in Allow.cs.");
             return;
         }
+
 
         // Insert the new permission before the closing brace of the class
         var classEndIndex = fileContent.LastIndexOf("}");
@@ -79,7 +81,155 @@ public abstract class CodeGeneratorBase<TArgument>
         var updatedFileContent = fileContent.Substring(0, classEndIndex) + (newLineBefore ? Environment.NewLine : string.Empty) + newPermission + Environment.NewLine + fileContent.Substring(classEndIndex);
 
         // Save the modified file
-        Console.WriteLine($"Add permission {permissionName} to {filePath}");
         File.WriteAllText(filePath, updatedFileContent);
+        Console.WriteLine($"Added permission {permissionName} to {filePath}");
+    }
+
+    protected void AddPermissionGroupToProvider(string filePath, string groupName, string displayName)
+    {
+        var fileContent = File.ReadAllText(filePath);
+
+        // Check if the permission group already exists
+        var groupPattern = $@"var\s+{groupName.ToLowerFirst()}Permissions\s*=\s*context\.AddPermission\(\s*""{displayName}""\s*,\s*""{displayName}""\s*\)\s*;";
+        if (Regex.IsMatch(fileContent, groupPattern))
+        {
+            Console.WriteLine($"{groupName.ToLowerFirst()}Permissions group already defined in PermissionDefinitionProvider.Define method.");
+            return;
+        }
+
+        // Create the new permission group line
+        var newGroup = $"\n\t\tvar {groupName.ToLowerFirst()}Permissions = context.AddPermission(\"{displayName}\", \"{displayName}\");";
+
+        // Find the Define method
+        var defineMethodPattern = @"public\s+void\s+Define\s*\(\s*PermissionDefinitionContext\s+context\s*\)\s*{";
+        var defineMethodMatch = Regex.Match(fileContent, defineMethodPattern);
+        if (!defineMethodMatch.Success)
+        {
+            throw new InvalidOperationException("Could not find Define method in PermissionDefinitionProvider.");
+        }
+
+        // Find the matching closing brace for Define method
+        var startPos = defineMethodMatch.Index;
+        var braceCount = 0;
+        var endPos = -1;
+
+        for (var i = startPos; i < fileContent.Length; i++)
+        {
+            if (fileContent[i] == '{') braceCount++;
+            else if (fileContent[i] == '}')
+            {
+                braceCount--;
+                if (braceCount == 0)
+                {
+                    endPos = i;
+                    break;
+                }
+            }
+        }
+
+        if (endPos == -1)
+        {
+            throw new InvalidOperationException("Could not find end of Define method in PermissionDefinitionProvider.");
+        }
+
+        // Insert the new group before the Define method's closing brace
+        var updatedContent = fileContent.Insert(endPos, newGroup + Environment.NewLine + "\t");
+
+        File.WriteAllText(filePath, updatedContent);
+        Console.WriteLine($"Added {groupName.ToLowerFirst()}Permissions group to {filePath}");
+    }
+
+    protected void AddPermissionToProvider(string filePath, string? groupName, string pluralName, string permissionName, string displayName)
+    {
+        var fileContent = File.ReadAllText(filePath);
+
+        // Check if the permission already exists
+        var permissionPattern = !string.IsNullOrWhiteSpace(groupName)
+            ? $@"{groupName.ToLowerFirst()}Permissions\.AddChild\s*\(\s*Allow\.{permissionName}, ""{displayName}""\)"
+            : $@"context\.AddPermission\s*\(""{permissionName}"", ""{displayName}""\)";
+        if (Regex.IsMatch(fileContent, permissionPattern))
+        {
+            Console.WriteLine($"Permission {permissionName} already defined in PermissionDefinitionProvider.Define method.");
+            return;
+        }
+
+
+        // Create the new permission line
+        var newPermission = !string.IsNullOrWhiteSpace(groupName)
+            ? $"\t\t{groupName.ToLowerFirst()}Permissions.AddChild(Allow.{permissionName}, \"{displayName}\");"
+            : $"\n\t\tcontext.AddPermission(\"{permissionName}\", \"{displayName}\");";
+
+
+        if (!string.IsNullOrWhiteSpace(groupName))
+        {
+            // Find the permissions group variable
+
+            var groupPattern = $@"var\s+{groupName.ToLowerFirst()}Permissions\s*=\s*context\.AddPermission\(\s*""{pluralName}""\s*,\s*""{pluralName}""\s*\)\s*;";
+            var groupMatch = Regex.Match(fileContent, groupPattern);
+            if (!groupMatch.Success)
+            {
+                // Add group if not found
+                AddPermissionGroupToProvider(filePath, groupName, pluralName);
+
+
+                // Re-read file content and find group again
+                fileContent = File.ReadAllText(filePath);
+                groupMatch = Regex.Match(fileContent, groupPattern);
+                if (!groupMatch.Success)
+                {
+                    throw new InvalidOperationException($"Could not find {groupName.ToLowerFirst()}Permissions group in PermissionDefinitionProvider.Define method after adding it.");
+                }
+            }
+
+            // Find the end of the group line
+            var groupLineEnd = fileContent.IndexOf('\n', groupMatch.Index) + 1;
+
+            // Insert the new permission after the group line
+            var updatedContent = fileContent.Insert(groupLineEnd, newPermission + Environment.NewLine);
+
+            File.WriteAllText(filePath, updatedContent);
+            Console.WriteLine($"Added permission {permissionName} to {groupName}Permissions group in {filePath}");
+        }
+        else
+        {
+            // Find the Define method
+            var defineMethodPattern = @"public\s+void\s+Define\s*\(\s*PermissionDefinitionContext\s+context\s*\)\s*{";
+            var defineMethodMatch = Regex.Match(fileContent, defineMethodPattern);
+            if (!defineMethodMatch.Success)
+            {
+                throw new InvalidOperationException("Could not find Define method in PermissionDefinitionProvider.");
+            }
+
+            // Find the matching closing brace for Define method
+            var startPos = defineMethodMatch.Index;
+            var braceCount = 0;
+            var endPos = -1;
+
+            for (var i = startPos; i < fileContent.Length; i++)
+            {
+                if (fileContent[i] == '{') braceCount++;
+                else if (fileContent[i] == '}')
+                {
+                    braceCount--;
+                    if (braceCount == 0)
+                    {
+                        endPos = i;
+                        break;
+                    }
+                }
+            }
+
+            if (endPos == -1)
+            {
+                throw new InvalidOperationException("Could not find end of Define method in PermissionDefinitionProvider.");
+            }
+
+            // add permission without group
+            var updatedContent = fileContent.Insert(endPos, newPermission + Environment.NewLine + "\t");
+
+            File.WriteAllText(filePath, updatedContent);
+            Console.WriteLine($"Added permission {permissionName} to {filePath}");
+        }
     }
 }
+
