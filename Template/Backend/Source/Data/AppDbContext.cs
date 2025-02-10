@@ -1,4 +1,3 @@
-using Backend.Data.Entities;
 using Backend.Data.Entities.Base;
 using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
@@ -24,7 +23,6 @@ public class AppDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<AuthToken> AuthTokens => Set<AuthToken>();
     public DbSet<Token> Tokens => Set<Token>();
-    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
