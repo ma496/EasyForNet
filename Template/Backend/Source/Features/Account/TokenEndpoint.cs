@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Backend.Features.Account;
 
-sealed class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
+sealed class TokenEndpoint : Endpoint<TokenReq, TokenResponse>
 {
     private readonly IUserService _userService;
 
-    public LoginEndpoint(IUserService userService)
+    public TokenEndpoint(IUserService userService)
     {
         _userService = userService;
     }
 
     public override void Configure()
     {
-        Post("login");
+        Post("token");
         Group<AccountGroup>();
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(LoginRequest req, CancellationToken c)
+    public override async Task HandleAsync(TokenReq req, CancellationToken c)
     {
         var user = await (!req.IsEmail ? _userService.GetByUsernameAsync(req.Username) : _userService.GetByEmailAsync(req.Email));
         if (user == null)
@@ -53,7 +53,7 @@ sealed class LoginEndpoint : Endpoint<LoginRequest, TokenResponse>
     }
 }
 
-sealed class LoginRequest
+sealed class TokenReq
 {
     public bool IsEmail { get; set; }
     public string Username { get; set; } = null!;
@@ -61,7 +61,7 @@ sealed class LoginRequest
     public string Password { get; set; } = null!;
 }
 
-sealed class LoginValidator : Validator<LoginRequest>
+sealed class LoginValidator : Validator<TokenReq>
 {
     public LoginValidator()
     {

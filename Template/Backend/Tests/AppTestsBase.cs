@@ -22,7 +22,7 @@ public abstract class AppTestsBase(App app) : TestBase<App>
 
     private async Task<string> GetNewAuthToken(string username = "admin", string password = "Admin#123")
     {
-        var (_, res) = await App.Client.POSTAsync<LoginEndpoint, LoginRequest, TokenResponse>(
+        var (_, res) = await App.Client.POSTAsync<TokenEndpoint, TokenReq, TokenResponse>(
             new()
             {
                 Username = username,
