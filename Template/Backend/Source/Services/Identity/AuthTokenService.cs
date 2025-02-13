@@ -39,4 +39,11 @@ public class AuthTokenService : IAuthTokenService
     {
         await _dbContext.AuthTokens.Where(at => at.RefreshExpiry < DateTime.UtcNow).ExecuteDeleteAsync();
     }
+
+    public async Task DeleteTokenAsync(string userId, string accessToken, string refreshToken)
+    {
+        await _dbContext.AuthTokens
+            .Where(at => at.UserId == Guid.Parse(userId) && at.AccessToken == accessToken && at.RefreshToken == refreshToken)
+            .ExecuteDeleteAsync();
+    }
 }

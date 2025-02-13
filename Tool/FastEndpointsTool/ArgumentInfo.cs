@@ -117,7 +117,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -178,7 +178,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -239,7 +239,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -300,7 +300,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -361,7 +361,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -438,7 +438,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -522,7 +522,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -606,7 +606,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -699,7 +699,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },
@@ -792,7 +792,7 @@ public class ArgumentInfo
                     {
                         Name = "--group",
                         ShortName = "-g",
-                        Description = "Endpoint group.",
+                        Description = "Endpoint group class name.",
                         Required = false,
                         NormalizeMethod = Helpers.GroupName,
                     },

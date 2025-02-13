@@ -1,10 +1,16 @@
 # FastEndpointsTool
 
+## Prerequisites
+
+- .NET 9.0
+- PostgreSQL
+
 ## Installation
 
 To install the FastEndpointsTool globally using the .NET CLI, run the following command:
 
 ```sh
+
 dotnet tool install --global FastEndpointsTool
 ```
 ## Checking the Version
@@ -20,7 +26,7 @@ or
 ```sh
 dotnet fet --version
 ```
-## Creating a New Project
+## Create a New Project
 
 To create a new project using the FastEndpointsTool, run the following command:
 
@@ -31,11 +37,13 @@ dotnet fet cp -n {name} -o {path}
 - `-n {name}`: Specifies the name of the new project.
 - `-o {path}`: (Optional) Specifies the output directory for the new project.
 
-## Changing Connection Strings
+## Change Connection Strings
 
 By default, the FastEndpointsTool sets up connection strings for PostgreSQL in the `appsettings.json` and `appsettings.Testing.json` files. To change the connection strings, follow these steps:
 
-1. Open the `appsettings.json` file and locate the `ConnectionStrings` section. Update the `DefaultConnection` string with your PostgreSQL connection details:
+1. Go to Source directory, create `appsettings.Development.json` file copy from `appsettings.json` and update the connection string.
+
+2. Open the `appsettings.Development.json` file. Update the `DefaultConnection` and `Hangfire` connection strings with your PostgreSQL connection details:
 
     ```json
     {
@@ -50,7 +58,7 @@ By default, the FastEndpointsTool sets up connection strings for PostgreSQL in t
     }
     ```
 
-2. Open the `appsettings.Testing.json` file and locate the `ConnectionStrings` section. Update the `DefaultConnection` string with your PostgreSQL connection details:
+3. Open the `appsettings.Testing.json` file. Update the `DefaultConnection` string with your PostgreSQL connection details:
 
     ```json
     {
@@ -70,6 +78,10 @@ By default, the FastEndpointsTool sets up connection strings for PostgreSQL in t
 
     Once the project is running, open your browser and go to [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html) to view the Swagger documentation for the endpoints.
 
+    Default credentials:
+    - Username: admin
+    - Password: Admin#123
+
     ## Run the Tests
 
     To run the tests, navigate to the Tests directory and execute the following command:
@@ -80,7 +92,7 @@ By default, the FastEndpointsTool sets up connection strings for PostgreSQL in t
 
     ## Project Architecture and Folder Structure
 
-    The project follows a slice architecture pattern with the following folder structure, for example if project name is PointOfSale:
+    The project follows a `slice architecture` and `request/response pattern` with the following folder structure, for example if project name is PointOfSale:
 
     ```
     PointOfSale

@@ -80,6 +80,40 @@ public class AppDbContext : DbContext
             .HasForeignKey(t => t.UserId);
     }
 
+    public override int SaveChanges()
+    {
+        var currentUserId = _currentUserService.GetCurrentUserId();
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => (e.Entity is ICreatableEntity || e.Entity is IUpdatableEntity) && (
+                e.State == EntityState.Added ||
+                e.State == EntityState.Modified));
+
+        foreach (var entityEntry in entries)
+        {
+            if (entityEntry.State == EntityState.Added)
+            {
+                var entity = entityEntry.Entity as ICreatableEntity;
+                if (entity != null)
+                {
+                    entity.CreatedAt = DateTime.UtcNow;
+                    entity.CreatedBy = currentUserId;
+                }
+            }
+            else if (entityEntry.State == EntityState.Modified)
+            {
+                var entity = entityEntry.Entity as IUpdatableEntity;
+                if (entity != null)
+                {
+                    entity.UpdatedAt = DateTime.UtcNow;
+                    entity.UpdatedBy = currentUserId;
+                }
+            }
+        }
+
+        return base.SaveChanges();
+    }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var currentUserId = _currentUserService.GetCurrentUserId();

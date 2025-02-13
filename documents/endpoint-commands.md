@@ -12,7 +12,7 @@
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoints. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 
 ### Create Endpoint Command
 
@@ -26,9 +26,9 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
+- `--group` or `-g`: Endpoint group class name. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Update Endpoint Command
@@ -43,9 +43,9 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
+- `--group` or `-g`: Endpoint group class name. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Get Endpoint Command
@@ -60,9 +60,9 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
+- `--group` or `-g`: Endpoint group class name. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### List Endpoint Command
@@ -77,9 +77,9 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
+- `--group` or `-g`: Endpoint group class name. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Delete Endpoint Command
@@ -94,9 +94,9 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
+- `--group` or `-g`: Endpoint group class name. (Optional)
 - `--dataContext` or `-dc`: DataContext class name. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ## Basic Endpoints Commands
@@ -113,8 +113,8 @@
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--entity` or `-e`: Name of the entity class. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--group` or `-g`: Endpoint group class name. (Optional)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Endpoint Without Mapper Command
@@ -128,8 +128,8 @@
 - `--method` or `-m`: HTTP method. (Required)
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--group` or `-g`: Endpoint group class name. (Optional)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Endpoint Without Response Command
@@ -143,8 +143,8 @@
 - `--method` or `-m`: HTTP method. (Required)
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--group` or `-g`: Endpoint group class name. (Optional)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Endpoint Without Request Command
@@ -158,8 +158,8 @@
 - `--method` or `-m`: HTTP method. (Required)
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--group` or `-g`: Endpoint group class name. (Optional)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
 
 ### Endpoint Without Response and Request Command
@@ -173,6 +173,6 @@
 - `--method` or `-m`: HTTP method. (Required)
 - `--url` or `-u`: URL of the endpoint. (Required)
 - `--output` or `-o`: Path of the endpoint. (Optional)
-- `--group` or `-g`: Endpoint group. (Optional)
-- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`)
+- `--group` or `-g`: Endpoint group class name. (Optional)
+- `--authorization` or `-auth`: Permission-based authorization. (Optional, Default: `false`, Values: `true`/`false`)
 - `--permission` or `-per`: Permission name. (Optional)
