@@ -92,7 +92,7 @@ By default, the FastEndpointsTool sets up connection strings for PostgreSQL in t
 
     ## Project Architecture
 
-    The project follows the REPR (Request-Endpoint-Response) design pattern with a slice architecture approach. This architecture provides:
+    The project based on [fast-endpoints](https://fast-endpoints.com) framework that follows the REPR (Request-Endpoint-Response) design pattern with a slice architecture approach. This architecture provides:
 
     - Clear separation of concerns
     - Maintainable and scalable codebase
@@ -187,7 +187,7 @@ In a slice architecture, features are organized into dedicated folders. For exam
 
 ## Additional Features
 
-For access to more advanced features, please connect with me on LinkedIn (https://www.linkedin.com/in/muhammad-ali-a5481b1b8/):
+For access to more advanced features, you can connect with me on [LinkedIn](https://www.linkedin.com/in/muhammad-ali-a5481b1b8/)
 
 - **Next.js Integration** - Full integration with Next.js frontend framework
 - **Multi-Tenant Architecture** - Support for multiple tenants/organizations
