@@ -185,7 +185,7 @@ In a slice architecture, features are organized into dedicated folders. For exam
   - `delete-expired-tokens` – A recurring job that runs once per day to remove expired tokens used for the "Forgot Password" functionality. The schedule can be customized.  
 
 
-## Additional Features
+## Premium Features
 
 For access to more advanced features, you can connect with me on [LinkedIn](https://www.linkedin.com/in/muhammad-ali-a5481b1b8/)
 
