@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 46 (44423) - http://www.bohemiancoding.com/sketch -->
     <title>SS</title>
     <desc>Created with sketchtool.</desc>
@@ -38,7 +39,9 @@
             <rect id="Rectangle-2" fill="url(#linearGradient-4)" x="0" y="11" width="21" height="4"></rect>
             <rect id="Rectangle-2" fill="url(#linearGradient-1)" x="0" y="10" width="21" height="1"></rect>
             <polygon id="Rectangle-83" fill="url(#linearGradient-5)" points="0 0 10 7.5 0 15"></polygon>
-            <polygon id="Star-53" fill="url(#linearGradient-6)" points="3.8362378 7.98697775 3.15270364 9.2672036 2.94825467 7.83040236 1.51946386 7.57593429 2.82276483 6.93749577 2.62325771 5.5 3.63319098 6.54222453 4.9386796 5.90827135 4.25955172 7.19084006 5.26589519 8.23653122"></polygon>
+            <polygon id="Star-53" fill="url(#linearGradient-6)"
+                points="3.8362378 7.98697775 3.15270364 9.2672036 2.94825467 7.83040236 1.51946386 7.57593429 2.82276483 6.93749577 2.62325771 5.5 3.63319098 6.54222453 4.9386796 5.90827135 4.25955172 7.19084006 5.26589519 8.23653122">
+            </polygon>
         </g>
     </g>
 </svg>
