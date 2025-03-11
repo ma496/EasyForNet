@@ -81,13 +81,15 @@ const Header = () => {
     <header className="fixed inset-x-0 top-0 z-30 bg-white px-4 py-[15px] shadow-sm lg:px-5">
       <div className="flex items-center justify-between gap-5">
         <Link href="/" className="inline-block shrink-0 lg:ml-2.5">
-          <Image
-            src="/images/logo.svg"
-            width={145}
-            height={34}
-            alt="Logo"
-            className="h-auto w-32 lg:w-[145px]"
-          />
+          <div className="flex items-center gap-2">
+            <Image
+              src="/images/icon.png"
+              alt="Logo"
+              width={34}
+              height={34}
+            />
+            <span className="font-bold">Easy for Net</span>
+          </div>
         </Link>
 
         <div className="inline-flex items-center gap-3 sm:gap-5">

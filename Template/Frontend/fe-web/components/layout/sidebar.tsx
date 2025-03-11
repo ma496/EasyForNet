@@ -144,13 +144,15 @@ const Sidebar = () => {
         </button>
         <div className="flex items-start justify-between border-b border-gray-300 px-4 py-5 lg:hidden">
           <Link href="/" className="inline-block">
-            <Image
-              src="/images/logo.svg"
-              width={145}
-              height={34}
-              alt="Logo"
-              className="h-auto w-auto"
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src="/images/icon.png"
+                alt="Logo"
+                width={34}
+                height={34}
+              />
+              <span className="font-bold">Easy for Net</span>
+            </div>
           </Link>
           <button type="button" onClick={toggleSidebarResponsive}>
             <X className="-mr-2 -mt-2 ml-auto size-4 hover:text-black" />
@@ -812,30 +814,12 @@ const Sidebar = () => {
             <span>Contact Us</span>
           </NavLink>
         </Accordion>
-        <div className="upgrade-menu sticky bottom-0 rounded-[10px] bg-light-theme p-4 transition-all">
-          <span className="absolute -right-0 left-0 top-0 -z-[1]">
-            <Image
-              src="/images/rectangle-gird.png"
-              width={250}
-              height={230}
-              alt="rectangle-grid"
-              className="h-full w-full rounded-[10px]"
-            />
-          </span>
-          <span className="grid size-9 place-content-center rounded-lg bg-white shadow-[0_1px_1px_0_rgba(0,0,0,0.05),0_1px_4px_0_rgba(0,0,0,0.03)]">
-            <Rocket className="size-5 text-primary" />
-          </span>
-          <p className="mb-4 mt-3 font-semibold leading-5 text-black">
-            Get detailed report, sales analysis, with pro plan
-          </p>
-          <Link
-            href="https://sbthemes.lemonsqueezy.com/buy/69aeae3f-6c81-4804-a211-7b96e7e0e56a"
-            target="_blank"
-          >
-            <Button type="button" variant={'black'}>
-              Upgrade Now
-            </Button>
-          </Link>
+        {/* footer */}
+        <div className="upgrade-menu sticky bottom-0 rounded-[10px] p-4 transition-all">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold">Easy for Net</span>
+            <span className="text-sm">2025</span>
+          </div>
         </div>
       </Card>
     </>
