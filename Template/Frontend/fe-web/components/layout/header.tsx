@@ -93,13 +93,6 @@ const Header = () => {
         </Link>
 
         <div className="inline-flex items-center gap-3 sm:gap-5">
-          <Link
-            href="/"
-            target="_blank"
-            className="hidden duration-300 hover:opacity-80 lg:block"
-          >
-            <MessageSquareText className="h-5 w-5" />
-          </Link>
           <div className="order-2 lg:order-none">
             <Popover>
               <PopoverTrigger asChild>
@@ -200,33 +193,6 @@ const Header = () => {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="order-1 lg:order-none">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={'outline-general'}
-                  className="text-wrap p-0 shadow-none ring-0 lg:px-2.5 lg:py-2 lg:shadow-sm lg:ring-1"
-                >
-                  <CalendarCheck className="!size-5 lg:!size-4" />
-                  {date ? (
-                    format(date, 'PPP')
-                  ) : (
-                    <span className="hidden lg:block">
-                      Schedule
-                    </span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="!w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
           <div className="hidden lg:block">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -240,20 +206,6 @@ const Header = () => {
                       alt="Profile Img"
                     />
                   </div>
-                  <div className="hidden space-y-1 lg:block">
-                    <h5 className="line-clamp-1 text-[10px]/3 font-semibold">
-                      Welcome back 👋
-                    </h5>
-                    <h2 className="line-clamp-1 text-xs font-bold text-black">
-                      Jackson James
-                    </h2>
-                  </div>
-                  <button
-                    type="button"
-                    className="-ml-1 mt-auto text-black transition group-hover:opacity-70"
-                  >
-                    <ChevronDown className="h-4 w-4 shrink-0 duration-300" />
-                  </button>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent

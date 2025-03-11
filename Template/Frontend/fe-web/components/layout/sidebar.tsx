@@ -817,7 +817,7 @@ const Sidebar = () => {
         {/* footer */}
         <div className="upgrade-menu sticky bottom-0 rounded-[10px] p-4 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold">Easy for Net</span>
+            <span className="text-sm">Easy for Net</span>
             <span className="text-sm">2025</span>
           </div>
         </div>
