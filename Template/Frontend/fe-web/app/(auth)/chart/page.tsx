@@ -11,28 +11,28 @@ import { DualLineChart } from '@/components/custom/charts/dual-line'
 import { LineChart3 } from '@/components/custom/charts/line-chart3'
 
 const Chart = () => {
-    return (
-        <div className="relative space-y-4">
-            <PageHeading heading={'Chart'} />
+  return (
+    <div className="relative space-y-4">
+      <PageHeading heading={'Chart'} />
 
-            <div className="min-h-[calc(100vh_-_160px)] w-full space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
-                    <OnlineSalesAreaChart isCardHeader={false} />
-                    <LineSingleChart />
-                    <LineChart />
-                    <DistributionRadialStackedChart isShowHeader={false} />
-                    <RadarAreaChart
-                        cardContentClassName="max-h-[400px]"
-                        cardclassName="shadow-sm"
-                    />
-                    <DailySalesBarChart />
-                </div>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <LineChart3 />
-                    <DualLineChart />
-                </div>
-            </div>
+      <div className="min-h-[calc(100vh_-_160px)] w-full space-y-4">
+        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+          <OnlineSalesAreaChart isCardHeader={false} />
+          <LineSingleChart />
+          <LineChart />
+          <DistributionRadialStackedChart isShowHeader={false} />
+          <RadarAreaChart
+            cardContentClassName="max-h-[400px]"
+            cardclassName="shadow-sm"
+          />
+          <DailySalesBarChart />
         </div>
-    )
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <LineChart3 />
+          <DualLineChart />
+        </div>
+      </div>
+    </div>
+  )
 }
 export default Chart

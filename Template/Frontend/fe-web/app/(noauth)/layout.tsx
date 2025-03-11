@@ -1,7 +1,7 @@
 export default async function NoAuthLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode
+  children: React.ReactNode
 }>) {
-    return children
+  return children
 }
