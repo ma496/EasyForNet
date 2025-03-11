@@ -5,7 +5,7 @@ insert_final_newline = false
 indent_style = space
 indent_size = 4
 
-[{*.har,*.json}]
+[{*.har,*.json,*.js,*.jsx,*.ts,*.tsx}]
 indent_size = 2
 
 [*.{received,verified}.{txt,xml,json}]
