@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .sidebar .nav-link {
+        @apply flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium leading-tight text-gray transition hover:text-black;
+    }
+    .nav-item.sub-menu-active {
+        @apply bg-light-theme !text-primary;
+    }
+    .nav-item.active {
+        @apply !text-black;
+    }
+    .sidebar .submenu > li > a {
+        @apply flex rounded-lg px-2 py-1 font-medium text-gray-700 transition hover:bg-light-theme hover:text-primary;
+    }
+    .sidebar.closed {
+        @apply w-[260px] lg:w-[60px];
+    }
+    .sidebar.closed h3 {
+        @apply rounded-none;
+    }
+    .sidebar.closed h3 > span {
+        @apply hidden;
+    }
+    .sidebar.closed h3 > svg {
+        @apply block;
+    }
+    .sidebar.closed .submenu {
+        @apply lg:hidden;
+    }
+    .sidebar .nav-link span {
+        @apply whitespace-nowrap transition-all;
+    }
+    .sidebar.closed .nav-link span {
+        @apply lg:invisible lg:w-0;
+    }
+    .sidebar.closed .sidemenu {
+        @apply px-2.5 lg:px-0;
+    }
+    .sidebar.closed .upgrade-menu {
+        @apply hidden;
+    }
+    .sidebar.open {
+        @apply left-0;
+    }
+    #overlay.open {
+        @apply block;
+    }
+}
