@@ -16,7 +16,7 @@ interface IProp {
   onClick?: () => void
   isAccordion?: boolean
   isSubAccordion?: boolean
-  isProfessionalPlanRoute?: boolean
+  count?: number
 }
 export default function NavLink({
   className,
@@ -29,14 +29,13 @@ export default function NavLink({
   targetPath,
   isAccordion,
   isSubAccordion,
-  isProfessionalPlanRoute = false,
+  count,
 }: IProp) {
-  const PROFESSION_PLAN = 'https://nexadash-next.vercel.app/'
   const pathName = usePathname()
 
   return (
     <Link
-      href={isProfessionalPlanRoute ? PROFESSION_PLAN : href}
+      href={href}
       target={target}
       rel={rel}
       className={cn(
@@ -81,13 +80,13 @@ export default function NavLink({
         </div>
       )}
 
-      {isProfessionalPlanRoute && (
+      {count && (
         <Badge
           size={'small'}
           variant={'primary'}
           className="ml-auto text-[10px]/none"
         >
-          Pro
+          {count}
         </Badge>
       )}
     </Link>

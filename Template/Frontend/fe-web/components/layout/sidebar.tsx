@@ -10,28 +10,19 @@ import { Card } from '@/components/ui/card'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
+  AlertCircle,
   ChevronDown,
-  ClipboardType,
-  Component,
-  FileType,
-  Fingerprint,
-  Gauge,
-  Gem,
-  MessageSquareText,
+  Building2,
+  GaugeCircleIcon,
   Minus,
-  PanelLeftDashed,
-  Phone,
-  PieChart,
-  RectangleEllipsis,
-  Rocket,
-  ScrollText,
   Settings,
-  Sheet,
-  SquareKanban,
-  TableProperties,
+  ShieldCheck,
+  UserRound,
+  BarChart4,
+  CalendarClock,
+  Users,
   X,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import NavLink from '@/components/layout/nav-link'
 
@@ -108,6 +99,31 @@ const Sidebar = () => {
       ].includes(pathName)
     ) {
       return 'item-5'
+    } else if (
+      [
+        '/crm',
+        '/crm/customers',
+        '/crm/leads',
+        '/crm/opportunities',
+        '/crm/reports',
+        '/crm/reports/sales',
+        '/crm/reports/customers',
+        '/crm/reports/pipeline',
+        '/crm/reports/performance',
+        '/crm/reports/forecasting',
+        '/crm/reports/conversion'
+      ].includes(pathName)
+    ) {
+      return 'item-7'
+    } else if (
+      [
+        '/users',
+        '/roles',
+        '/settings',
+        '/errors',
+      ].includes(pathName)
+    ) {
+      return 'item-8'
     } else {
       return ''
     }
@@ -158,6 +174,7 @@ const Sidebar = () => {
             <X className="-mr-2 -mt-2 ml-auto size-4 hover:text-black" />
           </button>
         </div>
+
         <Accordion
           type="single"
           defaultValue={isOpen()}
@@ -165,112 +182,107 @@ const Sidebar = () => {
           className="sidemenu grow overflow-y-auto overflow-x-hidden px-2.5 pb-10 pt-2.5 transition-all"
           key={pathName}
         >
-          <AccordionItem value="item-1" className="p-0 shadow-none">
+          <h3 className="mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black">
+            <span>General</span>
+            <Minus className="hidden h-4 w-5 text-gray" />
+          </h3>
+          <NavLink
+            href="/"
+            className={`nav-link ${pathName === '/' && '!text-black'}`}
+          >
+            <GaugeCircleIcon className="size-[18px] shrink-0" />
+            <span>Dashboard</span>
+          </NavLink>
+
+          <AccordionItem value="item-7" className="p-0 shadow-none">
             <AccordionTrigger className="nav-link">
-              <Gauge className="size-[18px] shrink-0" />
-              <span>Dashboard</span>
+              <Building2 className="size-[18px] shrink-0" />
+              <span>CRM</span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-0">
+              <ul className="submenu space-y-2 pl-12 pr-5">
                 <li>
                   <NavLink
-                    href="/"
-                    className="mr-5"
+                    href="/crm/customers"
                     isAccordion={true}
                   >
-                    Sales
+                    <UserRound className="mr-2 size-[14px] shrink-0" />
+                    Customers
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    href="/crypto"
-                    target="_blank"
-                    className="mr-5"
+                    href="/crm/leads"
                     isAccordion={true}
-                    isProfessionalPlanRoute={true}
                   >
-                    Crypto
+                    <UserRound className="mr-2 size-[14px] shrink-0" />
+                    Leads
                   </NavLink>
                 </li>
                 <li>
-                  <Accordion
-                    type="single"
-                    collapsible
-                    defaultValue={
-                      [
-                        '/product-card',
-                        '/add-product',
-                        '/product-details',
-                        '/product-checkout',
-                      ].includes(pathName)
-                        ? 'subitem-1'
-                        : ''
-                    }
+                  <NavLink
+                    href="/crm/opportunities"
+                    isAccordion={true}
                   >
-                    <AccordionItem
-                      value="subitem-1"
-                      className="p-0 shadow-none"
-                    >
+                    <CalendarClock className="mr-2 size-[14px] shrink-0" />
+                    Opportunities
+                  </NavLink>
+                </li>
+                <li>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="reports" className="p-0 shadow-none">
                       <AccordionTrigger className="relative items-center rounded-lg px-2 py-1 font-medium text-gray hover:bg-light-theme hover:text-primary [&[data-state=open]>.dot]:!bg-black">
-                        <div className="dot absolute -left-5 top-3 size-[5px] rounded-full bg-gray-700/50"></div>
-                        <span>eCommerce</span>
+                        <BarChart4 className="mr-2 size-[14px] shrink-0" />
+                        Reports
                       </AccordionTrigger>
                       <AccordionContent>
                         <ul className="submenu -mr-2 mt-2 space-y-2 pl-4">
                           <li>
                             <NavLink
-                              href="/product-card"
-                              target="_blank"
-                              isSubAccordion={
-                                true
-                              }
-                              isProfessionalPlanRoute={
-                                true
-                              }
+                              href="/crm/reports/sales"
+                              isSubAccordion={true}
                             >
-                              Product list
+                              Sales Analytics
                             </NavLink>
                           </li>
                           <li>
                             <NavLink
-                              href="/add-product"
-                              target="_blank"
-                              isSubAccordion={
-                                true
-                              }
-                              isProfessionalPlanRoute={
-                                true
-                              }
+                              href="/crm/reports/customers"
+                              isSubAccordion={true}
                             >
-                              Add new product
+                              Customer Insights
                             </NavLink>
                           </li>
                           <li>
                             <NavLink
-                              href="/product-details"
-                              target="_blank"
-                              isSubAccordion={
-                                true
-                              }
-                              isProfessionalPlanRoute={
-                                true
-                              }
+                              href="/crm/reports/pipeline"
+                              isSubAccordion={true}
                             >
-                              Product Details
+                              Pipeline Analysis
                             </NavLink>
                           </li>
                           <li>
                             <NavLink
-                              href="/product-checkout"
-                              target="_blank"
-                              isSubAccordion={
-                                true
-                              }
-                              isProfessionalPlanRoute={
-                                true
-                              }
+                              href="/crm/reports/performance"
+                              isSubAccordion={true}
                             >
-                              Product Checkout
+                              Team Performance
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              href="/crm/reports/forecasting"
+                              isSubAccordion={true}
+                            >
+                              Sales Forecasting
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              href="/crm/reports/conversion"
+                              isSubAccordion={true}
+                            >
+                              Conversion Rates
                             </NavLink>
                           </li>
                         </ul>
@@ -283,539 +295,40 @@ const Sidebar = () => {
           </AccordionItem>
 
           <h3 className="mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black">
-            <span>Apps</span>
+            <span>Administration</span>
             <Minus className="hidden h-4 w-5 text-gray" />
           </h3>
-
           <NavLink
-            href="/chat"
-            target="_blank"
-            className={`nav-link ${pathName === '/chat' && '!text-black'}`}
-            isProfessionalPlanRoute={true}
+            href="/users"
+            className={`nav-link ${pathName === '/users' && '!text-black'}`}
           >
-            <MessageSquareText className="size-[18px] shrink-0" />
-            <span>Chat</span>
+            <Users className="size-[18px] shrink-0" />
+            <span>Users</span>
           </NavLink>
-
           <NavLink
-            href="/scrumboard"
-            target="_blank"
-            isProfessionalPlanRoute={true}
-            className={`nav-link ${pathName === '/scrumboard' && '!text-black'}`}
+            href="/roles"
+            className={`nav-link ${pathName === '/roles' && '!text-black'}`}
           >
-            <SquareKanban className="size-[18px] shrink-0" />
-            <span>Scrumboard</span>
-          </NavLink>
-
-          <AccordionItem value="item-2" className="p-0 shadow-none">
-            <AccordionTrigger
-              defaultValue={
-                [
-                  '/blog-list',
-                  '/blog-details',
-                  '/add-blog',
-                ].includes(pathName)
-                  ? 'item-2'
-                  : ''
-              }
-              className="nav-link"
-            >
-              <SquareKanban className="size-[18px] shrink-0 -rotate-90" />
-              <span>Blog</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-5">
-                <li>
-                  <NavLink
-                    href="/blog-list"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Blog-list
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/blog-details"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Blog details
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/add-blog"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Add New Blog
-                  </NavLink>
-                </li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-3" className="p-0 shadow-none">
-            <AccordionTrigger className="nav-link">
-              <ScrollText className="size-[18px] shrink-0" />
-              <span>Invoice</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-5">
-                <li>
-                  <NavLink
-                    href="/invoice"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Invoice
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/invoice-details"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Invoice details
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/create-invoice"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Create Invoice
-                  </NavLink>
-                </li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-
-          <h3 className="mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black">
-            <span>User Interface</span>
-            <Minus className="hidden h-4 w-5 text-gray" />
-          </h3>
-
-          <AccordionItem value="item-4" className="p-0 shadow-none">
-            <AccordionTrigger className="nav-link">
-              <Component className="size-[18px] shrink-0" />
-              <span>Components</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-5">
-                <li>
-                  <NavLink
-                    href="/accordion-page"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Accordion
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/alert"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Alert
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/alert-dialog"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Alert Dialog
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/avatar"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Avatar
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/breadcrumbs"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Breadcrumb
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/buttons"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Button
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/card-page"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Cards
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/carousel"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Carousel
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/dropdown"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Dropdown Menu
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/empty-stats"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Empty Stats
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/hover-card"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Hover Card
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/modal"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Modals
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/popover"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Popover
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/scroll-area"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Scroll Area
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    href="/sonner"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Sonner
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/tabs"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Tab
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    href="/tag"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Tag
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    href="/toasts"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Toasts
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/toggle-group"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Toggle Group
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/tooltip"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Tooltip
-                  </NavLink>
-                </li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-
-          <NavLink href="/chart" className={`nav-link`}>
-            <PieChart className="size-[18px] shrink-0" />
-            <span>Charts</span>
-          </NavLink>
-
-          <NavLink
-            href="/typography"
-            target="_blank"
-            className={`nav-link`}
-            isProfessionalPlanRoute={true}
-          >
-            <FileType className="size-[18px] shrink-0" />
-            <span>Typography</span>
+            <ShieldCheck className="size-[18px] shrink-0" />
+            <span>Roles</span>
           </NavLink>
           <NavLink
-            href="/sidebar-page"
-            target="_blank"
-            className={`nav-link`}
-            isProfessionalPlanRoute={true}
-          >
-            <PanelLeftDashed className="size-[18px] shrink-0" />
-            <span>Sidebar</span>
-          </NavLink>
-          <NavLink
-            href="/sheet-page"
-            target="_blank"
-            className={`nav-link`}
-            isProfessionalPlanRoute={true}
-          >
-            <Sheet className="size-[18px] shrink-0" />
-            <span>Sheet</span>
-          </NavLink>
-          <NavLink
-            href="/navigation-menu"
-            target="_blank"
-            className={`nav-link`}
-            isProfessionalPlanRoute={true}
-          >
-            <RectangleEllipsis className="size-[18px] shrink-0" />
-            <span>Navigation Menu</span>
-          </NavLink>
-          <NavLink
-            href="/pricing-plan"
-            target="_blank"
-            className={`nav-link`}
-            isProfessionalPlanRoute={true}
-          >
-            <Gem className="size-[18px] shrink-0" />
-            <span>Pricing</span>
-          </NavLink>
-
-          <h3 className="mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black">
-            <span>Tables and Forms</span>
-            <Minus className="hidden h-4 w-5 text-gray" />
-          </h3>
-
-          <NavLink href="/table" className={`nav-link`}>
-            <TableProperties className="size-[18px] shrink-0" />
-            <span>Table</span>
-          </NavLink>
-
-          <AccordionItem value="item-5" className="p-0 shadow-none">
-            <AccordionTrigger className="nav-link">
-              <ClipboardType className="size-[18px] shrink-0" />
-              <span>Forms</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-5">
-                <li>
-                  <NavLink
-                    href="/checkbox"
-                    isAccordion={true}
-                  >
-                    Check Box & Radio
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/combobox"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Combobox
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    href="/command"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Command
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink href="/form" isAccordion={true}>
-                    Form
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/inputs"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Input
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    href="/input-otp"
-                    target="_blank"
-                    isAccordion={true}
-                    isProfessionalPlanRoute={true}
-                  >
-                    Input OTP
-                  </NavLink>
-                </li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-
-          <h3 className="mt-2.5 whitespace-nowrap rounded-lg bg-gray-400 px-5 py-2.5 text-xs/tight font-semibold uppercase text-black">
-            <span>Pages</span>
-            <Minus className="hidden h-4 w-5 text-gray" />
-          </h3>
-
-          <NavLink
-            href="/setting"
-            className={`nav-link ${pathName === '/setting' && '!text-black'}`}
+            href="/settings"
+            className={`nav-link ${pathName === '/settings' && '!text-black'}`}
           >
             <Settings className="size-[18px] shrink-0" />
             <span>Settings</span>
           </NavLink>
-
-          <AccordionItem value="item-6" className="p-0 shadow-none">
-            <AccordionTrigger className="nav-link">
-              <Fingerprint className="size-[18px] shrink-0" />
-              <span>Authentication</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="submenu space-y-2 pl-12 pr-5">
-                <li>
-                  <NavLink
-                    href="/login"
-                    target="_blank"
-                    isAccordion={true}
-                  >
-                    Login
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/register"
-                    target="_blank"
-                    isAccordion={true}
-                  >
-                    Register
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/forgot"
-                    target="_blank"
-                    isAccordion={true}
-                  >
-                    Forgot
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    href="/password"
-                    target="_blank"
-                    isAccordion={true}
-                  >
-                    Password
-                  </NavLink>
-                </li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-
           <NavLink
-            href="/contact-us"
-            className={`nav-link ${pathName === '/contact-us' && '!text-black'}`}
+            href="/errors"
+            className={`nav-link ${pathName === '/errors' && '!text-black'}`}
           >
-            <Phone className="size-[18px] shrink-0" />
-            <span>Contact Us</span>
+            <AlertCircle className="size-[18px] shrink-0" />
+            <span>Errors</span>
           </NavLink>
         </Accordion>
         {/* footer */}
-        <div className="upgrade-menu sticky bottom-0 rounded-[10px] p-4 transition-all">
+        <div className="sidebar-footer sticky bottom-0 rounded-[10px] p-4 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-sm">Easy for Net</span>
             <span className="text-sm">2025</span>
