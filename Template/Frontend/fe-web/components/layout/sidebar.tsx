@@ -176,9 +176,8 @@ const Sidebar = () => {
         </div>
 
         <Accordion
-          type="single"
-          defaultValue={isOpen()}
-          collapsible
+          type="multiple"
+          defaultValue={['item-7']}
           className="sidemenu grow overflow-y-auto overflow-x-hidden px-2.5 pb-10 pt-2.5 transition-all"
           key={pathName}
         >
@@ -229,66 +228,64 @@ const Sidebar = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <Accordion type="single" collapsible>
-                    <AccordionItem value="reports" className="p-0 shadow-none">
-                      <AccordionTrigger className="relative items-center rounded-lg px-2 py-1 font-medium text-gray hover:bg-light-theme hover:text-primary [&[data-state=open]>.dot]:!bg-black">
-                        <BarChart4 className="mr-2 size-[14px] shrink-0" />
-                        Reports
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="submenu -mr-2 mt-2 space-y-2 pl-4">
-                          <li>
-                            <NavLink
-                              href="/crm/reports/sales"
-                              isSubAccordion={true}
-                            >
-                              Sales Analytics
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              href="/crm/reports/customers"
-                              isSubAccordion={true}
-                            >
-                              Customer Insights
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              href="/crm/reports/pipeline"
-                              isSubAccordion={true}
-                            >
-                              Pipeline Analysis
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              href="/crm/reports/performance"
-                              isSubAccordion={true}
-                            >
-                              Team Performance
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              href="/crm/reports/forecasting"
-                              isSubAccordion={true}
-                            >
-                              Sales Forecasting
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              href="/crm/reports/conversion"
-                              isSubAccordion={true}
-                            >
-                              Conversion Rates
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                  <AccordionItem value="reports" className="p-0 shadow-none">
+                    <AccordionTrigger className="relative items-center rounded-lg px-2 py-1 font-medium text-gray hover:bg-light-theme hover:text-primary [&[data-state=open]>.dot]:!bg-black">
+                      <BarChart4 className="mr-2 size-[14px] shrink-0" />
+                      Reports
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="submenu -mr-2 mt-2 space-y-2 pl-4">
+                        <li>
+                          <NavLink
+                            href="/crm/reports/sales"
+                            isSubAccordion={true}
+                          >
+                            Sales Analytics
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            href="/crm/reports/customers"
+                            isSubAccordion={true}
+                          >
+                            Customer Insights
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            href="/crm/reports/pipeline"
+                            isSubAccordion={true}
+                          >
+                            Pipeline Analysis
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            href="/crm/reports/performance"
+                            isSubAccordion={true}
+                          >
+                            Team Performance
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            href="/crm/reports/forecasting"
+                            isSubAccordion={true}
+                          >
+                            Sales Forecasting
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            href="/crm/reports/conversion"
+                            isSubAccordion={true}
+                          >
+                            Conversion Rates
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
                 </li>
               </ul>
             </AccordionContent>
