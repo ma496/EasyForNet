@@ -1,4 +1,4 @@
-import { Users, Shield, Settings, Bug, Building, Home, User, Lock, Building2, UserRound, CalendarClock, BarChart4 } from "lucide-react"
+import { Users, Shield, Settings, Home, User, Lock, Building2, UserRound, CalendarClock, BarChart4 } from "lucide-react"
 
 export type NavItemGroup = {
   title: string
@@ -51,10 +51,6 @@ export const navItemGroups: NavItemGroup[] = [
             icon: BarChart4,
             children: [
               {
-                title: 'Sales Analytics',
-                url: '/crm/reports/sales'
-              },
-              {
                 title: 'Customer Insights',
                 url: '/crm/reports/customer-insights'
               },
@@ -97,16 +93,6 @@ export const navItemGroups: NavItemGroup[] = [
         title: 'Settings',
         url: '/settings',
         icon: Settings,
-      },
-      {
-        title: 'Errors',
-        url: '/errors',
-        icon: Bug,
-      },
-      {
-        title: 'Tenants',
-        url: '/tenants',
-        icon: Building,
       },
       {
         title: 'ChangePassword',
