@@ -5,14 +5,11 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import {
   Bell,
-  CalendarCheck,
-  ChevronDown,
   CircleX,
   Headphones,
   Info,
   LogOut,
   Menu,
-  MessageSquareText,
   UserCog,
 } from 'lucide-react'
 import {
@@ -20,8 +17,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { format } from 'date-fns'
 import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu,
@@ -30,10 +25,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { usePathname } from 'next/navigation'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 const Header = () => {
-  const [date, setDate] = useState<Date>()
-
   const pathName = usePathname()
 
   const toggleSidebar = () => {
@@ -78,7 +72,7 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-white px-4 py-[15px] shadow-sm lg:px-5">
+    <header className="fixed inset-x-0 top-0 z-30 bg-white dark:bg-gray-950 px-4 py-[15px] shadow-sm lg:px-5">
       <div className="flex items-center justify-between gap-5">
         <Link href="/" className="inline-block shrink-0 lg:ml-2.5">
           <div className="flex items-center gap-2">
@@ -88,7 +82,7 @@ const Header = () => {
               width={34}
               height={34}
             />
-            <span className="font-bold">Easy for Net</span>
+            <span className="font-bold dark:text-white">Easy for Net</span>
           </div>
         </Link>
 
@@ -98,7 +92,7 @@ const Header = () => {
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="relative duration-300 hover:opacity-80"
+                  className="relative duration-300 hover:opacity-80 dark:text-white"
                 >
                   <Bell className="h-5 w-5" />
                   {!!notifications?.length && (
@@ -114,9 +108,9 @@ const Header = () => {
               </PopoverTrigger>
               <PopoverContent
                 sideOffset={12}
-                className="mr-4 w-full max-w-80 divide-y divide-gray-300 p-0"
+                className="mr-4 w-full max-w-80 divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900 p-0"
               >
-                <div className="rounded-t-lg bg-gray-100 p-3 text-black">
+                <div className="rounded-t-lg bg-gray-100 dark:bg-gray-800 p-3 text-black dark:text-white">
                   <h2 className="font-semibold leading-5">
                     Notifications
                   </h2>
@@ -193,6 +187,9 @@ const Header = () => {
               </PopoverContent>
             </Popover>
           </div>
+          <div className="order-2 lg:order-none">
+            <ThemeToggle />
+          </div>
           <div className="hidden lg:block">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -245,7 +242,7 @@ const Header = () => {
           </div>
           <button
             type="button"
-            className="order-3 duration-300 hover:opacity-80 lg:hidden"
+            className="order-3 duration-300 hover:opacity-80 lg:hidden dark:text-white"
             onClick={toggleSidebar}
           >
             <Menu className="h-5 w-5" />
