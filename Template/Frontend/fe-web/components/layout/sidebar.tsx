@@ -20,7 +20,6 @@ const Sidebar = () => {
       acc.push(currentPath)
       return acc
     }, [])
-    console.log(`defaultOpenAccordions: ${defaultOpenAccordions}`)
     return defaultOpenAccordions
   }
 
