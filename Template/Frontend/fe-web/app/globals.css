@@ -14,7 +14,7 @@
   }
 
   .nav-item.active {
-    @apply !text-black;
+    @apply !text-primary;
   }
 
   .sidebar .submenu>li>a {
