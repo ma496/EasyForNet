@@ -15,8 +15,11 @@ const SidebarNavItem = ({ item, level = 0 }: SidebarNavItemProps) => {
   const Icon = item.icon
 
   if (item.children) {
+    // Use the base route as the accordion value
+    const accordionValue = item.url.split('/').slice(0, level + 2).join('/')
+
     return (
-      <AccordionItem value={item.url} className="p-0 shadow-none">
+      <AccordionItem value={accordionValue} className="p-0 shadow-none">
         <AccordionTrigger className={level === 0 ? "nav-link" : "relative items-center rounded-lg px-2 py-1 font-medium text-gray hover:bg-light-theme hover:text-primary [&[data-state=open]>.dot]:!bg-black"}>
           {Icon && <Icon className={level === 0 ? "size-[18px] shrink-0" : "mr-2 size-[14px] shrink-0"} />}
           <span>{item.title}</span>

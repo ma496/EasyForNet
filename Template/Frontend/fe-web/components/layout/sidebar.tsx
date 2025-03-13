@@ -13,6 +13,17 @@ const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const pathName = usePathname()
 
+  const getDefaultOpenAccordions = (path: string) => {
+    const pathParts = path.split('/').filter(Boolean)
+    const defaultOpenAccordions = pathParts.reduce((acc: string[], _, index) => {
+      const currentPath = '/' + pathParts.slice(0, index + 1).join('/')
+      acc.push(currentPath)
+      return acc
+    }, [])
+    console.log(`defaultOpenAccordions: ${defaultOpenAccordions}`)
+    return defaultOpenAccordions
+  }
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
     const mainContent = document.getElementById('main-content')
@@ -74,7 +85,7 @@ const Sidebar = () => {
 
         <Accordion
           type="multiple"
-          defaultValue={['/crm']}
+          defaultValue={getDefaultOpenAccordions(pathName)}
           className="sidemenu grow overflow-y-auto overflow-x-hidden px-2.5 pb-10 pt-2.5 transition-all"
           key={pathName}
         >
