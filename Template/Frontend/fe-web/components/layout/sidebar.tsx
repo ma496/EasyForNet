@@ -245,7 +245,7 @@ const Sidebar = () => {
                         </li>
                         <li>
                           <NavLink
-                            href="/crm/reports/customers"
+                            href="/crm/reports/customer-insights"
                             isSubAccordion={true}
                           >
                             Customer Insights

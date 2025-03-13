@@ -70,47 +70,53 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  const TableData = isFilterRow
-    ? table
-      .getRowModel()
-      .rows.filter((rowItems: any) =>
-        isFilterRowBasedOnValue === isAllRowKey
-          ? rowItems
-          : rowItems.original?.status === isFilterRowBasedOnValue,
-      )
-    : table.getRowModel().rows
-
   const [mounted, setMounted] = React.useState<boolean>(false)
+  const [searchElement, setSearchElement] = React.useState<HTMLElement | null>(null)
+
+  const TableData = React.useMemo(() => {
+    return isFilterRow
+      ? table
+        .getRowModel()
+        .rows.filter((rowItems: any) =>
+          isFilterRowBasedOnValue === isAllRowKey
+            ? rowItems
+            : rowItems.original?.status === isFilterRowBasedOnValue,
+        )
+      : table.getRowModel().rows
+  }, [isFilterRow, isFilterRowBasedOnValue, isAllRowKey, table])
 
   React.useEffect(() => {
     setMounted(true)
-    return () => setMounted(false)
+    const element = document.getElementById('search-table')
+    setSearchElement(element)
+    return () => {
+      setMounted(false)
+      setSearchElement(null)
+    }
   }, [])
 
   return (
     <div>
       <div className="w-full overflow-hidden rounded-b-lg bg-white shadow-sm">
         <div>
-          {mounted &&
-            createPortal(
-              <>
-                <InputSearch
-                  placeholder={`Search ${filterField || ''}`}
-                  value={
-                    (table
-                      .getColumn(filterField)
-
-                      ?.getFilterValue() as string) ?? ''
-                  }
-                  onChange={(event) =>
-                    table
-                      .getColumn(filterField)
-                      ?.setFilterValue(event.target.value)
-                  }
-                />
-              </>,
-              document.getElementById('search-table')!,
-            )}
+          {mounted && searchElement && createPortal(
+            <>
+              <InputSearch
+                placeholder={`Search ${filterField || ''}`}
+                value={
+                  (table
+                    .getColumn(filterField)
+                    ?.getFilterValue() as string) ?? ''
+                }
+                onChange={(event) =>
+                  table
+                    .getColumn(filterField)
+                    ?.setFilterValue(event.target.value)
+                }
+              />
+            </>,
+            searchElement,
+          )}
         </div>
         <Table>
           <TableHeader>
