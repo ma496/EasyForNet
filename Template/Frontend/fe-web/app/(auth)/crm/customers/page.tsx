@@ -95,19 +95,21 @@ const columns: ColumnDef<ICustomer>[] = [
   {
     id: 'actions',
     cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="outline" className="h-8 w-8 p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuItem>View Details</DropdownMenuItem>
-          <DropdownMenuItem>Purchase History</DropdownMenuItem>
-          <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <span className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg p-0 outline-none ring-1 ring-inset ring-gray-300 transition hover:bg-gray-200">
+              <MoreHorizontal className="h-4 w-4" />
+            </span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuItem>Purchase History</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     ),
   },
 ]
