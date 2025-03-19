@@ -1,18 +1,7 @@
-import Header from '@/components/layout/header'
-import Sidebar from '@/components/layout/sidebar'
+import React from 'react';
 
-export default async function AuthLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <>
-      <Header />
-      <Sidebar />
-      <div id="main-content" className="p-4 transition-all lg:ml-[260px] mt-[60px]">
-        {children}
-      </div>
-    </>
-  )
-}
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+  return <div className="min-h-screen text-black dark:text-white-dark">{children} </div>;
+};
+
+export default AuthLayout;

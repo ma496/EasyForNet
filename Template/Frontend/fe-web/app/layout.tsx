@@ -1,29 +1,28 @@
-import type { Metadata } from 'next'
-import '@/app/globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
+import ProviderComponent from '@/components/layouts/provider-component';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import '../styles/tailwind.css';
+import { Metadata } from 'next';
+import { Nunito } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Easy For Net',
-  description: 'Easy for Net',
-}
+  title: {
+    template: '%s | Easy For Net - Full Stack Web Application',
+    default: 'Easy For Net - Full Stack Web Application',
+  },
+};
+const nunito = Nunito({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-background font-plus-jakarta text-sm/[22px] font-normal text-foreground antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body className={nunito.variable}>
+        <ProviderComponent>{children}</ProviderComponent>
       </body>
     </html>
-  )
+  );
 }
