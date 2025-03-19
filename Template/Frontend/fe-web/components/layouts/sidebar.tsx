@@ -30,22 +30,29 @@ const Sidebar = () => {
     });
   };
 
+  const isChildActive = (children?: NavItem[]) => {
+    if (!children) return false;
+    return children.some(child => child.url === pathname);
+  };
+
   useEffect(() => {
-    const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
-    if (selector) {
-      selector.classList.add('active');
-      const ul: any = selector.closest('ul.sub-menu');
-      if (ul) {
-        let ele: any = ul.closest('li.menu').querySelectorAll('.nav-link') || [];
-        if (ele.length) {
-          ele = ele[0];
-          setTimeout(() => {
-            ele.click();
+    // Find and set active parent menu based on current path
+    const findActiveParent = () => {
+      navItems.forEach((group) => {
+        if (isNavItemGroup(group)) {
+          group.items.forEach((item) => {
+            if (isChildActive(item.children)) {
+              setCurrentMenu(item.title);
+            }
           });
+        } else if (isChildActive(group.children)) {
+          setCurrentMenu(group.title);
         }
-      }
-    }
-  }, []);
+      });
+    };
+
+    findActiveParent();
+  }, [pathname]);
 
   useEffect(() => {
     setActiveRoute();
@@ -60,12 +67,13 @@ const Sidebar = () => {
       const element = allLinks[i];
       element?.classList.remove('active');
     }
-    const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
+    const selector = document.querySelector('.sidebar ul a[href="' + pathname + '"]');
     selector?.classList.add('active');
   };
 
   const renderNavItem = (item: NavItem) => {
     if (item.show === false) return null;
+    const isActive = isChildActive(item.children);
 
     return (
       <li className="menu nav-item">
@@ -78,7 +86,7 @@ const Sidebar = () => {
             >
               <div className="flex items-center">
                 {item.icon && <item.icon className="shrink-0 w-5 h-5 group-hover:!text-primary" />}
-                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark ${isActive ? 'text-primary' : ''}`}>
                   {t(item.title)}
                 </span>
               </div>
@@ -92,7 +100,12 @@ const Sidebar = () => {
               <ul className="sub-menu text-gray-500">
                 {item.children.map((child, childIndex) => (
                   <li key={childIndex}>
-                    <Link href={child.url}>{t(child.title)}</Link>
+                    <Link
+                      href={child.url}
+                      className={pathname === child.url ? 'text-primary' : ''}
+                    >
+                      {t(child.title)}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -102,7 +115,7 @@ const Sidebar = () => {
           <Link href={item.url} className="group">
             <div className="flex items-center">
               {item.icon && <item.icon className="shrink-0 w-5 h-5 group-hover:!text-primary" />}
-              <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark ${pathname === item.url ? 'text-primary' : ''}`}>
                 {t(item.title)}
               </span>
             </div>
