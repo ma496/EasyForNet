@@ -28,6 +28,7 @@ const initialState = {
     { code: 'es', name: 'Spanish' },
     { code: 'sv', name: 'Swedish' },
     { code: 'tr', name: 'Turkish' },
+    { code: 'ur', name: 'Urdu' },
     { code: 'ae', name: 'Arabic' },
   ],
 };

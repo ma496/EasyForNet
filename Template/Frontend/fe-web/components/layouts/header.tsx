@@ -53,7 +53,7 @@ const Header = () => {
   }, [pathname]);
 
   const setLocale = (flag: string) => {
-    if (flag.toLowerCase() === 'ae') {
+    if (flag.toLowerCase() === 'ae' || flag.toLowerCase() === 'ur') {
       dispatch(toggleRTL('rtl'));
     } else {
       dispatch(toggleRTL('ltr'));
