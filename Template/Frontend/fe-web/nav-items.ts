@@ -47,16 +47,6 @@ export const navItems: (NavItem | NavItemGroup)[] = [
         icon: Settings,
       },
       {
-        title: 'Errors',
-        url: '/errors',
-        icon: Bug,
-      },
-      {
-        title: 'Tenants',
-        url: '/tenants',
-        icon: Building,
-      },
-      {
         title: 'ChangePassword',
         url: '/change-password',
         icon: Lock,
