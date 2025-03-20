@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store';
-import { toggleAnimation, toggleLayout, toggleMenu, toggleNavbar, toggleRTL, toggleTheme, toggleSemidark, resetToggleSidebar } from '@/store/themeConfigSlice';
+import { toggleAnimation, toggleNavbar, toggleRTL, toggleTheme } from '@/store/themeConfigSlice';
 import IconSettings from '@/components/icon/icon-settings';
 import IconX from '@/components/icon/icon-x';
 import IconSun from '@/components/icon/icon-sun';
@@ -58,83 +58,6 @@ const Setting = () => {
               <button type="button" className={`${themeConfig.theme === 'system' ? 'btn-primary' : 'btn-outline-primary'} btn`} onClick={() => dispatch(toggleTheme('system'))}>
                 <IconLaptop className="h-5 w-5 shrink-0 ltr:mr-2 rtl:ml-2" />
                 System
-              </button>
-            </div>
-          </div>
-
-          <div className="mb-3 rounded-md border border-dashed border-white-light p-3 dark:border-[#1b2e4b]">
-            <h5 className="mb-1 text-base leading-none dark:text-white">Navigation Position</h5>
-            <p className="text-xs text-white-dark">Select the primary navigation paradigm for your app.</p>
-            <div className="mt-3 grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                className={`${themeConfig.menu === 'horizontal' ? 'btn-primary' : 'btn-outline-primary'} btn`}
-                onClick={() => {
-                  dispatch(toggleMenu('horizontal'));
-                  dispatch(resetToggleSidebar());
-                }}
-              >
-                Horizontal
-              </button>
-
-              <button
-                type="button"
-                className={`${themeConfig.menu === 'vertical' ? 'btn-primary' : 'btn-outline-primary'} btn`}
-                onClick={() => {
-                  dispatch(toggleMenu('vertical'));
-                  dispatch(resetToggleSidebar());
-                }}
-              >
-                Vertical
-              </button>
-
-              <button
-                type="button"
-                className={`${themeConfig.menu === 'collapsible-vertical' ? 'btn-primary' : 'btn-outline-primary'} btn`}
-                onClick={() => {
-                  dispatch(toggleMenu('collapsible-vertical'));
-                  dispatch(resetToggleSidebar());
-                }}
-              >
-                Collapsible
-              </button>
-            </div>
-            <div className="mt-5 text-primary">
-              <label className="mb-0 inline-flex">
-                <input type="checkbox" className="form-checkbox" checked={themeConfig.semidark} onChange={(e) => dispatch(toggleSemidark(e.target.checked))} />
-                <span>Semi Dark (Sidebar & Header)</span>
-              </label>
-            </div>
-          </div>
-
-          <div className="mb-3 rounded-md border border-dashed border-white-light p-3 dark:border-[#1b2e4b]">
-            <h5 className="mb-1 text-base leading-none dark:text-white">Layout Style</h5>
-            <p className="text-xs text-white-dark">Select the primary layout style for your app.</p>
-            <div className="mt-3 flex gap-2">
-              <button
-                type="button"
-                className={`${themeConfig.layout === 'boxed-layout' ? 'btn-primary' : 'btn-outline-primary'} btn flex-auto`}
-                onClick={() => dispatch(toggleLayout('boxed-layout'))}
-              >
-                Box
-              </button>
-
-              <button type="button" className={`${themeConfig.layout === 'full' ? 'btn-primary' : 'btn-outline-primary'} btn flex-auto`} onClick={() => dispatch(toggleLayout('full'))}>
-                Full
-              </button>
-            </div>
-          </div>
-
-          <div className="mb-3 rounded-md border border-dashed border-white-light p-3 dark:border-[#1b2e4b]">
-            <h5 className="mb-1 text-base leading-none dark:text-white">Direction</h5>
-            <p className="text-xs text-white-dark">Select the direction for your app.</p>
-            <div className="mt-3 flex gap-2">
-              <button type="button" className={`${themeConfig.rtlClass === 'ltr' ? 'btn-primary' : 'btn-outline-primary'} btn flex-auto`} onClick={() => dispatch(toggleRTL('ltr'))}>
-                LTR
-              </button>
-
-              <button type="button" className={`${themeConfig.rtlClass === 'rtl' ? 'btn-primary' : 'btn-outline-primary'} btn flex-auto`} onClick={() => dispatch(toggleRTL('rtl'))}>
-                RTL
               </button>
             </div>
           </div>
