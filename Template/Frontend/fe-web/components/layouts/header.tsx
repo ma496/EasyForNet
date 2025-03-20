@@ -8,8 +8,8 @@ import IconSearch from '@/components/icon/icon-search';
 import IconXCircle from '@/components/icon/icon-x-circle';
 import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
-import ThemeChanger from '../custom/ThemeChanger';
-import UserProfile from '../custom/UserProfile';
+import ThemeChanger from '../custom/theme-changer';
+import UserProfile from '../custom/user-profile';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Header = () => {

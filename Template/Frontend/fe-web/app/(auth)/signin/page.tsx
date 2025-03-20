@@ -1,4 +1,4 @@
-import ComponentsAuthLoginForm from '@/app/(auth)/signin/_components/signin-form';
+import SigninForm from '@/app/(auth)/signin/_components/signin-form';
 import IconFacebookCircle from '@/components/icon/icon-facebook-circle';
 import IconGoogle from '@/components/icon/icon-google';
 import IconInstagram from '@/components/icon/icon-instagram';
@@ -26,7 +26,7 @@ const BoxedSignIn = () => {
                 <h1 className="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Sign in</h1>
                 <p className="text-base font-bold leading-normal text-white-dark">Enter your email and password to login</p>
               </div>
-              <ComponentsAuthLoginForm />
+              <SigninForm />
               <div className="relative my-7 text-center md:mb-9">
                 <span className="absolute inset-x-0 top-1/2 h-px w-full -translate-y-1/2 bg-white-light dark:bg-white-dark"></span>
                 <span className="relative bg-white px-2 font-bold uppercase text-white-dark dark:bg-dark dark:text-white-light">or</span>
