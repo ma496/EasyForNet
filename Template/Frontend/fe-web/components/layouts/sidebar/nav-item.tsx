@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { NavItem } from '@/nav-items';
 import AnimateHeight from 'react-animate-height';
 import IconCaretDown from '@/components/icon/icon-caret-down';
+import path from 'path';
 
 interface NavItemProps {
   item: NavItem;
@@ -27,7 +28,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
         >
           <div className="flex items-center">
             {item.icon && <item.icon className="shrink-0 w-5 h-5 group-hover:!text-primary" />}
-            <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark ${isActive ? 'text-primary' : ''}`}>
+            <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark`}>
               {t(item.title)}
             </span>
           </div>
@@ -43,16 +44,16 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
               <li key={`${item.title}-child-${index}`}>
                 <Link
                   href={child.url}
-                  className={`flex items-center`}
+                  className={`flex items-center ${pathname === child.url ? 'active' : ''}`}
                 >
                   {child.icon ? (
                     <child.icon className="shrink-0 w-4 h-4 ltr:mr-3 rtl:ml-3" />
                   ) : (
                     // <div className="h-0.5 w-2 rounded bg-gray-300 ltr:mr-2 rtl:ml-2 dark:bg-gray-500 group-hover:bg-primary" />
                     // <Dot className="shrink-0 w-4 h-4 ltr:mr-3 rtl:ml-3" />
-                    <span className="ltr:mr-3 rtl:ml-3">-</span>
+                    <span className={`ltr:mr-3 rtl:ml-3`}>-</span>
                   )}
-                  <span className={`${pathname === child.url ? 'text-primary' : ''}`}>{t(child.title)}</span>
+                  <span>{t(child.title)}</span>
                 </Link>
               </li>
             ))}
@@ -64,10 +65,10 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
 
   return (
     <div className="nav-item">
-      <Link href={item.url} className="group">
+      <Link href={item.url} className={`group ${pathname === item.url ? 'active' : ''}`}>
         <div className="flex items-center">
           {item.icon && <item.icon className="shrink-0 w-5 h-5 group-hover:!text-primary" />}
-          <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark ${pathname === item.url ? 'text-primary' : ''}`}>
+          <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark`}>
             {t(item.title)}
           </span>
         </div>
