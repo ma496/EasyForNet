@@ -1,5 +1,5 @@
 'use client';
-import { toggleSidebar } from '@/store/themeConfigSlice';
+import { toggleSidebar } from '@/store/slices/themeConfigSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Overlay = () => {

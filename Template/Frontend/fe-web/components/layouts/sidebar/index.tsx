@@ -2,7 +2,7 @@
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Link from 'next/link';
-import { toggleSidebar } from '@/store/themeConfigSlice';
+import { toggleSidebar } from '@/store/slices/themeConfigSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useState, useEffect } from 'react';
 import IconCaretsDown from '@/components/icon/icon-carets-down';

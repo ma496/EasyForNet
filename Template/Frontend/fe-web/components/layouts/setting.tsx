@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleAnimation, toggleNavbar, toggleRTL, toggleTheme } from '@/store/themeConfigSlice';
+import { toggleAnimation, toggleNavbar, toggleRTL, toggleTheme } from '@/store/slices/themeConfigSlice';
 import IconSettings from '@/components/icon/icon-settings';
 import IconX from '@/components/icon/icon-x';
 import IconSun from '@/components/icon/icon-sun';

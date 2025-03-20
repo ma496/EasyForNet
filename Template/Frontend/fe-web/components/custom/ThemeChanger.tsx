@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { toggleTheme } from '@/store/themeConfigSlice';
+import { toggleTheme } from '@/store/slices/themeConfigSlice';
 import IconSun from '@/components/icon/icon-sun';
 import IconMoon from '@/components/icon/icon-moon';
 import IconLaptop from '@/components/icon/icon-laptop';

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { toggleSidebar, toggleRTL } from '@/store/themeConfigSlice';
+import { toggleSidebar, toggleRTL } from '@/store/slices/themeConfigSlice';
 import Dropdown from '@/components/dropdown';
 import IconMenu from '@/components/icon/icon-menu';
 import IconSearch from '@/components/icon/icon-search';
