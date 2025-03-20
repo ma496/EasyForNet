@@ -43,9 +43,16 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
               <li key={`${item.title}-child-${index}`}>
                 <Link
                   href={child.url}
-                  className={pathname === child.url ? 'text-primary' : ''}
+                  className={`flex items-center`}
                 >
-                  {t(child.title)}
+                  {child.icon ? (
+                    <child.icon className="shrink-0 w-4 h-4 ltr:mr-3 rtl:ml-3" />
+                  ) : (
+                    // <div className="h-0.5 w-2 rounded bg-gray-300 ltr:mr-2 rtl:ml-2 dark:bg-gray-500 group-hover:bg-primary" />
+                    // <Dot className="shrink-0 w-4 h-4 ltr:mr-3 rtl:ml-3" />
+                    <span className="ltr:mr-3 rtl:ml-3">-</span>
+                  )}
+                  <span className={`${pathname === child.url ? 'text-primary' : ''}`}>{t(child.title)}</span>
                 </Link>
               </li>
             ))}

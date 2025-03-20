@@ -1,4 +1,4 @@
-import { Users, Shield, Settings, Bug, Building, Home, User, Lock } from "lucide-react"
+import { Users, Shield, Settings, Bug, Building, Home, User, Lock, ShoppingCart } from "lucide-react"
 
 export type NavItemGroup = {
   title: string
@@ -23,9 +23,9 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     icon: Home,
     children: [
       {
-        title: 'Dashboard',
+        title: 'Sales',
         url: '/',
-        icon: Home,
+        icon: ShoppingCart,
       }
     ]
   },
