@@ -1,10 +1,9 @@
 'use client';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { toggleSidebar } from '@/store/themeConfigSlice';
-import { IRootState } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useState, useEffect } from 'react';
 import IconCaretsDown from '@/components/icon/icon-carets-down';
 import { usePathname } from 'next/navigation';
@@ -17,12 +16,12 @@ const isNavItemGroup = (item: NavItem | NavItemGroup): item is NavItemGroup => {
 };
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = getTranslation();
   const pathname = usePathname();
   const [currentMenu, setCurrentMenu] = useState<string>('');
-  const themeConfig = useSelector((state: IRootState) => state.themeConfig);
-  const semidark = useSelector((state: IRootState) => state.themeConfig.semidark);
+  const themeConfig = useAppSelector((state) => state.theme);
+  const semidark = useAppSelector((state) => state.theme.semidark);
 
   const toggleMenu = (value: string) => {
     setCurrentMenu((oldValue) => {

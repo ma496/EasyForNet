@@ -1,14 +1,13 @@
 'use client';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '@/store/themeConfigSlice';
 import Loading from '@/components/layouts/loading';
 import { getTranslation } from '@/i18n';
 
 function App({ children }: PropsWithChildren) {
-  const themeConfig = useSelector((state: IRootState) => state.themeConfig);
-  const dispatch = useDispatch();
+  const themeConfig = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
   const { initLocale } = getTranslation();
   const [isLoading, setIsLoading] = useState(true);
 

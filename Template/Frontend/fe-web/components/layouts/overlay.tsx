@@ -1,11 +1,10 @@
 'use client';
-import { IRootState } from '@/store';
 import { toggleSidebar } from '@/store/themeConfigSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Overlay = () => {
-  const themeConfig = useSelector((state: IRootState) => state.themeConfig);
-  const dispatch = useDispatch();
+  const themeConfig = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
   return (
     <>
       {/* sidebar menu overlay */}

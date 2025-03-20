@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { IRootState } from '@/store';
 import { toggleSidebar, toggleRTL } from '@/store/themeConfigSlice';
 import Dropdown from '@/components/dropdown';
 import IconMenu from '@/components/icon/icon-menu';
@@ -12,17 +10,18 @@ import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
 import ThemeChanger from '../custom/ThemeChanger';
 import UserProfile from '../custom/UserProfile';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Header = () => {
   const pathname = usePathname();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const { t, i18n } = getTranslation();
 
   const [search, setSearch] = useState(false);
 
-  const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl';
-  const themeConfig = useSelector((state: IRootState) => state.themeConfig);
+  const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl';
+  const themeConfig = useAppSelector((state) => state.theme);
 
   useEffect(() => {
     const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');

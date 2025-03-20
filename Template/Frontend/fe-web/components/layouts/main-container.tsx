@@ -1,10 +1,9 @@
 'use client';
-import { IRootState } from '@/store';
+import { useAppSelector } from '@/store/hooks';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 const MainContainer = ({ children }: { children: React.ReactNode }) => {
-  const themeConfig = useSelector((state: IRootState) => state.themeConfig);
+  const themeConfig = useAppSelector((state) => state.theme);
   return <div className={`${themeConfig.navbar} main-container min-h-screen text-black dark:text-white-dark`}> {children}</div>;
 };
 
