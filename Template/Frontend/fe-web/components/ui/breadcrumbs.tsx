@@ -35,25 +35,29 @@ const findActivePathItems = (items: (NavItem | NavItemGroup)[], pathname: string
   return result
 }
 
-export function Breadcrumbs() {
+interface BreadcrumbsProps {
+  className?: string
+}
+
+export function Breadcrumbs({ className }: BreadcrumbsProps) {
   const pathname = usePathname()
   const activePathItems = findActivePathItems(navItems, pathname)
   const { t } = getTranslation()
 
   return (
-    <ul className="flex space-x-2 rtl:space-x-reverse">
+    <ul className={`flex space-x-2 rtl:space-x-reverse ${className || ''}`}>
       <li>
         <Link href="/" className="text-primary hover:underline">
-          {t('navigation_home')}
+          {t('nav_home')}
         </Link>
       </li>
       {activePathItems.map((item, index) => (
         <li key={item.url} className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
           {index === activePathItems.length - 1 ? (
-            <span>{t(`navigation_${item.title.toLowerCase()}`)}</span>
+            <span>{t(item.title)}</span>
           ) : (
             <Link href={item.url} className="text-primary hover:underline">
-              {t(`navigation_${item.title.toLowerCase()}`)}
+              {t(item.title)}
             </Link>
           )}
         </li>

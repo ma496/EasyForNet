@@ -141,10 +141,13 @@
   "label_password": "پاس ورڈ",
   "page_signin_title": "سائن ان",
   "page_signin_description": "سائن ان کرنے کے لیے اپنی تفصیلات درج کریں",
-  "navigation_home": "ہوم",
-  "navigation_users": "صارفین",
-  "navigation_roles": "کردار",
-  "navigation_settings": "ترتیبات",
-  "navigation_change_password": "پاس ورڈ تبدیل کریں",
-  "navigation_profile": "پروفائل"
+  "nav_home": "ہوم",
+  "nav_dashboard": "ڈیش بورڈ",
+  "nav_dashboard_sales": "فروخت",
+  "nav_administration": "انتظامیہ",
+  "nav_users": "صارفین",
+  "nav_roles": "کردار",
+  "nav_settings": "ترتیبات",
+  "nav_change_password": "پاس ورڈ تبدیل کریں",
+  "nav_profile": "پروفائل"
 }

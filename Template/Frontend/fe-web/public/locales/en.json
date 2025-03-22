@@ -141,10 +141,13 @@
   "label_password": "Password",
   "page_signin_title": "Sign In",
   "page_signin_description": "Enter your credentials to sign in",
-  "navigation_home": "Home",
-  "navigation_users": "Users",
-  "navigation_roles": "Roles",
-  "navigation_settings": "Settings",
-  "navigation_change_password": "Change Password",
-  "navigation_profile": "Profile"
+  "nav_home": "Home",
+  "nav_dashboard": "Dashboard",
+  "nav_dashboard_sales": "Sales",
+  "nav_administration": "Administration",
+  "nav_users": "Users",
+  "nav_roles": "Roles",
+  "nav_settings": "Settings",
+  "nav_change_password": "Change Password",
+  "nav_profile": "Profile"
 }

@@ -18,42 +18,42 @@ export type NavItem = {
 
 export const navItems: (NavItem | NavItemGroup)[] = [
   {
-    title: 'Dashboard',
+    title: 'nav_dashboard',
     url: '/',
     icon: Home,
     children: [
       {
-        title: 'Sales',
+        title: 'nav_dashboard_sales',
         url: '/',
       }
     ]
   },
   {
-    title: 'Administration',
+    title: 'nav_administration',
     items: [
       {
-        title: 'Users',
+        title: 'nav_users',
         url: '/users',
         icon: Users,
       },
       {
-        title: 'Roles',
+        title: 'nav_roles',
         url: '/roles',
         icon: Shield,
       },
       {
-        title: 'Settings',
+        title: 'nav_settings',
         url: '/settings',
         icon: Settings,
       },
       {
-        title: 'ChangePassword',
+        title: 'nav_change_password',
         url: '/change-password',
         icon: Lock,
         show: false,
       },
       {
-        title: 'Profile',
+        title: 'nav_profile',
         url: '/profile',
         icon: User,
         show: false,

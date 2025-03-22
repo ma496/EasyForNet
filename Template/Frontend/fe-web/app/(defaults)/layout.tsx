@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/layouts/scroll-to-top';
 import Setting from '@/components/layouts/setting';
 import Sidebar from '@/components/layouts/sidebar';
 import Portals from '@/components/portals';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,7 +31,10 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
             {/* END TOP NAVBAR */}
 
             {/* BEGIN CONTENT AREA */}
-            <ContentAnimation>{children}</ContentAnimation>
+            <ContentAnimation>
+              <Breadcrumbs className='mb-5' />
+              {children}
+            </ContentAnimation>
             {/* END CONTENT AREA */}
 
             {/* BEGIN FOOTER */}
