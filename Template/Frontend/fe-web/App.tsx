@@ -19,7 +19,7 @@ function App({ children }: PropsWithChildren) {
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (pathname !== '/sign-in' && pathname !== '/reset-password' && pathname !== '/forget-password') {
+      if (pathname !== '/signin' && pathname !== '/reset-password' && pathname !== '/forget-password') {
         const result = await getUserInfo()
         if (result.data) {
           dispatch(setUserInfo(result.data))
@@ -48,7 +48,7 @@ function App({ children }: PropsWithChildren) {
       className={`${(themeConfig.sidebar && 'toggle-sidebar') || ''} ${themeConfig.menu} ${themeConfig.layout} ${themeConfig.rtlClass
         } main-section relative font-nunito text-sm font-normal antialiased`}
     >
-      {isLoading ? <Loading /> : children}
+      {isLoading || isLoadingUserInfo ? <Loading /> : children}
     </div>
   );
 }
