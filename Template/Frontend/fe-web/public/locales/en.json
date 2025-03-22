@@ -140,5 +140,11 @@
   "label_username": "Username",
   "label_password": "Password",
   "page_signin_title": "Sign In",
-  "page_signin_description": "Enter your credentials to sign in"
+  "page_signin_description": "Enter your credentials to sign in",
+  "navigation_home": "Home",
+  "navigation_users": "Users",
+  "navigation_roles": "Roles",
+  "navigation_settings": "Settings",
+  "navigation_change_password": "Change Password",
+  "navigation_profile": "Profile"
 }

@@ -140,5 +140,11 @@
   "label_username": "صارف نام",
   "label_password": "پاس ورڈ",
   "page_signin_title": "سائن ان",
-  "page_signin_description": "سائن ان کرنے کے لیے اپنی تفصیلات درج کریں"
+  "page_signin_description": "سائن ان کرنے کے لیے اپنی تفصیلات درج کریں",
+  "navigation_home": "ہوم",
+  "navigation_users": "صارفین",
+  "navigation_roles": "کردار",
+  "navigation_settings": "ترتیبات",
+  "navigation_change_password": "پاس ورڈ تبدیل کریں",
+  "navigation_profile": "پروفائل"
 }
