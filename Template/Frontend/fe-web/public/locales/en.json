@@ -127,5 +127,18 @@
   "contact_us_cover": "Contact Us Cover",
   "administration": "Administration",
   "roles": "Roles",
-  "settings": "Settings"
+  "settings": "Settings",
+  "validation_usernameRequired": "Username is required",
+  "validation_usernameMin": "Username must be at least 3 characters",
+  "validation_usernameMax": "Username must not exceed 50 characters",
+  "validation_passwordRequired": "Password is required",
+  "validation_passwordMin": "Password must be at least 8 characters",
+  "validation_passwordMax": "Password must not exceed 50 characters",
+  "placeholder_username": "Enter username",
+  "placeholder_password": "Enter password",
+  "button_signin": "Sign In",
+  "label_username": "Username",
+  "label_password": "Password",
+  "page_signin_title": "Sign In",
+  "page_signin_description": "Enter your credentials to sign in"
 }

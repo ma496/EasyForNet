@@ -6,51 +6,77 @@ import React from 'react';
 import * as Yup from 'yup'
 import { getTranslation } from '@/i18n';
 import { Formik, Form } from 'formik';
+import { Input } from '@/components/ui/input';
+import { useLoginMutation } from '@/store/api/account/account-api';
+import { useLazyGetUserInfoQuery } from '@/store/api/account/account-api';
+import { useAppDispatch } from '@/store/hooks';
+import { login, setUserInfo } from '@/store/slices/authSlice';
+import { Button } from '@/components/ui/button';
+
 const SigninForm = () => {
   const router = useRouter();
   const { t } = getTranslation();
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email(t('validation_invalidEmail')).required(t('validation_emailRequired')),
-    password: Yup.string().required(t('validation_passwordRequired')),
+    username: Yup.string().required(t('validation_usernameRequired'))
+      .min(3, t('validation_usernameMin'))
+      .max(50, t('validation_usernameMax')),
+    password: Yup.string().required(t('validation_passwordRequired'))
+      .min(8, t('validation_passwordMin'))
+      .max(50, t('validation_passwordMax')),
   });
 
-  const submitForm = (e: any) => {
-    e.preventDefault();
-    router.push('/');
+  type LoginFormValues = Yup.InferType<typeof validationSchema>
+
+  const [loginApi, { isLoading: isLogin }] = useLoginMutation()
+  const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
+  const dispatch = useAppDispatch()
+
+  const submitForm = async (values: LoginFormValues) => {
+    const loginRes = await loginApi(values)
+    if (loginRes.error) {
+      return
+    }
+    if (loginRes.data) {
+      dispatch(login(loginRes.data))
+    }
+    const userInfoRes = await getUserInfo()
+    if (userInfoRes.data) {
+      dispatch(setUserInfo(userInfoRes.data))
+      router.push(`/`, { scroll: false })
+    }
   };
 
   return (
-    <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
-      <Form className="space-y-5 dark:text-white">
-        <div>
-          <label htmlFor="Email">Email</label>
-          <div className="relative text-white-dark">
-            <input id="Email" type="email" placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
-            <span className="absolute start-4 top-1/2 -translate-y-1/2">
-              <IconMail fill={true} />
-            </span>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="Password">Password</label>
-          <div className="relative text-white-dark">
-            <input id="Password" type="password" placeholder="Enter Password" className="form-input ps-10 placeholder:text-white-dark" />
-            <span className="absolute start-4 top-1/2 -translate-y-1/2">
-              <IconLockDots fill={true} />
-            </span>
-          </div>
-        </div>
-        <div>
-          <label className="flex cursor-pointer items-center">
-            <input type="checkbox" className="form-checkbox bg-white dark:bg-black" />
-            <span className="text-white-dark">Subscribe to weekly newsletter</span>
-          </label>
-        </div>
-        <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-          Sign in
-        </button>
-      </Form>
+    <Formik
+      initialValues={{ username: '', password: '' }}
+      validationSchema={validationSchema}
+      onSubmit={submitForm}>
+      {({ values, errors, touched, handleChange, handleBlur }) => (
+        <Form className="space-y-5 dark:text-white">
+          <Input
+            label={t('label_username')}
+            name="username"
+            placeholder={t('placeholder_username')}
+            icon={<IconMail fill={true} />}
+          />
+          <Input
+            label={t('label_password')}
+            name="password"
+            type='password'
+            placeholder={t('placeholder_password')}
+            icon={<IconLockDots fill={true} />}
+          />
+
+          <Button
+            type="submit"
+            className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
+            isLoading={isLogin || isLoadingUserInfo}
+          >
+            {t('button_signin')}
+          </Button>
+        </Form>
+      )}
     </Formik>
   );
 };

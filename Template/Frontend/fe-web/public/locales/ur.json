@@ -127,5 +127,18 @@
   "contact_us_cover": "ہم سے رابطہ کور",
   "administration": "انتظامیہ",
   "roles": "کردار",
-  "settings": "ترتیبات"
+  "settings": "ترتیبات",
+  "validation_usernameRequired": "صارف نام درکار ہے",
+  "validation_usernameMin": "صارف نام کم از کم 3 حروف کا ہونا چاہیے",
+  "validation_usernameMax": "صارف نام 50 حروف سے زیادہ نہیں ہونا چاہیے",
+  "validation_passwordRequired": "پاس ورڈ درکار ہے",
+  "validation_passwordMin": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے",
+  "validation_passwordMax": "پاس ورڈ 50 حروف سے زیادہ نہیں ہونا چاہیے",
+  "placeholder_username": "صارف نام درج کریں",
+  "placeholder_password": "پاس ورڈ درج کریں",
+  "button_signin": "سائن ان کریں",
+  "label_username": "صارف نام",
+  "label_password": "پاس ورڈ",
+  "page_signin_title": "سائن ان",
+  "page_signin_description": "سائن ان کرنے کے لیے اپنی تفصیلات درج کریں"
 }

@@ -25,13 +25,13 @@ sealed class TokenEndpoint : Endpoint<TokenReq, TokenResponse>
     {
         var user = await (!req.IsEmail ? _userService.GetByUsernameAsync(req.Username) : _userService.GetByEmailAsync(req.Email));
         if (user == null)
-            ThrowError(r => r.Username, $"Invalid {(!req.IsEmail ? "username" : "email")} or password");
+            ThrowError($"Invalid {(!req.IsEmail ? "username" : "email")} or password");
 
         var result = await _userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
-            ThrowError(r => r.Username, $"Invalid {(!req.IsEmail ? "username" : "email")} or password");
+            ThrowError($"Invalid {(!req.IsEmail ? "username" : "email")} or password");
         if (!user.IsActive)
-            ThrowError(r => r.Username, $"User is not active");
+            ThrowError($"User is not active");
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);
