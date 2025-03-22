@@ -6,23 +6,29 @@ import Loading from '@/components/layouts/loading';
 import { getTranslation } from '@/i18n';
 import { setUserInfo } from './store/slices/authSlice';
 import { useLazyGetUserInfoQuery } from './store/api/account/account-api';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { localeStorageConst } from './lib/constants';
 
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme);
   const dispatch = useAppDispatch();
   const { initLocale } = getTranslation();
   const [isLoading, setIsLoading] = useState(true);
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const router = useRouter();
 
   // get and set user info
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (pathname !== '/signin' && pathname !== '/reset-password' && pathname !== '/forget-password') {
+      if (!localStorage.getItem(localeStorageConst.login)) {
+        router.push('/signin')
+      } else if (pathname !== '/signin' && pathname !== '/reset-password' && pathname !== '/forget-password') {
         const result = await getUserInfo()
         if (result.data) {
           dispatch(setUserInfo(result.data))
+        } else {
+          router.push('/signin')
         }
       }
     }

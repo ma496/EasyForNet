@@ -1,6 +1,8 @@
 import { MiddlewareAPI, isRejectedWithValue } from '@reduxjs/toolkit';
 import { setError } from '../slices/errorSlice';
 
+const ignoreEndpoints = ['getUserInfo']
+
 const getValidationMessage = (errors: any) => {
   let message = ''
   // loop through errors array
@@ -11,6 +13,10 @@ const getValidationMessage = (errors: any) => {
 }
 
 const isError = (action: any, status: number): boolean => {
+  // Ignore error handling for /account/get-info route
+  if (ignoreEndpoints.includes(action.meta?.arg?.endpointName)) {
+    return false;
+  }
 
   let payloadStatus = action.payload?.status
 
