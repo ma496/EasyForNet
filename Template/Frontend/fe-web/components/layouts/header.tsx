@@ -9,7 +9,7 @@ import IconXCircle from '@/components/icon/icon-x-circle';
 import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
 import ThemeChanger from '../custom/theme-changer';
-import UserProfile from '../custom/user-profile';
+import NavUser from '../custom/nav-user';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Header = () => {
@@ -149,7 +149,7 @@ const Header = () => {
                 btnClassName="relative group block"
                 button={<img className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="/assets/images/user-profile.jpeg" alt="userProfile" />}
               >
-                <UserProfile />
+                <NavUser />
               </Dropdown>
             </div>
           </div>
