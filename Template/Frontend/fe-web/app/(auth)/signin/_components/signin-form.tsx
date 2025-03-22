@@ -12,6 +12,7 @@ import { useLazyGetUserInfoQuery } from '@/store/api/account/account-api';
 import { useAppDispatch } from '@/store/hooks';
 import { login, setUserInfo } from '@/store/slices/authSlice';
 import { Button } from '@/components/ui/button';
+import { PasswordInput } from '@/components/ui/password-input';
 
 const SigninForm = () => {
   const router = useRouter();
@@ -60,10 +61,9 @@ const SigninForm = () => {
             placeholder={t('placeholder_username')}
             icon={<IconMail fill={true} />}
           />
-          <Input
+          <PasswordInput
             label={t('label_password')}
             name="password"
-            type='password'
             placeholder={t('placeholder_password')}
             icon={<IconLockDots fill={true} />}
           />
