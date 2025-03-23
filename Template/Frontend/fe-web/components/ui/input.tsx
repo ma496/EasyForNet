@@ -25,7 +25,7 @@ export const Input = ({
   return (
     <div className={cn(
       className,
-      meta.touched && (hasError ? 'has-error' : 'has-success')
+      meta.touched && (hasError ? 'has-error' : '')
     )}>
       {label && (
         <label htmlFor={name}>{label}</label>
