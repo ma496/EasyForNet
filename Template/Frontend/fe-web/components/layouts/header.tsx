@@ -17,7 +17,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { t, i18n } = getTranslation();
-
+  const { user } = useAppSelector((state) => state.auth);
   const [search, setSearch] = useState(false);
 
   const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl';
@@ -147,7 +147,7 @@ const Header = () => {
                 offset={[0, 8]}
                 placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                 btnClassName="relative group block"
-                button={<img className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="/assets/images/user-profile.jpeg" alt="userProfile" />}
+                button={<img className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src={user?.image?.imageBase64 ? `data:${user?.image.contentType};base64,${user?.image.imageBase64}` : '/assets/images/default-avatar.svg'} alt="userProfile" />}
               >
                 <NavUser />
               </Dropdown>
