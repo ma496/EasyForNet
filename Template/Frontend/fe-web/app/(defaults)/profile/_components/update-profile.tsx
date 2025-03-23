@@ -130,7 +130,7 @@ export const UpdateProfile = () => {
             <div className="flex flex-col items-center gap-4 mb-6">
               <div className="w-24 h-24 rounded-full overflow-hidden">
                 <img
-                  src={imagePreview || "/assets/images/profile-34.jpeg"}
+                  src={imagePreview || "/assets/images/default-avatar.svg"}
                   alt={t('alt_profileImage')}
                   className="w-full h-full object-cover"
                 />
