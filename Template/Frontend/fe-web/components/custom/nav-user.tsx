@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import IconUser from '@/components/icon/icon-user';
-import IconMail from '@/components/icon/icon-mail';
-import IconLockDots from '@/components/icon/icon-lock-dots';
 import IconLogout from '@/components/icon/icon-logout';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { useRouter } from 'next/navigation';
-
+import { getTranslation } from '@/i18n';
+import IconLockDots from '@/components/icon/icon-lock-dots';
 const NavUser = () => {
   const { user } = useAppSelector(state => state.auth)
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const { t } = getTranslation()
 
   const logoutAction = () => {
     dispatch(logout())
@@ -35,25 +35,19 @@ const NavUser = () => {
       <li>
         <Link href="/profile" className="dark:hover:text-white">
           <IconUser className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-          Profile
+          {t('profile')}
         </Link>
       </li>
       <li>
-        <Link href="/apps/mailbox" className="dark:hover:text-white">
-          <IconMail className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-          Inbox
-        </Link>
-      </li>
-      <li>
-        <Link href="/auth/boxed-lockscreen" className="dark:hover:text-white">
+        <Link href="/change-password" className="dark:hover:text-white">
           <IconLockDots className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-          Lock Screen
+          {t('change_password')}
         </Link>
       </li>
       <li className="border-t border-white-light dark:border-white-light/10 cursor-pointer">
         <a className="!py-3 text-danger" onClick={logoutAction}>
           <IconLogout className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
-          Sign Out
+          {t('sign_out')}
         </a>
       </li>
     </ul>

@@ -181,5 +181,6 @@
   "placeholder_newPassword": "نیا پاس ورڈ درج کریں",
   "placeholder_confirmPassword": "پاس ورڈ کی تصدیق درج کریں",
   "change_password": "پاس ورڈ تبدیل کریں",
-  "change_password_success": "پاس ورڈ کامیابی سے تبدیل ہو گیا"
+  "change_password_success": "پاس ورڈ کامیابی سے تبدیل ہو گیا",
+  "sign_out": "سائن آؤٹ"
 }

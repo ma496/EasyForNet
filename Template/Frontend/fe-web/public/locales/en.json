@@ -181,5 +181,6 @@
   "placeholder_newPassword": "Enter new password",
   "placeholder_confirmPassword": "Enter confirm password",
   "change_password": "Change Password",
-  "change_password_success": "Password changed successfully"
+  "change_password_success": "Password changed successfully",
+  "sign_out": "Sign Out"
 }
