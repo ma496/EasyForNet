@@ -43,7 +43,7 @@ export const PasswordInput = ({
           {...props}
           id={name}
           type={showPassword ? "text" : "password"}
-          className={cn("form-input", (icon || true) && "ps-10", "pe-10")}
+          className={cn("form-input", icon && "ps-10", "pe-10")}
         />
         {icon && (
           <span className="absolute start-4 top-1/2 -translate-y-1/2">
