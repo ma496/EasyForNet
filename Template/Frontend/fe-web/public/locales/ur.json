@@ -134,6 +134,7 @@
   "validation_passwordRequired": "پاس ورڈ درکار ہے",
   "validation_passwordMin": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے",
   "validation_passwordMax": "پاس ورڈ 50 حروف سے زیادہ نہیں ہونا چاہیے",
+  "validation_passwordsMustMatch": "پاس ورڈز ایک جیسے ہونے چاہئیں",
   "placeholder_username": "صارف نام درج کریں",
   "placeholder_password": "پاس ورڈ درج کریں",
   "button_signin": "سائن ان کریں",
@@ -169,5 +170,16 @@
   "placeholder_lastName": "آخری نام درج کریں",
   "placeholder_email": "ای میل درج کریں",
   "update": "پروفائل اپ ڈیٹ کریں",
-  "loading": "لوڈ ہو رہا ہے..."
+  "loading": "لوڈ ہو رہا ہے...",
+  "validation_currentPasswordRequired": "موجودہ پاس ورڈ درکار ہے",
+  "validation_newPasswordRequired": "نیا پاس ورڈ درکار ہے",
+  "validation_confirmPasswordRequired": "پاس ورڈ کی تصدیق درکار ہے",
+  "label_currentPassword": "موجودہ پاس ورڈ",
+  "label_newPassword": "نیا پاس ورڈ",
+  "label_confirmPassword": "پاس ورڈ کی تصدیق",
+  "placeholder_currentPassword": "موجودہ پاس ورڈ درج کریں",
+  "placeholder_newPassword": "نیا پاس ورڈ درج کریں",
+  "placeholder_confirmPassword": "پاس ورڈ کی تصدیق درج کریں",
+  "change_password": "پاس ورڈ تبدیل کریں",
+  "change_password_success": "پاس ورڈ کامیابی سے تبدیل ہو گیا"
 }

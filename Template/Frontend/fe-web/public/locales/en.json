@@ -134,6 +134,7 @@
   "validation_passwordRequired": "Password is required",
   "validation_passwordMin": "Password must be at least 8 characters",
   "validation_passwordMax": "Password must not exceed 50 characters",
+  "validation_passwordsMustMatch": "Passwords must match",
   "placeholder_username": "Enter username",
   "placeholder_password": "Enter password",
   "button_signin": "Sign In",
@@ -169,5 +170,16 @@
   "placeholder_lastName": "Enter last name",
   "placeholder_email": "Enter email",
   "update": "Update Profile",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "validation_currentPasswordRequired": "Current password is required",
+  "validation_newPasswordRequired": "New password is required",
+  "validation_confirmPasswordRequired": "Confirm password is required",
+  "label_currentPassword": "Current Password",
+  "label_newPassword": "New Password",
+  "label_confirmPassword": "Confirm Password",
+  "placeholder_currentPassword": "Enter current password",
+  "placeholder_newPassword": "Enter new password",
+  "placeholder_confirmPassword": "Enter confirm password",
+  "change_password": "Change Password",
+  "change_password_success": "Password changed successfully"
 }
