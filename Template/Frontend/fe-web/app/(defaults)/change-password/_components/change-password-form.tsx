@@ -14,7 +14,9 @@ import IconLockDots from '@/components/icon/icon-lock-dots';
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
     currentPassword: Yup.string().required(t('validation_currentPasswordRequired')),
-    newPassword: Yup.string().required(t('validation_newPasswordRequired')),
+    newPassword: Yup.string().required(t('validation_newPasswordRequired'))
+      .min(8, t('validation_passwordMin'))
+      .max(50, t('validation_passwordMax')),
     confirmPassword: Yup.string()
       .required(t('validation_confirmPasswordRequired'))
       .oneOf([Yup.ref('newPassword')], t('validation_passwordsMustMatch')),
