@@ -201,5 +201,6 @@
   "placeholder_new_password": "Enter your new password",
   "reset_password": "Reset Password",
   "label_confirm_password": "Confirm Password",
-  "placeholder_confirm_password": "Enter confirm password"
+  "placeholder_confirm_password": "Enter confirm password",
+  "link_forgotPassword": "Forgot Password?"
 }

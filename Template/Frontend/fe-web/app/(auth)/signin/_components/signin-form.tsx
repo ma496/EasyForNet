@@ -13,6 +13,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { login, setUserInfo } from '@/store/slices/authSlice';
 import { Button } from '@/components/ui/button';
 import { PasswordInput } from '@/components/ui/password-input';
+import Link from 'next/link';
 
 const SigninForm = () => {
   const router = useRouter();
@@ -67,6 +68,15 @@ const SigninForm = () => {
             placeholder={t('placeholder_password')}
             icon={<IconLockDots fill={true} />}
           />
+
+          <div className="text-right">
+            <Link
+              href="/forget-password"
+              className="text-sm text-primary hover:underline dark:text-white"
+            >
+              {t('link_forgotPassword')}
+            </Link>
+          </div>
 
           <Button
             type="submit"

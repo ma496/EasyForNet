@@ -201,5 +201,6 @@
   "placeholder_new_password": "اپنا نیا پاس ورڈ درج کریں",
   "reset_password": "پاس ورڈ دوبارہ ترتیب دیں",
   "label_confirm_password": "پاس ورڈ کی تصدیق",
-  "placeholder_confirm_password": "پاس ورڈ کی تصدیق درج کریں"
+  "placeholder_confirm_password": "پاس ورڈ کی تصدیق درج کریں",
+  "link_forgotPassword": "پاس ورڈ بھول گئے؟"
 }
