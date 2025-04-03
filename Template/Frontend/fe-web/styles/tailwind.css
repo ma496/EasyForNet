@@ -1,3 +1,5 @@
+@layer mantine, mantine-datatable;
+
 /* Animate css */
 @import './animate.css';
 /* tippy css */

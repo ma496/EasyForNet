@@ -33,7 +33,7 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     items: [
       {
         title: 'nav_users',
-        url: '/users',
+        url: '/users/list',
         icon: Users,
       },
       {
