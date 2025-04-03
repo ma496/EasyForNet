@@ -38,12 +38,12 @@ table > thead > tr > th {
 
 /* Table hover effects */
 .mantine-datatable.table-hover .mantine-Table-tr:hover {
-  @apply !bg-[#e0e6ed33] dark:!bg-[#1a2941]/40;
+  @apply !bg-[#e0e6ed33] dark:!bg-[#131E30];
 }
 
 /* Pagination container */
 .mantine-datatable-pagination {
-  @apply border-t-0 !p-0 !pt-5 !bg-transparent;
+  @apply border-t-0 !p-0 !pt-5 !bg-transparent dark:!bg-[#0E1726];
 }
 
 .datatables.pagination-padding .mantine-datatable-pagination {
@@ -57,7 +57,7 @@ table > thead > tr > th {
 
 /* Text elements */
 .mantine-Text-root {
-  @apply flex-none !font-nunito text-sm font-medium;
+  @apply flex-none !font-nunito text-sm font-medium dark:!text-white-dark;
 }
 
 /* Group elements */
@@ -67,7 +67,7 @@ table > thead > tr > th {
 
 /* Pagination text */
 .mantine-datatable-pagination-text {
-  @apply text-center font-nunito !text-sm;
+  @apply text-center font-nunito !text-sm dark:!text-white-dark;
 }
 
 /* Pagination buttons */
@@ -82,7 +82,7 @@ table > thead > tr > th {
 
 /* Page size selector button */
 .mantine-datatable .mantine-Button-root[data-variant="default"] {
-  @apply border !border-[#e0e6ed] !bg-white font-nunito text-sm !text-[#3b3f5c] dark:border-[#191e3a] dark:!bg-[#1a2941] dark:!text-white transition-colors duration-300 rounded min-w-[80px] w-[80px] !px-4 !h-[32px] flex items-center justify-center;
+  @apply border !border-[#e0e6ed] !bg-white font-nunito text-sm !text-[#3b3f5c] dark:!border-[#191e3a] dark:!bg-[#1a2941] dark:!text-white transition-colors duration-300 rounded min-w-[80px] w-[80px] !px-4 !h-[32px] flex items-center justify-center;
 }
 
 /* Page size selector button inner */
