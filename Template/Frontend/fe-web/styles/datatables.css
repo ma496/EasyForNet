@@ -97,12 +97,17 @@ table > thead > tr > th {
 
 /* Page size selector dropdown */
 .mantine-Menu-dropdown {
-  @apply border !border-[#e0e6ed] !bg-white dark:!border-[#191e3a] dark:!bg-[#1a2941] dark:text-white-dark min-w-[80px] w-[80px];
+  @apply border !border-[#e0e6ed] !bg-white dark:!border-[#191e3a] dark:!bg-[#1a2941] dark:text-white-dark min-w-[80px] w-[80px] !rounded-lg overflow-hidden;
 }
 
 /* Page size selector menu items */
 .mantine-Menu-item {
   @apply font-nunito text-sm dark:text-white-dark transition-colors duration-300 hover:!bg-primary hover:!text-white dark:hover:!bg-primary dark:hover:!text-white w-full !px-4 !py-2 text-center;
+}
+
+/* Last menu item */
+.mantine-Menu-item:last-child {
+  @apply rounded-b-lg;
 }
 
 /* Active page size menu item */
