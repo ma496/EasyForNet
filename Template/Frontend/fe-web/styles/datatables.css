@@ -129,3 +129,19 @@ table > thead > tr > th {
 .mantine-datatable-loader {
   @apply bg-none;
 }
+
+/* Navigation buttons (prev/next) */
+.mantine-datatable-pagination-pages-control {
+  @apply hover:!bg-primary hover:!text-white transition-colors duration-300;
+}
+
+/* RTL - Rotate navigation icons */
+[dir="rtl"] .mantine-datatable-pagination-pages-control svg {
+  @apply rotate-180;
+}
+
+/* Remove default RTL rotation for first/last buttons */
+[dir="rtl"] .mantine-datatable-pagination-pages button:first-child svg,
+  [dir="rtl"] .mantine-datatable-pagination-pages button:last-child svg {
+  @apply rotate-0;
+}
