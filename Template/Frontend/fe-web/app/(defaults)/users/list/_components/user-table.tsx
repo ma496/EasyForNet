@@ -511,6 +511,7 @@ export const UserTable = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
   const initialRecords = rowData.slice(0, pageSize);
   const [recordsData, setRecordsData] = useState(initialRecords);
+  const [selectedRecords, setSelectedRecords] = useState<any>([]);
 
   useEffect(() => {
     setPage(1);
@@ -546,6 +547,8 @@ export const UserTable = () => {
           onRecordsPerPageChange={setPageSize}
           minHeight={200}
           paginationText={({ from, to, totalRecords }) => `Showing  ${from} to ${to} of ${totalRecords} entries`}
+          selectedRecords={selectedRecords}
+          onSelectedRecordsChange={setSelectedRecords}
         />
       </div>
     </div>

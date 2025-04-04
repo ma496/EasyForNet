@@ -150,3 +150,24 @@ table > thead > tr > th {
   [dir="rtl"] .mantine-datatable-pagination-pages button:last-child svg {
   @apply rotate-0;
 }
+
+/* Checkbox styles */
+table tr .mantine-Checkbox-root {
+  @apply flex;
+}
+
+.mantine-Checkbox-body {
+  @apply grid h-5 w-5 place-content-center overflow-hidden rounded  border-0  bg-transparent text-primary;
+}
+
+.mantine-Checkbox-inner > .mantine-Checkbox-input {
+  @apply border-2 border-white-light bg-transparent dark:!border-[#253b5c];
+}
+
+.mantine-Checkbox-inner > .mantine-Checkbox-input:checked {
+  @apply !border-primary !bg-primary;
+}
+
+.mantine-Checkbox-inner > .mantine-Checkbox-input[data-indeterminate="true"] {
+  @apply !border-primary !bg-primary;
+}
