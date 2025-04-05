@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useUserListQuery, useLazyUserListQuery } from '@/store/api/users/users-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { UserListDto } from '@/store/api/users/dto/user-list-response';
-import { Search, Download } from 'lucide-react';
+import { Search, Download, Loader2 } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
-import { Button } from '@/components/ui/button';
 import Dropdown from '@/components/dropdown';
+import { useAppSelector } from '@/store/hooks';
 
 export const UserTable = () => {
   const [page, setPage] = useState(1);
@@ -21,6 +21,8 @@ export const UserTable = () => {
     direction: 'asc',
   });
   const { t } = getTranslation();
+
+  const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
   const { data: userListResponse, isLoading } = useUserListQuery({
     page,
@@ -100,21 +102,16 @@ export const UserTable = () => {
           </div>
           <div className='dropdown'>
             <Dropdown
-              placement="bottom-end"
-              btnClassName="inline-flex"
+              placement={`${isRTL ? 'bottom-start' : 'bottom-end'}`}
+              btnClassName="btn btn-primary dropdown-toggle"
               button={
-                <div>
-                  <Button
-                    variant="default"
-                    isLoading={isExporting}
-                    icon={<Download size={16} />}
-                  >
-                    {t('table_export')}
-                  </Button>
+                <div className='flex items-center gap-2'>
+                  {isExporting ? <Loader2 className='animate-spin' size={16} /> : <Download size={16} />}
+                  <span className=''>{t('table_export')}</span>
                 </div>
               }
             >
-              <ul className="divide-y">
+              <ul className='mt-10'>
                 <li className="px-4 py-2 font-semibold text-sm text-gray-500 dark:text-gray-600">{t('table_export_excel')}</li>
                 <li>
                   <div
