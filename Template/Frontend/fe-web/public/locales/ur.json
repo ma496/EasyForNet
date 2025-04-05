@@ -213,5 +213,10 @@
   "table_pagination_showing_entries": "${totalRecords} ریکارڈز کی کل تعداد میں سے ${from} سے ${to} تک دکھا رہا ہے",
   "table_no_records_found": "کوئی ریکارڈ نہیں موجود ہے",
   "table_records_per_page": "صفحات پر ریکارڈز کی تعداد",
-  "footer_copyright": "ایزی فار نیٹ جملہ حقوق محفوظ ہیں۔"
+  "footer_copyright": "ایزی فار نیٹ جملہ حقوق محفوظ ہیں۔",
+  "table_export": "برآمد کریں",
+  "table_export_excel": "ایکسل",
+  "table_export_csv": "سی ایس وی",
+  "table_export_current_page": "موجودہ صفحہ",
+  "table_export_all_records": "تمام ریکارڈز"
 }

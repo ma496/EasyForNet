@@ -1,17 +1,21 @@
 'use client';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
-import { useUserListQuery } from '@/store/api/users/users-api';
+import { useUserListQuery, useLazyUserListQuery } from '@/store/api/users/users-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { UserListDto } from '@/store/api/users/dto/user-list-response';
-import { Search } from 'lucide-react';
+import { Search, Download } from 'lucide-react';
 import { getTranslation } from '@/i18n';
+import * as XLSX from 'xlsx';
+import { Button } from '@/components/ui/button';
+import Dropdown from '@/components/dropdown';
 
 export const UserTable = () => {
   const [page, setPage] = useState(1);
   const PAGE_SIZES = [10, 20, 30, 50, 100];
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
   const [search, setSearch] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<UserListDto>>({
     columnAccessor: '',
     direction: 'asc',
@@ -26,15 +30,64 @@ export const UserTable = () => {
     search: search || undefined,
   });
 
+  const [fetchUsers] = useLazyUserListQuery();
+
   useEffect(() => {
     setPage(1);
   }, [pageSize, search]);
+
+  type ExportFormat = 'excel' | 'csv';
+
+  const exportData = async (format: ExportFormat, all: boolean) => {
+    setIsExporting(true);
+    try {
+      let dataToExport;
+      if (all) {
+        const response = await fetchUsers({
+          page,
+          pageSize,
+          sortField: sortStatus.columnAccessor,
+          sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
+          search: search || undefined,
+          all: true,
+        }).unwrap();
+        dataToExport = response.items;
+      } else {
+        dataToExport = userListResponse?.items || [];
+      }
+
+      const exportData = dataToExport.map(user => ({
+        Username: user.username,
+        Email: user.email,
+        'First Name': user.firstName,
+        'Last Name': user.lastName,
+        Roles: user.roles.map(role => role.name).join(', ')
+      }));
+
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(exportData);
+
+      if (format === 'excel') {
+        XLSX.utils.book_append_sheet(wb, ws, 'Users');
+        XLSX.writeFile(wb, 'users.xlsx');
+      } else {
+        const csv = XLSX.utils.sheet_to_csv(ws);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'users.csv';
+        link.click();
+      }
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   return (
     <div className="panel mt-6">
       <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
         <h5 className="text-lg font-semibold dark:text-white-light">{t('page_users_title')}</h5>
-        <div className="ltr:ml-auto rtl:mr-auto">
+        <div className="flex items-center gap-4 ltr:ml-auto rtl:mr-auto">
           <div className="relative">
             <input
               type="text"
@@ -44,6 +97,46 @@ export const UserTable = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
             <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
+          </div>
+          <div className='dropdown'>
+            <Dropdown
+              placement="bottom-end"
+              btnClassName="inline-flex"
+              button={
+                <Button
+                  variant="default"
+                  isLoading={isExporting}
+                  icon={<Download size={16} />}
+                >
+                  {t('table_export')}
+                </Button>
+              }
+            >
+              <ul className="divide-y">
+                <li className="px-4 py-2 font-semibold text-sm text-gray-500">{t('table_export_excel')}</li>
+                <li>
+                  <button type="button" onClick={() => exportData('excel', false)}>
+                    {t('table_export_current_page')}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onClick={() => exportData('excel', true)}>
+                    {t('table_export_all_records')}
+                  </button>
+                </li>
+                <li className="px-4 py-2 font-semibold text-sm text-gray-500">{t('table_export_csv')}</li>
+                <li>
+                  <button type="button" onClick={() => exportData('csv', false)}>
+                    {t('table_export_current_page')}
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onClick={() => exportData('csv', true)}>
+                    {t('table_export_all_records')}
+                  </button>
+                </li>
+              </ul>
+            </Dropdown>
           </div>
         </div>
       </div>

@@ -213,5 +213,10 @@
   "table_pagination_showing_entries": "Showing ${from} to ${to} of ${totalRecords} entries",
   "table_no_records_found": "No records found",
   "table_records_per_page": "Records per page",
-  "footer_copyright": "Easy For Net All rights reserved."
+  "footer_copyright": "Easy For Net All rights reserved.",
+  "table_export": "Export",
+  "table_export_excel": "Excel",
+  "table_export_csv": "CSV",
+  "table_export_current_page": "Current Page",
+  "table_export_all_records": "All Records"
 }
