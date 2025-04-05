@@ -76,7 +76,7 @@ export const UserTable = () => {
           paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
           fetching={isLoading}
           noRecordsText={t('table_no_records_found')}
-          recordsPerPageLabel={t('table_records_per_page')}
+          recordsPerPageLabel={''}
         />
       </div>
     </div>
