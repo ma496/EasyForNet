@@ -202,5 +202,16 @@
   "reset_password": "Reset Password",
   "label_confirm_password": "Confirm Password",
   "placeholder_confirm_password": "Enter confirm password",
-  "link_forgotPassword": "Forgot Password?"
+  "link_forgotPassword": "Forgot Password?",
+  "search...": "Search...",
+  "page_users_title": "Users",
+  "page_users_firstName": "First Name",
+  "page_users_lastName": "Last Name",
+  "page_users_email": "Email",
+  "page_users_roles": "Roles",
+  "page_users_userName": "User Name",
+  "table_pagination_showing_entries": "Showing ${from} to ${to} of ${totalRecords} entries",
+  "table_no_records_found": "No records found",
+  "table_records_per_page": "Records per page",
+  "footer_copyright": "Easy For Net All rights reserved."
 }

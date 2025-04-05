@@ -90,7 +90,7 @@ const Header = () => {
                   <input
                     type="text"
                     className="peer form-input bg-gray-100 placeholder:tracking-widest ltr:pl-9 ltr:pr-9 rtl:pl-9 rtl:pr-9 sm:bg-transparent ltr:sm:pr-4 rtl:sm:pl-4"
-                    placeholder="Search..."
+                    placeholder={t('search...')}
                   />
                   <button type="button" className="absolute inset-0 h-9 w-9 appearance-none peer-focus:text-primary ltr:right-auto rtl:left-auto">
                     <IconSearch className="mx-auto" />

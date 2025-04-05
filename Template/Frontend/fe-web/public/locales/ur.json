@@ -202,5 +202,16 @@
   "reset_password": "پاس ورڈ دوبارہ ترتیب دیں",
   "label_confirm_password": "پاس ورڈ کی تصدیق",
   "placeholder_confirm_password": "پاس ورڈ کی تصدیق درج کریں",
-  "link_forgotPassword": "پاس ورڈ بھول گئے؟"
+  "link_forgotPassword": "پاس ورڈ بھول گئے؟",
+  "search...": "تلاش کریں...",
+  "page_users_title": "صارفین",
+  "page_users_firstName": "پہلا نام",
+  "page_users_lastName": "آخری نام",
+  "page_users_email": "ای میل",
+  "page_users_roles": "کردار",
+  "page_users_userName": "صارف نام",
+  "table_pagination_showing_entries": "${totalRecords} ریکارڈز کی کل تعداد میں سے ${from} سے ${to} تک دکھا رہا ہے",
+  "table_no_records_found": "کوئی ریکارڈ نہیں موجود ہے",
+  "table_records_per_page": "صفحات پر ریکارڈز کی تعداد",
+  "footer_copyright": "ایزی فار نیٹ جملہ حقوق محفوظ ہیں۔"
 }

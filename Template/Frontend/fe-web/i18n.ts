@@ -21,8 +21,14 @@ export const getTranslation = () => {
   const lang = getLang();
   const data: any = langObj[lang || 'en'];
 
-  const t = (key: string) => {
-    return data[key] ? data[key] : key;
+  const t = (key: string, variables?: Record<string, any>) => {
+    let text = data[key] ? data[key] : key;
+    if (variables) {
+      Object.entries(variables).forEach(([key, value]) => {
+        text = text.replace(`\${${key}}`, value);
+      });
+    }
+    return text;
   };
 
   const initLocale = (themeLocale: string) => {
