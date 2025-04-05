@@ -20,6 +20,14 @@ table > thead > tr > th {
 }
 
 /* Table styles */
+.mantine-datatable {
+  @apply !bg-white dark:!bg-black;
+}
+
+.mantine-datatable-empty-row {
+  @apply !bg-white dark:!bg-black;
+}
+
 .mantine-Table-table {
   @apply font-nunito !text-black dark:!text-white-dark;
 }
@@ -127,7 +135,7 @@ table > thead > tr > th {
 
 /* Empty state */
 .mantine-datatable-empty-state {
-  @apply bg-none;
+  @apply bg-none mt-9 !bg-white dark:!bg-black;
 }
 
 /* Loader */
