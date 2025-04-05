@@ -103,37 +103,55 @@ export const UserTable = () => {
               placement="bottom-end"
               btnClassName="inline-flex"
               button={
-                <Button
-                  variant="default"
-                  isLoading={isExporting}
-                  icon={<Download size={16} />}
-                >
-                  {t('table_export')}
-                </Button>
+                <div>
+                  <Button
+                    variant="default"
+                    isLoading={isExporting}
+                    icon={<Download size={16} />}
+                  >
+                    {t('table_export')}
+                  </Button>
+                </div>
               }
             >
               <ul className="divide-y">
-                <li className="px-4 py-2 font-semibold text-sm text-gray-500">{t('table_export_excel')}</li>
+                <li className="px-4 py-2 font-semibold text-sm text-gray-500 dark:text-gray-600">{t('table_export_excel')}</li>
                 <li>
-                  <button type="button" onClick={() => exportData('excel', false)}>
+                  <div
+                    role="menuitem"
+                    className="w-full px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30] cursor-pointer"
+                    onClick={() => exportData('excel', false)}
+                  >
                     {t('table_export_current_page')}
-                  </button>
+                  </div>
                 </li>
                 <li>
-                  <button type="button" onClick={() => exportData('excel', true)}>
+                  <div
+                    role="menuitem"
+                    className="w-full px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30] cursor-pointer"
+                    onClick={() => exportData('excel', true)}
+                  >
                     {t('table_export_all_records')}
-                  </button>
+                  </div>
                 </li>
-                <li className="px-4 py-2 font-semibold text-sm text-gray-500">{t('table_export_csv')}</li>
+                <li className="px-4 py-2 font-semibold text-sm text-gray-500 dark:text-gray-600">{t('table_export_csv')}</li>
                 <li>
-                  <button type="button" onClick={() => exportData('csv', false)}>
+                  <div
+                    role="menuitem"
+                    className="w-full px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30] cursor-pointer"
+                    onClick={() => exportData('csv', false)}
+                  >
                     {t('table_export_current_page')}
-                  </button>
+                  </div>
                 </li>
                 <li>
-                  <button type="button" onClick={() => exportData('csv', true)}>
+                  <div
+                    role="menuitem"
+                    className="w-full px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30] cursor-pointer"
+                    onClick={() => exportData('csv', true)}
+                  >
                     {t('table_export_all_records')}
-                  </button>
+                  </div>
                 </li>
               </ul>
             </Dropdown>
