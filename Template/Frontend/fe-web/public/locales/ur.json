@@ -218,5 +218,9 @@
   "table_export_excel": "ایکسل",
   "table_export_csv": "سی ایس وی",
   "table_export_current_page": "موجودہ صفحہ",
-  "table_export_all_records": "تمام ریکارڈز"
+  "table_export_all_records": "تمام ریکارڈز",
+  "delete_user_title": "صارف کو حذف کریں",
+  "delete_user_confirmation": "کیا آپ واقعی اس صارف کو حذف کرنا چاہتے ہیں؟",
+  "success_userDeleted": "صارف کامیابی سے حذف کر دیا گیا",
+  "table_actions": "اقدامات"
 }

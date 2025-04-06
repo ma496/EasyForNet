@@ -218,5 +218,9 @@
   "table_export_excel": "Excel",
   "table_export_csv": "CSV",
   "table_export_current_page": "Current Page",
-  "table_export_all_records": "All Records"
+  "table_export_all_records": "All Records",
+  "delete_user_title": "Delete User",
+  "delete_user_confirmation": "Are you sure you want to delete this user?",
+  "success_userDeleted": "User deleted successfully",
+  "table_actions": "Actions"
 }

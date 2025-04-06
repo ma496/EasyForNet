@@ -1,14 +1,15 @@
 'use client';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
-import { useUserListQuery, useLazyUserListQuery } from '@/store/api/users/users-api';
+import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/users/users-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { UserListDto } from '@/store/api/users/dto/user-list-response';
-import { Search, Download, Loader2 } from 'lucide-react';
+import { Search, Download, Loader2, Trash2 } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
 import Dropdown from '@/components/dropdown';
 import { useAppSelector } from '@/store/hooks';
+import Swal from 'sweetalert2';
 
 export const UserTable = () => {
   const [page, setPage] = useState(1);
@@ -32,7 +33,8 @@ export const UserTable = () => {
     search: search || undefined,
   });
 
-  const [fetchUsers] = useLazyUserListQuery();
+  const [fetchUsers, { isFetching: isFetchingUsers }] = useLazyUserListQuery();
+  const [deleteUser] = useUserDeleteMutation();
 
   useEffect(() => {
     setPage(1);
@@ -82,6 +84,43 @@ export const UserTable = () => {
       }
     } finally {
       setIsExporting(false);
+    }
+  };
+
+  const handleDelete = async (userId: string) => {
+    const result = await Swal.fire({
+      title: t('delete_user_title'),
+      text: t('delete_user_confirmation'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: t('delete_confirm'),
+      cancelButtonText: t('delete_cancel')
+    });
+
+    if (result.isConfirmed) {
+      const response = await deleteUser({ id: userId }).unwrap();
+      if (response.success) {
+        await Swal.fire({
+          icon: 'success',
+          title: t('success'),
+          text: t('success_userDeleted'),
+        });
+        await fetchUsers({
+          page,
+          pageSize,
+          sortField: sortStatus.columnAccessor,
+          sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
+          search: search || undefined,
+        });
+      } else {
+        await Swal.fire({
+          icon: 'error',
+          title: t('error'),
+          text: response.message,
+        });
+      }
     }
   };
 
@@ -170,6 +209,22 @@ export const UserTable = () => {
               render: (record) => record.roles.map(role => role.name).join(', '),
               sortable: false
             },
+            {
+              accessor: 'actions',
+              title: t('table_actions'),
+              sortable: false,
+              render: (record) => (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(record.id)}
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </div>
+              ),
+            },
           ]}
           highlightOnHover
           totalRecords={userListResponse?.total || 0}
@@ -182,7 +237,7 @@ export const UserTable = () => {
           onSortStatusChange={setSortStatus}
           minHeight={200}
           paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
-          fetching={isLoading}
+          fetching={isLoading || isFetchingUsers}
           noRecordsText={t('table_no_records_found')}
           recordsPerPageLabel={''}
         />
