@@ -197,14 +197,22 @@ export const UserTable = () => {
           className="table-hover whitespace-nowrap"
           records={userListResponse?.items || []}
           columns={[
-            { accessor: 'username', sortable: true, title: t('page_users_userName') },
-            { accessor: 'email', sortable: true, title: t('page_users_email') },
-            { accessor: 'firstName', sortable: true, title: t('page_users_firstName') },
-            { accessor: 'lastName', sortable: true, title: t('page_users_lastName') },
+            { accessor: 'username', sortable: true, title: t('table_users_userName') },
+            { accessor: 'email', sortable: true, title: t('table_users_email') },
+            { accessor: 'firstName', sortable: true, title: t('table_users_firstName') },
+            { accessor: 'lastName', sortable: true, title: t('table_users_lastName') },
             {
               accessor: 'roles',
-              title: t('page_users_roles'),
+              title: t('table_users_roles'),
               render: (record) => record.roles.map(role => role.name).join(', '),
+              sortable: false
+            },
+            {
+              accessor: 'isActive',
+              title: t('table_users_isActive'),
+              render: (record) => record.isActive ?
+                <span className='bg-green-500 text-white px-2 py-1 rounded-md text-xs'>Yes</span> :
+                <span className='bg-red-500 text-white px-2 py-1 rounded-md text-xs'>No</span>,
               sortable: false
             },
             {

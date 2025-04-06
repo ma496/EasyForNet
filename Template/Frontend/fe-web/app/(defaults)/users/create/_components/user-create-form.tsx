@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 import { getTranslation } from '@/i18n';
 import { useRouter } from 'next/navigation';
 import { useUserCreateMutation } from '@/store/api/users/users-api';
+import { useRoleListQuery } from '@/store/api/roles/roles-api';
+import { RoleListRequest } from '@/store/api/roles/dto/role-list-request';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '@/components/ui/password-input';
@@ -12,6 +14,8 @@ import IconLockDots from '@/components/icon/icon-lock-dots';
 import IconMail from '@/components/icon/icon-mail';
 import IconUser from '@/components/icon/icon-user';
 import { Checkbox } from '@/components/ui/checkbox';
+import Select, { MultiValue } from 'react-select';
+import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
 
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
@@ -36,17 +40,29 @@ const createValidationSchema = (t: (key: string) => string) => {
       .required(t('validation_confirmPasswordRequired'))
       .oneOf([Yup.ref('password')], t('validation_passwordsMustMatch')),
     isActive: Yup.boolean().required(),
+    roles: Yup.array().of(Yup.string()).required(t('validation_rolesRequired')),
   });
 };
+
+type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>;
 
 export const UserCreateForm = () => {
   const { t } = getTranslation();
   const validationSchema = createValidationSchema(t);
-  type UserCreateFormValues = Yup.InferType<typeof validationSchema>
   const [createUser, { isLoading }] = useUserCreateMutation()
+  const { data: rolesData, isLoading: isLoadingRoles } = useRoleListQuery({
+    page: 1,
+    pageSize: 100,
+    all: true,
+  } as RoleListRequest);
   const router = useRouter()
 
-  const onSubmit = async (data: UserCreateFormValues) => {
+  const roleOptions = rolesData?.items.map((role: RoleListDto) => ({
+    value: role.id,
+    label: role.name,
+  })) || [];
+
+  const onSubmit = async (data: FormValues) => {
     const result = await createUser({
       username: data.username,
       email: data.email,
@@ -54,7 +70,7 @@ export const UserCreateForm = () => {
       firstName: data.firstName,
       lastName: data.lastName,
       isActive: data.isActive,
-      roles: [],
+      roles: data.roles.filter((role): role is string => role !== undefined),
     });
 
     if (!result.error) {
@@ -68,7 +84,7 @@ export const UserCreateForm = () => {
 
   return (
     <div className='panel flex flex-col gap-4 min-w-[300px] sm:min-w-[500px]'>
-      <Formik
+      <Formik<FormValues>
         initialValues={{
           username: '',
           email: '',
@@ -77,11 +93,12 @@ export const UserCreateForm = () => {
           password: '',
           confirmPassword: '',
           isActive: true,
+          roles: [],
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
           <Form noValidate className='flex flex-col gap-4'>
             <Input
               name='username'
@@ -120,6 +137,27 @@ export const UserCreateForm = () => {
               placeholder={t('placeholder_confirmPassword')}
               icon={<IconLockDots fill={true} />}
             />
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium">{t('label_roles')}</label>
+              <Select<{ value: string; label: string }, true>
+                placeholder={t('placeholder_roles')}
+                isMulti
+                isLoading={isLoadingRoles}
+                options={roleOptions}
+                value={roleOptions.filter(option =>
+                  Array.isArray(values.roles) && values.roles.includes(option.value)
+                )}
+                onChange={(newValue: MultiValue<{ value: string; label: string }>) => {
+                  setFieldValue(
+                    'roles',
+                    newValue ? newValue.map(option => option.value) : []
+                  );
+                }}
+              />
+              {touched.roles && errors.roles && (
+                <span className="text-danger text-xs mt-1">{errors.roles as string}</span>
+              )}
+            </div>
             <Checkbox
               name='isActive'
               label={t('label_isActive')}

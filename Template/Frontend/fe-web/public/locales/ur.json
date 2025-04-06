@@ -205,11 +205,12 @@
   "link_forgotPassword": "پاس ورڈ بھول گئے؟",
   "search...": "تلاش کریں...",
   "page_users_title": "صارفین",
-  "page_users_firstName": "پہلا نام",
-  "page_users_lastName": "آخری نام",
-  "page_users_email": "ای میل",
-  "page_users_roles": "کردار",
-  "page_users_userName": "صارف نام",
+  "table_users_firstName": "پہلا نام",
+  "table_users_lastName": "آخری نام",
+  "table_users_email": "ای میل",
+  "table_users_roles": "کردار",
+  "table_users_userName": "صارف نام",
+  "table_users_isActive": "فعال",
   "table_pagination_showing_entries": "${totalRecords} ریکارڈز کی کل تعداد میں سے ${from} سے ${to} تک دکھا رہا ہے",
   "table_no_records_found": "کوئی ریکارڈ نہیں موجود ہے",
   "table_records_per_page": "صفحات پر ریکارڈز کی تعداد",
@@ -228,5 +229,7 @@
   "nav_users_list": "فہرست",
   "nav_users_create": "بنائیں",
   "user_create_success": "صارف کامیابی سے بنایا گیا",
-  "table_createLink": "بنائیں"
+  "table_createLink": "بنائیں",
+  "label_roles": "کردار",
+  "placeholder_roles": "کردار منتخب کریں"
 }

@@ -205,11 +205,12 @@
   "link_forgotPassword": "Forgot Password?",
   "search...": "Search...",
   "page_users_title": "Users",
-  "page_users_firstName": "First Name",
-  "page_users_lastName": "Last Name",
-  "page_users_email": "Email",
-  "page_users_roles": "Roles",
-  "page_users_userName": "User Name",
+  "table_users_firstName": "First Name",
+  "table_users_lastName": "Last Name",
+  "table_users_email": "Email",
+  "table_users_roles": "Roles",
+  "table_users_userName": "User Name",
+  "table_users_isActive": "Active",
   "table_pagination_showing_entries": "Showing ${from} to ${to} of ${totalRecords} entries",
   "table_no_records_found": "No records found",
   "table_records_per_page": "Records per page",
@@ -228,5 +229,7 @@
   "nav_users_list": "List",
   "nav_users_create": "Create",
   "user_create_success": "User created successfully",
-  "table_createLink": "Create"
+  "table_createLink": "Create",
+  "label_roles": "Roles",
+  "placeholder_roles": "Select roles"
 }
