@@ -43,6 +43,11 @@ export const navItems: (NavItem | NavItemGroup)[] = [
           {
             title: 'nav_users_create',
             url: '/users/create',
+          },
+          {
+            title: 'nav_users_update',
+            url: '/users/update/{id}',
+            show: false,
           }
         ]
       },

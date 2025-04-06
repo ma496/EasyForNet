@@ -38,7 +38,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
 
         <AnimateHeight duration={300} height={currentMenu === item.title ? 'auto' : 0}>
           <ul className="sub-menu text-gray-500">
-            {item.children.map((child, index) => (
+            {item.children.filter(child => child.show !== false).map((child, index) => (
               <li key={`${item.title}-child-${index}`}>
                 <Link
                   href={child.url}

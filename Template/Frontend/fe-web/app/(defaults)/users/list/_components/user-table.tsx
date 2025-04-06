@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/users/users-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { UserListDto } from '@/store/api/users/dto/user-list-response';
-import { Search, Download, Loader2, Trash2, Plus } from 'lucide-react';
+import { Search, Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
 import Dropdown from '@/components/dropdown';
@@ -221,6 +221,12 @@ export const UserTable = () => {
               sortable: false,
               render: (record) => (
                 <div className="flex items-center gap-2">
+                  <Link
+                    href={`/users/update/${record.id}`}
+                    className="btn btn-warning btn-sm"
+                  >
+                    <Pencil className="h-3 w-3" />
+                  </Link>
                   <button
                     type="button"
                     className="btn btn-danger btn-sm"

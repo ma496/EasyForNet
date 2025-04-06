@@ -231,5 +231,8 @@
   "user_create_success": "صارف کامیابی سے بنایا گیا",
   "table_createLink": "بنائیں",
   "label_roles": "کردار",
-  "placeholder_roles": "کردار منتخب کریں"
+  "placeholder_roles": "کردار منتخب کریں",
+  "nav_users_update": "ترتیب دیں",
+  "update_user": "صارف کو ترتیب دیں",
+  "user_update_success": "صارف کامیابی سے ترتیب دیا گیا"
 }

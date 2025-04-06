@@ -231,5 +231,8 @@
   "user_create_success": "User created successfully",
   "table_createLink": "Create",
   "label_roles": "Roles",
-  "placeholder_roles": "Select roles"
+  "placeholder_roles": "Select roles",
+  "nav_users_update": "Update",
+  "update_user": "Update User",
+  "user_update_success": "User updated successfully"
 }
