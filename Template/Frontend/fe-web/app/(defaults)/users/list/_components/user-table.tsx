@@ -34,7 +34,7 @@ export const UserTable = () => {
     search: search || undefined,
   });
 
-  const [fetchUsers, { isFetching: isFetchingUsers }] = useLazyUserListQuery();
+  const [fetchUsers] = useLazyUserListQuery();
   const [deleteUser] = useUserDeleteMutation();
 
   useEffect(() => {
@@ -107,13 +107,6 @@ export const UserTable = () => {
           icon: 'success',
           title: t('success'),
           text: t('success_userDeleted'),
-        });
-        await fetchUsers({
-          page,
-          pageSize,
-          sortField: sortStatus.columnAccessor,
-          sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
-          search: search || undefined,
         });
       } else {
         await Swal.fire({
@@ -242,7 +235,7 @@ export const UserTable = () => {
           onSortStatusChange={setSortStatus}
           minHeight={200}
           paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
-          fetching={isLoading || isFetchingUsers}
+          fetching={isLoading || isExporting}
           noRecordsText={t('table_no_records_found')}
           recordsPerPageLabel={''}
         />
