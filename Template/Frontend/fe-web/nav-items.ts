@@ -35,6 +35,16 @@ export const navItems: (NavItem | NavItemGroup)[] = [
         title: 'nav_users',
         url: '/users/list',
         icon: Users,
+        children: [
+          {
+            title: 'nav_users_list',
+            url: '/users/list',
+          },
+          {
+            title: 'nav_users_create',
+            url: '/users/create',
+          }
+        ]
       },
       {
         title: 'nav_roles',

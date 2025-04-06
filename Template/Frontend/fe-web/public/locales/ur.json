@@ -222,5 +222,11 @@
   "delete_user_title": "صارف کو حذف کریں",
   "delete_user_confirmation": "کیا آپ واقعی اس صارف کو حذف کرنا چاہتے ہیں؟",
   "success_userDeleted": "صارف کامیابی سے حذف کر دیا گیا",
-  "table_actions": "اقدامات"
+  "table_actions": "اقدامات",
+  "label_isActive": "فعال",
+  "create_user": "صارف بنائیں",
+  "nav_users_list": "فہرست",
+  "nav_users_create": "بنائیں",
+  "user_create_success": "صارف کامیابی سے بنایا گیا",
+  "table_createLink": "بنائیں"
 }
