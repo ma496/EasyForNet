@@ -51,7 +51,7 @@ table > thead > tr > th {
 
 /* Pagination container */
 .mantine-datatable-pagination {
-  @apply border-t-0 !p-0 !pt-5 !bg-transparent dark:!bg-[#0E1726];
+  @apply sm:!grid sm:!grid-cols-[auto_1fr_auto] border-t-0 !p-0 !pt-5 !bg-transparent dark:!bg-[#0E1726];
 }
 
 /* .mantine-datatable-pagination > :last-child {
