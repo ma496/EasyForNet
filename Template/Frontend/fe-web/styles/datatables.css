@@ -54,9 +54,9 @@ table > thead > tr > th {
   @apply border-t-0 !p-0 !pt-5 !bg-transparent dark:!bg-[#0E1726];
 }
 
-.mantine-datatable-pagination > :last-child {
+/* .mantine-datatable-pagination > :last-child {
   @apply ltr:!ml-auto rtl:!mr-auto;
-}
+} */
 
 .datatables.pagination-padding .mantine-datatable-pagination {
   @apply !px-5;

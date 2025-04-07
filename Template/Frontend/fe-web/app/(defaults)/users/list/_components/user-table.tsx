@@ -120,9 +120,9 @@ export const UserTable = () => {
 
   return (
     <div className="panel mt-6">
-      <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
+      <div className="mb-5 flex flex-col gap-5 justify-between sm:flex-row sm:items-center">
         <h5 className="text-lg font-semibold dark:text-white-light">{t('page_users_title')}</h5>
-        <div className="flex items-center gap-4 ltr:ml-auto rtl:mr-auto">
+        <div className="flex items-center justify-around flex-wrap gap-4">
           <div className="relative">
             <input
               type="text"
@@ -223,7 +223,7 @@ export const UserTable = () => {
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/users/update/${record.id}`}
-                    className="btn btn-warning btn-sm"
+                    className="btn btn-secondary btn-sm"
                   >
                     <Pencil className="h-3 w-3" />
                   </Link>
