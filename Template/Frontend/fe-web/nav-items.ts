@@ -53,8 +53,23 @@ export const navItems: (NavItem | NavItemGroup)[] = [
       },
       {
         title: 'nav_roles',
-        url: '/roles',
+        url: '/roles/list',
         icon: Shield,
+        children: [
+          {
+            title: 'nav_roles_list',
+            url: '/roles/list',
+          },
+          {
+            title: 'nav_roles_create',
+            url: '/roles/create',
+          },
+          {
+            title: 'nav_roles_update',
+            url: '/roles/update/{id}',
+            show: false,
+          }
+        ]
       },
       {
         title: 'nav_settings',

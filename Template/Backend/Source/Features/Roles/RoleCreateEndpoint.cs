@@ -43,7 +43,7 @@ sealed class RoleCreateValidator : Validator<RoleCreateRequest>
     public RoleCreateValidator()
     {
         // Add validation rules here
-        RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(50);
+        RuleFor(x => x.Name).NotEmpty().MinimumLength(2).MaximumLength(50);
         RuleFor(x => x.Description).MinimumLength(10).MaximumLength(255).When(x => !x.Description.IsNullOrEmpty());
     }
 }
