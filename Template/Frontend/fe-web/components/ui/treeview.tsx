@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type TreeNode = {
-  id: string | number;
+  id: string;
   label: string;
   children?: TreeNode[];
   data?: any;
@@ -16,16 +16,16 @@ interface TreeViewProps {
   data: TreeNode[];
   className?: string;
   contentClassName?: string;
-  defaultExpandedIds?: (string | number)[];
-  defaultSelectedIds?: (string | number)[];
-  onSelectionChange?: (selectedIds: (string | number)[]) => void;
+  defaultExpandedIds?: string[];
+  defaultSelectedIds?: string[];
+  onSelectionChange?: (selectedIds: string[]) => void;
   onNodeClick?: (node: TreeNode) => void;
   enableSelection?: boolean;
   expandAll?: boolean;
 }
 
 type SelectionState = {
-  [key: string | number]: boolean;
+  [key: string]: boolean;
 };
 
 interface TreeViewItemProps extends TreeNode {
@@ -33,12 +33,14 @@ interface TreeViewItemProps extends TreeNode {
   defaultExpanded?: boolean;
   contentClassName?: string;
   selectedState: SelectionState;
-  intermediateState: Set<string | number>;
-  onSelectionChange: (id: string | number, checked: boolean) => void;
+  intermediateState: Set<string>;
+  onSelectionChange: (id: string, checked: boolean) => void;
   onNodeClick?: (node: TreeNode) => void;
-  getDescendantIds: (node: TreeNode) => (string | number)[];
-  getAncestorIds: (id: string | number) => (string | number)[];
+  getDescendantIds: (node: TreeNode) => string[];
+  getAncestorIds: (id: string) => string[];
   enableSelection: boolean;
+  defaultExpandedIds: string[];
+  expandAll?: boolean;
 }
 
 const TreeViewItem = ({
@@ -58,7 +60,7 @@ const TreeViewItem = ({
   enableSelection,
   defaultExpandedIds,
   expandAll,
-}: TreeViewItemProps & { defaultExpandedIds: (string | number)[], expandAll?: boolean }) => {
+}: TreeViewItemProps) => {
   const [isOpen, setIsOpen] = React.useState(defaultExpanded);
   const [height, setHeight] = React.useState<"auto" | number>(
     defaultExpanded ? "auto" : 0
@@ -82,6 +84,7 @@ const TreeViewItem = ({
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     onSelectionChange(id, checked);
+    e.stopPropagation();
   };
 
   React.useEffect(() => {
@@ -175,6 +178,7 @@ export const TreeView = ({
   enableSelection = false,
   expandAll = false,
 }: TreeViewProps) => {
+  // Simplified state management
   const [selectedState, setSelectedState] = React.useState<SelectionState>(() => {
     const state: SelectionState = {};
     defaultSelectedIds.forEach((id) => {
@@ -182,11 +186,20 @@ export const TreeView = ({
     });
     return state;
   });
-  const [intermediateState, setIntermediateState] = React.useState<Set<string | number>>(new Set());
+  const [intermediateState, setIntermediateState] = React.useState<Set<string>>(new Set());
 
-  // Create a map of all nodes for easy access
+  // Track defaultSelectedIds changes
+  React.useEffect(() => {
+    const newState: SelectionState = {};
+    defaultSelectedIds.forEach((id) => {
+      newState[id] = true;
+    });
+    setSelectedState(newState);
+  }, [defaultSelectedIds]);
+
+  // Simplified node mapping
   const nodeMap = React.useMemo(() => {
-    const map = new Map<string | number, TreeNode>();
+    const map = new Map<string, TreeNode>();
     const addToMap = (node: TreeNode) => {
       map.set(node.id, node);
       if (node.children) {
@@ -197,10 +210,9 @@ export const TreeView = ({
     return map;
   }, [data]);
 
-  // Function to get all descendant IDs of a node
-  const getDescendantIds = React.useCallback((node: TreeNode): (string | number)[] => {
-    const descendants: (string | number)[] = [];
-
+  // Simplified descendant and ancestor functions
+  const getDescendantIds = React.useCallback((node: TreeNode): string[] => {
+    const descendants: string[] = [];
     const traverse = (currentNode: TreeNode) => {
       if (currentNode.children) {
         currentNode.children.forEach(child => {
@@ -209,15 +221,13 @@ export const TreeView = ({
         });
       }
     };
-
     traverse(node);
     return descendants;
   }, []);
 
-  // Function to get parent-child relationships
   const parentChildMap = React.useMemo(() => {
-    const map = new Map<string | number, string | number>();
-    const processNode = (node: TreeNode, parentId?: string | number) => {
+    const map = new Map<string, string>();
+    const processNode = (node: TreeNode, parentId?: string) => {
       if (parentId !== undefined) {
         map.set(node.id, parentId);
       }
@@ -229,9 +239,8 @@ export const TreeView = ({
     return map;
   }, [data]);
 
-  // Function to get all ancestor IDs of a node
-  const getAncestorIds = React.useCallback((id: string | number): (string | number)[] => {
-    const ancestors: (string | number)[] = [];
+  const getAncestorIds = React.useCallback((id: string): string[] => {
+    const ancestors: string[] = [];
     let currentId = id;
     while (parentChildMap.has(currentId)) {
       const parentId = parentChildMap.get(currentId)!;
@@ -241,77 +250,30 @@ export const TreeView = ({
     return ancestors;
   }, [parentChildMap]);
 
-  // Update intermediate states
-  const updateIntermediateStates = React.useCallback(() => {
-    const newIntermediateState = new Set<string | number>();
-
-    const processNode = (node: TreeNode): { selected: number; total: number } => {
-      if (!node.children || node.children.length === 0) {
-        return {
-          selected: selectedState[node.id] ? 1 : 0,
-          total: 1
-        };
-      }
-
-      const counts = node.children.map(processNode);
-      let totalSelected = counts.reduce((sum, count) => sum + count.selected, 0);
-      let totalNodes = counts.reduce((sum, count) => sum + count.total, 0);
-
-      // Add current node's selection to the counts
-      if (selectedState[node.id]) {
-        totalSelected += 1;
-      }
-      totalNodes += 1;
-
-      // If some but not all descendants are selected, mark as intermediate
-      if (totalSelected > 0 && totalSelected < totalNodes) {
-        newIntermediateState.add(node.id);
-      }
-
-      return {
-        selected: totalSelected,
-        total: totalNodes
-      };
-    };
-
-    data.forEach(node => {
-      const result = processNode(node);
-      // Also check if the root node itself should be intermediate
-      if (result.selected > 0 && result.selected < result.total) {
-        newIntermediateState.add(node.id);
-      }
-    });
-
-    setIntermediateState(newIntermediateState);
-  }, [data, selectedState]);
-
-  // Handle selection changes
-  const handleSelectionChange = React.useCallback((id: string | number, checked: boolean) => {
+  // Simplified selection handler
+  const handleSelectionChange = React.useCallback((id: string, checked: boolean) => {
     setSelectedState(prev => {
       const newState = { ...prev };
-      const targetNode = nodeMap.get(id);
-
-      if (!targetNode) return prev;
-
-      // Update the clicked node
       newState[id] = checked;
 
-      // Update descendants
-      const descendants = getDescendantIds(targetNode);
-      descendants.forEach(descendantId => {
-        newState[descendantId] = checked;
-      });
+      // Handle descendants
+      const node = nodeMap.get(id);
+      if (node) {
+        getDescendantIds(node).forEach(descendantId => {
+          newState[descendantId] = checked;
+        });
+      }
 
-      // Update ancestors
+      // Handle ancestors - check if all siblings are selected
       const ancestors = getAncestorIds(id);
       ancestors.forEach(ancestorId => {
         const ancestorNode = nodeMap.get(ancestorId);
-        if (ancestorNode) {
-          const descendantIds = getDescendantIds(ancestorNode);
-          const allDescendantsSelected = descendantIds.every(
-            descId => newState[descId]
+        if (ancestorNode && ancestorNode.children) {
+          // Check if all children are checked to update parent state
+          const allChildrenSelected = ancestorNode.children.every(
+            child => newState[child.id] === true
           );
-          newState[ancestorId] = allDescendantsSelected;
+          newState[ancestorId] = allChildrenSelected;
         }
       });
 
@@ -319,14 +281,53 @@ export const TreeView = ({
     });
   }, [nodeMap, getDescendantIds, getAncestorIds]);
 
-  // Update intermediate states when selection changes
+  // Calculate intermediate states separately
   React.useEffect(() => {
-    updateIntermediateStates();
+    const newIntermediateState = new Set<string>();
+    const stateUpdates: { [key: string]: boolean } = {};
+
+    const processNode = (node: TreeNode): { checked: number, total: number } => {
+      if (!node.children || node.children.length === 0) {
+        return { checked: selectedState[node.id] ? 1 : 0, total: 1 };
+      }
+
+      // Calculate counts from children
+      const counts = node.children.map(processNode);
+      const checkedCount = counts.reduce((sum, count) => sum + count.checked, 0);
+      const totalCount = counts.reduce((sum, count) => sum + count.total, 0);
+
+      // If all children are checked, ensure parent is also checked
+      if (checkedCount === totalCount && totalCount > 0 && !selectedState[node.id]) {
+        stateUpdates[node.id] = true;
+      }
+      // If some children are checked but not all, mark as intermediate
+      else if (checkedCount > 0 && checkedCount < totalCount) {
+        newIntermediateState.add(node.id);
+      }
+
+      return {
+        checked: (selectedState[node.id] || stateUpdates[node.id]) ? totalCount : checkedCount,
+        total: totalCount
+      };
+    };
+
+    data.forEach(processNode);
+
+    // Apply state updates if needed
+    if (Object.keys(stateUpdates).length > 0) {
+      setSelectedState(prev => ({ ...prev, ...stateUpdates }));
+    }
+
+    setIntermediateState(newIntermediateState);
+  }, [data, selectedState]);
+
+  // Notify parent of selection changes
+  React.useEffect(() => {
     const selectedIds = Object.entries(selectedState)
       .filter(([, selected]) => selected)
-      .map(([id]) => isNaN(Number(id)) ? id : Number(id));
+      .map(([id]) => id);
     onSelectionChange?.(selectedIds);
-  }, [selectedState, updateIntermediateStates, onSelectionChange]);
+  }, [selectedState]);
 
   return (
     <div className={cn("w-full", className)}>

@@ -11,7 +11,6 @@ import Dropdown from '@/components/dropdown';
 import { useAppSelector } from '@/store/hooks';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
-import { ChangePermissions } from './change-permissions';
 
 export const RoleTable = () => {
   const [page, setPage] = useState(1);
@@ -24,8 +23,6 @@ export const RoleTable = () => {
     direction: 'asc',
   });
   const { t } = getTranslation();
-  const [showChangePermissions, setShowChangePermissions] = useState(false);
-
   const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
   const { data: roleListResponse, isLoading } = useRoleListQuery({
@@ -224,13 +221,12 @@ export const RoleTable = () => {
                   >
                     <Trash2 className="h-3 w-3" />
                   </button>
-                  <button
-                    type="button"
+                  <Link
+                    href={`/roles/change-permissions/${record.id}`}
                     className="btn btn-primary btn-sm"
-                    onClick={() => setShowChangePermissions(true)}
                   >
                     <Shield className="h-3 w-3" />
-                  </button>
+                  </Link>
                 </div>
               ),
             },
@@ -251,7 +247,6 @@ export const RoleTable = () => {
           recordsPerPageLabel={''}
         />
       </div>
-      <ChangePermissions show={showChangePermissions} setShow={setShowChangePermissions} />
     </div>
   );
 };

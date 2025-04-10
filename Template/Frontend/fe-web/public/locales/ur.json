@@ -259,5 +259,9 @@
   "role_create_success": "کردار کامیابی سے بنایا گیا",
   "role_update_success": "کردار کامیابی سے ترتیب دیا گیا",
   "role_not_found": "کردار نہیں ملا",
-  "success_roleDeleted": "کردار کامیابی سے حذف کر دیا گیا"
+  "success_roleDeleted": "کردار کامیابی سے حذف کر دیا گیا",
+  "permissions_updated_successfully": "اجازتیں کامیابی سے اپ ڈیٹ ہو گئیں",
+  "permissions": "اجازتیں",
+  "save": "محفوظ کریں",
+  "nav_roles_change_permissions": "اجازتیں ترتیب دیں"
 }

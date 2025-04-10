@@ -68,6 +68,11 @@ export const navItems: (NavItem | NavItemGroup)[] = [
             title: 'nav_roles_update',
             url: '/roles/update/{id}',
             show: false,
+          },
+          {
+            title: 'nav_roles_change_permissions',
+            url: '/roles/change-permissions/{id}',
+            show: false,
           }
         ]
       },

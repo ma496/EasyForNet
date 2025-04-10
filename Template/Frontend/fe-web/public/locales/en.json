@@ -259,5 +259,9 @@
   "role_create_success": "Role created successfully",
   "role_update_success": "Role updated successfully",
   "role_not_found": "Role not found",
-  "success_roleDeleted": "Role deleted successfully"
+  "success_roleDeleted": "Role deleted successfully",
+  "permissions_updated_successfully": "Permissions updated successfully",
+  "permissions": "Permissions",
+  "save": "Save",
+  "nav_roles_change_permissions": "Change Permissions"
 }
