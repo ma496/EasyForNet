@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { useRoleListQuery, useLazyRoleListQuery, useRoleDeleteMutation } from '@/store/api/roles/roles-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
-import { Search, Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react';
+import { Search, Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
 import Dropdown from '@/components/dropdown';
 import { useAppSelector } from '@/store/hooks';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
+import { ChangePermissions } from './change-permissions';
 
 export const RoleTable = () => {
   const [page, setPage] = useState(1);
@@ -23,6 +24,7 @@ export const RoleTable = () => {
     direction: 'asc',
   });
   const { t } = getTranslation();
+  const [showChangePermissions, setShowChangePermissions] = useState(false);
 
   const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
@@ -117,7 +119,7 @@ export const RoleTable = () => {
   };
 
   return (
-    <div className="panel mt-6 min-w-[300px] sm:min-w-[600px] md:min-w-[750px]">
+    <div className="panel mt-6 min-w-[300px] sm:min-w-[600px] md:min-w-[750px] lg:min-w-[850px]">
       <div className="mb-5 flex flex-col gap-5 justify-between sm:flex-row sm:items-center">
         <h5 className="text-lg font-semibold dark:text-white-light">{t('page_roles_title')}</h5>
         <div className="flex items-center justify-around flex-wrap gap-4">
@@ -222,6 +224,13 @@ export const RoleTable = () => {
                   >
                     <Trash2 className="h-3 w-3" />
                   </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setShowChangePermissions(true)}
+                  >
+                    <Shield className="h-3 w-3" />
+                  </button>
                 </div>
               ),
             },
@@ -242,6 +251,7 @@ export const RoleTable = () => {
           recordsPerPageLabel={''}
         />
       </div>
+      <ChangePermissions show={showChangePermissions} setShow={setShowChangePermissions} />
     </div>
   );
 };

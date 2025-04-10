@@ -41,7 +41,7 @@
     "next": "14.2.13",
     "ni18n": "^1.0.5",
     "react": "18.3.1",
-    "react-animate-height": "^3.1.0",
+    "react-animate-height": "^3.2.3",
     "react-apexcharts": "^1.7.0",
     "react-click-away-listener": "^2.3.0",
     "react-copy-to-clipboard": "^5.1.0",
