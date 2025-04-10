@@ -204,10 +204,10 @@ export const RoleTable = () => {
             },
             {
               accessor: 'actions',
-              title: t('table_actions'),
+              title: <div className='flex items-center justify-end ltr:mr-[73px] rtl:ml-[73px]'>{t('table_actions')}</div>,
               sortable: false,
               render: (record) => (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 justify-end">
                   <Link
                     href={`/roles/update/${record.id}`}
                     className="btn btn-secondary btn-sm"
