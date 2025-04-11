@@ -128,7 +128,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
               placeholder={t('placeholder_lastName')}
               icon={<IconUser />}
             />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 custom-select">
               <label className="text-sm font-medium">{t('label_roles')}</label>
               <Select<{ value: string; label: string }, true>
                 placeholder={t('placeholder_roles')}
