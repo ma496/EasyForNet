@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { getTranslation } from "@/i18n";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/layouts/loading";
+import { Search } from "lucide-react";
 
 const toTreeNodes = (definePermissions: PermissionDefinition[], permissions: PermissionDto[]): TreeNode[] => {
   let count = 1
@@ -56,8 +57,25 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   const [changedPermissions, setChangedPermissions] = useState<string[]>([])
   const { t } = getTranslation()
   const router = useRouter()
+  const [search, setSearch] = useState('');
 
   const permissionTreeNodes = definePermissionsRes && permissionsRes ? toTreeNodes(definePermissionsRes.permissions, permissionsRes.permissions) : [];
+
+  const filterTreeNodes = (nodes: TreeNode[], query: string): TreeNode[] => {
+    return nodes.reduce<TreeNode[]>((acc, node) => {
+      if (node.label.toLowerCase().includes(query.toLowerCase())) {
+        acc.push(node);
+      } else if (node.children) {
+        const filteredChildren = filterTreeNodes(node.children, query);
+        if (filteredChildren.length > 0) {
+          acc.push({ ...node, children: filteredChildren });
+        }
+      }
+      return acc;
+    }, []);
+  };
+
+  const filteredPermissionTreeNodes = filterTreeNodes(permissionTreeNodes, search);
 
   useEffect(() => {
     if (role) {
@@ -86,9 +104,19 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
         !isFetchingRole && !isLoadingDefinePermissions && !isLoadingPermissions ? (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <span className="text-lg">{role?.name} - {t('permissions')}</span>
+              <span className="text-lg font-semibold">{role?.name} - {t('permissions')}</span>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="form-input w-auto ltr:pl-9 rtl:pr-9"
+                  placeholder={t('search...')}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
+              </div>
               <TreeView
-                data={permissionTreeNodes}
+                data={filteredPermissionTreeNodes}
                 defaultSelectedIds={selectedPermissions}
                 expandAll={true}
                 enableSelection={true}
