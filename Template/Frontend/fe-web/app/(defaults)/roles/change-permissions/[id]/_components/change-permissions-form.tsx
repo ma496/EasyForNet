@@ -21,7 +21,8 @@ const toTreeNodes = (definePermissions: PermissionDefinition[], permissions: Per
     return {
       id: permission ? permission.id : `${definePermission.name}-${count++}`,
       label: definePermission.displayName,
-      children: definePermission.children?.map(buildNode) || []
+      children: definePermission.children?.map(buildNode) || [],
+      show: true
     }
   }
 
@@ -61,21 +62,35 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
 
   const permissionTreeNodes = definePermissionsRes && permissionsRes ? toTreeNodes(definePermissionsRes.permissions, permissionsRes.permissions) : [];
 
-  const filterTreeNodes = (nodes: TreeNode[], query: string): TreeNode[] => {
-    return nodes.reduce<TreeNode[]>((acc, node) => {
-      if (node.label.toLowerCase().includes(query.toLowerCase())) {
-        acc.push(node);
-      } else if (node.children) {
-        const filteredChildren = filterTreeNodes(node.children, query);
-        if (filteredChildren.length > 0) {
-          acc.push({ ...node, children: filteredChildren });
+  const filterTreeNodes = (nodes: TreeNode[], query: string): void => {
+    if (!query) {
+      // Reset all nodes to visible when no query
+      nodes.forEach(n => {
+        n.show = true;
+        if (n.children && n.children.length > 0) {
+          filterTreeNodes(n.children, query);
         }
-      }
-      return acc;
-    }, []);
-  };
+      });
+    } else {
+      const normalizedQuery = query.trim().toLowerCase();
 
-  const filteredPermissionTreeNodes = filterTreeNodes(permissionTreeNodes, search);
+      nodes.forEach(n => {
+        if (n.children && n.children.length > 0) {
+          // Process children first
+          filterTreeNodes(n.children, query);
+
+          // Parent node should be visible if it matches the query OR if any child is visible
+          const matchesQuery = n.label.toLowerCase().includes(normalizedQuery);
+          const hasVisibleChild = n.children.some(child => child.show === true);
+
+          n.show = matchesQuery || hasVisibleChild;
+        } else {
+          // Leaf nodes are visible only if they match the query
+          n.show = n.label.toLowerCase().includes(normalizedQuery);
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (role) {
@@ -84,6 +99,9 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
     }
   }, [role])
 
+  useEffect(() => {
+    filterTreeNodes(permissionTreeNodes, search)
+  }, [search, permissionTreeNodes])
 
   const handleSubmit = async () => {
     await changePermissions({
@@ -116,7 +134,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
                 <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
               </div>
               <TreeView
-                data={filteredPermissionTreeNodes}
+                data={permissionTreeNodes}
                 defaultSelectedIds={selectedPermissions}
                 expandAll={true}
                 enableSelection={true}

@@ -10,6 +10,7 @@ export type TreeNode = {
   label: string;
   children?: TreeNode[];
   data?: any;
+  show?: boolean;
 };
 
 interface TreeViewProps {
@@ -41,6 +42,7 @@ interface TreeViewItemProps extends TreeNode {
   enableSelection: boolean;
   defaultExpandedIds: string[];
   expandAll?: boolean;
+  show?: boolean;
 }
 
 const TreeViewItem = ({
@@ -60,7 +62,10 @@ const TreeViewItem = ({
   enableSelection,
   defaultExpandedIds,
   expandAll,
+  show = true,
 }: TreeViewItemProps) => {
+  if (!show) return null;
+
   const [isOpen, setIsOpen] = React.useState(defaultExpanded);
   const [height, setHeight] = React.useState<"auto" | number>(
     defaultExpanded ? "auto" : 0
@@ -158,6 +163,7 @@ const TreeViewItem = ({
                 enableSelection={enableSelection}
                 defaultExpandedIds={defaultExpandedIds}
                 expandAll={expandAll}
+                show={child.show}
               />
             ))}
           </div>
@@ -347,6 +353,7 @@ export const TreeView = ({
           enableSelection={enableSelection}
           defaultExpandedIds={defaultExpandedIds}
           expandAll={expandAll}
+          show={item.show}
         />
       ))}
     </div>
