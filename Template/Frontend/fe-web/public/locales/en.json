@@ -263,5 +263,13 @@
   "permissions_updated_successfully": "Permissions updated successfully",
   "permissions": "Permissions",
   "save": "Save",
-  "nav_roles_change_permissions": "Change Permissions"
+  "nav_roles_change_permissions": "Change Permissions",
+  "search_home": "Home",
+  "search_users": "Users",
+  "search_users_create": "Create User",
+  "search_roles": "Roles",
+  "search_roles_create": "Create Role",
+  "search_settings": "Settings",
+  "search_change_password": "Change Password",
+  "search_profile": "Profile"
 }

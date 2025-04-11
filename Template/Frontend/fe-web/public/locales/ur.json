@@ -263,5 +263,13 @@
   "permissions_updated_successfully": "اجازتیں کامیابی سے اپ ڈیٹ ہو گئیں",
   "permissions": "اجازتیں",
   "save": "محفوظ کریں",
-  "nav_roles_change_permissions": "اجازتیں ترتیب دیں"
+  "nav_roles_change_permissions": "اجازتیں ترتیب دیں",
+  "search_home": "ہوم",
+  "search_users": "صارفین",
+  "search_users_create": "صارف بنائیں",
+  "search_roles": "کردار",
+  "search_roles_create": "کردار بنائیں",
+  "search_settings": "ترتیبات",
+  "search_change_password": "پاس ورڈ تبدیل کریں",
+  "search_profile": "پروفائل"
 }
