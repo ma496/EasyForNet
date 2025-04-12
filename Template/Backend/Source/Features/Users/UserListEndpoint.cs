@@ -32,7 +32,7 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, User
             .ThenInclude(x => x.Role)
             .AsQueryable();
 
-        var search = request.Search?.ToLower();
+        var search = request.Search?.Trim()?.ToLower();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>

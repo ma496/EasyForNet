@@ -33,7 +33,7 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, RoleListResponse, Role
             .Include(x => x.UserRoles)
             .AsQueryable();
 
-        var search = request.Search?.ToLower();
+        var search = request.Search?.Trim()?.ToLower();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
