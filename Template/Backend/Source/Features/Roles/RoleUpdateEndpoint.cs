@@ -33,8 +33,8 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Name == "Admin")
-            ThrowError("Admin role can not be updated.");
+        if (entity.Default)
+            ThrowError("Default role can not be updated.");
 
         Map.UpdateEntity(request, entity);
 

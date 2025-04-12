@@ -30,8 +30,8 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Name == "Admin")
-            ThrowError("Admin role can not be deleted.");
+        if (entity.Default)
+            ThrowError("Default role can not be deleted.");
 
         // Delete the entity from the db
         await _roleService.DeleteAsync(entity);

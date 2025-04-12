@@ -35,8 +35,8 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             await SendNotFoundAsync(cancellationToken);
             return;
         }
-        if (entity.Username == "admin")
-            ThrowError("Admin user can not be updated.");
+        if (entity.Default)
+            ThrowError("Default user can not be updated.");
 
         Map.UpdateEntity(request, entity);
         // update user roles based on request and already assigned roles
