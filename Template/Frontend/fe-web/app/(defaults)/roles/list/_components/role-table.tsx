@@ -27,7 +27,7 @@ export const RoleTable = () => {
   const { t } = getTranslation();
   const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
-  const { data: roleListResponse, isLoading } = useRoleListQuery({
+  const { data: roleListResponse, isFetching } = useRoleListQuery({
     page,
     pageSize,
     sortField: sortStatus.columnAccessor,
@@ -258,7 +258,7 @@ export const RoleTable = () => {
           onSortStatusChange={setSortStatus}
           minHeight={200}
           paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
-          fetching={isLoading || isExporting}
+          fetching={isFetching || isExporting}
           noRecordsText={t('table_no_records_found')}
           recordsPerPageLabel={''}
         />
