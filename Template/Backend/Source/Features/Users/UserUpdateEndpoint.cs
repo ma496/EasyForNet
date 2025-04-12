@@ -36,7 +36,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             return;
         }
         if (entity.Default)
-            ThrowError("Default user can not be updated.");
+            ThrowError("default_user_cannot_be_updated");
 
         Map.UpdateEntity(request, entity);
         // update user roles based on request and already assigned roles

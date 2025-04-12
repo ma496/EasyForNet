@@ -35,7 +35,7 @@ sealed class ChangePermissionsEndpoint : Endpoint<ChangePermissionsRequest, Chan
             return;
         }
         if (entity.Default)
-            ThrowError("Permissions of default role can not be changed.");
+            ThrowError("default_role_permissions_cannot_be_changed");
 
         // update role permissions based on request and already assigned permissions
         var permissionsToAssign = request.Permissions.Where(x => !entity.RolePermissions.Any(rp => rp.PermissionId == x)).ToList();

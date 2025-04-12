@@ -68,7 +68,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
     {
         var user = await _userService.GetByIdAsync(Guid.Parse(request.UserId));
         if (user == null)
-            ThrowError(r => r.UserId, "User not found");
+            ThrowError(r => r.UserId, "user_not_found");
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

@@ -1,13 +1,15 @@
 import { MiddlewareAPI, isRejectedWithValue } from '@reduxjs/toolkit';
 import { setError } from '../slices/errorSlice';
+import { getTranslation } from '@/i18n';
 
 const ignoreEndpoints = ['getUserInfo']
 
 const getValidationMessage = (errors: any) => {
+  const { t } = getTranslation()
   let message = ''
   // loop through errors array
   errors.forEach((error: any) => {
-    message += `${error.reason}\n`
+    message += `${t(`server_error_${error.reason}`)}\n`
   })
   return message
 }
@@ -33,21 +35,22 @@ const isError = (action: any, status: number): boolean => {
 }
 
 export const rtkErrorHandler = (api: MiddlewareAPI) => (next: any) => (action: any) => {
+  const { t } = getTranslation()
   if (isRejectedWithValue(action)) {
     if (action.payload?.status === 'FETCH_ERROR') {
-      api.dispatch(setError({ title: 'Connection Error', message: 'Unable to connect to the server. Please check your connection or try again later.' }))
+      api.dispatch(setError({ title: t('connection_error_title'), message: t('connection_error_message') }))
     } else if (isError(action, 400) && action.payload.data.errors) {
-      api.dispatch(setError({ title: 'Error', message: getValidationMessage(action.payload.data.errors) }))
+      api.dispatch(setError({ title: t('400_error_title'), message: getValidationMessage(action.payload.data.errors) }))
     } else if (isError(action, 401)) {
-      api.dispatch(setError({ title: 'Error', message: 'Please sign-in!' }))
+      api.dispatch(setError({ title: t('401_error_title'), message: t('401_error_message') }))
     } else if (isError(action, 403)) {
-      api.dispatch(setError({ title: 'Error', message: 'You are not allowed to access this resource!' }))
+      api.dispatch(setError({ title: t('403_error_title'), message: t('403_error_message') }))
     } else if (isError(action, 404)) {
-      api.dispatch(setError({ title: 'Error', message: 'Not Found!' }))
+      api.dispatch(setError({ title: t('404_error_title'), message: t('404_error_message') }))
     } else if (isError(action, 415)) {
-      api.dispatch(setError({ title: 'Error', message: 'Unsupported Media Type!' }))
+      api.dispatch(setError({ title: t('415_error_title'), message: t('415_error_message') }))
     } else if (isError(action, 500)) {
-      api.dispatch(setError({ title: 'Error', message: 'Internal Server Error!' }))
+      api.dispatch(setError({ title: t('500_error_title'), message: t('500_error_message') }))
     }
   }
 
