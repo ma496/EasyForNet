@@ -2,7 +2,7 @@ using Backend.Data.Entities.Base;
 
 namespace Backend.Data.Entities.Identity;
 
-public class User : AuditableEntity<Guid>, IExcludeProperties
+public class User : AuditableEntity<Guid>
 {
     public bool Default { get; set; }
     public string Username { get; set; } = null!;
@@ -17,15 +17,4 @@ public class User : AuditableEntity<Guid>, IExcludeProperties
     public ICollection<UserRole> UserRoles { get; set; } = [];
     public ICollection<AuthToken> AuthTokens { get; set; } = [];
     public ICollection<Token> Tokens { get; set; } = [];
-
-    public static List<string> ExcludeProperties()
-    {
-        return new List<string>
-        {
-            nameof(Default),
-            nameof(PasswordHash),
-            nameof(LastLoginAt),
-            nameof(Image)
-        };
-    }
 }

@@ -74,6 +74,6 @@ public class RoleDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Admin role can not be deleted.");
+        res.Errors.First().Reason.Should().Be("default_role_cannot_be_deleted");
     }
 }

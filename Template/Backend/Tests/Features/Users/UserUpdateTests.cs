@@ -88,6 +88,6 @@ public class UserUpdateTests : AppTestsBase
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Admin user can not be updated.");
+        res.Errors.First().Reason.Should().Be("default_user_cannot_be_updated");
     }
 }

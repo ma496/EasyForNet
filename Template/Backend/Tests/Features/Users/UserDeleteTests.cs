@@ -77,6 +77,6 @@ public class UserDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("Admin user can not be deleted.");
+        res.Errors.First().Reason.Should().Be("default_user_cannot_be_deleted");
     }
 }
