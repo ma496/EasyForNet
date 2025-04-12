@@ -40,3 +40,18 @@ export const {
   login,
   logout
 } = authSlice.actions
+
+// Add new selector function
+export const isAllowed = (state: AuthState, permissions: string[]): boolean => {
+  if (!state.user || !state.user.roles) return false;
+  if (!permissions || permissions.length === 0) return true;
+
+  // console.log(permissions)
+
+  // Check if any of the user's role permissions match the required permissions
+  return state.user.roles.some(role =>
+    role.permissions?.some(permission =>
+      permissions.includes(permission.name)
+    )
+  );
+};

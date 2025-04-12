@@ -1,8 +1,9 @@
-import { getTranslation } from "./i18n";
+import { Allow } from "./allow";
 
 export type SearchableItem = {
   title: string;
   url: string;
+  permissions?: string[];
 }
 
 export const searchableItems: SearchableItem[] = [
@@ -13,18 +14,22 @@ export const searchableItems: SearchableItem[] = [
   {
     title: 'search_users',
     url: '/users/list',
+    permissions: [Allow.User_View],
   },
   {
     title: 'search_users_create',
     url: '/users/create',
+    permissions: [Allow.User_Create],
   },
   {
     title: 'search_roles',
     url: '/roles/list',
+    permissions: [Allow.Role_View],
   },
   {
     title: 'search_roles_create',
     url: '/roles/create',
+    permissions: [Allow.Role_Create],
   },
   {
     title: 'search_settings',
@@ -39,16 +44,5 @@ export const searchableItems: SearchableItem[] = [
     url: '/profile',
   },
 ];
-
-const { t } = getTranslation();
-
-export const getSearchableItems = (query: string): SearchableItem[] => {
-  if (!query || query.trim() === '') {
-    return [];
-  }
-  return searchableItems
-    .filter((item) => t(item.title).toLowerCase().includes(query.trim().toLowerCase()))
-    .slice(0, 5);
-};
 
 

@@ -11,6 +11,8 @@ import Dropdown from '@/components/dropdown';
 import { useAppSelector } from '@/store/hooks';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
+import { isAllowed } from '@/store/slices/authSlice';
+import { Allow } from '@/allow';
 
 export const UserTable = () => {
   const [page, setPage] = useState(1);
@@ -36,6 +38,11 @@ export const UserTable = () => {
 
   const [fetchUsers] = useLazyUserListQuery();
   const [deleteUser] = useUserDeleteMutation();
+
+  const authState = useAppSelector(state => state.auth);
+  const canCreate = isAllowed(authState, [Allow.User_Create]);
+  const canUpdate = isAllowed(authState, [Allow.User_Update]);
+  const canDelete = isAllowed(authState, [Allow.User_Delete]);
 
   useEffect(() => {
     setPage(1);
@@ -133,10 +140,12 @@ export const UserTable = () => {
             />
             <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
           </div>
-          <Link href="/users/create" className="btn btn-primary flex items-center gap-2">
-            <Plus size={16} />
-            <span>{t('table_createLink')}</span>
-          </Link>
+          {canCreate && (
+            <Link href="/users/create" className="btn btn-primary flex items-center gap-2">
+              <Plus size={16} />
+              <span>{t('table_createLink')}</span>
+            </Link>
+          )}
           <div className='dropdown'>
             <Dropdown
               placement={`${isRTL ? 'bottom-start' : 'bottom-end'}`}
@@ -221,19 +230,23 @@ export const UserTable = () => {
               sortable: false,
               render: (record) => (
                 <div className="flex items-center gap-2">
-                  <Link
-                    href={`/users/update/${record.id}`}
-                    className="btn btn-secondary btn-sm"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(record.id)}
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </button>
+                  {canUpdate && (
+                    <Link
+                      href={`/users/update/${record.id}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      <Pencil className="h-3 w-3" />
+                    </Link>
+                  )}
+                  {canDelete && (
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(record.id)}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                  )}
                 </div>
               ),
             },

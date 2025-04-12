@@ -14,8 +14,6 @@ interface NavItemProps {
 }
 
 export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }: NavItemProps) => {
-  if (item.show === false) return null;
-
   if (item.children) {
     return (
       <div className="nav-item">

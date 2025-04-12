@@ -11,6 +11,8 @@ import Dropdown from '@/components/dropdown';
 import { useAppSelector } from '@/store/hooks';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
+import { Allow } from '@/allow';
+import { isAllowed } from '@/store/slices/authSlice';
 
 export const RoleTable = () => {
   const [page, setPage] = useState(1);
@@ -35,6 +37,12 @@ export const RoleTable = () => {
 
   const [fetchRoles] = useLazyRoleListQuery();
   const [deleteRole] = useRoleDeleteMutation();
+
+  const authState = useAppSelector(state => state.auth);
+  const canCreate = isAllowed(authState, [Allow.Role_Create]);
+  const canUpdate = isAllowed(authState, [Allow.Role_Update]);
+  const canDelete = isAllowed(authState, [Allow.Role_Delete]);
+  const canChangePermissions = isAllowed(authState, [Allow.Role_ChangePermissions]);
 
   useEffect(() => {
     setPage(1);
@@ -130,10 +138,12 @@ export const RoleTable = () => {
             />
             <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
           </div>
-          <Link href="/roles/create" className="btn btn-primary flex items-center gap-2">
-            <Plus size={16} />
-            <span>{t('table_createLink')}</span>
-          </Link>
+          {canCreate && (
+            <Link href="/roles/create" className="btn btn-primary flex items-center gap-2">
+              <Plus size={16} />
+              <span>{t('table_createLink')}</span>
+            </Link>
+          )}
           <div className='dropdown'>
             <Dropdown
               placement={`${isRTL ? 'bottom-start' : 'bottom-end'}`}
@@ -208,25 +218,31 @@ export const RoleTable = () => {
               sortable: false,
               render: (record) => (
                 <div className="flex items-center gap-2 justify-end">
-                  <Link
-                    href={`/roles/update/${record.id}`}
-                    className="btn btn-secondary btn-sm"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(record.id)}
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </button>
-                  <Link
-                    href={`/roles/change-permissions/${record.id}`}
-                    className="btn btn-primary btn-sm"
-                  >
-                    <Shield className="h-3 w-3" />
-                  </Link>
+                  {canUpdate && (
+                    <Link
+                      href={`/roles/update/${record.id}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      <Pencil className="h-3 w-3" />
+                    </Link>
+                  )}
+                  {canDelete && (
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(record.id)}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                  )}
+                  {canChangePermissions && (
+                    <Link
+                      href={`/roles/change-permissions/${record.id}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      <Shield className="h-3 w-3" />
+                    </Link>
+                  )}
                 </div>
               ),
             },

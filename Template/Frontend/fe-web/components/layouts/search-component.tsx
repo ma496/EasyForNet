@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSearchableItems, SearchableItem } from '@/searchable-items';
+import { SearchableItem, searchableItems } from '@/searchable-items';
 import Link from 'next/link';
 import IconSearch from '@/components/icon/icon-search';
 import { getTranslation } from '@/i18n';
+import { isAllowed } from '@/store/slices/authSlice';
+import { useAppSelector } from '@/store/hooks';
 
 const SearchComponent = () => {
   const router = useRouter();
@@ -12,6 +14,20 @@ const SearchComponent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchableItem[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const authState = useAppSelector(state => state.auth);
+
+  const getSearchableItems = (query: string): SearchableItem[] => {
+    if (!query || query.trim() === '') {
+      return [];
+    }
+
+    return searchableItems
+      .filter((item) =>
+        t(item.title).toLowerCase().includes(query.trim().toLowerCase()) &&
+        (item.permissions && item.permissions.length > 0 ? isAllowed(authState, item.permissions) : true)
+      )
+      .slice(0, 5);
+  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;

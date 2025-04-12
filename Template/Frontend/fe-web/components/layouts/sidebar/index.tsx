@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { getTranslation } from '@/i18n';
 import { navItems, NavItem, NavItemGroup } from '@/nav-items';
 import { SidebarNavGroup } from './nav-group';
+import { isAllowed } from '@/store/slices/authSlice';
 
 const isNavItemGroup = (item: NavItem | NavItemGroup): item is NavItemGroup => {
   return 'items' in item;
@@ -29,10 +30,71 @@ const Sidebar = () => {
     });
   };
 
+  const getFilteredNavItems = (): (NavItem | NavItemGroup)[] => {
+    const authState = useAppSelector(state => state.auth);
+
+    // Helper function to recursively filter children
+    const filterNavItem = (item: NavItem): NavItem | null => {
+      // Check if the item should be shown and if the user has permission
+      if (item.show === false || !isAllowed(authState, item.permissions || [])) {
+        return null;
+      }
+
+      // If item has children, recursively filter them
+      if (item.children && item.children.length > 0) {
+        const filteredChildren = item.children
+          .map(filterNavItem)
+          .filter((child): child is NavItem => child !== null);
+
+        // If no children remain after filtering, don't show the parent
+        if (filteredChildren.length === 0) {
+          return null;
+        }
+
+        // Return a new item with filtered children
+        return {
+          ...item,
+          children: filteredChildren
+        };
+      }
+
+      // Item has no children and passes the conditions
+      return item;
+    };
+
+    // Process the navItems array
+    return navItems.reduce<(NavItem | NavItemGroup)[]>((filtered, item) => {
+      if (isNavItemGroup(item)) {
+        // For groups, filter each item in the group
+        const filteredItems = item.items
+          .map(filterNavItem)
+          .filter((groupItem): groupItem is NavItem => groupItem !== null);
+
+        // Only include the group if it has at least one valid item
+        if (filteredItems.length > 0) {
+          filtered.push({
+            ...item,
+            items: filteredItems
+          });
+        }
+      } else {
+        // For regular items, apply the filter directly
+        const filteredItem = filterNavItem(item);
+        if (filteredItem !== null) {
+          filtered.push(filteredItem);
+        }
+      }
+
+      return filtered;
+    }, []);
+  };
+
+  const [filteredNavItems, _] = useState<(NavItem | NavItemGroup)[]>(getFilteredNavItems());
+
   useEffect(() => {
     // Find and set active parent menu based on current path
     const findActiveParent = () => {
-      navItems.forEach((group) => {
+      filteredNavItems.forEach((group) => {
         if (isNavItemGroup(group)) {
           group.items.forEach((item) => {
             if (item.children?.some(child => child.url === pathname)) {
@@ -76,7 +138,7 @@ const Sidebar = () => {
           </div>
           <PerfectScrollbar className="relative h-[calc(100vh-80px)]">
             <div className="relative space-y-0.5 p-4 py-0 font-semibold">
-              {navItems.map((group, index) => (
+              {filteredNavItems.map((group, index) => (
                 <SidebarNavGroup
                   key={`nav-group-${index}`}
                   group={group}
