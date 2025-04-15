@@ -47,15 +47,14 @@ export function DataTable<TData>({ className = '' }: DataTableProps<TData>) {
     rowSelection,
     setRowSelection,
     enableRowSelection,
+    setTable,
   } = useDataTable<TData>();
 
   // Extract global filter value
   const globalFilter = columnFilters.find(filter => filter.id === 'global')?.value as string || '';
 
-  // Update pageCount when data or pagination changes
-  useEffect(() => {
-    setPageCount(Math.ceil(data.length / pagination.pageSize));
-  }, [data.length, pagination.pageSize, setPageCount]);
+  // Track previous filter state to detect changes
+  const [prevGlobalFilter, setPrevGlobalFilter] = useState(globalFilter);
 
   const table = useReactTable({
     data,
@@ -82,6 +81,43 @@ export function DataTable<TData>({ className = '' }: DataTableProps<TData>) {
     globalFilterFn: fuzzyFilter,
     manualPagination: false,
   });
+
+  // Store table instance in context
+  useEffect(() => {
+    if (setTable) {
+      setTable(table);
+    }
+  }, [table, setTable]);
+
+  // Monitor global filter changes and reset pagination if needed
+  useEffect(() => {
+    // If global filter changed and there are no filtered rows, reset to page 0
+    if (globalFilter !== prevGlobalFilter) {
+      setPrevGlobalFilter(globalFilter);
+
+      const filteredRowsCount = table.getFilteredRowModel().rows.length;
+      if (filteredRowsCount === 0) {
+        setPagination(prev => ({
+          ...prev,
+          pageIndex: 0
+        }));
+      }
+    }
+  }, [globalFilter, prevGlobalFilter, table, setPagination]);
+
+  // Update pageCount when data, pagination, or filters change
+  useEffect(() => {
+    const filteredRowsCount = table.getFilteredRowModel().rows.length;
+    setPageCount(Math.ceil(filteredRowsCount / pagination.pageSize));
+
+    // Reset to first page if current page would be out of bounds
+    if (pagination.pageIndex > 0 && filteredRowsCount > 0 && pagination.pageIndex >= Math.ceil(filteredRowsCount / pagination.pageSize)) {
+      setPagination(prev => ({
+        ...prev,
+        pageIndex: 0
+      }));
+    }
+  }, [table, pagination.pageSize, setPageCount, columnFilters, pagination.pageIndex, setPagination]);
 
   return (
     <div className="relative overflow-x-auto">

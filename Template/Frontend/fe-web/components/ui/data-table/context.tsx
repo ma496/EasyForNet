@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 import {
   ColumnDef,
   SortingState,
@@ -6,6 +6,7 @@ import {
   VisibilityState,
   ColumnFiltersState,
   RowSelectionState,
+  Table,
 } from '@tanstack/react-table';
 
 interface DataTableContextProps<TData> {
@@ -25,6 +26,10 @@ interface DataTableContextProps<TData> {
   rowSelection: RowSelectionState;
   setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
   enableRowSelection: boolean;
+  table?: Table<TData>;
+  setTable?: React.Dispatch<React.SetStateAction<Table<TData> | undefined>>;
+  totalFilteredRows: number;
+  setTotalFilteredRows: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined);
@@ -65,6 +70,16 @@ export function DataTableProvider<TData>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pageCount, setPageCount] = useState(Math.ceil(data.length / initialPageSize));
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [table, setTable] = useState<Table<TData>>();
+  const [totalFilteredRows, setTotalFilteredRows] = useState<number>(data.length);
+
+  // Update totalFilteredRows when the table or filters change
+  useEffect(() => {
+    if (table) {
+      const filteredCount = table.getFilteredRowModel().rows.length;
+      setTotalFilteredRows(filteredCount);
+    }
+  }, [table, columnFilters]);
 
   const value = useMemo(
     () => ({
@@ -84,6 +99,10 @@ export function DataTableProvider<TData>({
       rowSelection,
       setRowSelection,
       enableRowSelection,
+      table,
+      setTable,
+      totalFilteredRows,
+      setTotalFilteredRows,
     }),
     [
       data,
@@ -96,6 +115,8 @@ export function DataTableProvider<TData>({
       pageSizeOptions,
       rowSelection,
       enableRowSelection,
+      table,
+      totalFilteredRows,
     ]
   );
 

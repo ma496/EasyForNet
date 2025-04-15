@@ -10,7 +10,13 @@ export function DataTablePagination<TData>({
   className = '',
   siblingCount = 1
 }: PaginationProps) {
-  const { pagination, setPagination, pageCount, data, pageSizeOptions } = useDataTable<TData>();
+  const {
+    pagination,
+    setPagination,
+    pageCount,
+    pageSizeOptions,
+    totalFilteredRows
+  } = useDataTable<TData>();
 
   const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const pageSize = Number(e.target.value);
@@ -128,10 +134,11 @@ export function DataTablePagination<TData>({
     return items;
   };
 
-  // Calculate displayed entry range
-  const from = data.length > 0 ? pagination.pageIndex * pagination.pageSize + 1 : 0;
-  const to = Math.min((pagination.pageIndex + 1) * pagination.pageSize, data.length);
-  const totalEntries = data.length;
+  // Calculate displayed entry range using the totalFilteredRows from context
+  const filteredRowsLength = totalFilteredRows;
+  const from = filteredRowsLength === 0 ? 0 : pagination.pageIndex * pagination.pageSize + 1;
+  const to = filteredRowsLength === 0 ? 0 : Math.min((pagination.pageIndex + 1) * pagination.pageSize, filteredRowsLength);
+  const totalEntries = filteredRowsLength;
 
   return (
     <div className={`flex flex-wrap items-center justify-between gap-4 mt-5 ${className}`}>
