@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { getTranslation } from "@/i18n";
 import { useRouter } from "next/navigation";
-import AppLoading from "@/components/layouts/loading";
+import AppLoading from "@/components/layouts/app-loading";
 import { Search } from "lucide-react";
 
 const toTreeNodes = (definePermissions: PermissionDefinition[], permissions: PermissionDto[]): TreeNode[] => {

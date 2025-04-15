@@ -1,4 +1,4 @@
-import AppLoading from '@/components/layouts/loading';
+import AppLoading from '@/components/layouts/app-loading';
 import React from 'react';
 
 const loading = () => {

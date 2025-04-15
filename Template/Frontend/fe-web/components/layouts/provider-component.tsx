@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import React, { ReactNode, Suspense } from 'react';
 import { appWithI18Next } from 'ni18n';
 import { ni18nConfig } from 'ni18n.config.ts';
-import AppLoading from '@/components/layouts/loading';
+import AppLoading from '@/components/layouts/app-loading';
 import { ShowError } from '@/components/custom/show-error';
 
 interface IProps {
