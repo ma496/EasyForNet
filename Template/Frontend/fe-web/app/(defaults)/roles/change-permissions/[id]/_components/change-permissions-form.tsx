@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { getTranslation } from "@/i18n";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/layouts/loading";
+import AppLoading from "@/components/layouts/loading";
 import { Search } from "lucide-react";
 
 const toTreeNodes = (definePermissions: PermissionDefinition[], permissions: PermissionDto[]): TreeNode[] => {
@@ -151,7 +151,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
             </div>
           </div>) : (
           <div className="flex justify-center items-center h-full">
-            <Loading />
+            <AppLoading />
           </div>)
       }
     </div>

@@ -8,7 +8,7 @@ import {
   DataTablePagination,
   CheckboxCell,
   CheckboxHeader,
-} from '../../../../../components/ui/data-table';
+} from '@/components/ui/data-table';
 
 // Define the data type for our table
 interface User {
