@@ -4,7 +4,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import Link from 'next/link';
 import { toggleSidebar } from '@/store/slices/themeConfigSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import IconCaretsDown from '@/components/icon/icon-carets-down';
 import { usePathname } from 'next/navigation';
 import { getTranslation } from '@/i18n';
@@ -23,6 +23,7 @@ const Sidebar = () => {
   const [currentMenu, setCurrentMenu] = useState<string>('');
   const themeConfig = useAppSelector((state) => state.theme);
   const semidark = useAppSelector((state) => state.theme.semidark);
+  const authState = useAppSelector(state => state.auth);
 
   const toggleMenu = (value: string) => {
     setCurrentMenu((oldValue) => {
@@ -30,9 +31,7 @@ const Sidebar = () => {
     });
   };
 
-  const getFilteredNavItems = (): (NavItem | NavItemGroup)[] => {
-    const authState = useAppSelector(state => state.auth);
-
+  const getFilteredNavItems = () => {
     // Helper function to recursively filter children
     const filterNavItem = (item: NavItem): NavItem | null => {
       // Check if the item should be shown and if the user has permission
@@ -89,7 +88,8 @@ const Sidebar = () => {
     }, []);
   };
 
-  const [filteredNavItems, _] = useState<(NavItem | NavItemGroup)[]>(getFilteredNavItems());
+  // Replace the useState initialization with a useMemo that depends on auth state
+  const filteredNavItems = useMemo(() => getFilteredNavItems(), [authState]);
 
   useEffect(() => {
     // Find and set active parent menu based on current path
@@ -108,7 +108,7 @@ const Sidebar = () => {
     };
 
     findActiveParent();
-  }, [pathname]);
+  }, [pathname, filteredNavItems]);
 
   useEffect(() => {
     if (window.innerWidth < 1024 && themeConfig.sidebar) {
