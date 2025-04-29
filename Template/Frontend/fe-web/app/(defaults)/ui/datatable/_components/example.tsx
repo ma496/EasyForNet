@@ -9,8 +9,9 @@ import {
   CheckboxCell,
   CheckboxHeader,
 } from '@/components/ui/data-table';
+import Link from 'next/link';
+import { Plus, Download } from 'lucide-react';
 
-// Define the data type for our table
 interface User {
   id: number;
   firstName: string;
@@ -103,10 +104,16 @@ export function DataTableExample() {
   // Custom page size options
   const customPageSizeOptions = [5, 10, 25, 50, 100, 200];
 
+  // Example of a React Element for the title
+  const titleElement = (
+    <div className="flex items-center gap-2">
+      <span className="text-primary">👥</span>
+      <span>Users Directory</span>
+    </div>
+  );
+
   return (
     <div className="panel">
-      <h2 className="text-xl font-bold mb-5">Data Table Example</h2>
-
       <DataTableProvider
         data={userData}
         columns={columns}
@@ -114,8 +121,17 @@ export function DataTableExample() {
         pageSizeOptions={customPageSizeOptions}
         enableRowSelection={enableSelection}
       >
-        <DataTableToolbar globalFilterPlaceholder="Search...">
+        {/* Using a React Element as the title */}
+        <DataTableToolbar title={titleElement}>
           {/* Additional toolbar items could go here */}
+          <Link href="#" className="btn btn-primary flex items-center gap-2">
+            <Plus size={16} />
+            <span>Add User</span>
+          </Link>
+          <Link href="#" className="btn btn-primary flex items-center gap-2">
+            <Download size={16} />
+            <span>Export</span>
+          </Link>
         </DataTableToolbar>
 
         <DataTable />
