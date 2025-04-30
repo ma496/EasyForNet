@@ -185,7 +185,6 @@ export const UserTable = () => {
         data={userListResponse?.items || []}
         rowCount={userListResponse?.total || 0}
         columns={columns}
-        initialPageSize={10}
         enableRowSelection={false}
         sorting={sorting}
         setSorting={setSorting}

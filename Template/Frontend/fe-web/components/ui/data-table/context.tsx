@@ -47,7 +47,6 @@ interface DataTableProviderProps<TData> {
   data: TData[];
   rowCount?: number;
   columns: ColumnDef<TData, any>[];
-  initialPageSize?: number;
   pageSizeOptions?: number[];
   enableRowSelection?: boolean;
   sorting: SortingState;
