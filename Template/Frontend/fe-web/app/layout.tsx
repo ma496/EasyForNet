@@ -11,8 +11,8 @@ import '../styles/tailwind.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Easy For Net - Full Stack Web Application',
-    default: 'Easy For Net - Full Stack Web Application',
+    template: '%s | Easy For Net',
+    default: 'Easy For Net',
   },
 };
 const nunito = Nunito({

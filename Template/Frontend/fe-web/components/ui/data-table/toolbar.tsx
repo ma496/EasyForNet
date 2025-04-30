@@ -1,6 +1,8 @@
-import { useState, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import IconSearch from '@/components/icon/icon-search';
 import { cn } from '@/lib/utils';
+import { getTranslation } from '@/i18n';
+import { useDataTable } from './context';
 
 interface DataTableToolbarProps<TData> {
   searchPlaceholder?: string;
@@ -8,17 +10,13 @@ interface DataTableToolbarProps<TData> {
   children?: React.ReactNode;
 }
 
-export function DataTableToolbar<TData>({
-  searchPlaceholder = 'Search...',
-  title,
-  children
-}: DataTableToolbarProps<TData>) {
-  const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchValue(value);
-  };
+export function DataTableToolbar<TData>({
+  title,
+  children,
+}: DataTableToolbarProps<TData>) {
+  const { t } = getTranslation()
+  const { table } = useDataTable<TData>()
 
   return (
     <div className="flex flex-col gap-4 mb-5 sm:flex-row sm:items-center sm:justify-between">
@@ -42,9 +40,9 @@ export function DataTableToolbar<TData>({
           <input
             type="text"
             className="form-input w-full sm:w-auto max-w-xs rounded-md border-white-light py-2 pl-9 pr-3 text-sm font-semibold text-black placeholder:text-gray-400 focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:placeholder:text-gray-500 dark:focus:border-primary"
-            placeholder={searchPlaceholder}
-            value={searchValue}
-            onChange={handleSearch}
+            placeholder={t('table_search_placeholder')}
+            value={table.getState().globalFilter}
+            onChange={e => table.setGlobalFilter(String(e.target.value))}
           />
         </div>
 

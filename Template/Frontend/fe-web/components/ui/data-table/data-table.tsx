@@ -3,6 +3,8 @@ import {
 } from '@tanstack/react-table';
 import { useDataTable } from './context';
 import { SortIcon } from './sort-icon';
+import { Loading } from '../loading';
+import { getTranslation } from '@/i18n';
 
 interface DataTableProps<TData> {
   className?: string;
@@ -11,8 +13,10 @@ interface DataTableProps<TData> {
 export function DataTable<TData>({ className = '' }: DataTableProps<TData>) {
   const {
     columns,
-    table
+    table,
+    isFetching
   } = useDataTable<TData>();
+  const { t } = getTranslation()
 
   return (
     <div className="relative overflow-x-auto">
@@ -42,7 +46,13 @@ export function DataTable<TData>({ className = '' }: DataTableProps<TData>) {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.length > 0 ? (
+          {isFetching ? (
+            <tr>
+              <td colSpan={columns.length} className="text-center py-6">
+                <Loading size='lg' />
+              </td>
+            </tr>
+          ) : table.getRowModel().rows.length > 0 ? (
             table.getRowModel().rows.map(row => (
               <tr
                 key={row.id}
@@ -59,7 +69,7 @@ export function DataTable<TData>({ className = '' }: DataTableProps<TData>) {
           ) : (
             <tr>
               <td colSpan={columns.length} className="text-center py-6">
-                No results found.
+                {t('table_no_records_found')}
               </td>
             </tr>
           )}

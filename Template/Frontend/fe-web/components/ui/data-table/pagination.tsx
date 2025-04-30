@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDataTable } from './context';
-
+import { getTranslation } from '@/i18n';
 interface PaginationProps {
   className?: string;
   siblingCount?: number;
@@ -15,6 +15,7 @@ export function DataTablePagination<TData>({
     rowCount,
     table
   } = useDataTable<TData>();
+  const { t } = getTranslation()
 
   const pageNumbers = () => {
     const currentPage = table.getState().pagination.pageIndex;
@@ -131,7 +132,7 @@ export function DataTablePagination<TData>({
     <div className={`flex flex-wrap items-center justify-between gap-4 mt-5 ${className}`}>
       <div className="flex flex-wrap items-center">
         <div className="flex items-center">
-          <span className="whitespace-nowrap">Showing {from} to {to} of {rowCount} entries</span>
+          <span className="whitespace-nowrap">{t('table_pagination_showing_entries', { from, to, totalRecords: rowCount })}</span>
         </div>
         <div className="ltr:ml-3 rtl:mr-3 flex items-center">
           <select
@@ -158,7 +159,7 @@ export function DataTablePagination<TData>({
             }`}
           title="First Page"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11 17L6 12L11 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M18 17L13 12L18 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -199,7 +200,7 @@ export function DataTablePagination<TData>({
             }`}
           title="Last Page"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M13 7L18 12L13 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M6 7L11 12L6 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

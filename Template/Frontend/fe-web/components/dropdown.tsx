@@ -1,8 +1,18 @@
 'use client';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
+import { Placement } from '@popperjs/core';
 
-const Dropdown = (props: any, forwardedRef: any) => {
+interface DropdownProps {
+  button: React.ReactNode;
+  children: React.ReactNode;
+  placement?: Placement;
+  offset?: any;
+  btnClassName?: string;
+  isDisabled?: boolean;
+}
+
+const Dropdown = (props: DropdownProps, forwardedRef: any) => {
   const [visibility, setVisibility] = useState<any>(false);
 
   const referenceRef = useRef<any>();
@@ -43,7 +53,13 @@ const Dropdown = (props: any, forwardedRef: any) => {
 
   return (
     <>
-      <button ref={referenceRef} type="button" className={props.btnClassName} onClick={() => setVisibility(!visibility)}>
+      <button
+        ref={referenceRef}
+        type="button"
+        className={props.btnClassName}
+        onClick={() => setVisibility(!visibility)}
+        disabled={props.isDisabled}
+      >
         {props.button}
       </button>
 

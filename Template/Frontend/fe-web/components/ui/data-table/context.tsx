@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 import {
   ColumnDef,
   SortingState,
@@ -14,12 +14,14 @@ import {
 
 interface DataTableContextProps<TData> {
   data: TData[];
-  rowCount: number | undefined;
+  rowCount?: number;
   columns: ColumnDef<TData, any>[];
   sorting: SortingState;
   setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
   pagination: PaginationState;
   setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
   columnVisibility: VisibilityState;
   setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>;
   pageSizeOptions: number[];
@@ -27,6 +29,7 @@ interface DataTableContextProps<TData> {
   setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
   enableRowSelection: boolean;
   table: Table<TData>;
+  isFetching?: boolean;
 }
 
 const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined);
@@ -42,7 +45,7 @@ export function useDataTable<TData>() {
 interface DataTableProviderProps<TData> {
   children: ReactNode;
   data: TData[];
-  rowCount: number | undefined;
+  rowCount?: number;
   columns: ColumnDef<TData, any>[];
   initialPageSize?: number;
   pageSizeOptions?: number[];
@@ -51,6 +54,9 @@ interface DataTableProviderProps<TData> {
   setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
   pagination: PaginationState;
   setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+  isFetching?: boolean;
 }
 
 export function DataTableProvider<TData>({
@@ -64,6 +70,9 @@ export function DataTableProvider<TData>({
   setSorting,
   pagination,
   setPagination,
+  globalFilter,
+  setGlobalFilter,
+  isFetching,
 }: DataTableProviderProps<TData>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -76,19 +85,25 @@ export function DataTableProvider<TData>({
       pagination,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
     enableRowSelection,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
+    onGlobalFilterChange: setGlobalFilter,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: true,
     manualSorting: true,
+    manualPagination: true,
     manualFiltering: true,
   });
+
+  useEffect(() => {
+    table.firstPage()
+  }, [pagination.pageSize, globalFilter])
 
   const value = useMemo(
     () => ({
@@ -99,6 +114,8 @@ export function DataTableProvider<TData>({
       setSorting,
       pagination,
       setPagination,
+      globalFilter,
+      setGlobalFilter,
       columnVisibility,
       setColumnVisibility,
       pageSizeOptions,
@@ -106,6 +123,7 @@ export function DataTableProvider<TData>({
       setRowSelection,
       enableRowSelection,
       table,
+      isFetching,
     }),
     [
       data,
@@ -113,11 +131,13 @@ export function DataTableProvider<TData>({
       columns,
       sorting,
       pagination,
+      globalFilter,
       columnVisibility,
       pageSizeOptions,
       rowSelection,
       enableRowSelection,
       table,
+      isFetching,
     ]
   );
 
