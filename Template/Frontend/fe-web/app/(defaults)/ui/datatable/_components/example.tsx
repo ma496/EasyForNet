@@ -1,6 +1,6 @@
 'use client';
 
-import { createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, PaginationState, SortingState } from '@tanstack/react-table';
 import {
   DataTableProvider,
   DataTable,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/data-table';
 import Link from 'next/link';
 import { Plus, Download } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface User {
   id: number;
@@ -58,7 +59,7 @@ export function DataTableExample() {
   const columnHelper = createColumnHelper<User>();
 
   // Define columns - conditionally include checkbox column if selection is enabled
-  const columns = [
+  const columns: ColumnDef<User, any>[] = [
     // Only include checkbox column if selection is enabled
     ...(enableSelection ? [
       columnHelper.display({
@@ -77,27 +78,22 @@ export function DataTableExample() {
     columnHelper.accessor('id', {
       header: 'Id',
       cell: info => info.getValue(),
-      sortingFn: 'basic',
     }),
     columnHelper.accessor('firstName', {
       header: 'First name',
       cell: info => info.getValue(),
-      sortingFn: 'basic',
     }),
     columnHelper.accessor('lastName', {
       header: 'Last name',
       cell: info => info.getValue(),
-      sortingFn: 'basic',
     }),
     columnHelper.accessor('email', {
       header: 'Email',
       cell: info => info.getValue(),
-      sortingFn: 'basic',
     }),
     columnHelper.accessor('phone', {
       header: 'Phone No.',
       cell: info => info.getValue(),
-      sortingFn: 'basic',
     }),
   ];
 
@@ -112,14 +108,37 @@ export function DataTableExample() {
     </div>
   );
 
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const [filterData, setFilterData] = useState<User[]>([]);
+
+  // do pagination
+  useEffect(() => {
+    const paginatedData = userData.slice(
+      pagination.pageIndex * pagination.pageSize,
+      (pagination.pageIndex + 1) * pagination.pageSize
+    );
+    setFilterData(paginatedData);
+    console.log(`sorting, pagination`)
+  }, [sorting, pagination]);
+
+
   return (
     <div className="panel">
       <DataTableProvider
-        data={userData}
-        columns={columns}
+        data={filterData}
+        rowCount={userData.length}
+        columns={columns as ColumnDef<unknown, any>[]}
         initialPageSize={10}
         pageSizeOptions={customPageSizeOptions}
         enableRowSelection={enableSelection}
+        sorting={sorting}
+        setSorting={setSorting}
+        pagination={pagination}
+        setPagination={setPagination}
       >
         {/* Using a React Element as the title */}
         <DataTableToolbar title={titleElement}>

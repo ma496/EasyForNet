@@ -1,5 +1,4 @@
-import { useState, useEffect, ReactNode } from 'react';
-import { useDataTable } from './context';
+import { useState, ReactNode } from 'react';
 import IconSearch from '@/components/icon/icon-search';
 import { cn } from '@/lib/utils';
 
@@ -14,38 +13,11 @@ export function DataTableToolbar<TData>({
   title,
   children
 }: DataTableToolbarProps<TData>) {
-  const { columnFilters, setColumnFilters } = useDataTable<TData>();
   const [searchValue, setSearchValue] = useState('');
 
-  // Initialize search value from existing filter
-  useEffect(() => {
-    const globalFilter = columnFilters.find(filter => filter.id === 'global');
-    if (globalFilter) {
-      setSearchValue(globalFilter.value as string);
-    }
-  }, []);
-
-  const handleGlobalFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
-
-    setColumnFilters(prev => {
-      // Remove existing global filter if any
-      const filtered = prev.filter(filter => filter.id !== 'global');
-
-      // Add new global filter if search term exists
-      if (value) {
-        return [
-          ...filtered,
-          {
-            id: 'global',
-            value: value,
-          },
-        ];
-      }
-
-      return filtered;
-    });
   };
 
   return (
@@ -72,7 +44,7 @@ export function DataTableToolbar<TData>({
             className="form-input w-full sm:w-auto max-w-xs rounded-md border-white-light py-2 pl-9 pr-3 text-sm font-semibold text-black placeholder:text-gray-400 focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:placeholder:text-gray-500 dark:focus:border-primary"
             placeholder={searchPlaceholder}
             value={searchValue}
-            onChange={handleGlobalFilter}
+            onChange={handleSearch}
           />
         </div>
 
