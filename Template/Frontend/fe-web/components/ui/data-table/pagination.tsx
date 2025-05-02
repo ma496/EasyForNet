@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDataTable } from './context';
 import { getTranslation } from '@/i18n';
+import ScrollBar from 'react-perfect-scrollbar';
 interface PaginationProps {
   className?: string;
   siblingCount?: number;
@@ -129,14 +130,14 @@ export function DataTablePagination<TData>({
   const to = rowCount === 0 ? 0 : Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, rowCount || 0);
 
   return (
-    <div className={`flex flex-wrap items-center justify-between gap-4 mt-5 ${className}`}>
-      <div className="flex flex-wrap items-center">
+    <div className={`flex flex-wrap items-center gap-4 mt-5 ${className}`}>
+      <div className="flex items-center mx-auto ltr:sm:ml-0 rtl:sm:mr-0">
         <div className="flex items-center">
           <span className="whitespace-nowrap">{t('table_pagination_showing_entries', { from, to, totalRecords: rowCount })}</span>
         </div>
         <div className="ltr:ml-3 rtl:mr-3 flex items-center">
           <select
-            className="form-select rounded-md border-white-light py-1 ltr:pl-2 rtl:pr-2 text-sm font-semibold text-black dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark"
+            className="min-w-16 form-select rounded-md border-white-light py-1 ltr:pl-2 rtl:pr-2 text-sm font-semibold text-black dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark"
             value={table.getState().pagination.pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}
           >
@@ -149,63 +150,65 @@ export function DataTablePagination<TData>({
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
-          className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex === 0
-            ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
-            }`}
-          title="First Page"
-        >
-          <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 17L6 12L11 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M18 17L13 12L18 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
+      <ScrollBar className='mx-auto ltr:sm:mr-0 rtl:sm:ml-0'>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+            className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex === 0
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
+              }`}
+            title="First Page"
+          >
+            <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 17L6 12L11 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M18 17L13 12L18 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
 
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex === 0
-            ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
-            }`}
-          title="Previous Page"
-        >
-          &lt;
-        </button>
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex === 0
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
+              }`}
+            title="Previous Page"
+          >
+            &lt;
+          </button>
 
-        {pageNumbers()}
+          {pageNumbers()}
 
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex >= table.getPageCount() - 1
-            ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
-            }`}
-          title="Next Page"
-        >
-          &gt;
-        </button>
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex >= table.getPageCount() - 1
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
+              }`}
+            title="Next Page"
+          >
+            &gt;
+          </button>
 
-        <button
-          onClick={() => table.lastPage()}
-          disabled={!table.getCanNextPage()}
-          className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex >= table.getPageCount() - 1
-            ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
-            }`}
-          title="Last Page"
-        >
-          <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 7L18 12L13 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M6 7L11 12L6 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
+          <button
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+            className={`flex h-9 w-9 items-center justify-center rounded-md border border-white-light bg-white p-0 font-semibold text-dark transition duration-300 dark:border-[#191e3a] dark:bg-black dark:text-white-light ${table.getState().pagination.pageIndex >= table.getPageCount() - 1
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-primary hover:text-white dark:hover:bg-primary'
+              }`}
+            title="Last Page"
+          >
+            <svg className="rtl:scale-x-[-1]" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 7L18 12L13 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 7L11 12L6 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </ScrollBar>
     </div>
   );
 }

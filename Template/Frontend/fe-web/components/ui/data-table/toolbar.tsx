@@ -29,7 +29,7 @@ export function DataTableToolbar<TData>({
 
       {/* Right side controls - stack on mobile, row on tablet+ */}
       <div className={cn(
-        "flex flex-col sm:flex-row sm:items-center gap-4 w-full",
+        "flex flex-wrap items-center justify-around sm:justify-between gap-4 w-full",
         title ? "sm:justify-end sm:w-auto" : "sm:justify-between"
       )}>
         {/* Search with icon */}
