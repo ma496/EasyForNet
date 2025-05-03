@@ -6,7 +6,7 @@ import { useForgetPasswordMutation } from '@/store/api/account/account-api';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { FormInput } from '@/components/ui/form-input';
 import IconMail from '@/components/icon/icon-mail';
 
 const createValidationSchema = (t: (key: string) => string) => {
@@ -50,7 +50,7 @@ export const ForgetPasswordForm = () => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <Input
+            <FormInput
               name='email'
               type='email'
               label={t('label_email')}

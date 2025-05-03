@@ -4,7 +4,7 @@ import { useField } from "formik";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from 'class-variance-authority';
 
-const checkboxVariants = cva(
+const formCheckboxVariants = cva(
   "form-checkbox cursor-pointer rounded",
   {
     variants: {
@@ -34,14 +34,14 @@ type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>
 
 interface FormCheckboxProps
   extends InputAttributes,
-  VariantProps<typeof checkboxVariants> {
+  VariantProps<typeof formCheckboxVariants> {
   label?: string;
   name: string;
   showValidation?: boolean;
   className?: string;
 }
 
-export const Checkbox = ({
+export const FormCheckbox = ({
   label,
   name,
   showValidation = true,
@@ -66,7 +66,7 @@ export const Checkbox = ({
           type="checkbox"
           id={name}
           className={cn('mb-0',
-            checkboxVariants({ variant, size }),
+            formCheckboxVariants({ variant, size }),
             hasError && "border-danger focus:ring-danger"
           )}
         />
@@ -91,4 +91,4 @@ export const Checkbox = ({
   );
 };
 
-export { checkboxVariants };
+export { formCheckboxVariants };

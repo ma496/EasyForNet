@@ -6,13 +6,13 @@ import React from 'react';
 import * as Yup from 'yup'
 import { getTranslation } from '@/i18n';
 import { Formik, Form } from 'formik';
-import { Input } from '@/components/ui/input';
+import { FormInput } from '@/components/ui/form-input';
 import { useLoginMutation } from '@/store/api/account/account-api';
 import { useLazyGetUserInfoQuery } from '@/store/api/account/account-api';
 import { useAppDispatch } from '@/store/hooks';
 import { login, setUserInfo } from '@/store/slices/authSlice';
 import { Button } from '@/components/ui/button';
-import { PasswordInput } from '@/components/ui/password-input';
+import { FormPasswordInput } from '@/components/ui/form-password-input';
 import Link from 'next/link';
 
 const SigninForm = () => {
@@ -56,13 +56,13 @@ const SigninForm = () => {
       onSubmit={submitForm}>
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form className="space-y-5 dark:text-white">
-          <Input
+          <FormInput
             label={t('label_username')}
             name="username"
             placeholder={t('placeholder_username')}
             icon={<IconMail fill={true} />}
           />
-          <PasswordInput
+          <FormPasswordInput
             label={t('label_password')}
             name="password"
             placeholder={t('placeholder_password')}

@@ -1,5 +1,3 @@
-@layer mantine, mantine-datatable;
-
 /* Animate css */
 @import './animate.css';
 /* tippy css */
@@ -10,9 +8,6 @@
 
 /* Elements - Progressbar */
 @import './progressbar.css';
-
-/* Data tables css */
-@import './datatables.css';
 
 /* scrumboard */
 @import './scrumboard.css';
@@ -40,9 +35,6 @@
 
 /* form element*/
 @import './form-elements.css';
-
-/* Select2*/
-@import './select2.css';
 
 @tailwind base;
 
@@ -377,11 +369,11 @@
   }
   
   .badge-outline-primary {
-    @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary dark:hover:text-white-light;
+    @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary-dark-light dark:hover:text-white-light;
   }
   
   .badge-outline-secondary {
-    @apply border-secondary text-secondary hover:bg-secondary-light dark:hover:bg-secondary dark:hover:text-white-light;
+    @apply border-secondary text-secondary hover:bg-secondary-light dark:hover:bg-secondary-dark-light dark:hover:text-white-light;
   }
   
   .badge-outline-success {

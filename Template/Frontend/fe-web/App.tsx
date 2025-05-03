@@ -2,7 +2,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '@/store/slices/themeConfigSlice';
-import Loading from '@/components/layouts/loading';
+import AppLoading from '@/components/layouts/app-loading';
 import { getTranslation } from '@/i18n';
 import { setUserInfo } from './store/slices/authSlice';
 import { useLazyGetUserInfoQuery } from './store/api/account/account-api';
@@ -54,7 +54,7 @@ function App({ children }: PropsWithChildren) {
       className={`${(themeConfig.sidebar && 'toggle-sidebar') || ''} ${themeConfig.menu} ${themeConfig.layout} ${themeConfig.rtlClass
         } main-section relative font-nunito text-sm font-normal antialiased`}
     >
-      {isLoading || isLoadingUserInfo ? <Loading /> : children}
+      {isLoading || isLoadingUserInfo ? <AppLoading /> : children}
     </div>
   );
 }

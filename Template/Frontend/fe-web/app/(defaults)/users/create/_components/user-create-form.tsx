@@ -7,15 +7,15 @@ import { useRoleListQuery } from '@/store/api/roles/roles-api';
 import { RoleListRequest } from '@/store/api/roles/dto/role-list-request';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
-import { PasswordInput } from '@/components/ui/password-input';
+import { FormPasswordInput } from '@/components/ui/form-password-input';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { FormInput } from '@/components/ui/form-input';
 import IconLockDots from '@/components/icon/icon-lock-dots';
 import IconMail from '@/components/icon/icon-mail';
 import IconUser from '@/components/icon/icon-user';
-import { Checkbox } from '@/components/ui/checkbox';
-import Select, { MultiValue } from 'react-select';
+import { FormCheckbox } from '@/components/ui/form-checkbox';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
+import { FormMultiSelect } from '@/components/ui/form-multi-select';
 
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
@@ -100,65 +100,51 @@ export const UserCreateForm = () => {
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <Input
+            <FormInput
               name='username'
               label={t('label_username')}
               placeholder={t('placeholder_username')}
               icon={<IconUser />}
             />
-            <Input
+            <FormInput
               name='email'
               type='email'
               label={t('label_email')}
               placeholder={t('placeholder_email')}
               icon={<IconMail />}
             />
-            <Input
+            <FormInput
               name='firstName'
               label={t('label_firstName')}
               placeholder={t('placeholder_firstName')}
               icon={<IconUser />}
             />
-            <Input
+            <FormInput
               name='lastName'
               label={t('label_lastName')}
               placeholder={t('placeholder_lastName')}
               icon={<IconUser />}
             />
-            <PasswordInput
+            <FormPasswordInput
               name='password'
               label={t('label_password')}
               placeholder={t('placeholder_password')}
               icon={<IconLockDots fill={true} />}
             />
-            <PasswordInput
+            <FormPasswordInput
               name='confirmPassword'
               label={t('label_confirmPassword')}
               placeholder={t('placeholder_confirmPassword')}
               icon={<IconLockDots fill={true} />}
             />
-            <div className="flex flex-col gap-1 custom-select">
-              <label className="text-sm font-medium">{t('label_roles')}</label>
-              <Select<{ value: string; label: string }, true>
-                placeholder={t('placeholder_roles')}
-                isMulti
-                isLoading={isLoadingRoles}
-                options={roleOptions}
-                value={roleOptions.filter(option =>
-                  Array.isArray(values.roles) && values.roles.includes(option.value)
-                )}
-                onChange={(newValue: MultiValue<{ value: string; label: string }>) => {
-                  setFieldValue(
-                    'roles',
-                    newValue ? newValue.map(option => option.value) : []
-                  );
-                }}
-              />
-              {touched.roles && errors.roles && (
-                <span className="text-danger text-xs mt-1">{errors.roles as string}</span>
-              )}
-            </div>
-            <Checkbox
+            <FormMultiSelect
+              name='roles'
+              label={t('label_roles')}
+              placeholder={t('placeholder_roles')}
+              options={roleOptions}
+              size='sm'
+            />
+            <FormCheckbox
               name='isActive'
               label={t('label_isActive')}
             />

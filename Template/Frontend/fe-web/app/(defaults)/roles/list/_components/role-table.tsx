@@ -1,10 +1,14 @@
 'use client';
-import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState } from 'react';
+import { createColumnHelper, SortingState, PaginationState } from '@tanstack/react-table';
+import { DataTableProvider } from '@/components/ui/data-table/context';
+import { DataTableToolbar } from '@/components/ui/data-table/toolbar';
+import { DataTablePagination } from '@/components/ui/data-table/pagination';
+import { DataTable } from '@/components/ui/data-table';
+import { useState } from 'react';
 import { useRoleListQuery, useLazyRoleListQuery, useRoleDeleteMutation } from '@/store/api/roles/roles-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
-import { Search, Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react';
+import { Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
 import Dropdown from '@/components/dropdown';
@@ -15,24 +19,22 @@ import { Allow } from '@/allow';
 import { isAllowed } from '@/store/slices/authSlice';
 
 export const RoleTable = () => {
-  const [page, setPage] = useState(1);
-  const PAGE_SIZES = [10, 20, 30, 50, 100];
-  const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-  const [search, setSearch] = useState('');
-  const [isExporting, setIsExporting] = useState(false);
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<RoleListDto>>({
-    columnAccessor: '',
-    direction: 'asc',
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
   });
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
   const { t } = getTranslation();
   const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
   const { data: roleListResponse, isFetching } = useRoleListQuery({
-    page,
-    pageSize,
-    sortField: sortStatus.columnAccessor,
-    sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
-    search: search || undefined,
+    page: pagination.pageIndex + 1,
+    pageSize: pagination.pageSize,
+    sortField: sorting[0]?.id,
+    sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
+    search: globalFilter || undefined,
   });
 
   const [fetchRoles] = useLazyRoleListQuery();
@@ -44,10 +46,6 @@ export const RoleTable = () => {
   const canDelete = isAllowed(authState, [Allow.Role_Delete]);
   const canChangePermissions = isAllowed(authState, [Allow.Role_ChangePermissions]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [pageSize, search]);
-
   type ExportFormat = 'excel' | 'csv';
 
   const exportData = async (format: ExportFormat, all: boolean) => {
@@ -56,11 +54,11 @@ export const RoleTable = () => {
       let dataToExport;
       if (all) {
         const response = await fetchRoles({
-          page,
-          pageSize,
-          sortField: sortStatus.columnAccessor,
-          sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
-          search: search || undefined,
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          sortField: sorting[0]?.id,
+          sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
+          search: globalFilter || undefined,
           all: true,
         }).unwrap();
         dataToExport = response.items;
@@ -123,21 +121,72 @@ export const RoleTable = () => {
     }
   };
 
+  const columnHelper = createColumnHelper<RoleListDto>();
+  const columns = [
+    columnHelper.accessor('name', {
+      header: t('table_roles_name'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('description', {
+      header: t('table_roles_description'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('users', {
+      header: t('table_roles_userCount'),
+      cell: info => info.getValue().length.toString(),
+      enableSorting: false,
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: t('table_actions'),
+      cell: info => (
+        <div className="flex items-center gap-2 justify-end">
+          {canUpdate && (
+            <Link
+              href={`/roles/update/${info.row.original.id}`}
+              className="btn btn-secondary btn-sm"
+            >
+              <Pencil className="h-3 w-3" />
+            </Link>
+          )}
+          {canDelete && (
+            <button
+              type="button"
+              className="btn btn-danger btn-sm"
+              onClick={() => handleDelete(info.row.original.id)}
+            >
+              <Trash2 className="h-3 w-3" />
+            </button>
+          )}
+          {canChangePermissions && (
+            <Link
+              href={`/roles/change-permissions/${info.row.original.id}`}
+              className="btn btn-primary btn-sm"
+            >
+              <Shield className="h-3 w-3" />
+            </Link>
+          )}
+        </div>
+      ),
+    }),
+  ];
+
   return (
     <div className="panel mt-6 min-w-[300px] sm:min-w-[600px] md:min-w-[750px] lg:min-w-[850px]">
-      <div className="mb-5 flex flex-col gap-5 justify-between sm:flex-row sm:items-center">
-        <h5 className="text-lg font-semibold dark:text-white-light">{t('page_roles_title')}</h5>
-        <div className="flex items-center justify-around flex-wrap gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              className="form-input w-auto ltr:pl-9 rtl:pr-9"
-              placeholder={t('search...')}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
-          </div>
+      <DataTableProvider
+        data={roleListResponse?.items || []}
+        rowCount={roleListResponse?.total || 0}
+        columns={columns}
+        enableRowSelection={false}
+        sorting={sorting}
+        setSorting={setSorting}
+        pagination={pagination}
+        setPagination={setPagination}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        isFetching={isFetching}
+      >
+        <DataTableToolbar title={t('page_roles_title')}>
           {canCreate && (
             <Link href="/roles/create" className="btn btn-primary flex items-center gap-2">
               <Plus size={16} />
@@ -148,6 +197,7 @@ export const RoleTable = () => {
             <Dropdown
               placement={`${isRTL ? 'bottom-start' : 'bottom-end'}`}
               btnClassName="btn btn-primary dropdown-toggle"
+              isDisabled={isExporting}
               button={
                 <div className='flex items-center gap-2'>
                   {isExporting ? <Loader2 className='animate-spin' size={16} /> : <Download size={16} />}
@@ -197,72 +247,10 @@ export const RoleTable = () => {
               </ul>
             </Dropdown>
           </div>
-        </div>
-      </div>
-      <div className="datatables">
-        <DataTable<RoleListDto>
-          className="table-hover whitespace-nowrap"
-          records={roleListResponse?.items || []}
-          columns={[
-            { accessor: 'name', sortable: true, title: t('table_roles_name') },
-            { accessor: 'description', sortable: true, title: t('table_roles_description') },
-            {
-              accessor: 'users',
-              title: t('table_roles_userCount'),
-              render: (record) => record.users.length.toString(),
-              sortable: false
-            },
-            {
-              accessor: 'actions',
-              title: <div className='flex items-center justify-end ltr:mr-[73px] rtl:ml-[73px]'>{t('table_actions')}</div>,
-              sortable: false,
-              render: (record) => (
-                <div className="flex items-center gap-2 justify-end">
-                  {canUpdate && (
-                    <Link
-                      href={`/roles/update/${record.id}`}
-                      className="btn btn-secondary btn-sm"
-                    >
-                      <Pencil className="h-3 w-3" />
-                    </Link>
-                  )}
-                  {canDelete && (
-                    <button
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(record.id)}
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </button>
-                  )}
-                  {canChangePermissions && (
-                    <Link
-                      href={`/roles/change-permissions/${record.id}`}
-                      className="btn btn-primary btn-sm"
-                    >
-                      <Shield className="h-3 w-3" />
-                    </Link>
-                  )}
-                </div>
-              ),
-            },
-          ]}
-          highlightOnHover
-          totalRecords={roleListResponse?.total || 0}
-          recordsPerPage={pageSize}
-          page={page}
-          onPageChange={(p) => setPage(p)}
-          recordsPerPageOptions={PAGE_SIZES}
-          onRecordsPerPageChange={setPageSize}
-          sortStatus={sortStatus}
-          onSortStatusChange={setSortStatus}
-          minHeight={200}
-          paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
-          fetching={isFetching || isExporting}
-          noRecordsText={t('table_no_records_found')}
-          recordsPerPageLabel={''}
-        />
-      </div>
+        </DataTableToolbar>
+        <DataTable />
+        <DataTablePagination siblingCount={1} />
+      </DataTableProvider>
     </div>
   );
 };

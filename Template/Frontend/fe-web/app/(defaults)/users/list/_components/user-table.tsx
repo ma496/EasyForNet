@@ -1,10 +1,9 @@
 'use client';
-import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/users/users-api';
 import { SortDirection } from '@/store/api/base/sort-direction';
 import { UserListDto } from '@/store/api/users/dto/user-list-response';
-import { Search, Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react';
+import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react';
 import { getTranslation } from '@/i18n';
 import * as XLSX from 'xlsx';
 import Dropdown from '@/components/dropdown';
@@ -13,27 +12,30 @@ import Swal from 'sweetalert2';
 import Link from 'next/link';
 import { isAllowed } from '@/store/slices/authSlice';
 import { Allow } from '@/allow';
+import { createColumnHelper, SortingState, PaginationState } from '@tanstack/react-table';
+import { DataTableProvider } from '@/components/ui/data-table/context';
+import { DataTableToolbar } from '@/components/ui/data-table/toolbar';
+import { DataTablePagination } from '@/components/ui/data-table/pagination';
+import { DataTable } from '@/components/ui/data-table';
 
 export const UserTable = () => {
-  const [page, setPage] = useState(1);
-  const PAGE_SIZES = [10, 20, 30, 50, 100];
-  const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-  const [search, setSearch] = useState('');
-  const [isExporting, setIsExporting] = useState(false);
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<UserListDto>>({
-    columnAccessor: '',
-    direction: 'asc',
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
   });
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
   const { t } = getTranslation();
 
   const isRTL = useAppSelector(state => state.theme.rtlClass) === 'rtl';
 
   const { data: userListResponse, isFetching } = useUserListQuery({
-    page,
-    pageSize,
-    sortField: sortStatus.columnAccessor,
-    sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
-    search: search || undefined,
+    page: pagination.pageIndex + 1,
+    pageSize: pagination.pageSize,
+    sortField: sorting[0]?.id,
+    sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
+    search: globalFilter,
   });
 
   const [fetchUsers] = useLazyUserListQuery();
@@ -44,10 +46,6 @@ export const UserTable = () => {
   const canUpdate = isAllowed(authState, [Allow.User_Update]);
   const canDelete = isAllowed(authState, [Allow.User_Delete]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [pageSize, search]);
-
   type ExportFormat = 'excel' | 'csv';
 
   const exportData = async (format: ExportFormat, all: boolean) => {
@@ -56,11 +54,11 @@ export const UserTable = () => {
       let dataToExport;
       if (all) {
         const response = await fetchUsers({
-          page,
-          pageSize,
-          sortField: sortStatus.columnAccessor,
-          sortDirection: sortStatus.direction === 'asc' ? SortDirection.Asc : SortDirection.Desc,
-          search: search || undefined,
+          page: pagination.pageIndex + 1,
+          pageSize: pagination.pageSize,
+          sortField: sorting[0]?.id,
+          sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
+          search: globalFilter,
           all: true,
         }).unwrap();
         dataToExport = response.items;
@@ -125,21 +123,78 @@ export const UserTable = () => {
     }
   };
 
+  const columnHelper = createColumnHelper<UserListDto>();
+  const columns = [
+    columnHelper.accessor('username', {
+      header: t('table_users_userName'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('email', {
+      header: t('table_users_email'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('firstName', {
+      header: t('table_users_firstName'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('lastName', {
+      header: t('table_users_lastName'),
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('roles', {
+      header: t('table_users_roles'),
+      cell: info => info.getValue().map(role => role.name).join(', '),
+      enableSorting: false,
+    }),
+    columnHelper.accessor('isActive', {
+      header: t('table_users_isActive'),
+      cell: info => info.getValue()
+        ? <span className='bg-green-500 text-white px-2 py-1 rounded-md text-xs'>Yes</span>
+        : <span className='bg-red-500 text-white px-2 py-1 rounded-md text-xs'>No</span>,
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: t('table_actions'),
+      cell: info => (
+        <div className="flex items-center gap-2">
+          {canUpdate && (
+            <Link
+              href={`/users/update/${info.row.original.id}`}
+              className="btn btn-secondary btn-sm"
+            >
+              <Pencil className="h-3 w-3" />
+            </Link>
+          )}
+          {canDelete && (
+            <button
+              type="button"
+              className="btn btn-danger btn-sm"
+              onClick={() => handleDelete(info.row.original.id)}
+            >
+              <Trash2 className="h-3 w-3" />
+            </button>
+          )}
+        </div>
+      ),
+    }),
+  ];
+
   return (
     <div className="panel mt-6">
-      <div className="mb-5 flex flex-col gap-5 justify-between sm:flex-row sm:items-center">
-        <h5 className="text-lg font-semibold dark:text-white-light">{t('page_users_title')}</h5>
-        <div className="flex items-center justify-around flex-wrap gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              className="form-input w-auto ltr:pl-9 rtl:pr-9"
-              placeholder={t('search...')}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 dark:text-gray-600 ltr:left-2 rtl:right-2" />
-          </div>
+      <DataTableProvider
+        data={userListResponse?.items || []}
+        rowCount={userListResponse?.total || 0}
+        columns={columns}
+        enableRowSelection={false}
+        sorting={sorting}
+        setSorting={setSorting}
+        pagination={pagination}
+        setPagination={setPagination}
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        isFetching={isFetching}
+      >
+        <DataTableToolbar title={t('page_users_title')}>
           {canCreate && (
             <Link href="/users/create" className="btn btn-primary flex items-center gap-2">
               <Plus size={16} />
@@ -150,6 +205,7 @@ export const UserTable = () => {
             <Dropdown
               placement={`${isRTL ? 'bottom-start' : 'bottom-end'}`}
               btnClassName="btn btn-primary dropdown-toggle"
+              isDisabled={isExporting}
               button={
                 <div className='flex items-center gap-2'>
                   {isExporting ? <Loader2 className='animate-spin' size={16} /> : <Download size={16} />}
@@ -199,74 +255,12 @@ export const UserTable = () => {
               </ul>
             </Dropdown>
           </div>
-        </div>
-      </div>
-      <div className="datatables">
-        <DataTable<UserListDto>
-          className="table-hover whitespace-nowrap"
-          records={userListResponse?.items || []}
-          columns={[
-            { accessor: 'username', sortable: true, title: t('table_users_userName') },
-            { accessor: 'email', sortable: true, title: t('table_users_email') },
-            { accessor: 'firstName', sortable: true, title: t('table_users_firstName') },
-            { accessor: 'lastName', sortable: true, title: t('table_users_lastName') },
-            {
-              accessor: 'roles',
-              title: t('table_users_roles'),
-              render: (record) => record.roles.map(role => role.name).join(', '),
-              sortable: false
-            },
-            {
-              accessor: 'isActive',
-              title: t('table_users_isActive'),
-              render: (record) => record.isActive ?
-                <span className='bg-green-500 text-white px-2 py-1 rounded-md text-xs'>Yes</span> :
-                <span className='bg-red-500 text-white px-2 py-1 rounded-md text-xs'>No</span>,
-              sortable: false
-            },
-            {
-              accessor: 'actions',
-              title: t('table_actions'),
-              sortable: false,
-              render: (record) => (
-                <div className="flex items-center gap-2">
-                  {canUpdate && (
-                    <Link
-                      href={`/users/update/${record.id}`}
-                      className="btn btn-secondary btn-sm"
-                    >
-                      <Pencil className="h-3 w-3" />
-                    </Link>
-                  )}
-                  {canDelete && (
-                    <button
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(record.id)}
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </button>
-                  )}
-                </div>
-              ),
-            },
-          ]}
-          highlightOnHover
-          totalRecords={userListResponse?.total || 0}
-          recordsPerPage={pageSize}
-          page={page}
-          onPageChange={(p) => setPage(p)}
-          recordsPerPageOptions={PAGE_SIZES}
-          onRecordsPerPageChange={setPageSize}
-          sortStatus={sortStatus}
-          onSortStatusChange={setSortStatus}
-          minHeight={200}
-          paginationText={({ from, to, totalRecords }) => t('table_pagination_showing_entries', { from, to, totalRecords })}
-          fetching={isFetching || isExporting}
-          noRecordsText={t('table_no_records_found')}
-          recordsPerPageLabel={''}
-        />
-      </div>
+        </DataTableToolbar>
+
+        <DataTable />
+
+        <DataTablePagination siblingCount={1} />
+      </DataTableProvider>
     </div>
   );
 };

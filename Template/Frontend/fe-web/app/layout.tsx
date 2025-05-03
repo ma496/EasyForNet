@@ -1,18 +1,15 @@
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import ProviderComponent from '@/components/layouts/provider-component';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
-import '@mantine/core/styles.layer.css';
-import 'mantine-datatable/styles.layer.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/tailwind.css';
 
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Easy For Net - Full Stack Web Application',
-    default: 'Easy For Net - Full Stack Web Application',
+    template: '%s | Easy For Net',
+    default: 'Easy For Net',
   },
 };
 const nunito = Nunito({
@@ -26,12 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript defaultColorScheme="auto" />
       </head>
       <body className={nunito.variable}>
-        <MantineProvider defaultColorScheme="auto">
-          <ProviderComponent>{children}</ProviderComponent>
-        </MantineProvider>
+        <ProviderComponent>{children}</ProviderComponent>
       </body>
     </html>
   );

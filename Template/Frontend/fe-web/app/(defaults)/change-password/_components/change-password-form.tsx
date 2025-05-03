@@ -7,7 +7,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
-import { PasswordInput } from '@/components/ui/password-input';
+import { FormPasswordInput } from '@/components/ui/form-password-input';
 import { Button } from '@/components/ui/button';
 import IconLockDots from '@/components/icon/icon-lock-dots';
 
@@ -60,19 +60,19 @@ export const ChangePasswordForm = () => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <PasswordInput
+            <FormPasswordInput
               name='currentPassword'
               label={t('label_currentPassword')}
               placeholder={t('placeholder_currentPassword')}
               icon={<IconLockDots fill={true} />}
             />
-            <PasswordInput
+            <FormPasswordInput
               name='newPassword'
               label={t('label_newPassword')}
               placeholder={t('placeholder_newPassword')}
               icon={<IconLockDots fill={true} />}
             />
-            <PasswordInput
+            <FormPasswordInput
               name='confirmPassword'
               label={t('label_confirmPassword')}
               placeholder={t('placeholder_confirmPassword')}

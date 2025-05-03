@@ -1,8 +1,8 @@
-import Loading from '@/components/layouts/loading';
+import AppLoading from '@/components/layouts/app-loading';
 import React from 'react';
 
 const loading = () => {
-  return <Loading />;
+  return <AppLoading />;
 };
 
 export default loading;

@@ -1,7 +1,7 @@
 'use client'
 
 import { useGetUserProfileQuery, useLazyGetUserInfoQuery, useUpdateProfileMutation } from '@/store/api/account/account-api'
-import { Input } from '@/components/ui/input'
+import { FormInput } from '@/components/ui/form-input'
 import Swal from 'sweetalert2'
 import { useAppDispatch } from '@/store/hooks'
 import { setUserInfo } from '@/store/slices/authSlice'
@@ -164,7 +164,7 @@ export const UpdateProfile = () => {
             </div>
 
             <div>
-              <Input
+              <FormInput
                 label={t('label_firstName')}
                 name="firstName"
                 type="text"
@@ -173,7 +173,7 @@ export const UpdateProfile = () => {
             </div>
 
             <div>
-              <Input
+              <FormInput
                 label={t('label_lastName')}
                 name="lastName"
                 type="text"
@@ -182,7 +182,7 @@ export const UpdateProfile = () => {
             </div>
 
             <div>
-              <Input
+              <FormInput
                 label={t('label_email')}
                 name="email"
                 type="email"
