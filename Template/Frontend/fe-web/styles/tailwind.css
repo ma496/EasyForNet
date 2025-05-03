@@ -1,5 +1,3 @@
-@layer mantine, mantine-datatable;
-
 /* Animate css */
 @import './animate.css';
 /* tippy css */
@@ -10,9 +8,6 @@
 
 /* Elements - Progressbar */
 @import './progressbar.css';
-
-/* Data tables css */
-/* @import './datatables.css'; */
 
 /* scrumboard */
 @import './scrumboard.css';
