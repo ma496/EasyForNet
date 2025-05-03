@@ -6,8 +6,8 @@ import { useRoleCreateMutation } from '@/store/api/roles/roles-api';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { FormInput } from '@/components/ui/form-input';
+import { FormTextarea } from '@/components/ui/form-textarea';
 
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
@@ -57,12 +57,12 @@ export const RoleCreateForm = () => {
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <Input
+            <FormInput
               name='name'
               label={t('label_roleName')}
               placeholder={t('placeholder_roleName')}
             />
-            <Textarea
+            <FormTextarea
               name='description'
               label={t('label_roleDescription')}
               placeholder={t('placeholder_roleDescription')}

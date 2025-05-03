@@ -6,7 +6,7 @@ import { useResetPasswordMutation } from '@/store/api/account/account-api';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
-import { PasswordInput } from '@/components/ui/password-input';
+import { FormPasswordInput } from '@/components/ui/form-password-input';
 import IconLockDots from '@/components/icon/icon-lock-dots';
 
 const createValidationSchema = (t: (key: string) => string) => {
@@ -67,13 +67,13 @@ export const ResetPasswordForm = () => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <PasswordInput
+            <FormPasswordInput
               name='password'
               label={t('label_new_password')}
               placeholder={t('placeholder_new_password')}
               icon={<IconLockDots fill={true} />}
             />
-            <PasswordInput
+            <FormPasswordInput
               name='confirmPassword'
               label={t('label_confirm_password')}
               placeholder={t('placeholder_confirm_password')}

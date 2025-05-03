@@ -9,10 +9,10 @@ import { RoleListRequest } from '@/store/api/roles/dto/role-list-request';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { FormInput } from '@/components/ui/form-input';
 import IconMail from '@/components/icon/icon-mail';
 import IconUser from '@/components/icon/icon-user';
-import { Checkbox } from '@/components/ui/checkbox';
+import { FormCheckbox } from '@/components/ui/form-checkbox';
 import Select, { MultiValue } from 'react-select';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
 
@@ -103,26 +103,26 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
           <Form noValidate className='flex flex-col gap-4'>
-            <Input
+            <FormInput
               name='username'
               label={t('label_username')}
               placeholder={t('placeholder_username')}
               icon={<IconUser />}
             />
-            <Input
+            <FormInput
               name='email'
               type='email'
               label={t('label_email')}
               placeholder={t('placeholder_email')}
               icon={<IconMail />}
             />
-            <Input
+            <FormInput
               name='firstName'
               label={t('label_firstName')}
               placeholder={t('placeholder_firstName')}
               icon={<IconUser />}
             />
-            <Input
+            <FormInput
               name='lastName'
               label={t('label_lastName')}
               placeholder={t('placeholder_lastName')}
@@ -149,7 +149,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
                 <span className="text-danger text-xs mt-1">{errors.roles as string}</span>
               )}
             </div>
-            <Checkbox
+            <FormCheckbox
               name='isActive'
               label={t('label_isActive')}
             />
