@@ -36,9 +36,6 @@
 /* form element*/
 @import './form-elements.css';
 
-/* Select2*/
-@import './select2.css';
-
 @tailwind base;
 
 @tailwind components;

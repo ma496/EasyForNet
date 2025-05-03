@@ -13,8 +13,8 @@ import { FormInput } from '@/components/ui/form-input';
 import IconMail from '@/components/icon/icon-mail';
 import IconUser from '@/components/icon/icon-user';
 import { FormCheckbox } from '@/components/ui/form-checkbox';
-import Select, { MultiValue } from 'react-select';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
+import FormSelect from '@/components/ui/form-select';
 
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
@@ -128,27 +128,13 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
               placeholder={t('placeholder_lastName')}
               icon={<IconUser />}
             />
-            <div className="flex flex-col gap-1 custom-select">
-              <label className="text-sm font-medium">{t('label_roles')}</label>
-              <Select<{ value: string; label: string }, true>
-                placeholder={t('placeholder_roles')}
-                isMulti
-                isLoading={isLoadingRoles}
-                options={roleOptions}
-                value={roleOptions.filter(option =>
-                  Array.isArray(values.roles) && values.roles.includes(option.value)
-                )}
-                onChange={(newValue: MultiValue<{ value: string; label: string }>) => {
-                  setFieldValue(
-                    'roles',
-                    newValue ? newValue.map(option => option.value) : []
-                  );
-                }}
-              />
-              {touched.roles && errors.roles && (
-                <span className="text-danger text-xs mt-1">{errors.roles as string}</span>
-              )}
-            </div>
+            <FormSelect
+              name='roles'
+              label={t('label_roles')}
+              placeholder={t('placeholder_roles')}
+              options={roleOptions}
+              isMulti
+            />
             <FormCheckbox
               name='isActive'
               label={t('label_isActive')}
