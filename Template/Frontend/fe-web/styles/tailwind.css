@@ -369,11 +369,11 @@
   }
   
   .badge-outline-primary {
-    @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary dark:hover:text-white-light;
+    @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary-dark-light dark:hover:text-white-light;
   }
   
   .badge-outline-secondary {
-    @apply border-secondary text-secondary hover:bg-secondary-light dark:hover:bg-secondary dark:hover:text-white-light;
+    @apply border-secondary text-secondary hover:bg-secondary-light dark:hover:bg-secondary-dark-light dark:hover:text-white-light;
   }
   
   .badge-outline-success {

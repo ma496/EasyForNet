@@ -15,7 +15,7 @@ import IconMail from '@/components/icon/icon-mail';
 import IconUser from '@/components/icon/icon-user';
 import { FormCheckbox } from '@/components/ui/form-checkbox';
 import { RoleListDto } from '@/store/api/roles/dto/role-list-response';
-import FormSelect from '@/components/ui/form-select';
+import { FormMultiSelect } from '@/components/ui/form-multi-select';
 
 const createValidationSchema = (t: (key: string) => string) => {
   return Yup.object().shape({
@@ -137,12 +137,12 @@ export const UserCreateForm = () => {
               placeholder={t('placeholder_confirmPassword')}
               icon={<IconLockDots fill={true} />}
             />
-            <FormSelect
+            <FormMultiSelect
               name='roles'
               label={t('label_roles')}
               placeholder={t('placeholder_roles')}
               options={roleOptions}
-              isMulti
+              size='sm'
             />
             <FormCheckbox
               name='isActive'

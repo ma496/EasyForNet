@@ -13,7 +13,7 @@ interface Option {
   disabled?: boolean;
 }
 
-interface FormSelectProps {
+interface FormMultiSelectProps {
   label?: string;
   name: string;
   options: Option[];
@@ -21,13 +21,13 @@ interface FormSelectProps {
   className?: string;
   icon?: React.ReactNode;
   placeholder?: string;
-  isMulti?: boolean;
   searchable?: boolean;
   maxVisibleItems?: number;
   disabled?: boolean;
+  size?: 'default' | 'sm' | 'lg';
 }
 
-export const FormSelect = ({
+export const FormMultiSelect = ({
   label,
   name,
   options,
@@ -35,11 +35,11 @@ export const FormSelect = ({
   className,
   icon,
   placeholder = "Select...",
-  isMulti = false,
   searchable = true,
   maxVisibleItems = 5,
   disabled = false,
-}: FormSelectProps) => {
+  size = 'default',
+}: FormMultiSelectProps) => {
   const [field, meta, helpers] = useField(name);
   const hasError = meta.touched && meta.error;
   const [open, setOpen] = useState(false);
@@ -67,43 +67,55 @@ export const FormSelect = ({
   }, [open]);
 
   // Value helpers
-  const isSelected = (val: string) =>
-    isMulti && Array.isArray(field.value)
-      ? field.value.includes(val)
-      : field.value === val;
+  const isSelected = (val: string) => Array.isArray(field.value) ? field.value.includes(val) : false;
 
   const handleSelect = (val: string) => {
-    if (isMulti) {
-      let newValue = Array.isArray(field.value) ? [...field.value] : [];
-      if (newValue.includes(val)) {
-        newValue = newValue.filter(v => v !== val);
-      } else {
-        newValue.push(val);
-      }
-      helpers.setValue(newValue);
+    let newValue = Array.isArray(field.value) ? [...field.value] : [];
+    if (newValue.includes(val)) {
+      newValue = newValue.filter(v => v !== val);
     } else {
-      helpers.setValue(val);
-      setOpen(false);
+      newValue.push(val);
     }
+    helpers.setValue(newValue);
     helpers.setTouched(true);
   };
 
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation();
-    helpers.setValue(isMulti ? [] : "");
+    helpers.setValue([]);
     setSearch("");
   };
 
-  // Render selected label(s)
+  // Render selected label(s) as badges
   const renderValue = () => {
-    if (isMulti && Array.isArray(field.value) && field.value.length > 0) {
-      return options
-        .filter(opt => field.value.includes(opt.value))
-        .map(opt => opt.label)
-        .join(", ");
+    if (Array.isArray(field.value) && field.value.length > 0) {
+      return (
+        <div className="flex flex-wrap gap-1 items-center min-h-[28px]">
+          {options
+            .filter(opt => field.value.includes(opt.value))
+            .map(opt => (
+              <span
+                key={opt.value}
+                className="badge badge-outline-secondary flex items-center gap-1 pr-1"
+              >
+                {opt.label}
+                <button
+                  type="button"
+                  className="ml-1 text-xs text-primary hover:text-danger focus:outline-none"
+                  tabIndex={-1}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleSelect(opt.value);
+                  }}
+                >
+                  <IconX className="h-3 w-3" />
+                </button>
+              </span>
+            ))}
+        </div>
+      );
     }
-    const selected = options.find(opt => opt.value === field.value);
-    return selected ? selected.label : "";
+    return "";
   };
 
   return (
@@ -120,9 +132,11 @@ export const FormSelect = ({
       >
         <div
           className={cn(
-            "form-input flex items-center cursor-pointer min-h-[40px]",
+            "form-multiselect flex items-center cursor-pointer min-h-[40px] gap-1 flex-wrap",
             icon && "ps-10",
-            disabled && "opacity-60 pointer-events-none"
+            disabled && "opacity-60 pointer-events-none",
+            size === 'sm' && 'form-multiselect-sm',
+            size === 'lg' && 'form-multiselect-lg',
           )}
           tabIndex={0}
           onClick={() => setOpen(v => !v)}
@@ -135,9 +149,13 @@ export const FormSelect = ({
               {icon}
             </span>
           )}
-          <span className={cn("flex-1 truncate", !renderValue() && "text-gray-400")}
-          >{renderValue() || placeholder}</span>
-          {(field.value && ((isMulti && field.value.length > 0) || (!isMulti && field.value))) && (
+          <span className={cn("flex-1 flex flex-wrap gap-1 items-center min-h-[28px]", !field.value?.length && "text-gray-400")}
+          >
+            {(Array.isArray(field.value) && field.value.length > 0)
+              ? renderValue()
+              : (placeholder && (!field.value || field.value.length === 0) && placeholder)}
+          </span>
+          {(Array.isArray(field.value) && field.value.length > 0) && (
             <button
               type="button"
               className="absolute end-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
@@ -181,12 +199,12 @@ export const FormSelect = ({
                   key={opt.value}
                   className={cn(
                     "px-4 py-2 cursor-pointer flex items-center gap-2 hover:bg-[#f6f6f6] dark:hover:bg-[#132136]",
-                    isSelected(opt.value) && "bg-primary/10 text-primary dark:bg-success dark:text-white",
+                    isSelected(opt.value) && "bg-primary/10 text-primary",
                     opt.disabled && "opacity-50 pointer-events-none"
                   )}
                   onClick={() => handleSelect(opt.value)}
                 >
-                  {isMulti && (
+                  {isSelected(opt.value) && (
                     <input
                       type="checkbox"
                       checked={isSelected(opt.value)}
@@ -207,5 +225,3 @@ export const FormSelect = ({
     </div>
   );
 };
-
-export default FormSelect;
