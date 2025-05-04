@@ -22,6 +22,20 @@ public static class IQueryableExtension
         {
             processQuery = processQuery.OrderBy($"{request.SortField} {(request.SortDirection == SortDirection.Desc ? "desc" : "asc")}");
         }
+        else if (typeof(IUpdatableEntity).IsAssignableFrom(typeof(T)))
+        {
+            var sortExpression = $"{nameof(IUpdatableEntity.UpdatedAt)}.HasValue DESC, {nameof(IUpdatableEntity.UpdatedAt)} DESC";
+            if (typeof(ICreatableEntity).IsAssignableFrom(typeof(T))
+                && typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
+            {
+                sortExpression += $", {nameof(ICreatableEntity.CreatedAt)} DESC, {nameof(IBaseEntity<object>.Id)} DESC";
+            }
+            else if (typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
+            {
+                sortExpression += $", {nameof(IBaseEntity<object>.Id)} DESC";
+            }
+            processQuery = processQuery.OrderBy(sortExpression);
+        }
         else if (typeof(ICreatableEntity).IsAssignableFrom(typeof(T)))
         {
             var sortExpression = $"{nameof(ICreatableEntity.CreatedAt)} desc";

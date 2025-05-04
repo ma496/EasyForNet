@@ -25,7 +25,6 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, User
 
     public override async Task HandleAsync(UserListRequest request, CancellationToken cancellationToken)
     {
-        Thread.Sleep(3000);
         // get entities from db
         var query = _userService.Users()
             .AsNoTracking()
