@@ -1,3 +1,4 @@
+using FastEndpointsTool.Extensions;
 using FastEndpointsTool.Parsing;
 using System.Diagnostics;
 
@@ -52,7 +53,12 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
             Console.WriteLine("Copying template files...");
             var backendProjectPath = Path.Combine(versionedTemplateDir, "Template", "Backend");
-            var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, argument.Name);
+            var frontendProjectPath = Path.Combine(versionedTemplateDir, "Template", "Frontend", "fe-web");
+            var pascalCaseProjectName = argument.Name.ToPascalCase();
+            var kebabCaseProjectName = argument.Name.ToKebabCase();
+            var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, kebabCaseProjectName);
+            var backendTargetPath = Path.Combine(targetPath, "src", "backend");
+            var frontendTargetPath = Path.Combine(targetPath, "src", "frontend");
 
             if (Directory.Exists(targetPath))
             {
@@ -60,19 +66,27 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             }
 
             Directory.CreateDirectory(targetPath);
-            CopyDirectory(backendProjectPath, targetPath, true);
+            if (!Directory.Exists(backendTargetPath))
+                Directory.CreateDirectory(backendTargetPath);
+            if (!Directory.Exists(frontendTargetPath))
+                Directory.CreateDirectory(frontendTargetPath);
+
+            Console.WriteLine("Copying project files...");
+            CopyDirectory(backendProjectPath, backendTargetPath, true);
+            CopyDirectory(frontendProjectPath, frontendTargetPath, true);
             CopyFilesIfExists(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
-            RenameFilesAndDirectories(targetPath, "Backend", argument.Name);
-            await ReplaceInFiles(targetPath, "Backend", argument.Name);
-            
+            RenameFilesAndDirectories(backendTargetPath, "Backend", pascalCaseProjectName);
+            await ReplaceInFiles(backendTargetPath, "Backend", pascalCaseProjectName);
+            await ReplaceInFiles(frontendTargetPath, "fe-web", kebabCaseProjectName);
+
             Console.WriteLine("Creating solution file...");
-            var solutionPath = Path.Combine(targetPath, $"{argument.Name}.sln");
-            await ExecuteCommand("dotnet", $"new sln -n {argument.Name} -o \"{Path.GetDirectoryName(solutionPath)}\"");
+            var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");
+            await ExecuteCommand("dotnet", $"new sln -n {pascalCaseProjectName} -o \"{Path.GetDirectoryName(solutionPath)}\"");
 
             // Add projects to solution
-            var projectFiles = Directory.GetFiles(targetPath, "*.csproj", SearchOption.AllDirectories);
+            var projectFiles = Directory.GetFiles(backendTargetPath, "*.csproj", SearchOption.AllDirectories);
             foreach (var projectFile in projectFiles)
             {
                 Console.WriteLine($"Adding project: {Path.GetFileName(projectFile)}");
@@ -80,7 +94,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             }
 
             // create fetool.json file
-            await FetHelper.CreateFetFile("Source", argument.Name, argument.Name, targetPath);
+            await FetHelper.CreateFetFile("Source", pascalCaseProjectName, pascalCaseProjectName, backendTargetPath);
 
             Console.WriteLine("Project creation completed successfully!");
         }
@@ -236,7 +250,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             await File.WriteAllTextAsync(file, content);
         }
     }
-    
+
     private void CopyFilesIfExists(string sourceDirectory, string targetDirectory, params string[] fileNames)
     {
         foreach (var fileName in fileNames)

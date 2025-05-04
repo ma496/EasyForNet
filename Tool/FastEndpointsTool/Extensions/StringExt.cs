@@ -18,6 +18,11 @@ public static class StringExt
         return camelCase;
     }
 
+    public static string ToKebabCase(this string value)
+    {
+        return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + char.ToLower(x) : char.ToLower(x).ToString())).ToLower();
+    }
+
     public static string ToLowerFirst(this string str)
     {
         if (string.IsNullOrEmpty(str))
