@@ -39,9 +39,9 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
     public override async Task HandleAsync({arg.Name}Request request, CancellationToken cancellationToken)
     {{
         // get entities from db
-        {(!string.IsNullOrWhiteSpace(arg.DataContext) 
+        {(!string.IsNullOrWhiteSpace(arg.DataContext)
             ? $"var query = _dbContext.{arg.PluralName}\n\t\t\t.AsNoTracking()\n\t\t\t.AsQueryable();" +
-            "\n\n\t\tvar search = request.Search?.ToLower();" +
+            "\n\n\t\tvar search = request.Search?.Trim()?.ToLower();" +
             "\n\t\tif (!string.IsNullOrWhiteSpace(search))\n\t\t{\n\t\t}" +
             "\n\n\t\tvar total = await query.CountAsync(cancellationToken);" +
             "\n\t\tvar items = await query\n\t\t\t.Process(request)\n\t\t\t.ToListAsync(cancellationToken);"
@@ -77,7 +77,7 @@ sealed class {$"{arg.Name}Response : {responseBaseType.className}<{arg.Name}Dto>
 sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Dto" : $"{arg.Name}Dto : {dtoBaseClass.className}")}
 {{
     {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName,
-        string.IsNullOrWhiteSpace(dtoBaseClass.className), 
+        string.IsNullOrWhiteSpace(dtoBaseClass.className),
         string.IsNullOrWhiteSpace(dtoBaseClass.className) ? arg.BaseProperties : "false"))}
 }}
 
