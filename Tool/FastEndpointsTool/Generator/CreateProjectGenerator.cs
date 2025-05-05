@@ -53,12 +53,12 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
             Console.WriteLine("Copying template files...");
             var backendProjectPath = Path.Combine(versionedTemplateDir, "Template", "Backend");
-            var frontendProjectPath = Path.Combine(versionedTemplateDir, "Template", "Frontend", "fe-web");
+            var webProjectPath = Path.Combine(versionedTemplateDir, "Template", "Frontend", "fe-web");
             var pascalCaseProjectName = argument.Name.ToPascalCase();
             var kebabCaseProjectName = argument.Name.ToKebabCase();
             var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, kebabCaseProjectName);
             var backendTargetPath = Path.Combine(targetPath, "src", "backend");
-            var frontendTargetPath = Path.Combine(targetPath, "src", "frontend");
+            var webTargetPath = Path.Combine(targetPath, "src", "frontend", "web");
 
             if (Directory.Exists(targetPath))
             {
@@ -68,18 +68,18 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             Directory.CreateDirectory(targetPath);
             if (!Directory.Exists(backendTargetPath))
                 Directory.CreateDirectory(backendTargetPath);
-            if (!Directory.Exists(frontendTargetPath))
-                Directory.CreateDirectory(frontendTargetPath);
+            if (!Directory.Exists(webTargetPath))
+                Directory.CreateDirectory(webTargetPath);
 
             Console.WriteLine("Copying project files...");
             CopyDirectory(backendProjectPath, backendTargetPath, true);
-            CopyDirectory(frontendProjectPath, frontendTargetPath, true);
+            CopyDirectory(webProjectPath, webTargetPath, true);
             CopyFilesIfExists(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(backendTargetPath, "Backend", pascalCaseProjectName);
             await ReplaceInFiles(backendTargetPath, "Backend", pascalCaseProjectName);
-            await ReplaceInFiles(frontendTargetPath, "fe-web", kebabCaseProjectName);
+            await ReplaceInFiles(webTargetPath, "fe-web", kebabCaseProjectName);
 
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");
