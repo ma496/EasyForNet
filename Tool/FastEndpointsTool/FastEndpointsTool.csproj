@@ -8,8 +8,8 @@
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-fet</ToolCommandName>
+    <PackageReadmeFile>../../README.md</PackageReadmeFile>
     <Version>1.1.16</Version>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
 </Project>
