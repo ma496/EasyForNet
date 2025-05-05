@@ -21,6 +21,9 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 read -p "Enter version [$VERSION]: " VERSION_OVERRIDE
 VERSION=${VERSION_OVERRIDE:-$VERSION}
 
+# Copy README.md to project directory for NuGet packaging
+cp README.md Tool/FastEndpointsTool/README.md
+
 # Build and pack with version
 echo "Building and packing version $VERSION..."
 dotnet pack Tool/FastEndpointsTool/FastEndpointsTool.csproj -c Release /p:Version=$VERSION /p:PackageVersion=$VERSION
