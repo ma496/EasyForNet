@@ -34,7 +34,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
             return;
         }
         if (entity.Default)
-            ThrowError("default_role_cannot_be_updated");
+            this.ThrowError("Default role cannot be updated", "default_role_cannot_be_updated");
 
         Map.UpdateEntity(request, entity);
 

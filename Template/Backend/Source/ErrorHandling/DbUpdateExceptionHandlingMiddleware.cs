@@ -22,7 +22,7 @@ public class DbUpdateExceptionHandlingMiddleware
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             context.Response.ContentType = "application/json";
-            var error = ex.InnerException is PostgresException pgEx ? GetErrorMessage(pgEx) : (null, ex.Message);
+            var error = ex.InnerException is PostgresException pgEx ? GetErrorMessage(pgEx) : (null, ex.Message, ErrorCodes.DatabaseError);
             var response = new
             {
                 type = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1",
@@ -30,14 +30,14 @@ public class DbUpdateExceptionHandlingMiddleware
                 status = 400,
                 instance = context.Request.Path.Value,
                 traceId = context.TraceIdentifier,
-                errors = new[] { new { name = error.propertyName, reason = error.message } }
+                errors = new[] { new { name = error.propertyName, reason = error.message, code = error.code } }
             };
 
             await context.Response.WriteAsJsonAsync(response);
         }
     }
 
-    private static (string? propertyName, string message) GetErrorMessage(PostgresException ex)
+    private static (string? propertyName, string message, string code) GetErrorMessage(PostgresException ex)
     {
         switch (ex.SqlState)
         {
@@ -45,30 +45,30 @@ public class DbUpdateExceptionHandlingMiddleware
             case "23505":
                 var constraintName = ex.ConstraintName;
                 if (string.IsNullOrEmpty(constraintName))
-                    return (null, "A duplicate value was found.");
+                    return (null, "A duplicate value was found.", ErrorCodes.DuplicateValue);
 
                 // Extract property name from constraint name (e.g. "IX_Users_Username" -> "username")
                 var property = constraintName.Split('_').Last().ToLower();
-                return (property, $"A {property} with this value already exists.");
+                return (property, $"A {property} with this value already exists.", ErrorCodes.DuplicatePropertyValue);
 
             // Not null violation
             case "23502":
                 var columnName = ex.ColumnName?.ToLower();
                 if (string.IsNullOrEmpty(columnName))
-                    return (null, "A required field is missing.");
+                    return (null, "A required field is missing.", ErrorCodes.RequiredFieldMissing);
 
-                return (columnName, $"The {columnName} field is required.");
+                return (columnName, $"The {columnName} field is required.", ErrorCodes.RequiredPropertyFieldMissing);
 
             // Foreign key violation
             case "23503":
-                return (null, "Referenced record does not exist.");
+                return (null, "Referenced record does not exist.", ErrorCodes.ReferencedRecordNotFound);
 
             // Check violation
             case "23514":
-                return (null, "Invalid value provided.");
+                return (null, "Invalid value provided.", ErrorCodes.InvalidValueProvided);
 
             default:
-                return (null, "A database error occurred.");
+                return (null, "A database error occurred.", ErrorCodes.DatabaseError);
         }
     }
 }

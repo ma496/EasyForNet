@@ -9,7 +9,8 @@ const getValidationMessage = (errors: any) => {
   let message = ''
   // loop through errors array
   errors.forEach((error: any) => {
-    message += `${t(`server_error_${error.reason}`)}\n`
+    const localizeName = t(error.name)
+    message += error.code ? `${t(`server_error_${error.code}`, { propertyName: localizeName })}\n` : `${error.reason}\n`
   })
   return message
 }

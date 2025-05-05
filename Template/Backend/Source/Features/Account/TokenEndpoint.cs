@@ -24,14 +24,15 @@ sealed class TokenEndpoint : Endpoint<TokenReq, TokenResponse>
     public override async Task HandleAsync(TokenReq req, CancellationToken c)
     {
         var user = await (!req.IsEmail ? _userService.GetByUsernameAsync(req.Username) : _userService.GetByEmailAsync(req.Email));
+        var errorMessage = !req.IsEmail ? "Username or password is invalid" : "Email or password is invalid";
         if (user == null)
-            ThrowError($"invalid_{(!req.IsEmail ? "username" : "email")}_password");
+            this.ThrowError(errorMessage, $"invalid_{(!req.IsEmail ? "username" : "email")}_password");
 
         var result = await _userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
-            ThrowError($"invalid_{(!req.IsEmail ? "username" : "email")}_password");
+            this.ThrowError(errorMessage, $"invalid_{(!req.IsEmail ? "username" : "email")}_password");
         if (!user.IsActive)
-            ThrowError($"user_not_active");
+            this.ThrowError("User is not active", "user_not_active");
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

@@ -31,7 +31,7 @@ sealed class RoleDeleteEndpoint : Endpoint<RoleDeleteRequest, RoleDeleteResponse
             return;
         }
         if (entity.Default)
-            ThrowError("default_role_cannot_be_deleted");
+            this.ThrowError("Default role cannot be deleted", "default_role_cannot_be_deleted");
 
         // Delete the entity from the db
         await _roleService.DeleteAsync(entity);

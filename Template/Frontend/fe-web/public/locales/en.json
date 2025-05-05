@@ -285,6 +285,13 @@
   "server_error_default_role_cannot_be_updated": "Default role cannot be updated.",
   "server_error_default_user_cannot_be_deleted": "Default user cannot be deleted.",
   "server_error_default_user_cannot_be_updated": "Default user cannot be updated.",
+  "server_error_duplicate_value": "A duplicate value was found.",
+  "server_error_duplicate_property_value": "A ${propertyName} with this value already exists.",
+  "server_error_required_field_missing": "A required field is missing.",
+  "server_error_required_property_field_missing": "A ${propertyName} field is required.",
+  "server_error_referenced_record_not_found": "Referenced record does not exist.",
+  "server_error_invalid_value_provided": "Invalid value provided.",
+  "server_error_database_error": "A database error occurred.",
   "connection_error_title": "Connection Error",
   "connection_error_message": "Unable to connect to the server. Please check your connection or try again later.",
   "400_error_title": "Bad Request",
@@ -298,5 +305,8 @@
   "415_error_title": "Unsupported Media Type",
   "415_error_message": "The request media type is not supported.",
   "500_error_title": "Internal Server Error",
-  "500_error_message": "An error occurred while processing the request."
+  "500_error_message": "An error occurred while processing the request.",
+  "name": "Name",
+  "email": "Email",
+  "username": "Username"
 }

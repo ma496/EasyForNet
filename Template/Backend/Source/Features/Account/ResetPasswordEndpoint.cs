@@ -30,13 +30,14 @@ sealed class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
         var token = await _tokenService.GetTokenAsync(request.Token);
         if (token == null)
         {
-            ThrowError("invalid_token");
+            this.ThrowError("Token is invalid", "invalid_token");
+
             return;
         }
         var isTokenValid = await _tokenService.ValidateTokenAsync(token.Value);
         if (!isTokenValid)
         {
-            ThrowError("token_expired");
+            this.ThrowError("Token is expired", "token_expired");
         }
         var user = await _userService.GetByIdAsync(token.UserId);
         if (user == null)

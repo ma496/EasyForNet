@@ -107,6 +107,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseMiddleware<UnsupportedMediaTypeMiddleware>();
 app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
+
 app.UseCors()
    .UseAuthentication()
    .UseAuthorization()
@@ -118,6 +119,18 @@ app.UseCors()
            c.Endpoints.RoutePrefix = "api/v1";
            c.Security.RoleClaimType = ClaimTypes.Role;
            c.Security.PermissionsClaimType = ClaimConstants.Permission;
+           c.Errors.UseProblemDetails(x =>
+           {
+               x.IndicateErrorCode = true;     //serializes the fluentvalidation error code
+               x.TypeValue = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1";
+               x.TitleValue = "One or more validation errors occurred.";
+               x.TitleTransformer = pd => pd.Status switch
+               {
+                   400 => "Validation Error",
+                   404 => "Not Found",
+                   _ => "One or more errors occurred!"
+               };
+           });
        })
    .UseSwaggerGen();
 

@@ -285,6 +285,13 @@
   "server_error_default_role_cannot_be_updated": "ڈیفالٹ کردار کو اپ ڈیٹ نہیں کیا جا سکتا۔",
   "server_error_default_user_cannot_be_deleted": "ڈیفالٹ صارف کو حذف نہیں کیا جا سکتا۔",
   "server_error_default_user_cannot_be_updated": "ڈیفالٹ صارف کو اپ ڈیٹ نہیں کیا جا سکتا۔",
+  "server_error_duplicate_value": "ایک جیسے قدر موجود ہے۔",
+  "server_error_duplicate_property_value": "${propertyName} کی یہ قدر پہلے ہی موجود ہے۔",
+  "server_error_required_field_missing": "ایک ضروری فیلڈ موجود نہیں ہے۔",
+  "server_error_required_property_field_missing": "${propertyName} فیلڈ موجود نہیں ہے۔",
+  "server_error_referenced_record_not_found": "مربوط ریکارڈ موجود نہیں ہے۔",
+  "server_error_invalid_value_provided": "غلط قدر دی گئی ہے۔",
+  "server_error_database_error": "دیوائس کی خرابی پیش آ گئی۔",
   "connection_error_title": "کنکشن کی خرابی",
   "connection_error_message": "سرور سے رابطہ نہیں ہو سکا۔ براہ کرم اپنا کنکشن چیک کریں یا بعد میں دوبارہ کوشش کریں۔",
   "400_error_title": "غلط درخواست",
@@ -298,5 +305,8 @@
   "415_error_title": "غیر تعاون یافتہ میڈیا کی قسم",
   "415_error_message": "درخواست کردہ میڈیا کی قسم تعاون یافتہ نہیں ہے۔",
   "500_error_title": "اندرونی سرور کی خرابی",
-  "500_error_message": "درخواست پر کارروائی کے دوران ایک خرابی پیش آ گئی۔"
+  "500_error_message": "درخواست پر کارروائی کے دوران ایک خرابی پیش آ گئی۔",
+  "name": "نام",
+  "email": "ای میل",
+  "username": "صارف نام"
 }
