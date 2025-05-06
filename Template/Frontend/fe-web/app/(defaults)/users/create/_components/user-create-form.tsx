@@ -25,7 +25,7 @@ const createValidationSchema = (t: (key: string) => string) => {
       .max(50, t('validation_usernameMax')),
     email: Yup.string()
       .required(t('validation_emailRequired'))
-      .email(t('validation_emailInvalid')),
+      .email(t('validation_invalidEmail')),
     firstName: Yup.string()
       .min(2, t('validation_firstNameMin'))
       .max(50, t('validation_firstNameMax')),

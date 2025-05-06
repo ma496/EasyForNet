@@ -28,7 +28,7 @@ export const FormInput = ({
       meta.touched && (hasError ? 'has-error' : '')
     )}>
       {label && (
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={name} className="label form-label">{label}</label>
       )}
       <div className="relative text-white-dark">
         <input
