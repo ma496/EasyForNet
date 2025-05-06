@@ -10,7 +10,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
     {
         var version = Helpers.GetVersion();
         var templateBaseDir = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "FastEndpointsTool",
             "Templates"
         );

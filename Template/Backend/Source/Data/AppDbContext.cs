@@ -98,6 +98,11 @@ public class AppDbContext : DbContext
                 {
                     entity.CreatedAt = DateTime.UtcNow;
                     entity.CreatedBy = currentUserId;
+
+                    if (entity is IUpdatableEntity updatableEntity)
+                    {
+                        updatableEntity.UpdatedAt = default;
+                    }
                 }
             }
             else if (entityEntry.State == EntityState.Modified)

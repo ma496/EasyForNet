@@ -24,7 +24,7 @@ public static class IQueryableExtension
         }
         else if (typeof(IUpdatableEntity).IsAssignableFrom(typeof(T)))
         {
-            var sortExpression = $"{nameof(IUpdatableEntity.UpdatedAt)}.HasValue DESC, {nameof(IUpdatableEntity.UpdatedAt)} DESC";
+            var sortExpression = $"{nameof(IUpdatableEntity.UpdatedAt)} DESC";
             if (typeof(ICreatableEntity).IsAssignableFrom(typeof(T))
                 && typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
             {
