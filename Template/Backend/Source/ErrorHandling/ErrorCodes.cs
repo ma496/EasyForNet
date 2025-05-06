@@ -9,4 +9,16 @@ public static class ErrorCodes
     public const string ReferencedRecordNotFound = "referenced_record_not_found";
     public const string InvalidValueProvided = "invalid_value_provided";
     public const string DatabaseError = "database_error";
+    public const string InvalidCurrentPassword = "invalid_current_password";
+    public const string InvalidToken = "invalid_token";
+    public const string TokenExpired = "token_expired";
+    public const string InvalidUsernamePassword = "invalid_username_password";
+    public const string InvalidEmailPassword = "invalid_email_password";
+    public const string UserNotActive = "user_not_active";
+    public const string UserNotFound = "user_not_found";
+    public const string DefaultRolePermissionsCannotBeChanged = "default_role_permissions_cannot_be_changed";
+    public const string DefaultRoleCannotBeDeleted = "default_role_cannot_be_deleted";
+    public const string DefaultRoleCannotBeUpdated = "default_role_cannot_be_updated";
+    public const string DefaultUserCannotBeDeleted = "default_user_cannot_be_deleted";
+    public const string DefaultUserCannotBeUpdated = "default_user_cannot_be_updated";
 }

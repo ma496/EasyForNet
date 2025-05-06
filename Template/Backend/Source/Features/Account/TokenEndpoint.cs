@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Backend.ErrorHandling;
 using Backend.Services.Identity;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,14 +26,15 @@ sealed class TokenEndpoint : Endpoint<TokenReq, TokenResponse>
     {
         var user = await (!req.IsEmail ? _userService.GetByUsernameAsync(req.Username) : _userService.GetByEmailAsync(req.Email));
         var errorMessage = !req.IsEmail ? "Username or password is invalid" : "Email or password is invalid";
+        var errorCode = !req.IsEmail ? ErrorCodes.InvalidUsernamePassword : ErrorCodes.InvalidEmailPassword;
         if (user == null)
-            this.ThrowError(errorMessage, $"invalid_{(!req.IsEmail ? "username" : "email")}_password");
+            this.ThrowError(errorMessage, errorCode);
 
         var result = await _userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
-            this.ThrowError(errorMessage, $"invalid_{(!req.IsEmail ? "username" : "email")}_password");
+            this.ThrowError(errorMessage, errorCode);
         if (!user.IsActive)
-            this.ThrowError("User is not active", "user_not_active");
+            this.ThrowError("User is not active", ErrorCodes.UserNotActive);
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

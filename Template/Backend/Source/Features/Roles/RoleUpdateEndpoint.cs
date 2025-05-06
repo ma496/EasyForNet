@@ -4,6 +4,7 @@ using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 using Backend.Features.Base.Dto;
+using Backend.ErrorHandling;
 
 namespace Backend.Features.Roles;
 
@@ -34,7 +35,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default role cannot be updated", "default_role_cannot_be_updated");
+            this.ThrowError("Default role cannot be updated", ErrorCodes.DefaultRoleCannotBeUpdated);
 
         Map.UpdateEntity(request, entity);
 

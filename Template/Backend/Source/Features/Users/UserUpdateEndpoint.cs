@@ -1,5 +1,6 @@
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
+using Backend.ErrorHandling;
 using Backend.Extensions;
 using Backend.Features.Base.Dto;
 using Backend.Services.Identity;
@@ -36,7 +37,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default user cannot be updated", "default_user_cannot_be_updated");
+            this.ThrowError("Default user cannot be updated", ErrorCodes.DefaultUserCannotBeUpdated);
 
         Map.UpdateEntity(request, entity);
         // update user roles based on request and already assigned roles

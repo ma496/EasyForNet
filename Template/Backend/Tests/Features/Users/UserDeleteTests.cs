@@ -1,4 +1,5 @@
 using Backend;
+using Backend.ErrorHandling;
 using Backend.Features.Users;
 using Backend.Services.Identity;
 using Tests.Seeder;
@@ -77,6 +78,6 @@ public class UserDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("default_user_cannot_be_deleted");
+        res.Errors.First().Code.Should().Be(ErrorCodes.DefaultUserCannotBeDeleted);
     }
 }

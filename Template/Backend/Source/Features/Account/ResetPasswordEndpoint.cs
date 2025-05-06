@@ -1,4 +1,5 @@
 using Backend.Data;
+using Backend.ErrorHandling;
 using Backend.Services.Identity;
 
 namespace Backend.Features.Account;
@@ -30,14 +31,12 @@ sealed class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
         var token = await _tokenService.GetTokenAsync(request.Token);
         if (token == null)
         {
-            this.ThrowError("Token is invalid", "invalid_token");
-
-            return;
+            this.ThrowError("Token is invalid", ErrorCodes.InvalidToken);
         }
         var isTokenValid = await _tokenService.ValidateTokenAsync(token.Value);
         if (!isTokenValid)
         {
-            this.ThrowError("Token is expired", "token_expired");
+            this.ThrowError("Token is expired", ErrorCodes.TokenExpired);
         }
         var user = await _userService.GetByIdAsync(token.UserId);
         if (user == null)

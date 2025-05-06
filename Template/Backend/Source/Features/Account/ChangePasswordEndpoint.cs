@@ -1,6 +1,7 @@
 using FluentValidation;
 using Backend.Data;
 using Backend.Services.Identity;
+using Backend.ErrorHandling;
 
 namespace Backend.Features.Account;
 
@@ -35,7 +36,7 @@ sealed class ChangePasswordEndpoint : Endpoint<ChangePasswordRequest>
         var verified = await _userService.ValidatePasswordAsync(user, request.CurrentPassword);
         if (!verified)
         {
-            this.ThrowError(x => x.CurrentPassword, "Current password is invalid", "invalid_current_password");
+            this.ThrowError(x => x.CurrentPassword, "Current password is invalid", ErrorCodes.InvalidCurrentPassword);
             return;
         }
         await _userService.UpdatePasswordAsync(user, request.NewPassword);

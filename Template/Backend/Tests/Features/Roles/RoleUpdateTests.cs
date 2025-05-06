@@ -1,4 +1,5 @@
 using Backend;
+using Backend.ErrorHandling;
 using Backend.Features.Roles;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +70,6 @@ public class RoleUpdateTests : AppTestsBase
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("default_role_cannot_be_updated");
+        res.Errors.First().Code.Should().Be(ErrorCodes.DefaultRoleCannotBeUpdated);
     }
 }

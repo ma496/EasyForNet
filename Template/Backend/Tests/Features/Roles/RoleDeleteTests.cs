@@ -1,4 +1,5 @@
 using Backend;
+using Backend.ErrorHandling;
 using Backend.Features.Roles;
 using Backend.Services.Identity;
 using Tests.Seeder;
@@ -74,6 +75,6 @@ public class RoleDeleteTests : AppTestsBase
 
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("default_role_cannot_be_deleted");
+        res.Errors.First().Code.Should().Be(ErrorCodes.DefaultRoleCannotBeDeleted);
     }
 }

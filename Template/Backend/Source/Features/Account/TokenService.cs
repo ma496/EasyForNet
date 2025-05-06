@@ -1,3 +1,4 @@
+using Backend.ErrorHandling;
 using Backend.Services.Identity;
 using Backend.Settings;
 using Microsoft.Extensions.Options;
@@ -68,7 +69,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
     {
         var user = await _userService.GetByIdAsync(Guid.Parse(request.UserId));
         if (user == null)
-            this.ThrowError(r => r.UserId, "User not found", "user_not_found");
+            this.ThrowError(r => r.UserId, "User not found", ErrorCodes.UserNotFound);
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

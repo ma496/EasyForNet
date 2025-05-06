@@ -2,6 +2,7 @@ using FluentValidation;
 using Backend.Services.Identity;
 using Backend.Auth;
 using Backend.Features.Base.Dto;
+using Backend.ErrorHandling;
 
 namespace Backend.Features.Users;
 
@@ -31,7 +32,7 @@ sealed class UserDeleteEndpoint : Endpoint<UserDeleteRequest, UserDeleteResponse
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default user cannot be deleted", "default_user_cannot_be_deleted");
+            this.ThrowError("Default user cannot be deleted", ErrorCodes.DefaultUserCannotBeDeleted);
 
         // Delete the entity from the db
         await _userService.DeleteAsync(request.Id);

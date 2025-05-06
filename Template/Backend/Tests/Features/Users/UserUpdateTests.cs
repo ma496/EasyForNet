@@ -1,4 +1,5 @@
 using Backend;
+using Backend.ErrorHandling;
 using Backend.Features.Users;
 using Backend.Services.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,6 @@ public class UserUpdateTests : AppTestsBase
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         res.Errors.Should().ContainSingle();
-        res.Errors.First().Reason.Should().Be("default_user_cannot_be_updated");
+        res.Errors.First().Code.Should().Be(ErrorCodes.DefaultUserCannotBeUpdated);
     }
 }
