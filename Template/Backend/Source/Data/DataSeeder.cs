@@ -42,7 +42,7 @@ public class DataSeeder
         var permissions = await _permissionService.Permissions().ToListAsync();
 
         var adminRole = await _roleService.GetByNameAsync("Admin") ??
-            await _roleService.CreateAsync(new Role { Default = true, Name = "Admin" });
+            await _roleService.CreateAsync(new Role { Default = true, Name = "Admin", Description = "Admin Role" });
         var adminPermissions = await _permissionService.GetRolePermissionsAsync(adminRole.Id);
         var adminPermissionsToAssign = permissions.Where(p => !adminPermissions.Any(ap => ap.Name == p.Name)).ToList();
         foreach (var permission in adminPermissionsToAssign)

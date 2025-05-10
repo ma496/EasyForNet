@@ -242,7 +242,7 @@
   "page_roles_title": "کردار",
   "table_roles_name": "نام",
   "table_roles_description": "تفصیل",
-  "table_roles_userCount": "صارفین کی تعداد",
+  "table_roles_userCount": "صارفین",
   "delete_role_title": "کردار حذف کریں",
   "delete_role_confirmation": "کیا آپ واقعی اس کردار کو حذف کرنا چاہتے ہیں؟",
   "validation_roleNameRequired": "کردار کا نام درکار ہے",

@@ -69,7 +69,7 @@ export const RoleTable = () => {
       const exportData = dataToExport.map(role => ({
         Name: role.name,
         Description: role.description,
-        'User Count': role.users.length
+        'Users': role.userCount
       }));
 
       const wb = XLSX.utils.book_new();
@@ -131,9 +131,9 @@ export const RoleTable = () => {
       header: t('table_roles_description'),
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('users', {
+    columnHelper.accessor('userCount', {
       header: t('table_roles_userCount'),
-      cell: info => info.getValue().length.toString(),
+      cell: info => info.getValue(),
       enableSorting: false,
     }),
     columnHelper.display({

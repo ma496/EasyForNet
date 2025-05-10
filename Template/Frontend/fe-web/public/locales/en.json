@@ -242,7 +242,7 @@
   "page_roles_title": "Roles",
   "table_roles_name": "Name",
   "table_roles_description": "Description",
-  "table_roles_userCount": "User Count",
+  "table_roles_userCount": "Users",
   "delete_role_title": "Delete Role",
   "delete_role_confirmation": "Are you sure you want to delete this role?",
   "validation_roleNameRequired": "Role name is required",

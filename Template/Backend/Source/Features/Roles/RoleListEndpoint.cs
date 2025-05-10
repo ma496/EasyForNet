@@ -4,7 +4,6 @@ using Backend.Data.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Backend.Services.Identity;
 using Backend.Features.Base.Dto;
-using Backend.Extensions;
 
 namespace Backend.Features.Roles;
 
@@ -77,11 +76,7 @@ sealed class RoleListDto : AuditableDto<Guid>
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
-    public List<UserDto> Users { get; set; } = [];
-}
-
-sealed class UserDto : BaseDto<Guid>
-{
+    public int UserCount { get; set; }
 }
 
 sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Role>>
@@ -94,14 +89,11 @@ sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Ro
             Name = entity.Name,
             Description = entity.Description,
             Permissions = entity.RolePermissions.Select(x => x.PermissionId).ToList(),
+            UserCount = entity.UserRoles.Count,
             CreatedAt = entity.CreatedAt,
             CreatedBy = entity.CreatedBy,
             UpdatedAt = entity.UpdatedAt,
             UpdatedBy = entity.UpdatedBy,
-            Users = entity.UserRoles.Select(x => new UserDto
-            {
-                Id = x.UserId
-            }).ToList()
         }).ToList();
     }
 }

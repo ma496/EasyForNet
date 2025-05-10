@@ -5,4 +5,5 @@ export type RoleGetResponse = BaseDto<string> & AuditableDto & {
   name: string
   description: string
   permissions: string[]
+  userCount: number
 }

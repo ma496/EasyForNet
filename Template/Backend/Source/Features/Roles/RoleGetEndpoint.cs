@@ -27,6 +27,7 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
         // get entity from db
         var entity = await _roleService.Roles()
             .Include(x => x.RolePermissions)
+            .Include(x => x.UserRoles)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
@@ -55,6 +56,7 @@ sealed class RoleGetResponse : AuditableDto<Guid>
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
+    public int UserCount { get; set; }
 }
 
 sealed class RoleGetMapper : Mapper<RoleGetRequest, RoleGetResponse, Role>
@@ -67,6 +69,7 @@ sealed class RoleGetMapper : Mapper<RoleGetRequest, RoleGetResponse, Role>
             Name = e.Name,
             Description = e.Description,
             Permissions = e.RolePermissions.Select(x => x.PermissionId).ToList(),
+            UserCount = e.UserRoles.Count,
             CreatedAt = e.CreatedAt,
             CreatedBy = e.CreatedBy,
             UpdatedAt = e.UpdatedAt,
