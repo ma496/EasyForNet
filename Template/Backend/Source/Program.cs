@@ -93,7 +93,6 @@ bld.Services.AddScoped<IEmailBackgroundJobs, EmailBackgroundJobs>();
 
 var app = bld.Build();
 
-// Move database migration before Hangfire initialization
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();

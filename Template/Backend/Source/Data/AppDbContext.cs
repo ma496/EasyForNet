@@ -93,25 +93,23 @@ public class AppDbContext : DbContext
         {
             if (entityEntry.State == EntityState.Added)
             {
-                var entity = entityEntry.Entity as ICreatableEntity;
-                if (entity != null)
+                if (entityEntry.Entity is ICreatableEntity creatableEntity)
                 {
-                    entity.CreatedAt = DateTime.UtcNow;
-                    entity.CreatedBy = currentUserId;
-
-                    if (entity is IUpdatableEntity updatableEntity)
-                    {
-                        updatableEntity.UpdatedAt = default;
-                    }
+                    creatableEntity.CreatedAt = DateTime.UtcNow;
+                    creatableEntity.CreatedBy = currentUserId;
+                }
+                
+                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
+                {
+                    updatableEntity.UpdatedAt = DateTime.UtcNow;
                 }
             }
             else if (entityEntry.State == EntityState.Modified)
             {
-                var entity = entityEntry.Entity as IUpdatableEntity;
-                if (entity != null)
+                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
                 {
-                    entity.UpdatedAt = DateTime.UtcNow;
-                    entity.UpdatedBy = currentUserId;
+                    updatableEntity.UpdatedAt = DateTime.UtcNow;
+                    updatableEntity.UpdatedBy = currentUserId;
                 }
             }
         }
@@ -132,20 +130,23 @@ public class AppDbContext : DbContext
         {
             if (entityEntry.State == EntityState.Added)
             {
-                var entity = entityEntry.Entity as ICreatableEntity;
-                if (entity != null)
+                if (entityEntry.Entity is ICreatableEntity creatableEntity)
                 {
-                    entity.CreatedAt = DateTime.UtcNow;
-                    entity.CreatedBy = currentUserId;
+                    creatableEntity.CreatedAt = DateTime.UtcNow;
+                    creatableEntity.CreatedBy = currentUserId;
+                }
+                
+                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
+                {
+                    updatableEntity.UpdatedAt = DateTime.UtcNow;
                 }
             }
             else if (entityEntry.State == EntityState.Modified)
             {
-                var entity = entityEntry.Entity as IUpdatableEntity;
-                if (entity != null)
+                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
                 {
-                    entity.UpdatedAt = DateTime.UtcNow;
-                    entity.UpdatedBy = currentUserId;
+                    updatableEntity.UpdatedAt = DateTime.UtcNow;
+                    updatableEntity.UpdatedBy = currentUserId;
                 }
             }
         }
