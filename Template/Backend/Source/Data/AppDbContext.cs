@@ -29,14 +29,14 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<User>()
-            .HasIndex(u => u.Username)
+            .HasIndex(u => u.UsernameNormalized)
             .IsUnique();
         modelBuilder.Entity<User>()
-            .HasIndex(u => u.Email)
+            .HasIndex(u => u.EmailNormalized)
             .IsUnique();
 
         modelBuilder.Entity<Role>()
-            .HasIndex(r => r.Name)
+            .HasIndex(r => r.NameNormalized)
             .IsUnique();
 
         modelBuilder.Entity<Permission>()
@@ -82,6 +82,7 @@ public class AppDbContext : DbContext
 
     public override int SaveChanges()
     {
+        NormalizeProperties();
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
@@ -98,7 +99,7 @@ public class AppDbContext : DbContext
                     creatableEntity.CreatedAt = DateTime.UtcNow;
                     creatableEntity.CreatedBy = currentUserId;
                 }
-                
+
                 if (entityEntry.Entity is IUpdatableEntity updatableEntity)
                 {
                     updatableEntity.UpdatedAt = DateTime.UtcNow;
@@ -119,6 +120,7 @@ public class AppDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        NormalizeProperties();
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
@@ -135,7 +137,7 @@ public class AppDbContext : DbContext
                     creatableEntity.CreatedAt = DateTime.UtcNow;
                     creatableEntity.CreatedBy = currentUserId;
                 }
-                
+
                 if (entityEntry.Entity is IUpdatableEntity updatableEntity)
                 {
                     updatableEntity.UpdatedAt = DateTime.UtcNow;
@@ -152,5 +154,22 @@ public class AppDbContext : DbContext
         }
 
         return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void NormalizeProperties()
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e.Entity is IHasNormalizedProperties && (
+                e.State == EntityState.Added ||
+                e.State == EntityState.Modified));
+
+        foreach (var entityEntry in entries)
+        {
+            if (entityEntry.Entity is IHasNormalizedProperties hasNormalizedProperties)
+            {
+                hasNormalizedProperties.NormalizeProperties();
+            }
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace Backend.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Default = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    NameNormalized = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -53,12 +54,17 @@ namespace Backend.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Default = table.Column<bool>(type: "boolean", nullable: false),
                     Username = table.Column<string>(type: "text", nullable: false),
+                    UsernameNormalized = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
+                    EmailNormalized = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     LastLoginAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Image_Data = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Image_FileName = table.Column<string>(type: "text", nullable: true),
+                    Image_ContentType = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -98,6 +104,55 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuthTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccessToken = table.Column<string>(type: "text", nullable: false),
+                    AccessExpiry = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: false),
+                    RefreshExpiry = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    Expiry = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsUsed = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoles",
                 columns: table => new
                 {
@@ -126,6 +181,11 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthTokens_UserId",
+                table: "AuthTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Permissions_Name",
                 table: "Permissions",
                 column: "Name",
@@ -137,10 +197,15 @@ namespace Backend.Migrations
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Roles_Name",
+                name: "IX_Roles_NameNormalized",
                 table: "Roles",
-                column: "Name",
+                column: "NameNormalized",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tokens_UserId",
+                table: "Tokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -148,15 +213,15 @@ namespace Backend.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
+                name: "IX_Users_EmailNormalized",
                 table: "Users",
-                column: "Email",
+                column: "EmailNormalized",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Username",
+                name: "IX_Users_UsernameNormalized",
                 table: "Users",
-                column: "Username",
+                column: "UsernameNormalized",
                 unique: true);
         }
 
@@ -164,7 +229,13 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AuthTokens");
+
+            migrationBuilder.DropTable(
                 name: "RolePermissions");
+
+            migrationBuilder.DropTable(
+                name: "Tokens");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");

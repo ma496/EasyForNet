@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241201025934_Initial")]
+    [Migration("20250510212906_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,10 +20,46 @@ namespace Backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Backend.Data.Entities.Identity.AuthToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AccessExpiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("RefreshExpiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuthTokens");
+                });
 
             modelBuilder.Entity("Backend.Data.Entities.Identity.Permission", b =>
                 {
@@ -81,6 +117,10 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NameNormalized")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -89,7 +129,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("NameNormalized")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -122,6 +162,44 @@ namespace Backend.Migrations
                     b.ToTable("RolePermissions");
                 });
 
+            modelBuilder.Entity("Backend.Data.Entities.Identity.Token", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Expiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tokens");
+                });
+
             modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -138,6 +216,10 @@ namespace Backend.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmailNormalized")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -167,12 +249,16 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UsernameNormalized")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("EmailNormalized")
                         .IsUnique();
 
-                    b.HasIndex("Username")
+                    b.HasIndex("UsernameNormalized")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -205,6 +291,17 @@ namespace Backend.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("Backend.Data.Entities.Identity.AuthToken", b =>
+                {
+                    b.HasOne("Backend.Data.Entities.Identity.User", "User")
+                        .WithMany("AuthTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Backend.Data.Entities.Identity.RolePermission", b =>
                 {
                     b.HasOne("Backend.Data.Entities.Identity.Permission", "Permission")
@@ -222,6 +319,47 @@ namespace Backend.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Backend.Data.Entities.Identity.Token", b =>
+                {
+                    b.HasOne("Backend.Data.Entities.Identity.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
+                {
+                    b.OwnsOne("Backend.Data.Entities.Image", "Image", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("ContentType")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("bytea");
+
+                            b1.Property<string>("FileName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Backend.Data.Entities.Identity.UserRole", b =>
@@ -257,6 +395,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
                 {
+                    b.Navigation("AuthTokens");
+
+                    b.Navigation("Tokens");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

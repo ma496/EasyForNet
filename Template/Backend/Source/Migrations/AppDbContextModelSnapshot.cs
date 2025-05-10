@@ -114,6 +114,10 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NameNormalized")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -122,7 +126,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("NameNormalized")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -212,6 +216,10 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("EmailNormalized")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
@@ -238,12 +246,16 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UsernameNormalized")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("EmailNormalized")
                         .IsUnique();
 
-                    b.HasIndex("Username")
+                    b.HasIndex("UsernameNormalized")
                         .IsUnique();
 
                     b.ToTable("Users");
