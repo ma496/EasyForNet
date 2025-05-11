@@ -54,6 +54,7 @@ sealed class RoleGetValidator : Validator<RoleGetRequest>
 sealed class RoleGetResponse : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
+    public string NameNormalized { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
     public int UserCount { get; set; }
@@ -67,6 +68,7 @@ sealed class RoleGetMapper : Mapper<RoleGetRequest, RoleGetResponse, Role>
         {
             Id = e.Id,
             Name = e.Name,
+            NameNormalized = e.NameNormalized,
             Description = e.Description,
             Permissions = e.RolePermissions.Select(x => x.PermissionId).ToList(),
             UserCount = e.UserRoles.Count,

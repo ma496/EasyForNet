@@ -125,11 +125,11 @@ export const UserTable = () => {
 
   const columnHelper = createColumnHelper<UserListDto>();
   const columns = [
-    columnHelper.accessor('username', {
+    columnHelper.accessor('usernameNormalized', {
       header: t('table_users_userName'),
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('email', {
+    columnHelper.accessor('emailNormalized', {
       header: t('table_users_email'),
       cell: info => info.getValue(),
     }),

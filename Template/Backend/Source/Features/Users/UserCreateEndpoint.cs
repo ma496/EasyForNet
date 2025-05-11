@@ -58,7 +58,9 @@ sealed class UserCreateValidator : Validator<UserCreateRequest>
 sealed class UserCreateResponse : BaseDto<Guid>
 {
     public string Username { get; set; } = null!;
+    public string UsernameNormalized { get; set; } = null!;
     public string Email { get; set; } = null!;
+    public string EmailNormalized { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }
@@ -86,7 +88,9 @@ sealed class UserCreateMapper : Mapper<UserCreateRequest, UserCreateResponse, Us
         {
             Id = e.Id,
             Username = e.Username,
+            UsernameNormalized = e.UsernameNormalized,
             Email = e.Email,
+            EmailNormalized = e.EmailNormalized,
             FirstName = e.FirstName,
             LastName = e.LastName,
             IsActive = e.IsActive,

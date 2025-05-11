@@ -80,6 +80,7 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 sealed class UserUpdateResponse : BaseDto<Guid>
 {
     public string Email { get; set; } = null!;
+    public string EmailNormalized { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }
@@ -104,6 +105,7 @@ sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, Us
         {
             Id = e.Id,
             Email = e.Email,
+            EmailNormalized = e.EmailNormalized,
             FirstName = e.FirstName,
             LastName = e.LastName,
             IsActive = e.IsActive,

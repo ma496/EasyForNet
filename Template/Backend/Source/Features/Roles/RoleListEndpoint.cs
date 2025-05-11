@@ -74,6 +74,7 @@ sealed class RoleListResponse : ListDto<RoleListDto>
 sealed class RoleListDto : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
+    public string NameNormalized { get; set; } = null!;
     public string? Description { get; set; }
     public List<Guid> Permissions { get; set; } = [];
     public int UserCount { get; set; }
@@ -87,6 +88,7 @@ sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Ro
         {
             Id = entity.Id,
             Name = entity.Name,
+            NameNormalized = entity.NameNormalized,
             Description = entity.Description,
             Permissions = entity.RolePermissions.Select(x => x.PermissionId).ToList(),
             UserCount = entity.UserRoles.Count,

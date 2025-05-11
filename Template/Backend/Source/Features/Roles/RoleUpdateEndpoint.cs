@@ -63,6 +63,7 @@ sealed class RoleUpdateValidator : Validator<RoleUpdateRequest>
 sealed class RoleUpdateResponse : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
+    public string NameNormalized { get; set; } = null!;
     public string? Description { get; set; }
 }
 
@@ -82,6 +83,7 @@ sealed class RoleUpdateMapper : Mapper<RoleUpdateRequest, RoleUpdateResponse, Ro
         {
             Id = e.Id,
             Name = e.Name,
+            NameNormalized = e.NameNormalized,
             Description = e.Description,
         };
     }

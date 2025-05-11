@@ -1,7 +1,6 @@
 using FluentValidation;
 using Backend.Auth;
 using Backend.Data.Entities.Identity;
-using Backend.Extensions;
 using Backend.Services.Identity;
 using Backend.Features.Base.Dto;
 
@@ -51,6 +50,7 @@ sealed class RoleCreateValidator : Validator<RoleCreateRequest>
 sealed class RoleCreateResponse : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
+    public string NameNormalized { get; set; } = null!;
     public string? Description { get; set; }
 }
 
@@ -71,6 +71,7 @@ sealed class RoleCreateMapper : Mapper<RoleCreateRequest, RoleCreateResponse, Ro
         {
             Id = e.Id,
             Name = e.Name,
+            NameNormalized = e.NameNormalized,
             Description = e.Description,
         };
     }

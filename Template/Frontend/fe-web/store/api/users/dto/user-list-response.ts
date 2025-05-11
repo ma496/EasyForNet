@@ -6,7 +6,9 @@ export type UserListResponse = ListDto<UserListDto>
 
 export type UserListDto = BaseDto<string> & AuditableDto & {
   username: string
+  usernameNormalized: string
   email: string
+  emailNormalized: string
   firstName: string
   lastName: string
   isActive: boolean

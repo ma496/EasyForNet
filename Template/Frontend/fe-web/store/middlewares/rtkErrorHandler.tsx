@@ -9,7 +9,9 @@ const getValidationMessage = (errors: any) => {
   let message = ''
   // loop through errors array
   errors.forEach((error: any) => {
-    const localizeName = t(error.name)
+    // Remove the word 'Normalized' from the end of the error name, regardless of its casing.
+    const name = error.name.replace(/normalized$/i, '')
+    const localizeName = t(name)
     message += error.code ? `${t(`server_error_${error.code}`, { propertyName: localizeName })}\n` : `${error.reason}\n`
   })
   return message

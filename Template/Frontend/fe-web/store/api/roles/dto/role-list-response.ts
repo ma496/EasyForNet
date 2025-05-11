@@ -6,6 +6,7 @@ export type RoleListResponse = ListDto<RoleListDto>
 
 export type RoleListDto = BaseDto<string> & AuditableDto & {
   name: string
+  nameNormalized: string
   description: string
   permissions: string[]
   userCount: number
