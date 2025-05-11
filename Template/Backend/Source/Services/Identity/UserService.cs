@@ -22,12 +22,12 @@ public class UserService : IUserService
 
     public async Task<User?> GetByUsernameAsync(string username)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        return await _context.Users.FirstOrDefaultAsync(u => u.UsernameNormalized == username.ToLowerInvariant());
     }
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return await _context.Users.FirstOrDefaultAsync(u => u.EmailNormalized == email.ToLowerInvariant());
     }
 
     public IQueryable<User> Users()
@@ -116,5 +116,12 @@ public class UserService : IUserService
         user.PasswordHash = _passwordHasher.HashPassword(password);
         await UpdateAsync(user);
         return user;
+    }
+
+    public async Task UpdateLastLoginAsync(Guid userId)
+    {
+        await _context.Users
+            .Where(u => u.Id == userId)
+            .ExecuteUpdateAsync(u => u.SetProperty(u => u.LastLoginAt, DateTime.UtcNow));
     }
 }

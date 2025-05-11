@@ -53,6 +53,8 @@ sealed class TokenEndpoint : Endpoint<TokenReq, TokenResponse>
         {
             u.Claims.AddRange(claims);
         });
+
+        await _userService.UpdateLastLoginAsync(user.Id);
     }
 }
 

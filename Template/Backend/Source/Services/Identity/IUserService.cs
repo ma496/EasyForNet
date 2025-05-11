@@ -19,4 +19,5 @@ public interface IUserService
     Task RemoveRoleAsync(Guid userId, Guid roleId);
     Task<bool> IsInRoleAsync(Guid userId, Guid roleId);
     Task<User> UpdatePasswordAsync(User user, string password);
+    Task UpdateLastLoginAsync(Guid userId);
 }
