@@ -22,7 +22,6 @@ public class Product : AuditableEntity<Guid>
     public string Description { get; set; } = null!;
     public decimal Price { get; set; }
     public int Stock { get; set; }
-    public string ImageUrl { get; set; } = null!;
     public bool IsActive { get; set; }
 }
 ```
@@ -52,7 +51,7 @@ dotnet fet crud -n Product -pn Products -e Product -dc AppDbContext -auth true
 ```
 Command Explanation:
 
-- `-n Product`: Specifies the name used for endpoint classes (e.g., CreateProductEndpoint, UpdateProductEndpoint, etc.)
+- `-n Product`: Specifies the name used for endpoint classes (e.g., ProductCreateEndpoint, ProductUpdateEndpoint, etc.)
 - `-pn Products`: Matches the DbSet property name defined in AppDbContext (public DbSet<Product> Products { get; set; })
 - `-e Product`: Specifies the entity class name that was created in Data/Entities folder
 - `-dc AppDbContext`: Specifies the DbContext class name that contains the entity DbSet
@@ -71,7 +70,7 @@ The command will generate the following group and endpoints files in the Feature
 
 Each endpoint will include:
 - Request/response DTOs
-- Validation rules
+- Validation class
 - Entity mapping
 - Database operations
 - Permission-based authorization

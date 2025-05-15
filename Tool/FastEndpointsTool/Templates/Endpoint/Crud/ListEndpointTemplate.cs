@@ -14,7 +14,7 @@ public class ListEndpointTemplate : TemplateBase<EndpointArgument>
             !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty
         };
         var dtoMapping = GetDtoMapping(assembly, setting, arg.EntityFullName);
-        var dtoBaseClass = GetDtoClass(dtoMapping.mapping, dtoMapping.entityBaseType);
+        var dtoBaseClass = GetDtoClass(assembly, dtoMapping.mapping, dtoMapping.entityBaseType);
         var requestBaseType = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.RequestBaseType);
         var responseBaseType = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.ResponseBaseType);
         var processMethod = GetNamespaceAndMemberName(setting.Project.Endpoints.ListEndpoint.ProcessMethod);
@@ -76,9 +76,7 @@ sealed class {$"{arg.Name}Response : {responseBaseType.className}<{arg.Name}Dto>
 
 sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Dto" : $"{arg.Name}Dto : {dtoBaseClass.className}")}
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName,
-        string.IsNullOrWhiteSpace(dtoBaseClass.className),
-        string.IsNullOrWhiteSpace(dtoBaseClass.className) ? arg.BaseProperties : "false"))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, dtoBaseClass))}
 }}
 
 sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, List<{arg.Name}Dto>, List<{arg.Entity}>>
@@ -87,7 +85,7 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, List<{arg.Name}Dto>, L
     {{
         return e.Select(entity => new {arg.Name}Dto
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "entity", true, arg.BaseProperties)}
+            {MappingPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName), "entity")}
         }}).ToList();
     }}
 }}

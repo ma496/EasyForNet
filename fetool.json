@@ -10,20 +10,32 @@
     "PermissionDefinitionProviderPath": "Auth/PermissionDefinitionProvider.cs",
     "DtoMappings": [
       {
-        "Entity": "Backend.Data.Entities.Base.BaseEntity",
-        "Dto": "Backend.Features.Base.Dto.BaseDto"
+        "Entity": "Backend.Data.Entities.Base.BaseEntity`1",
+        "Dto": "Backend.Features.Base.Dto.BaseDto`1"
       },
       {
         "Entity": "Backend.Data.Entities.Base.CreatableEntity",
         "Dto": "Backend.Features.Base.Dto.CreatableDto"
       },
       {
+        "Entity": "Backend.Data.Entities.Base.CreatableEntity`1",
+        "Dto": "Backend.Features.Base.Dto.CreatableDto`1"
+      },
+      {
         "Entity": "Backend.Data.Entities.Base.UpdatableEntity",
         "Dto": "Backend.Features.Base.Dto.UpdatableDto"
       },
       {
+        "Entity": "Backend.Data.Entities.Base.UpdatableEntity`1",
+        "Dto": "Backend.Features.Base.Dto.UpdatableDto`1"
+      },
+      {
         "Entity": "Backend.Data.Entities.Base.AuditableEntity",
         "Dto": "Backend.Features.Base.Dto.AuditableDto"
+      },
+      {
+        "Entity": "Backend.Data.Entities.Base.AuditableEntity`1",
+        "Dto": "Backend.Features.Base.Dto.AuditableDto`1"
       }
     ],
     "Endpoints": {

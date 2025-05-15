@@ -53,6 +53,7 @@ public class DtoMapping
 {
     public string Entity { get; set; } = null!;
     public string Dto { get; set; } = null!;
+    public string DtoWithArguments { get; set; } = null!;
 }
 
 public class Endpoints

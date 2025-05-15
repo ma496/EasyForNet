@@ -13,7 +13,7 @@ public class GetEndpointTemplate : TemplateBase<EndpointArgument>
             !string.IsNullOrWhiteSpace(arg.DataContext) ? $"{arg.DataContext} context" : string.Empty
         };
         var dtoMapping = GetDtoMapping(assembly, setting, arg.EntityFullName);
-        var dtoBaseClass = GetDtoClass(dtoMapping.mapping, dtoMapping.entityBaseType);
+        var dtoBaseClass = GetDtoClass(assembly, dtoMapping.mapping, dtoMapping.entityBaseType);
 
         var template = $@"
 sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response, {arg.Name}Mapper>
@@ -61,9 +61,7 @@ sealed class {arg.Name}Validator : Validator<{arg.Name}Request>
 
 sealed class {(string.IsNullOrWhiteSpace(dtoBaseClass.className) ? $"{arg.Name}Response" : $"{arg.Name}Response : {dtoBaseClass.className}")}
 {{
-    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName,
-        string.IsNullOrWhiteSpace(dtoBaseClass.className), 
-        string.IsNullOrWhiteSpace(dtoBaseClass.className) ? arg.BaseProperties : "false"))}
+    {GetPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName, dtoBaseClass))}
 }}
 
 sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {arg.Entity}>
@@ -72,7 +70,7 @@ sealed class {arg.Name}Mapper : Mapper<{arg.Name}Request, {arg.Name}Response, {a
     {{
         return new {arg.Name}Response
         {{
-            {MappingPropertiesCode(assembly, arg.Entity, arg.EntityFullName, "e", true, arg.BaseProperties)}
+            {MappingPropertiesCode(GetScalarProperties(assembly, arg.Entity, arg.EntityFullName), "e")}
         }};
     }}
 }}

@@ -1,5 +1,7 @@
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
+using FastEndpointsTool.Extensions;
 
 namespace FastEndpointsTool.Templates;
 
@@ -50,35 +52,33 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return builder.ToString();
     }
 
-    protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, bool includeId, string baseProperties)
+    protected List<PropertyInfo> GetScalarProperties(Assembly assembly, string entityName, string entityFullName, DtoClass? dtoBaseClass = null, bool includeId = false, bool onlySetProperties = false)
     {
         var entityType = SingleType(assembly, entityFullName);
-        var excludePropertiesMethod = entityType.GetMethod("ExcludeProperties");
-        var excludeProperties = new List<string>();
-        if (baseProperties == "false")
-        {
-            excludeProperties.Add("CreatedAt");
-            excludeProperties.Add("CreatedBy");
-            excludeProperties.Add("UpdatedAt");
-            excludeProperties.Add("UpdatedBy");
-        }
-        if (excludePropertiesMethod != null)
-        {
-            excludeProperties.AddRange(excludePropertiesMethod.Invoke(null, null) as List<string> ?? new List<string>());
-        }
-        var properties = entityType.GetProperties()
+        var excludeProperties = dtoBaseClass?.classType?
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
-            .Where(p => !IsId(p.Name, entityName))
+            .WhereIf(includeId, p => !IsId(p.Name, entityName))
+            .Select(p => p.Name).ToList() ?? [];
+        var properties = entityType
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
             .Where(p => !excludeProperties.Contains(p.Name))
+            .WhereIf(onlySetProperties, p => p.SetMethod != null && p.SetMethod.IsPublic)
             .ToList();
-        if (includeId)
-            properties.Insert(0, GetIdProperty(assembly, entityName, entityFullName));
+
+        // place Id property at the first, if it exists
+        if (properties.Any(p => IsId(p.Name, entityName)))
+        {
+            var idProperty = properties.First(p => IsId(p.Name, entityName));
+            properties.Remove(idProperty);
+            properties.Insert(0, idProperty);
+        }
         return properties;
     }
 
-    protected string MappingPropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string baseProperties, string? leftParameter = null)
+    protected string MappingPropertiesCode(List<PropertyInfo> properties, string parameter, string? leftParameter = null)
     {
-        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId, baseProperties);
         var codeBuilder = new StringBuilder();
 
         for (int i = 0; i < properties.Count; i++)
@@ -104,9 +104,8 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return codeBuilder.ToString();
     }
 
-    protected string UpdatePropertiesCode(Assembly assembly, string entityName, string entityFullName, string parameter, bool includeId, string baseProperties, string? leftParameter = null)
+    protected string UpdatePropertiesCode(List<PropertyInfo> properties, string parameter, string? leftParameter = null)
     {
-        var properties = GetScalarProperties(assembly, entityName, entityFullName, includeId, baseProperties);
         var codeBuilder = new StringBuilder();
 
         for (int i = 0; i < properties.Count; i++)
@@ -259,7 +258,7 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         // Try to get the alias, return the original typeName if no alias is found
         return typeAliasMap.TryGetValue(typeName, out var alias) ? alias : typeName;
     }
-    
+
     protected (DtoMapping? mapping, Type? entityBaseType) GetDtoMapping(Assembly assembly, FeToolSetting setting, string entityFullName)
     {
         var entityType = assembly.GetType(entityFullName);
@@ -272,27 +271,43 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         var baseType = entityType.BaseType;
         while (baseType != null)
         {
-            dtoMapping = setting.Project.DtoMappings.Find(x => x.Entity == baseType.FullName 
-                                                               || baseType.FullName!.Contains($"{x.Entity}`"));
+            // remove any thing b/w [] using regex
+            var baseTypeFullName = Regex.Replace(baseType.FullName ?? string.Empty, @"(\[.*?\])|\]", string.Empty);
+            dtoMapping = setting.Project.DtoMappings.Find(x => x.Entity == baseTypeFullName);
             if (dtoMapping != null)
+            {
+                dtoMapping.DtoWithArguments = baseType.FullName ?? string.Empty;
                 break;
+            }
             baseType = baseType.BaseType;
         }
-        
+
         return (dtoMapping, baseType);
     }
 
-    protected (string? namespaceName, string? className) GetDtoClass(DtoMapping? mapping, Type? entityBaseType)
+    protected DtoClass GetDtoClass(Assembly assembly, DtoMapping? mapping, Type? entityBaseType)
     {
         if (mapping == null || entityBaseType == null)
-            return (null, null);
+            return new(null, null, null);
+
+        Type? dtoType = null;
+        (string? namespaceName, string? className) member;
+
         if (!entityBaseType.IsGenericType)
         {
-            return GetNamespaceAndMemberName(mapping.Dto);
+            dtoType = assembly.GetType(mapping.Dto);
+            if (dtoType == null)
+                throw new UserFriendlyException($"Dto type {mapping.Dto} not found.");
+            member = GetNamespaceAndMemberName(mapping.Dto);
+            return new(member.namespaceName, member.className, dtoType);
         }
-        
-        var namespaceAndClassName = GetNamespaceAndMemberName(mapping.Dto);
-        return (namespaceAndClassName.namespaceName, $"{namespaceAndClassName.className}<{string.Join(",", entityBaseType.GetGenericArguments().Select(x => ConvertToAlias(x.Name)))}>");
+
+        dtoType = assembly.GetType(mapping.DtoWithArguments);
+        if (dtoType == null)
+            throw new UserFriendlyException($"Dto type {mapping.DtoWithArguments} not found.");
+        member = GetNamespaceAndMemberName(mapping.Dto);
+        var classNameWithArguments = $"{Regex.Replace(member.className ?? string.Empty, @"`\d", "")}<{string.Join(",", dtoType.GetGenericArguments().Select(x => ConvertToAlias(x.Name)))}>";
+        return new(member.namespaceName, classNameWithArguments, dtoType);
     }
 
     protected (string namespaceName, string className) GetNamespaceAndMemberName(string fullName)
@@ -301,3 +316,5 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
         return (string.Join(".", parts.Take(parts.Length - 1)), parts.Last());
     }
 }
+
+public record DtoClass(string? namespaceName, string? className, Type? classType);
