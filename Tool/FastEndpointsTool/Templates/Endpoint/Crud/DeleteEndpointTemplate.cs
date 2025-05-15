@@ -14,17 +14,17 @@ public class DeleteEndpointTemplate : TemplateBase<EndpointArgument>
         var template = $@"
 sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response>
 {{
-    {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(3, 4))}
+    {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"private readonly {arg.DataContext} _dbContext;" : RemoveLine(2))}
 
     public {arg.Name}Endpoint({string.Join(", ", constructorParams)})
     {{
-        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext = context;" : RemoveLine(7))}
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext = context;" : RemoveLine())}
     }}
 
     public override void Configure()
     {{
         Delete(""{Helpers.JoinUrl(arg.Url ?? string.Empty, $"{{{GetIdProperty(assembly, arg.Entity, arg.EntityFullName).Name.ToLower()}}}")}"");
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(13))}
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine())}
         {(!string.IsNullOrWhiteSpace(arg.Permission) ? $"Permissions(Allow.{arg.Permission});" : "AllowAnonymous();")}
     }}
 
@@ -39,8 +39,8 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request, {arg.Name}Response
         }}
 
         // Delete the entity from the db
-        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext.{arg.PluralName}.Remove(entity);" : RemoveLine(28))}
-        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine(29))}
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"_dbContext.{arg.PluralName}.Remove(entity);" : RemoveLine())}
+        {(!string.IsNullOrWhiteSpace(arg.DataContext) ? $"await _dbContext.SaveChangesAsync(cancellationToken);" : RemoveLine())}
         await SendAsync(new {arg.Name}Response {{ Success = true }}, cancellation: cancellationToken);
     }}
 }}

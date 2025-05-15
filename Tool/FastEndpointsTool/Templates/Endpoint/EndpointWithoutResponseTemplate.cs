@@ -13,7 +13,7 @@ sealed class {arg.Name}Endpoint : Endpoint<{arg.Name}Request>
     public override void Configure()
     {{
         {arg.Method.ToPascalCase()}(""{Helpers.JoinUrl(arg.Url)}"");
-        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine(6))}
+        {(!string.IsNullOrWhiteSpace(arg.Group) ? $"Group<{arg.Group}>();" : RemoveLine())}
         {(!string.IsNullOrWhiteSpace(arg.Permission) ? $"Permissions(Allow.{arg.Permission});" : "AllowAnonymous();")}
     }}
 

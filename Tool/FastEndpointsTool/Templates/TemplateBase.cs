@@ -10,31 +10,35 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
 {
     public abstract string Template(TArgument arg);
 
-    protected List<int> RemoveLineIndexes { get; set; } = new List<int>();
-
     protected string DeleteLines(string input)
     {
-        string?[] lines = input.Split(["\r\n", "\r", "\n"], StringSplitOptions.None);
-
-        foreach (var lineIndex in RemoveLineIndexes)
+        var lines = input.Split(Environment.NewLine);
+        var builder = new StringBuilder();
+        for (var i = 0; i < lines.Length; i++)
         {
-            if (lineIndex < 0 || lineIndex >= lines.Length)
+            var line = lines[i];
+            // use regex to find (Remove {lineCount} lines) in line
+            var match = Regex.Match(line, @"^\s*Remove\s+(\d+)\s+lines\s*$");
+            if (match.Success)
             {
-                continue;
+                var lineCount = int.Parse(match.Groups[1].Value);
+                i += lineCount;
             }
-
-            // Remove the specified line
-            lines[lineIndex] = null;
+            else
+            {
+                builder.AppendLine(line);
+            }
         }
-
-        // Reconstruct the string without the null (deleted) line
-        return string.Join(Environment.NewLine, lines.Where(line => line != null));
+        return builder.ToString();
     }
 
-    protected string RemoveLine(params int[] lineIndexes)
+    protected string RemoveLine(int lineCount = 1)
     {
-        RemoveLineIndexes.AddRange(lineIndexes);
-        return string.Empty;
+        if (lineCount < 1)
+            throw new Exception("Line count must be greater than or equal to 1.");
+
+        // return placeholder for remove lines
+        return $"Remove {lineCount - 1} lines";
     }
 
     protected string Merge(List<string> namespaces, string @namespace, string code)
