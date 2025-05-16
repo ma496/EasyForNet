@@ -8,7 +8,7 @@
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-fet</ToolCommandName>
-    <Version>1.1.22</Version>
+    <Version>1.1.23</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
