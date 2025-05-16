@@ -1,7 +1,7 @@
 using FastEndpointsTool.Parsing;
 using Xunit.Abstractions;
 
-namespace FastEndpointsTool.Tests;
+namespace FastEndpointsTool.Tests.Parsing;
 
 public class ParserTests
 {
@@ -221,7 +221,7 @@ public class ParserTests
         Assert.Equal("endpoints is not a valid command.", exception.Message);
     }
 
-    [Fact]  
+    [Fact]
     public void EmptyNameTest()
     {
         var args = new[] { "endpoint", "--name", "", "--method", "post", "--url", "get-users", "--entity", "User" };

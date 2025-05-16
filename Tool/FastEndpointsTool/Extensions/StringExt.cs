@@ -5,7 +5,6 @@ namespace FastEndpointsTool.Extensions;
 public static class StringExt
 {
     public static string ToCamelCase(this string value)
-
     {
         return JsonNamingPolicy.CamelCase.ConvertName(value);
     }
