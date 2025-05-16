@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Backend.Data.Entities.Base;
 using Backend.Data.Entities.Identity;
 using Backend.Services.Identity;
@@ -27,6 +28,8 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        SoftDeleteFilter(modelBuilder);
 
         modelBuilder.Entity<User>()
             .HasIndex(u => u.UsernameNormalized)
@@ -80,8 +83,25 @@ public class AppDbContext : DbContext
             .HasForeignKey(t => t.UserId);
     }
 
+    private void SoftDeleteFilter(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+                     .Where(t => typeof(ISoftDelete).IsAssignableFrom(t.ClrType)))
+        {
+            var parameter = Expression.Parameter(entityType.ClrType, "e");
+            var isDeletedProp = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+            var filter = Expression.Lambda(
+                Expression.Equal(isDeletedProp, Expression.Constant(false)),
+                parameter);
+
+            modelBuilder.Entity(entityType.ClrType)
+                        .HasQueryFilter(filter);
+        }
+    }
+
     public override int SaveChanges()
     {
+        ApplySoftDeleteRules();
         NormalizeProperties();
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
@@ -120,6 +140,7 @@ public class AppDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        ApplySoftDeleteRules();
         NormalizeProperties();
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
@@ -170,6 +191,17 @@ public class AppDbContext : DbContext
             {
                 hasNormalizedProperties.NormalizeProperties();
             }
+        }
+    }
+
+    private void ApplySoftDeleteRules()
+    {
+        foreach (var entry in ChangeTracker.Entries<ISoftDelete>()
+                                         .Where(e => e.State == EntityState.Deleted))
+        {
+            entry.State = EntityState.Modified;
+            entry.Entity.IsDeleted = true;
+            entry.Entity.DeletedAt = DateTime.UtcNow;
         }
     }
 }

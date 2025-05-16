@@ -64,6 +64,8 @@ public abstract class TemplateBase<TArgument> : ITemplate<TArgument>
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))
             .WhereIf(includeId, p => !IsId(p.Name, entityName))
             .Select(p => p.Name).ToList() ?? [];
+        excludeProperties.Add("IsDeleted");
+        excludeProperties.Add("DeletedAt");
         var properties = entityType
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string))

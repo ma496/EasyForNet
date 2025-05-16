@@ -67,8 +67,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
             Console.WriteLine("Copying project files...");
             CopyDirectory(backendProjectPath, backendTargetPath, true);
+            CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Development.json");
             CopyDirectory(webProjectPath, webTargetPath, true);
-            CopyFilesIfExists(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
+            CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
 
             Console.WriteLine("Customizing project files...");
             RenameFilesAndDirectories(backendTargetPath, "Backend", pascalCaseProjectName);
@@ -252,7 +253,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
-    private void CopyFilesIfExists(string sourceDirectory, string targetDirectory, params string[] fileNames)
+    private void CopyFiles(string sourceDirectory, string targetDirectory, params string[] fileNames)
     {
         foreach (var fileName in fileNames)
         {
@@ -265,8 +266,23 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             }
             else
             {
-                throw new UserFriendlyException($"File '{fileName}' does not exist in the source directory '{sourceDirectory}'.");
+                throw new Exception($"File '{fileName}' does not exist in the source directory '{sourceDirectory}'.");
             }
+        }
+    }
+
+    private void CopyFrom(string sourceDirectory, string targetDirectory, string from, string to)
+    {
+        var sourceFilePath = Path.Combine(sourceDirectory, from);
+        var targetFilePath = Path.Combine(targetDirectory, to);
+
+        if (File.Exists(sourceFilePath))
+        {
+            File.Copy(sourceFilePath, targetFilePath, overwrite: true);
+        }
+        else
+        {
+            throw new Exception($"File '{from}' does not exist in the source directory '{sourceDirectory}'.");
         }
     }
 }
