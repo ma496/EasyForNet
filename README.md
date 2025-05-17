@@ -267,7 +267,7 @@ For detailed instructions and guides, please refer to the following documents:
 
 - [CRUD Endpoints Tutorial](documents/crud-endpoints-tutorial.md) - Step-by-step guide for creating CRUD endpoints
 - [Endpoint Commands Reference](documents/endpoint-commands.md) - Complete reference for all endpoint generation commands
-- [Authentication & Authorization](documents/authentication-authorization.md) - Detailed guide on authentication and authorization
+- [Authentication & Authorization](documents/authentication-and-authorization.md) - Detailed guide on authentication and authorization
 - [Send Email Guide](documents/send-email.md) - Instructions for sending emails using the background email service
 
 
