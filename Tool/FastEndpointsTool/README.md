@@ -99,4 +99,4 @@ dotnet test
 
 ## Documentation
 
-Check out the [Repository](https://github.com/ma496/FastEndpointsTool) for additional information.
+Check out the [Documentation](https://github.com/ma496/FastEndpointsTool/wiki) for additional information.
