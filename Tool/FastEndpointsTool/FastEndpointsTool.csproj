@@ -12,6 +12,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/ma496/FastEndpointsTool</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/ma496/FastEndpointsTool</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
