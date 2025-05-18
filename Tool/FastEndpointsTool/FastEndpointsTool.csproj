@@ -8,8 +8,10 @@
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-fet</ToolCommandName>
-    <Version>1.1.27</Version>
+    <Version>1.1.28</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ma496/FastEndpointsTool</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
