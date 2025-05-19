@@ -105,6 +105,7 @@ dotnet test
 - **User Management** – Includes endpoints and pages for user CRUD operations, changing passwords, and handling forgotten/reset passwords.  
 - **Rapid CRUD Endpoints** – Use the `dotnet fet crud` command to generate fully authorized CRUD endpoints with permissions in one step, maintaining consistency and speeding up development.  
 - **Custom Endpoint Creation** – Generate individual endpoints as needed while following a structured convention.  
+- **Localization** – Support multiple languages.  
 - **Self-Hosted Background Email Service** – Send emails directly from your own server without relying on third-party services.  
 - **Automatic Token Cleanup Jobs**  
   - `delete-expired-auth-tokens` – A recurring job that runs once per day to remove expired authentication tokens. The schedule can be customized.  
