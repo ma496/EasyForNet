@@ -29,58 +29,9 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
         SoftDeleteFilter(modelBuilder);
-
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.UsernameNormalized)
-            .IsUnique();
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.EmailNormalized)
-            .IsUnique();
-
-        modelBuilder.Entity<Role>()
-            .HasIndex(r => r.NameNormalized)
-            .IsUnique();
-
-        modelBuilder.Entity<Permission>()
-            .HasIndex(p => p.Name)
-            .IsUnique();
-
-        modelBuilder.Entity<UserRole>()
-            .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.User)
-            .WithMany(u => u.UserRoles)
-            .HasForeignKey(ur => ur.UserId);
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.Role)
-            .WithMany(r => r.UserRoles)
-            .HasForeignKey(ur => ur.RoleId);
-
-        modelBuilder.Entity<RolePermission>()
-            .HasKey(rp => new { rp.RoleId, rp.PermissionId });
-
-        modelBuilder.Entity<RolePermission>()
-            .HasOne(rp => rp.Role)
-            .WithMany(r => r.RolePermissions)
-            .HasForeignKey(rp => rp.RoleId);
-
-        modelBuilder.Entity<RolePermission>()
-            .HasOne(rp => rp.Permission)
-            .WithMany(p => p.RolePermissions)
-            .HasForeignKey(rp => rp.PermissionId);
-
-        modelBuilder.Entity<AuthToken>()
-            .HasOne(at => at.User)
-            .WithMany(u => u.AuthTokens)
-            .HasForeignKey(at => at.UserId);
-
-        modelBuilder.Entity<Token>()
-            .HasOne(t => t.User)
-            .WithMany(u => u.Tokens)
-            .HasForeignKey(t => t.UserId);
     }
 
     private void SoftDeleteFilter(ModelBuilder modelBuilder)
@@ -103,6 +54,7 @@ public class AppDbContext : DbContext
     {
         ApplySoftDeleteRules();
         NormalizeProperties();
+
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
@@ -142,6 +94,7 @@ public class AppDbContext : DbContext
     {
         ApplySoftDeleteRules();
         NormalizeProperties();
+
         var currentUserId = _currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
