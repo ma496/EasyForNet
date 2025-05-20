@@ -1,7 +1,0 @@
-backend:
-  - Project Directory is Template/Backend/Source/
-  - Tests Directory is Template/Backend/Tests/
-frontend:
-  - Project Directory is Template/Frontend/fe-web/
-  - not used src directory
-  - use app directory instead of pages directory

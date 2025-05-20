@@ -1,4 +1,6 @@
-# FastEndpointsTool & Template
+# FullStack Template & Tool
+
+A full-stack template built with ASP.NET 9 and Next.js, featuring a CLI tool for generating projects and API endpoints.
 
 ## Prerequisites
 
@@ -8,31 +10,31 @@
 
 ## Installation
 
-To install the FastEndpointsTool globally using the .NET CLI, run the following command:
+To install the EasyForNet tool globally using the .NET CLI, run the following command:
 
 ```sh
-dotnet tool install --global FastEndpointsTool
+dotnet tool install --global EasyForNet
 ```
 
 ## Checking the Version
 
-To check the version of the FastEndpointsTool, run the following command:
+To check the version of the EasyForNet tool, run the following command:
 
 ```sh
-dotnet fet -v
+dotnet efn -v
 ```
 
 or
 
 ```sh
-dotnet fet --version
+dotnet efn --version
 ```
 ## Create a New Project
 
-To create a new project using the FastEndpointsTool, run the following command:
+To create a new project using the EasyForNet tool, run the following command:
 
 ```sh
-dotnet fet cp -n {name} -o {path}
+dotnet efn cp -n {name} -o {path}
 ```
 
 - `-n {name}`: Specifies the name of the new project.
@@ -40,7 +42,7 @@ dotnet fet cp -n {name} -o {path}
 
 ## Change Connection Strings
 
-By default, the FastEndpointsTool sets up connection strings for PostgreSQL in the `appsettings.json`, `appsettings.Development.json` and `appsettings.Testing.json` files. To change the connection strings, follow these steps:
+By default, the EasyForNet sets up connection strings for PostgreSQL in the `appsettings.json`, `appsettings.Development.json` and `appsettings.Testing.json` files. To change the connection strings, follow these steps:
 
 1. Open the `appsettings.Development.json` file. Update the `DefaultConnection` and `Hangfire` connection strings with your PostgreSQL connection details:
 
@@ -103,7 +105,7 @@ dotnet test
 - **Permissions-Based Authorization** – Fine-grained access control using flexible permissions, ensuring users can only perform authorized actions.  
 - **Role & Permission Management** – Define roles and assign permissions dynamically through frontend.  
 - **User Management** – Includes endpoints and pages for user CRUD operations, changing passwords, and handling forgotten/reset passwords.  
-- **Rapid CRUD Endpoints** – Use the `dotnet fet crud` command to generate fully authorized CRUD endpoints with permissions in one step, maintaining consistency and speeding up development.  
+- **Rapid CRUD Endpoints** – Use the `dotnet efn crud` command to generate fully authorized CRUD endpoints with permissions in one step, maintaining consistency and speeding up development.  
 - **Custom Endpoint Creation** – Generate individual endpoints as needed while following a structured convention.  
 - **Localization** – Support multiple languages.  
 - **Self-Hosted Background Email Service** – Send emails directly from your own server without relying on third-party services.  
@@ -141,4 +143,4 @@ Thank you for your support! 👍
 
 ## Documentation
 
-Check out the [Documentation](https://github.com/ma496/FastEndpointsTool/wiki) for additional information.
+Check out the [Documentation](https://github.com/ma496/EasyForNet/wiki) for additional information.
