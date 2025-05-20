@@ -13,7 +13,7 @@ A full-stack template built with ASP.NET 9 and Next.js, featuring a CLI tool for
 To install the EasyForNet tool globally using the .NET CLI, run the following command:
 
 ```sh
-dotnet tool install --global EasyForNet
+dotnet tool install --global EasyForNetTool
 ```
 
 ## Checking the Version
