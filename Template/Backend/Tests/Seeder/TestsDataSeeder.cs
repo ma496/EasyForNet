@@ -1,5 +1,5 @@
-using Backend.Data.Entities.Identity;
-using Backend.Services.Identity;
+using Backend.Features.Identity.Core;
+using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Seeder;

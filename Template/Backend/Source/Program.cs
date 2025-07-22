@@ -2,8 +2,9 @@ using System.Security.Claims;
 using Backend.Auth;
 using Backend.Data;
 using Backend.ErrorHandling;
+using Backend.Features.Identity.Core;
+using Backend.Permissions;
 using Backend.Services.Email;
-using Backend.Services.Identity;
 using Backend.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
@@ -87,7 +88,7 @@ bld.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 bld.Services.AddScoped<ITokenService, TokenService>();
 
 // Configure email services
-bld.Services.Configure<EmailSettings>(bld.Configuration.GetSection("EmailSettings"));
+bld.Services.Configure<EmailSetting>(bld.Configuration.GetSection("EmailSettings"));
 bld.Services.AddScoped<IEmailService, EmailService>();
 bld.Services.AddScoped<IEmailBackgroundJobs, EmailBackgroundJobs>();
 
@@ -140,7 +141,7 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 });
 
 // Move recurring jobs setup after database is ready
-using (var scope = app.Services.CreateScope())
+using (app.Services.CreateScope())
 {
     RecurringJob.AddOrUpdate<IAuthTokenService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
     RecurringJob.AddOrUpdate<ITokenService>("delete-expired-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
@@ -150,5 +151,5 @@ app.Run();
 
 namespace Backend
 {
-    public partial class Program { }
+    public class Program { }
 }

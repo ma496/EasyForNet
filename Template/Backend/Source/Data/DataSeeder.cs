@@ -1,6 +1,7 @@
 using Backend.Auth;
-using Backend.Data.Entities.Identity;
-using Backend.Services.Identity;
+using Backend.Features.Identity.Core;
+using Backend.Features.Identity.Core.Entities;
+using Backend.Permissions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data;
