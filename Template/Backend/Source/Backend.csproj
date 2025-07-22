@@ -10,18 +10,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FastEndpoints" Version="5.32.0" />
-        <PackageReference Include="FastEndpoints.Generator" Version="5.32.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-        <PackageReference Include="FastEndpoints.Security" Version="5.32.0" />
-        <PackageReference Include="FastEndpoints.Swagger" Version="5.32.0" />
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.17" />
-        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+        <PackageReference Include="FastEndpoints" Version="6.2.0" />
+        <PackageReference Include="FastEndpoints.Generator" Version="6.2.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+        <PackageReference Include="FastEndpoints.Security" Version="6.2.0" />
+        <PackageReference Include="FastEndpoints.Swagger" Version="6.2.0" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.20" />
+        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
-        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.6" />
     </ItemGroup>
 
     <ItemGroup>
