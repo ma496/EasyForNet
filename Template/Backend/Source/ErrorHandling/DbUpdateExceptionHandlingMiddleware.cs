@@ -3,20 +3,13 @@ using Npgsql;
 
 namespace Backend.ErrorHandling;
 
-public class DbUpdateExceptionHandlingMiddleware
+public class DbUpdateExceptionHandlingMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public DbUpdateExceptionHandlingMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task Invoke(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (DbUpdateException ex)
         {

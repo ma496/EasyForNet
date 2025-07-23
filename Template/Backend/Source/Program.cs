@@ -1,10 +1,9 @@
 using System.Security.Claims;
-using Backend.Auth;
 using Backend.Data;
 using Backend.ErrorHandling;
+using Backend.External.Email;
 using Backend.Features.Identity.Core;
 using Backend.Permissions;
-using Backend.Services.Email;
 using Backend.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;

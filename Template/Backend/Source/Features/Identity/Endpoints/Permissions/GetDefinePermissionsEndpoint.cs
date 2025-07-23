@@ -1,4 +1,3 @@
-using Backend.Auth;
 using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Permissions;

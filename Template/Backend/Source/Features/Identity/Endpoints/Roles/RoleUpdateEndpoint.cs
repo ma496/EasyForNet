@@ -1,6 +1,5 @@
-using Backend.Auth;
+using Backend.Base.Dto;
 using Backend.ErrorHandling;
-using Backend.Features.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using FluentValidation;

@@ -1,17 +1,10 @@
 namespace Backend.ErrorHandling;
 
-public class UnsupportedMediaTypeMiddleware
+public class UnsupportedMediaTypeMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public UnsupportedMediaTypeMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task Invoke(HttpContext context)
     {
-        await _next(context);
+        await next(context);
 
         if (context.Response.StatusCode == StatusCodes.Status415UnsupportedMediaType)
         {

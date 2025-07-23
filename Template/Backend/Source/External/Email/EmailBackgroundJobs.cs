@@ -1,6 +1,6 @@
 using Hangfire;
 
-namespace Backend.Services.Email;
+namespace Backend.External.Email;
 
 public interface IEmailBackgroundJobs
 {

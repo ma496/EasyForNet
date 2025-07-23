@@ -1,5 +1,5 @@
+using Backend.External.Email;
 using Backend.Features.Identity.Core;
-using Backend.Services.Email;
 using Backend.Settings;
 using FluentValidation;
 using Microsoft.Extensions.Options;

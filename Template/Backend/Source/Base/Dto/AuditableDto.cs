@@ -1,4 +1,4 @@
-namespace Backend.Features.Base.Dto;
+namespace Backend.Base.Dto;
 
 public abstract class AuditableDto<TId> : AuditableDto, IBaseDto<TId>
 {

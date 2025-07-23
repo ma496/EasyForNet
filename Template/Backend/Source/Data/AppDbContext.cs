@@ -6,17 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options,
+                          ICurrentUserService currentUserService)
+    : DbContext(options)
 {
-    private readonly ICurrentUserService _currentUserService;
-
-    public AppDbContext(
-        DbContextOptions<AppDbContext> options,
-        ICurrentUserService currentUserService) : base(options)
-    {
-        _currentUserService = currentUserService;
-    }
-
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<Permission> Permissions => Set<Permission>();
@@ -55,7 +48,7 @@ public class AppDbContext : DbContext
         ApplySoftDeleteRules();
         NormalizeProperties();
 
-        var currentUserId = _currentUserService.GetCurrentUserId();
+        var currentUserId = currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
             .Where(e => (e.Entity is ICreatableEntity || e.Entity is IUpdatableEntity) && (
@@ -77,13 +70,10 @@ public class AppDbContext : DbContext
                     updatableEntity.UpdatedAt = DateTime.UtcNow;
                 }
             }
-            else if (entityEntry.State == EntityState.Modified)
+            else if (entityEntry is { State: EntityState.Modified, Entity: IUpdatableEntity updatableEntity })
             {
-                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
-                {
-                    updatableEntity.UpdatedAt = DateTime.UtcNow;
-                    updatableEntity.UpdatedBy = currentUserId;
-                }
+                updatableEntity.UpdatedAt = DateTime.UtcNow;
+                updatableEntity.UpdatedBy = currentUserId;
             }
         }
 
@@ -95,7 +85,7 @@ public class AppDbContext : DbContext
         ApplySoftDeleteRules();
         NormalizeProperties();
 
-        var currentUserId = _currentUserService.GetCurrentUserId();
+        var currentUserId = currentUserService.GetCurrentUserId();
         var entries = ChangeTracker
             .Entries()
             .Where(e => (e.Entity is ICreatableEntity || e.Entity is IUpdatableEntity) && (
@@ -117,13 +107,10 @@ public class AppDbContext : DbContext
                     updatableEntity.UpdatedAt = DateTime.UtcNow;
                 }
             }
-            else if (entityEntry.State == EntityState.Modified)
+            else if (entityEntry is { State: EntityState.Modified, Entity: IUpdatableEntity updatableEntity })
             {
-                if (entityEntry.Entity is IUpdatableEntity updatableEntity)
-                {
-                    updatableEntity.UpdatedAt = DateTime.UtcNow;
-                    updatableEntity.UpdatedBy = currentUserId;
-                }
+                updatableEntity.UpdatedAt = DateTime.UtcNow;
+                updatableEntity.UpdatedBy = currentUserId;
             }
         }
 

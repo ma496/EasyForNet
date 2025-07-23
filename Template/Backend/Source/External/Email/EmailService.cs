@@ -1,8 +1,8 @@
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using Microsoft.Extensions.Options;
 
-namespace Backend.Services.Email;
+namespace Backend.External.Email;
 
 public interface IEmailService
 {

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Backend.Features.Base.Dto;
+namespace Backend.Base.Dto;
 
 public class ListRequestDtoValidator : Validator<ListRequestDto>
 {
