@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Tests.Architect;
 
 namespace Tests;
 
@@ -18,6 +19,7 @@ public class App : AppFixture<Backend.Program>
     protected override void ConfigureServices(IServiceCollection s)
     {
         // do test service registration here
+        s.AddScoped<IFeatureDependencyTester, FeatureDependencyTester>();
     }
 
     protected override Task TearDownAsync()
