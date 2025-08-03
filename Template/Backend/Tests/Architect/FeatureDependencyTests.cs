@@ -15,7 +15,7 @@ public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper)
       var featureDependencyTester = App.Services.GetRequiredService<IFeatureDependencyTester>();
       var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
       
-      Assert.True(testOutput.IsSuccess, FormatFailureMessage(testOutput));
+      Assert.True(testOutput.IsSuccess, "Feature dependency test failed:\n" + FormatFailureMessage(testOutput));
     }
     
     [Fact]
@@ -27,7 +27,7 @@ public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper)
         var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
       
         Assert.False(testOutput.IsSuccess);
-        TestOutputHelper.WriteLine(FormatFailureMessage(testOutput));
+        TestOutputHelper.WriteLine("Feature dependency failed:\n" + FormatFailureMessage(testOutput));
         
         MustHaveForbiddenTypes(testOutput, typeof(FeatureBStat), 
             [typeof(IFeatureAOneService)]);
@@ -75,7 +75,7 @@ public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper)
   - {string.Join("\n  - ", forbiddenTypeFullNames)}";
         });
   
-        return "Feature dependency test failed:\n" + string.Join("\n", failedTypesMessages);
+        return string.Join("\n", failedTypesMessages);
     }
 
     private static void MustHaveForbiddenTypes(FeatureDependencyTestOutput testOutput,

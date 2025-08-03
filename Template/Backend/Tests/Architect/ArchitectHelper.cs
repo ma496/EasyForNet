@@ -10,101 +10,112 @@ public static class ArchitectHelper
         var dependencies = new HashSet<TypeDefinition>();
 
         // Recursive local function to process types and their generic arguments.
-        void AddDependenciesFrom(TypeReference typeRef)
+        void AddDependenciesFrom(TypeReference? typeRef)
         {
+            if (typeRef == null) return;
+
             // 1. Resolve the main type and add it as a dependency.
-            //    e.g., for `List<string>`, this adds `System.List`.
             var resolvedType = typeRef.Resolve();
             if (resolvedType != null)
             {
                 dependencies.Add(resolvedType);
             }
 
-            // 2. If it's a generic type (like Tuple<T1, T2>), recursively process its arguments.
+            // 2. If it's a generic type, recursively process its arguments.
             if (typeRef is GenericInstanceType genericInstance)
             {
                 foreach (var genericArg in genericInstance.GenericArguments)
                 {
-                    // This recursive call will handle nested generics,
-                    // e.g., the inner tuple in `Tuple<T1, Tuple<T2, T3>>`.
                     AddDependenciesFrom(genericArg);
                 }
             }
         }
 
-        // --- Now, iterate through all type members using the helper ---
-
-        // Base type
-        AddDependenciesFrom(type.BaseType);
-
-        // Interfaces
-        if (type.HasInterfaces)
+        // --- Traverse the inheritance hierarchy ---
+        var currentType = type;
+        while (currentType != null && currentType.FullName != "System.Object")
         {
-            foreach (var i in type.Interfaces)
+            // Interfaces
+            if (currentType.HasInterfaces)
             {
-                AddDependenciesFrom(i.InterfaceType);
-            }
-        }
-
-        // Fields
-        if (type.HasFields)
-        {
-            foreach (var field in type.Fields)
-            {
-                AddDependenciesFrom(field.FieldType);
-            }
-        }
-
-        // Properties
-        if (type.HasProperties)
-        {
-            foreach (var property in type.Properties)
-            {
-                AddDependenciesFrom(property.PropertyType);
-            }
-        }
-
-        // Methods (including constructors)
-        if (type.HasMethods)
-        {
-            foreach (var method in type.Methods)
-            {
-                // Return type
-                AddDependenciesFrom(method.ReturnType);
-
-                // Parameters
-                foreach (var parameter in method.Parameters)
+                foreach (var i in currentType.Interfaces)
                 {
-                    AddDependenciesFrom(parameter.ParameterType);
-                }
-
-                // Method body locals and instructions
-                if (method.HasBody)
-                {
-                    // Local variables
-                    foreach(var variable in method.Body.Variables)
-                    {
-                        AddDependenciesFrom(variable.VariableType);
-                    }
-
-                    // Instruction operands
-                    foreach (var instruction in method.Body.Instructions)
-                    {
-                        if (instruction.Operand is MethodReference methodReference)
-                        {
-                            AddDependenciesFrom(methodReference.DeclaringType);
-                        }
-                        else if (instruction.Operand is FieldReference fieldReference)
-                        {
-                            AddDependenciesFrom(fieldReference.DeclaringType);
-                        }
-                        else if (instruction.Operand is TypeReference typeReference)
-                        {
-                            AddDependenciesFrom(typeReference);
-                        }
-                    }
+                    AddDependenciesFrom(i.InterfaceType);
                 }
             }
+
+            // Fields
+            if (currentType.HasFields)
+            {
+                foreach (var field in currentType.Fields)
+                {
+                    AddDependenciesFrom(field.FieldType);
+                }
+            }
+
+            // Properties
+            if (currentType.HasProperties)
+            {
+                foreach (var property in currentType.Properties)
+                {
+                    AddDependenciesFrom(property.PropertyType);
+                }
+            }
+
+            // Methods (including constructors)
+            if (currentType.HasMethods)
+            {
+                foreach (var method in currentType.Methods)
+                {
+                    // We only care about methods declared in the current type of the hierarchy
+                    if (method.DeclaringType != currentType) continue;
+                    
+                    // Return type
+                    AddDependenciesFrom(method.ReturnType);
+
+                    // Parameters
+                    foreach (var parameter in method.Parameters)
+                    {
+                        AddDependenciesFrom(parameter.ParameterType);
+                    }
+
+                    // Method body locals and instructions
+                    if (method.HasBody)
+                    {
+                        foreach (var variable in method.Body.Variables)
+                        {
+                            AddDependenciesFrom(variable.VariableType);
+                        }
+
+                        foreach (var instruction in method.Body.Instructions)
+                        {
+                            switch (instruction.Operand)
+                            {
+                                case MethodReference methodReference:
+                                    AddDependenciesFrom(methodReference.DeclaringType);
+                                    // Also check generic arguments of the method call itself
+                                    if (methodReference is GenericInstanceMethod genericMethod)
+                                    {
+                                        foreach(var arg in genericMethod.GenericArguments)
+                                        {
+                                            AddDependenciesFrom(arg);
+                                        }
+                                    }
+                                    break;
+                                case FieldReference fieldReference:
+                                    AddDependenciesFrom(fieldReference.DeclaringType);
+                                    break;
+                                case TypeReference typeReference:
+                                    AddDependenciesFrom(typeReference);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Move up to the base class for the next iteration.
+            currentType = currentType.BaseType?.Resolve();
         }
 
         // Filter out the type itself and return the final list.
