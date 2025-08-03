@@ -23,12 +23,12 @@ public class FeatureDependencyTester : IFeatureDependencyTester {
         var featureNamespaces = Types.InAssembly(assembly)
                                      .That().ResideInNamespaceStartingWith(baseFeatureNamespace)
                                      .GetTypes()
-                                     .Select(t => GetFeatureFromNamespace(t.Namespace ?? ""))
+                                     .Select(t => GetFeatureFromNamespace(baseFeatureNamespace, t.Namespace ?? ""))
                                      .Where(n => !string.IsNullOrEmpty(n))
                                      .Distinct()
                                      .ToList();
 
-        bool isSuccessFlag = true;
+        var isSuccessFlag = true;
         var featureNamespaceFlag = string.Empty;
         var failedTypesFlag = new List<FailedTypeInfo>();
 
@@ -64,7 +64,7 @@ public class FeatureDependencyTester : IFeatureDependencyTester {
                     return new(t, []);
                 }
 
-                var dependencies = FeatureDependencyRule.GetDependencies(typeDefinition);
+                var dependencies = ArchitectHelper.GetDependencies(typeDefinition);
                 var forbidden = dependencies
                     .Where(d => otherFeatureNamespaces.Any(ns => d.FullName.StartsWith(ns)) &&
                                 (!d.HasCustomAttributes ||
@@ -84,14 +84,14 @@ public class FeatureDependencyTester : IFeatureDependencyTester {
         return new(isSuccessFlag, featureNamespaceFlag, failedTypesFlag);
     }
     
-    private static string GetFeatureFromNamespace(string ns)
+    private static string GetFeatureFromNamespace(string baseFeatureNamespace, string @namespace)
     {
-        if (string.IsNullOrEmpty(ns) || !ns.StartsWith("Backend.Features."))
+        if (string.IsNullOrEmpty(@namespace) || !@namespace.StartsWith($"{baseFeatureNamespace}."))
         {
             return string.Empty;
         }
 
-        var parts = ns.Substring("Backend.Features.".Length).Split('.');
-        return $"Backend.Features.{parts.First()}";
+        var parts = @namespace.Substring($"{baseFeatureNamespace}.".Length).Split('.');
+        return $"{baseFeatureNamespace}.{parts.First()}";
     }
 }

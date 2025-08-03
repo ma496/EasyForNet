@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Architect\Features\" />
       <Folder Include="Features\Identity\Endpoints\" />
     </ItemGroup>
 
