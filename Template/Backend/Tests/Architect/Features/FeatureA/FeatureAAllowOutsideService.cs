@@ -1,4 +1,5 @@
 using Backend.Attributes;
+// ReSharper disable UnusedVariable
 
 namespace Tests.Architect.Features.FeatureA;
 
@@ -6,6 +7,8 @@ namespace Tests.Architect.Features.FeatureA;
 public interface IFeatureAAllowOutsideService
 {
     void MethodOne(FeatureAOneAllowOutsideModel allowOutsideModel);
+    FeatureATwoAllowOutsideModel MethodTwo();
+    void MethodThree();
 }
 
 [AllowOutside]
@@ -13,6 +16,13 @@ public class FeatureAAllowOutsideService : IFeatureAAllowOutsideService
 {
     public void MethodOne(FeatureAOneAllowOutsideModel allowOutsideModel)
     {
-        throw new NotImplementedException();
+    }
+
+    public FeatureATwoAllowOutsideModel MethodTwo()
+        => throw new NotImplementedException();
+
+    public void MethodThree()
+    {
+        var x = new FeatureAOneModel();
     }
 }

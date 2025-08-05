@@ -8,7 +8,9 @@ public class FeatureBMethodBody
     public void MethodA()
     {
         IFeatureAOneService featureAOneService = new FeatureAOneService();
-        IFeatureAAllowOutsideService featureAAllowOutsideService1 = new FeatureAAllowOutsideService();
-        featureAAllowOutsideService1.MethodOne(new());
+        IFeatureAAllowOutsideService featureAAllowOutsideService = new FeatureAAllowOutsideService();
+        featureAAllowOutsideService.MethodOne(new());
+        var x = featureAAllowOutsideService.MethodTwo();
+        featureAAllowOutsideService.MethodThree();
     }
 }

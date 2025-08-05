@@ -76,7 +76,8 @@ public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper)
         MustHaveForbiddenTypes(testOutput, typeof(FeatureBMethodBody), 
             [typeof(IFeatureAOneService), typeof(FeatureAOneService)]);
         MustHaveNotForbiddenTypes(testOutput, typeof(FeatureBMethodBody), 
-            [typeof(IFeatureAAllowOutsideService), typeof(FeatureAAllowOutsideService), typeof(FeatureAOneAllowOutsideModel)]);
+            [typeof(IFeatureAAllowOutsideService), typeof(FeatureAAllowOutsideService),
+                typeof(FeatureAOneAllowOutsideModel), typeof(FeatureATwoAllowOutsideModel), typeof(FeatureAOneModel)]);
     }
   
     private static string FormatFailureMessage(FeatureDependencyTestOutput testOutput)
