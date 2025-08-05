@@ -9,6 +9,6 @@ public class FeatureBConstructor
                                IFeatureAAllowOutsideService featureAAllowOutsideService,
                                FeatureAAllowOutsideService? featureAAllowOutsideService1)
     {
-        
+        featureAAllowOutsideService.MethodOne(new());
     }
 }

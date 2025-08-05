@@ -5,13 +5,13 @@ namespace Tests.Architect.Features.FeatureA;
 [AllowOutside]
 public interface IFeatureAAllowOutsideService
 {
-    void MethodOne(FeatureAOneModel model);
+    void MethodOne(FeatureAOneAllowOutsideModel allowOutsideModel);
 }
 
 [AllowOutside]
 public class FeatureAAllowOutsideService : IFeatureAAllowOutsideService 
 {
-    public void MethodOne(FeatureAOneModel model)
+    public void MethodOne(FeatureAOneAllowOutsideModel allowOutsideModel)
     {
         throw new NotImplementedException();
     }
