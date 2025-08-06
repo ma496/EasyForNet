@@ -11,6 +11,7 @@
         <PackageReference Include="FastEndpoints.Testing" Version="5.32.0" />
         <PackageReference Include="FluentAssertions" Version="8.5.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+        <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
         <PackageReference Include="xunit" Version="2.9.3" />
         <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
         <PackageReference Include="coverlet.collector" Version="6.0.4" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
@@ -25,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Architect\Features\" />
       <Folder Include="Features\Identity\Endpoints\" />
     </ItemGroup>
 
