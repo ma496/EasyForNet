@@ -1,4 +1,5 @@
 using Backend.Attributes;
+using Mono.Cecil;
 using NetArchTest.Rules;
 using Xunit.Abstractions;
 
@@ -16,10 +17,13 @@ public class NoDirectUseTests(ITestOutputHelper OutputHelper)
             .That()
             .HaveCustomAttribute(typeof(NoDirectUseAttribute))
             .GetTypes()
-            .Select(t => t.FullName)
-            .ToArray();
+            .ToList();
 
-        if (!typesWithNoDirectUseAttribute.Any())
+        var typesWithNoDirectUseAttributeFullNames = typesWithNoDirectUseAttribute
+                                                     .Select(x => x.FullName)
+                                                     .ToArray();
+
+        if (typesWithNoDirectUseAttribute.Count == 0)
         {
             // No types to test, so the test passes by default.
             return;
@@ -30,11 +34,11 @@ public class NoDirectUseTests(ITestOutputHelper OutputHelper)
             .That()
             .DoNotHaveCustomAttribute(typeof(NoDirectUseAttribute))
             .ShouldNot()
-            .HaveDependencyOnAny(typesWithNoDirectUseAttribute)
+            .HaveDependencyOnAny(typesWithNoDirectUseAttributeFullNames)
             .GetResult();
 
         // Assert
-        Assert.True(testResult.IsSuccessful, GetFailingTypesMessage(testResult));
+        Assert.True(testResult.IsSuccessful, GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
     }
     
     [Fact]
@@ -47,10 +51,13 @@ public class NoDirectUseTests(ITestOutputHelper OutputHelper)
                                                  .That()
                                                  .HaveCustomAttribute(typeof(NoDirectUseAttribute))
                                                  .GetTypes()
-                                                 .Select(t => t.FullName)
-                                                 .ToArray();
+                                                 .ToList();
 
-        if (!typesWithNoDirectUseAttribute.Any())
+        var typesWithNoDirectUseAttributeFullNames = typesWithNoDirectUseAttribute
+                                                     .Select(x => x.FullName)
+                                                     .ToArray();
+
+        if (typesWithNoDirectUseAttribute.Count == 0)
         {
             // No types to test, so the test passes by default.
             return;
@@ -61,23 +68,43 @@ public class NoDirectUseTests(ITestOutputHelper OutputHelper)
                               .That()
                               .DoNotHaveCustomAttribute(typeof(NoDirectUseAttribute))
                               .ShouldNot()
-                              .HaveDependencyOnAny(typesWithNoDirectUseAttribute)
+                              .HaveDependencyOnAny(typesWithNoDirectUseAttributeFullNames)
                               .GetResult();
 
         // Assert
         Assert.False(testResult.IsSuccessful);
         
-        OutputHelper.WriteLine(GetFailingTypesMessage(testResult));
+        OutputHelper.WriteLine(GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
     }
 
-    private static string GetFailingTypesMessage(TestResult result)
+    private static string GetFailingTypesMessage(TestResult result, IReadOnlyList<Type> typesWithNoDirectUseAttribute)
     {
-        if (result.IsSuccessful)
+        if (result.IsSuccessful || result.FailingTypes == null)
         {
             return string.Empty;
         }
 
-        var failingTypes = result.FailingTypes.Select(t => t.FullName);
-        return $"The following types violate the NoDirectUse rule: {string.Join(", ", failingTypes)}";
+        var failingTypesDetails = result.FailingTypes.Select(failingType =>
+        {
+            var module = ModuleDefinition.ReadModule(failingType.Module.FullyQualifiedName);
+            var cecilType = module.GetType(failingType.FullName);
+
+            if (cecilType == null) return $"{failingType.FullName} (could not analyze dependencies)";
+
+            var dependencies = ArchitectHelper.GetDependencies(cecilType);
+            var forbiddenDependencies = dependencies
+                .Where(dep => typesWithNoDirectUseAttribute.Any(t => t.FullName == dep.FullName))
+                .Select(d => d.FullName)
+                .ToList();
+
+            if (forbiddenDependencies.Count != 0)
+            {
+                return $"{failingType.FullName} -> [{string.Join(", ", forbiddenDependencies)}]";
+            }
+
+            return $"{failingType.FullName} (unexpected dependency)";
+        });
+
+        return $"The following types violate the NoDirectUse rule (Type -> Forbidden Dependencies):\n- {string.Join("\n- ", failingTypesDetails)}";
     }
 }
