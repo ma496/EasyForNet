@@ -1,3 +1,4 @@
+using Backend.Attributes;
 using Backend.Data;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ public interface IUserService
     Task UpdateLastLoginAsync(Guid userId);
 }
 
+[NoDirectUse]
 public class UserService(AppDbContext dbContext, IPasswordHasher passwordHasher) : IUserService
 {
     public async Task<User?> GetByIdAsync(Guid id)

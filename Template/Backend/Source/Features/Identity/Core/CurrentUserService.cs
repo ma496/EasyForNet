@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Backend.Attributes;
 
 namespace Backend.Features.Identity.Core;
 
@@ -14,6 +15,7 @@ public interface ICurrentUserService
     IEnumerable<string> GetCurrentUserPermissions();
 } 
 
+[NoDirectUse]
 public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {
     private readonly ClaimsPrincipal? _user = httpContextAccessor.HttpContext?.User;

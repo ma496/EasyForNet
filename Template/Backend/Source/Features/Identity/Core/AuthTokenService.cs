@@ -1,3 +1,4 @@
+using Backend.Attributes;
 using Backend.Data;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public interface IAuthTokenService
     Task DeleteExpiredTokensAsync();
 }
 
+[NoDirectUse]
 public class AuthTokenService(AppDbContext dbContext) : IAuthTokenService
 {
     public async Task<AuthToken> SaveTokenAsync(TokenResponse rsp)

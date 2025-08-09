@@ -1,8 +1,10 @@
+using Backend.Attributes;
 using Backend.Base;
 using Backend.Features.Identity.Core;
 
 namespace Backend.Features.Identity;
 
+[BypassNoDirectUse]
 public class IdentityFeature : IFeature
 {
     public static void AddServices(IServiceCollection services)

@@ -1,3 +1,4 @@
+using Backend.Attributes;
 using Backend.Data;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ public interface IPermissionService
     Task<List<Permission>> GetUserPermissionsAsync(Guid userId);
 }
 
+[NoDirectUse]
 public class PermissionService(AppDbContext dbContext) : IPermissionService
 {
     public async Task<Permission?> GetByIdAsync(Guid id)

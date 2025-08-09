@@ -1,5 +1,8 @@
+using Backend.Attributes;
+
 namespace Backend.Permissions;
 
+[NoDirectUse]
 public class PermissionDefinitionService(PermissionDefinitionContext context) : IPermissionDefinitionService
 {
     public IReadOnlyList<PermissionDefinition> GetPermissions() => context.GetPermissions();

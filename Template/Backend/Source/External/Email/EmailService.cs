@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Mail;
+using Backend.Attributes;
 using Microsoft.Extensions.Options;
 
 namespace Backend.External.Email;
@@ -9,6 +10,7 @@ public interface IEmailService
     Task SendEmailAsync(string to, string subject, string body, bool isHtml = false);
 }
 
+[NoDirectUse]
 public class EmailService(IOptions<EmailSetting> emailSetting) : IEmailService
 {
     private readonly EmailSetting _emailSetting = emailSetting.Value;

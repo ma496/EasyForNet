@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using Backend.Attributes;
 
 namespace Backend.Features.Identity.Core;
 
@@ -8,6 +9,7 @@ public interface IPasswordHasher
     string HashPassword(string password);
 }
 
+[NoDirectUse]
 public class PasswordHasher : IPasswordHasher
 {
     public string HashPassword(string password)

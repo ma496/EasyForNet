@@ -1,3 +1,4 @@
+using Backend.Attributes;
 using Backend.Data;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ public interface IRoleService
     Task<List<string>> GetRolePermissionsAsync(Guid roleId);
 }
 
+[NoDirectUse]
 public class RoleService(AppDbContext dbContext) : IRoleService
 {
     public async Task<Role?> GetByIdAsync(Guid id)

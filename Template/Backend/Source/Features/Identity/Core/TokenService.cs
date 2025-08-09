@@ -1,3 +1,4 @@
+using Backend.Attributes;
 using Backend.Data;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ public interface ITokenService
     Task DeleteExpiredTokensAsync();
 }
 
+[NoDirectUse]
 public class TokenService(AppDbContext dbContext) : ITokenService
 {
     public async Task<Token> GenerateTokenAsync(User user)
