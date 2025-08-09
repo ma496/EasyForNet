@@ -73,18 +73,12 @@ bld.Services.AddHangfireServer();
 bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
 bld.Services.Configure<WebSetting>(bld.Configuration.GetSection("Web"));
 
-// add services
-bld.Services.AddScoped<IUserService, UserService>();
-bld.Services.AddScoped<IRoleService, RoleService>();
-bld.Services.AddScoped<IPermissionService, PermissionService>();
-bld.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+// configure services 
+bld.Services.AddFeatures();
 bld.Services.AddScoped<DataSeeder>();
 bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
-bld.Services.AddScoped<IAuthTokenService, AuthTokenService>();
-bld.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-bld.Services.AddScoped<ITokenService, TokenService>();
 
 // Configure email services
 bld.Services.Configure<EmailSetting>(bld.Configuration.GetSection("EmailSettings"));
