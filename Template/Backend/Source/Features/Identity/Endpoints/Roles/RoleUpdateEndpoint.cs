@@ -4,19 +4,14 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
+using Riok.Mapperly.Abstractions;
 
 namespace Backend.Features.Identity.Endpoints.Roles;
 
-sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse, RoleUpdateMapper>
+sealed class RoleUpdateEndpoint(IRoleService roleService)
+    : Endpoint<RoleUpdateRequest, RoleUpdateResponse>
 {
-    private readonly IRoleService _roleService;
-
-    public RoleUpdateEndpoint(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     public override void Configure()
     {
         Put("{id}");
@@ -27,7 +22,7 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
     public override async Task HandleAsync(RoleUpdateRequest request, CancellationToken cancellationToken)
     {
         // get entity from db
-        var entity = await _roleService.Roles()
+        var entity = await roleService.Roles()
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
@@ -37,15 +32,17 @@ sealed class RoleUpdateEndpoint : Endpoint<RoleUpdateRequest, RoleUpdateResponse
         if (entity.Default)
             this.ThrowError("Default role cannot be updated", ErrorCodes.DefaultRoleCannotBeUpdated);
 
-        Map.UpdateEntity(request, entity);
+        var requestMapper = new RoleUpdateRequestMapper();
+        requestMapper.Update(request, entity);
 
         // save entity to db
-        await _roleService.UpdateAsync(entity);
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        await roleService.UpdateAsync(entity);
+        var responseMapper = new RoleUpdateResponseMapper();
+        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
-sealed class RoleUpdateRequest : BaseDto<Guid>
+public sealed class RoleUpdateRequest : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
@@ -60,7 +57,7 @@ sealed class RoleUpdateValidator : Validator<RoleUpdateRequest>
     }
 }
 
-sealed class RoleUpdateResponse : BaseDto<Guid>
+public sealed class RoleUpdateResponse : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
     public string NameNormalized { get; set; } = null!;
@@ -87,6 +84,18 @@ sealed class RoleUpdateMapper : Mapper<RoleUpdateRequest, RoleUpdateResponse, Ro
             Description = e.Description,
         };
     }
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class RoleUpdateRequestMapper
+{
+    public partial void Update(RoleUpdateRequest request, Role entity);
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class RoleUpdateResponseMapper
+{
+    public partial RoleUpdateResponse Map(Role entity);
 }
 
 

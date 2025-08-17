@@ -5,17 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Features.Identity.Endpoints.Account;
 
-sealed class GetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
+sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    : EndpointWithoutRequest<UserGetInfoResponse>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly ICurrentUserService _currentUserService;
-
-    public GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
-    {
-        _dbContext = dbContext;
-        _currentUserService = currentUserService;
-    }
-
     public override void Configure()
     {
         Get("get-info");
@@ -24,8 +16,8 @@ sealed class GetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetCurrentUserId();
-        var user = await _dbContext.Users
+        var userId = currentUserService.GetCurrentUserId();
+        var user = await dbContext.Users
             .Include(x => x.UserRoles)
             .ThenInclude(x => x.Role)
             .ThenInclude(x => x.RolePermissions)
@@ -44,15 +36,15 @@ sealed class GetInfoEndpoint : EndpointWithoutRequest<UserGetInfoResponse>
                     FileName = x.Image.FileName,
                     ContentType = x.Image.ContentType
                 } : null,
-                Roles = x.UserRoles.Select(x => new UserGetInfoResponse.RoleDto
+                Roles = x.UserRoles.Select(ur => new UserGetInfoResponse.RoleDto
                 {
-                    Id = x.RoleId,
-                    Name = x.Role.Name,
-                    Permissions = x.Role.RolePermissions.Select(x => new UserGetInfoResponse.PermissionDto
+                    Id = ur.RoleId,
+                    Name = ur.Role.Name,
+                    Permissions = ur.Role.RolePermissions.Select(rp => new UserGetInfoResponse.PermissionDto
                     {
-                        Id = x.PermissionId,
-                        Name = x.Permission.Name,
-                        DisplayName = x.Permission.DisplayName
+                        Id = rp.PermissionId,
+                        Name = rp.Permission.Name,
+                        DisplayName = rp.Permission.DisplayName
                     }).ToList()
                 }).ToList()
             })

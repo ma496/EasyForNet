@@ -2,19 +2,13 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Riok.Mapperly.Abstractions;
+using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Users;
 
-sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, UserListMapper>
+sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListRequest, UserListResponse>
 {
-    private readonly IUserService _userService;
-
-    public UserListEndpoint(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public override void Configure()
     {
         Get("");
@@ -25,13 +19,13 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, User
     public override async Task HandleAsync(UserListRequest request, CancellationToken cancellationToken)
     {
         // get entities from db
-        var query = _userService.Users()
+        var query = userService.Users()
             .AsNoTracking()
             .Include(x => x.UserRoles)
             .ThenInclude(x => x.Role)
             .AsQueryable();
 
-        var search = request.Search?.Trim()?.ToLower();
+        var search = request.Search?.Trim().ToLower();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
@@ -46,9 +40,10 @@ sealed class UserListEndpoint : Endpoint<UserListRequest, UserListResponse, User
             .Process(request)
             .ToListAsync(cancellationToken);
 
+        var dtoMapper = new UserListDtoMapper();
         var response = new UserListResponse
         {
-            Items = Map.FromEntity(items),
+            Items = items.Select(dtoMapper.Map).ToList(),
             Total = total
         };
 
@@ -68,11 +63,11 @@ sealed class UserListValidator : Validator<UserListRequest>
     }
 }
 
-sealed class UserListResponse : ListDto<UserListDto>
+public sealed class UserListResponse : ListDto<UserListDto>
 {
 }
 
-sealed class UserListDto : AuditableDto<Guid>
+public sealed class UserListDto : AuditableDto<Guid>
 {
     public string Username { get; set; } = null!;
     public string UsernameNormalized { get; set; } = null!;
@@ -84,37 +79,17 @@ sealed class UserListDto : AuditableDto<Guid>
     public List<UserRoleDto> Roles { get; set; } = [];
 }
 
-sealed class UserRoleDto : BaseDto<Guid>
+public sealed class UserRoleDto : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
 }
 
-sealed class UserListMapper : Mapper<UserListRequest, List<UserListDto>, List<User>>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class UserListDtoMapper
 {
-    public override List<UserListDto> FromEntity(List<User> e)
-    {
-        return e.Select(entity => new UserListDto
-        {
-            Id = entity.Id,
-            Username = entity.Username,
-            UsernameNormalized = entity.UsernameNormalized,
-            Email = entity.Email,
-            EmailNormalized = entity.EmailNormalized,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            IsActive = entity.IsActive,
-            CreatedAt = entity.CreatedAt,
-            CreatedBy = entity.CreatedBy,
-            UpdatedAt = entity.UpdatedAt,
-            UpdatedBy = entity.UpdatedBy,
-            Roles = entity.UserRoles != null
-             ? entity.UserRoles.Select(x => new UserRoleDto
-             {
-                 Id = x.RoleId,
-                 Name = x.Role.Name
-             }).ToList() : [],
-        }).ToList();
-    }
+    [MapProperty("UserRoles", "Roles", Use = nameof(UserRolesToRoles))]
+    public partial UserListDto Map(User entity);
+
+    private static List<UserRoleDto> UserRolesToRoles(ICollection<UserRole> userRoles)
+        => userRoles.Select(x => new UserRoleDto { Id = x.RoleId, Name = x.Role.Name }).ToList();
 }
-
-

@@ -2,19 +2,13 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Riok.Mapperly.Abstractions;
+using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Users;
 
-sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGetMapper>
+sealed class UserGetEndpoint(IUserService userService) : Endpoint<UserGetRequest, UserGetResponse>
 {
-    private readonly IUserService _userService;
-
-    public UserGetEndpoint(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public override void Configure()
     {
         Get("{id}");
@@ -25,7 +19,7 @@ sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGet
     public override async Task HandleAsync(UserGetRequest request, CancellationToken cancellationToken)
     {
         // get entity from db
-        var entity = await _userService.Users()
+        var entity = await userService.Users()
             .AsNoTracking()
             .Include(x => x.UserRoles)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
@@ -35,7 +29,7 @@ sealed class UserGetEndpoint : Endpoint<UserGetRequest, UserGetResponse, UserGet
             return;
         }
 
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        await SendAsync(new UserGetResponseMapper().Map(entity), cancellation: cancellationToken);
     }
 }
 
@@ -45,13 +39,9 @@ sealed class UserGetRequest : BaseDto<Guid>
 
 sealed class UserGetValidator : Validator<UserGetRequest>
 {
-    public UserGetValidator()
-    {
-        // Add validation rules here
-    }
 }
 
-sealed class UserGetResponse : AuditableDto<Guid>
+public sealed class UserGetResponse : AuditableDto<Guid>
 {
     public string Username { get; set; } = null!;
     public string UsernameNormalized { get; set; } = null!;
@@ -64,27 +54,12 @@ sealed class UserGetResponse : AuditableDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
-sealed class UserGetMapper : Mapper<UserGetRequest, UserGetResponse, User>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class UserGetResponseMapper
 {
-    public override UserGetResponse FromEntity(User e)
-    {
-        return new UserGetResponse
-        {
-            Id = e.Id,
-            Username = e.Username,
-            UsernameNormalized = e.UsernameNormalized,
-            Email = e.Email,
-            EmailNormalized = e.EmailNormalized,
-            FirstName = e.FirstName,
-            LastName = e.LastName,
-            IsActive = e.IsActive,
-            CreatedAt = e.CreatedAt,
-            CreatedBy = e.CreatedBy,
-            UpdatedAt = e.UpdatedAt,
-            UpdatedBy = e.UpdatedBy,
-            Roles = e.UserRoles.Select(x => x.RoleId).ToList(),
-        };
-    }
+    [MapProperty("UserRoles", "Roles", Use = nameof(UserRolesToRoles))]
+    public partial UserGetResponse Map(User entity);
+
+    private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
+        => userRoles.Select(x => x.RoleId).ToList();
 }
-
-

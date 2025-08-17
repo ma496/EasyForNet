@@ -1,6 +1,5 @@
 using Backend.ErrorHandling;
 using Backend.Features.Identity.Core;
-using Backend.Settings;
 using Microsoft.Extensions.Options;
 
 namespace Backend.Features.Identity.Endpoints.Account;
@@ -8,23 +7,22 @@ namespace Backend.Features.Identity.Endpoints.Account;
 public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 {
     private readonly IUserService _userService;
-    private readonly AuthSetting _authSetting;
     private readonly IAuthTokenService _authTokenService;
 
     public TokenService(IUserService userService, IOptions<AuthSetting> authSetting, IAuthTokenService authTokenService)
     {
         _userService = userService;
-        _authSetting = authSetting.Value;
+        var authSettingValue = authSetting.Value;
         _authTokenService = authTokenService;
         Setup(o =>
         {
-            o.TokenSigningKey = _authSetting.Jwt.Key;
-            o.Issuer = _authSetting.Jwt.Issuer;
-            o.Audience = _authSetting.Jwt.Audience;
-            o.AccessTokenValidity = TimeSpan.FromMinutes(_authSetting.AccessTokenValidity);
-            o.RefreshTokenValidity = TimeSpan.FromHours(_authSetting.RefreshTokenValidity);
+            o.TokenSigningKey = authSettingValue.Jwt.Key;
+            o.Issuer = authSettingValue.Jwt.Issuer;
+            o.Audience = authSettingValue.Jwt.Audience;
+            o.AccessTokenValidity = TimeSpan.FromMinutes(authSettingValue.AccessTokenValidity);
+            o.RefreshTokenValidity = TimeSpan.FromHours(authSettingValue.RefreshTokenValidity);
 
-            o.Endpoint("account/refresh-token", ep =>
+            o.Endpoint("account/refresh-token", _ =>
             {
             });
         });

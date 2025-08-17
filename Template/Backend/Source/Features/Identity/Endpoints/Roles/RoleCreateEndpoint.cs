@@ -2,19 +2,14 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using FluentValidation;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
+using Riok.Mapperly.Abstractions;
 
 namespace Backend.Features.Identity.Endpoints.Roles;
 
-sealed class RoleCreateEndpoint : Endpoint<RoleCreateRequest, RoleCreateResponse, RoleCreateMapper>
+sealed class RoleCreateEndpoint(IRoleService roleService)
+    : Endpoint<RoleCreateRequest, RoleCreateResponse>
 {
-    private readonly IRoleService _roleService;
-
-    public RoleCreateEndpoint(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     public override void Configure()
     {
         Post("");
@@ -24,14 +19,16 @@ sealed class RoleCreateEndpoint : Endpoint<RoleCreateRequest, RoleCreateResponse
 
     public override async Task HandleAsync(RoleCreateRequest request, CancellationToken cancellationToken)
     {
-        var entity = Map.ToEntity(request);
+        var requestMapper = new RoleCreateRequestMapper();
+        var entity = requestMapper.Map(request);
         // save entity to db
-        await _roleService.CreateAsync(entity);
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        await roleService.CreateAsync(entity);
+        var responseMapper = new RoleCreateResponseMapper();
+        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
-sealed class RoleCreateRequest
+public sealed class RoleCreateRequest
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
@@ -47,34 +44,23 @@ sealed class RoleCreateValidator : Validator<RoleCreateRequest>
     }
 }
 
-sealed class RoleCreateResponse : BaseDto<Guid>
+public sealed class RoleCreateResponse : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
     public string NameNormalized { get; set; } = null!;
     public string? Description { get; set; }
 }
 
-sealed class RoleCreateMapper : Mapper<RoleCreateRequest, RoleCreateResponse, Role>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class RoleCreateRequestMapper
 {
-    public override Role ToEntity(RoleCreateRequest r)
-    {
-        return new Role
-        {
-            Name = r.Name,
-            Description = r.Description,
-        };
-    }
+    public partial Role Map(RoleCreateRequest request);
+}
 
-    public override RoleCreateResponse FromEntity(Role e)
-    {
-        return new RoleCreateResponse
-        {
-            Id = e.Id,
-            Name = e.Name,
-            NameNormalized = e.NameNormalized,
-            Description = e.Description,
-        };
-    }
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class RoleCreateResponseMapper
+{
+    public partial RoleCreateResponse Map(Role entity);
 }
 
 

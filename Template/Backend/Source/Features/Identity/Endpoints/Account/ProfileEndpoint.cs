@@ -5,17 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Features.Identity.Endpoints.Account;
 
-sealed class ProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
+sealed class ProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    : EndpointWithoutRequest<UserProfileResponse>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly ICurrentUserService _currentUserService;
-
-    public ProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
-    {
-        _dbContext = dbContext;
-        _currentUserService = currentUserService;
-    }
-
     public override void Configure()
     {
         Get("profile");
@@ -24,8 +16,8 @@ sealed class ProfileEndpoint : EndpointWithoutRequest<UserProfileResponse>
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetCurrentUserId();
-        var user = await _dbContext.Users
+        var userId = currentUserService.GetCurrentUserId();
+        var user = await dbContext.Users
                 .Where(x => x.Id == userId)
                 .Select(x => new UserProfileResponse
                 {

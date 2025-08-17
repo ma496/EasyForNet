@@ -2,19 +2,13 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
+using Riok.Mapperly.Abstractions;
 
 namespace Backend.Features.Identity.Endpoints.Roles;
 
-sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGetMapper>
+sealed class RoleGetEndpoint(IRoleService roleService) : Endpoint<RoleGetRequest, RoleGetResponse>
 {
-    private readonly IRoleService _roleService;
-
-    public RoleGetEndpoint(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     public override void Configure()
     {
         Get("{id}");
@@ -25,7 +19,7 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
     public override async Task HandleAsync(RoleGetRequest request, CancellationToken cancellationToken)
     {
         // get entity from db
-        var entity = await _roleService.Roles()
+        var entity = await roleService.Roles()
             .Include(x => x.RolePermissions)
             .Include(x => x.UserRoles)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
@@ -35,7 +29,8 @@ sealed class RoleGetEndpoint : Endpoint<RoleGetRequest, RoleGetResponse, RoleGet
             return;
         }
 
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        var responseMapper = new RoleGetResponseMapper();
+        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
@@ -44,14 +39,9 @@ sealed class RoleGetRequest : BaseDto<Guid>
 }
 
 sealed class RoleGetValidator : Validator<RoleGetRequest>
-{
-    public RoleGetValidator()
-    {
-        // Add validation rules here
-    }
-}
+{ }
 
-sealed class RoleGetResponse : AuditableDto<Guid>
+public sealed class RoleGetResponse : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
     public string NameNormalized { get; set; } = null!;
@@ -60,23 +50,16 @@ sealed class RoleGetResponse : AuditableDto<Guid>
     public int UserCount { get; set; }
 }
 
-sealed class RoleGetMapper : Mapper<RoleGetRequest, RoleGetResponse, Role>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class RoleGetResponseMapper
 {
-    public override RoleGetResponse FromEntity(Role e)
+    [MapProperty(nameof(Role.RolePermissions), nameof(RoleGetResponse.Permissions), Use = nameof(RolePermissionsToPermissions)),
+     MapProperty(nameof(Role.UserRoles.Count), nameof(RoleGetResponse.UserCount))]
+    public partial RoleGetResponse Map(Role entity);
+
+    private static List<Guid> RolePermissionsToPermissions(ICollection<RolePermission> rolePermissions)
     {
-        return new RoleGetResponse
-        {
-            Id = e.Id,
-            Name = e.Name,
-            NameNormalized = e.NameNormalized,
-            Description = e.Description,
-            Permissions = e.RolePermissions.Select(x => x.PermissionId).ToList(),
-            UserCount = e.UserRoles.Count,
-            CreatedAt = e.CreatedAt,
-            CreatedBy = e.CreatedBy,
-            UpdatedAt = e.UpdatedAt,
-            UpdatedBy = e.UpdatedBy,
-        };
+        return rolePermissions.Select(x => x.PermissionId).ToList();
     }
 }
 

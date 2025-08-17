@@ -2,19 +2,13 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
+using Riok.Mapperly.Abstractions;
 
 namespace Backend.Features.Identity.Endpoints.Roles;
 
-sealed class RoleListEndpoint : Endpoint<RoleListRequest, RoleListResponse, RoleListMapper>
+sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListRequest, RoleListResponse>
 {
-    private readonly IRoleService _roleService;
-
-    public RoleListEndpoint(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     public override void Configure()
     {
         Get("");
@@ -25,13 +19,13 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, RoleListResponse, Role
     public override async Task HandleAsync(RoleListRequest request, CancellationToken cancellationToken)
     {
         // get entities from db
-        var query = _roleService.Roles()
+        var query = roleService.Roles()
             .AsNoTracking()
             .Include(x => x.RolePermissions)
             .Include(x => x.UserRoles)
             .AsQueryable();
 
-        var search = request.Search?.Trim()?.ToLower();
+        var search = request.Search?.Trim().ToLower();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
@@ -44,9 +38,10 @@ sealed class RoleListEndpoint : Endpoint<RoleListRequest, RoleListResponse, Role
             .Process(request)
             .ToListAsync(cancellationToken);
 
+        var dtoMapper = new RoleListDtoMapper();
         var response = new RoleListResponse
         {
-            Items = Map.FromEntity(items),
+            Items = items.Select(dtoMapper.Map).ToList(),
             Total = total
         };
 
@@ -66,11 +61,11 @@ sealed class RoleListValidator : Validator<RoleListRequest>
     }
 }
 
-sealed class RoleListResponse : ListDto<RoleListDto>
+public sealed class RoleListResponse : ListDto<RoleListDto>
 {
 }
 
-sealed class RoleListDto : AuditableDto<Guid>
+public sealed class RoleListDto : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
     public string NameNormalized { get; set; } = null!;
@@ -96,6 +91,19 @@ sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Ro
             UpdatedAt = entity.UpdatedAt,
             UpdatedBy = entity.UpdatedBy,
         }).ToList();
+    }
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class RoleListDtoMapper
+{
+    [MapProperty(nameof(Role.RolePermissions), nameof(RoleGetResponse.Permissions), Use = nameof(RolePermissionsToPermissions)),
+     MapProperty(nameof(Role.UserRoles.Count), nameof(RoleGetResponse.UserCount))]
+    public partial RoleListDto Map(Role entity);
+    
+    private static List<Guid> RolePermissionsToPermissions(ICollection<RolePermission> rolePermissions)
+    {
+        return rolePermissions.Select(x => x.PermissionId).ToList();
     }
 }
 

@@ -4,15 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Features.Identity.Endpoints.Permissions;
 
-sealed class GetPermissionsEndpoint : EndpointWithoutRequest<GetPermissionsResponse>
+sealed class GetPermissionsEndpoint(IPermissionService permissionService) : EndpointWithoutRequest<GetPermissionsResponse>
 {
-    private readonly IPermissionService _permissionService;
-
-    public GetPermissionsEndpoint(IPermissionService permissionService)
-    {
-        _permissionService = permissionService;
-    }
-
     public override void Configure()
     {
         Get("get");
@@ -21,7 +14,7 @@ sealed class GetPermissionsEndpoint : EndpointWithoutRequest<GetPermissionsRespo
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var permissions = await _permissionService
+        var permissions = await permissionService
             .Permissions()
             .Select(p => new PermissionDto
             {
@@ -29,7 +22,7 @@ sealed class GetPermissionsEndpoint : EndpointWithoutRequest<GetPermissionsRespo
                 Name = p.Name,
                 DisplayName = p.DisplayName
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         await SendAsync(new GetPermissionsResponse
         {

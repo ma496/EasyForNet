@@ -2,15 +2,8 @@ using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Permissions;
 
-sealed class GetDefinePermissionsEndpoint : EndpointWithoutRequest<GetDefinePermissionsResponse>
+sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissionDefinitionService) : EndpointWithoutRequest<GetDefinePermissionsResponse>
 {
-    private readonly IPermissionDefinitionService _permissionDefinitionService;
-
-    public GetDefinePermissionsEndpoint(IPermissionDefinitionService permissionDefinitionService)
-    {
-        _permissionDefinitionService = permissionDefinitionService;
-    }
-
     public override void Configure()
     {
         Get("define");
@@ -19,7 +12,7 @@ sealed class GetDefinePermissionsEndpoint : EndpointWithoutRequest<GetDefinePerm
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var permissions = _permissionDefinitionService.GetPermissions();
+        var permissions = permissionDefinitionService.GetPermissions();
 
         await SendAsync(new GetDefinePermissionsResponse
         {

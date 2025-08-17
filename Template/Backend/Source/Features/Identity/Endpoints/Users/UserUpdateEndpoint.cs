@@ -4,19 +4,14 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
+using Riok.Mapperly.Abstractions;
 
 namespace Backend.Features.Identity.Endpoints.Users;
 
-sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse, UserUpdateMapper>
+sealed class UserUpdateEndpoint(IUserService userService)
+    : Endpoint<UserUpdateRequest, UserUpdateResponse>
 {
-    private readonly IUserService _userService;
-
-    public UserUpdateEndpoint(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public override void Configure()
     {
         Put("{id}");
@@ -27,7 +22,7 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
     public override async Task HandleAsync(UserUpdateRequest request, CancellationToken cancellationToken)
     {
         // get entity from db
-        var entity = await _userService.Users()
+        var entity = await userService.Users()
             .Include(x => x.UserRoles)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
@@ -38,9 +33,10 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
         if (entity.Default)
             this.ThrowError("Default user cannot be updated", ErrorCodes.DefaultUserCannotBeUpdated);
 
-        Map.UpdateEntity(request, entity);
+        var requestMapper = new UserUpdateRequestMapper();
+        requestMapper.Update(request, entity);
         // update user roles based on request and already assigned roles
-        var rolesToAssign = request.Roles.Where(x => !entity.UserRoles.Any(ur => ur.RoleId == x)).ToList();
+        var rolesToAssign = request.Roles.Where(x => entity.UserRoles.All(ur => ur.RoleId != x)).ToList();
         foreach (var role in rolesToAssign)
         {
             entity.UserRoles.Add(new UserRole { RoleId = role });
@@ -52,12 +48,13 @@ sealed class UserUpdateEndpoint : Endpoint<UserUpdateRequest, UserUpdateResponse
         }
 
         // save entity to db
-        await _userService.UpdateAsync(entity);
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        await userService.UpdateAsync(entity);
+        var responseMapper = new UserUpdateResponseMapper();
+        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
-sealed class UserUpdateRequest : BaseDto<Guid>
+public sealed class UserUpdateRequest : BaseDto<Guid>
 {
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
@@ -76,7 +73,7 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
     }
 }
 
-sealed class UserUpdateResponse : BaseDto<Guid>
+public sealed class UserUpdateResponse : BaseDto<Guid>
 {
     public string Email { get; set; } = null!;
     public string EmailNormalized { get; set; } = null!;
@@ -86,30 +83,22 @@ sealed class UserUpdateResponse : BaseDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
-sealed class UserUpdateMapper : Mapper<UserUpdateRequest, UserUpdateResponse, User>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class UserUpdateRequestMapper
 {
-    public override User UpdateEntity(UserUpdateRequest r, User e)
-    {
-        e.Email = r.Email;
-        e.FirstName = r.FirstName;
-        e.LastName = r.LastName;
-        e.IsActive = r.IsActive;
+    [MapperIgnoreSource(nameof(UserUpdateRequest.Roles))]
+    public partial void Update(UserUpdateRequest request, User entity);
+}
 
-        return e;
-    }
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class UserUpdateResponseMapper
+{
+    [MapProperty(nameof(User.UserRoles), nameof(UserUpdateResponse.Roles), Use = nameof(UserRolesToRoles))]
+    public partial UserUpdateResponse Map(User entity);
 
-    public override UserUpdateResponse FromEntity(User e)
+    private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
     {
-        return new UserUpdateResponse
-        {
-            Id = e.Id,
-            Email = e.Email,
-            EmailNormalized = e.EmailNormalized,
-            FirstName = e.FirstName,
-            LastName = e.LastName,
-            IsActive = e.IsActive,
-            Roles = e.UserRoles.Select(x => x.RoleId).ToList(),
-        };
+        return userRoles.Select(x => x.RoleId).ToList();
     }
 }
 

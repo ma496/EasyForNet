@@ -5,17 +5,9 @@ using FluentValidation;
 
 namespace Backend.Features.Identity.Endpoints.Account;
 
-sealed class UpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
+sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+    : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly ICurrentUserService _currentUserService;
-
-    public UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
-    {
-        _dbContext = dbContext;
-        _currentUserService = currentUserService;
-    }
-
     public override void Configure()
     {
         Post("update-profile");
@@ -25,8 +17,8 @@ sealed class UpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, UserUpda
 
     public override async Task HandleAsync(UserUpdateProfileRequest request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetCurrentUserId();
-        var user = await _dbContext.Users.FindAsync([userId], cancellationToken);
+        var userId = currentUserService.GetCurrentUserId();
+        var user = await dbContext.Users.FindAsync([userId], cancellationToken);
         if (user is null)
         {
             await SendNotFoundAsync(cancellationToken);
@@ -45,9 +37,9 @@ sealed class UpdateProfileEndpoint : Endpoint<UserUpdateProfileRequest, UserUpda
             }
             : null;
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
-        await SendAsync(new UserUpdateProfileResponse
+        await SendAsync(new()
         {
             Id = user.Id,
             Email = user.Email,

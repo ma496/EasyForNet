@@ -2,19 +2,13 @@ using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using FluentValidation;
-using Allow = Backend.Permissions.Allow;
+using Riok.Mapperly.Abstractions;
+using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Users;
 
-sealed class UserCreateEndpoint : Endpoint<UserCreateRequest, UserCreateResponse, UserCreateMapper>
+sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateRequest, UserCreateResponse>
 {
-    private readonly IUserService _userService;
-
-    public UserCreateEndpoint(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public override void Configure()
     {
         Post("");
@@ -24,14 +18,16 @@ sealed class UserCreateEndpoint : Endpoint<UserCreateRequest, UserCreateResponse
 
     public override async Task HandleAsync(UserCreateRequest request, CancellationToken cancellationToken)
     {
-        var entity = Map.ToEntity(request);
+        var requestMapper = new UserCreateRequestMapper();
+        var entity = requestMapper.Map(request);
         // save entity to db
-        await _userService.CreateAsync(entity, request.Password);
-        await SendAsync(Map.FromEntity(entity), cancellation: cancellationToken);
+        await userService.CreateAsync(entity, request.Password);
+        var responseMapper = new UserCreateResponseMapper();
+        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
-sealed class UserCreateRequest
+public sealed class UserCreateRequest
 {
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
@@ -54,7 +50,7 @@ sealed class UserCreateValidator : Validator<UserCreateRequest>
     }
 }
 
-sealed class UserCreateResponse : BaseDto<Guid>
+public sealed class UserCreateResponse : BaseDto<Guid>
 {
     public string Username { get; set; } = null!;
     public string UsernameNormalized { get; set; } = null!;
@@ -66,36 +62,24 @@ sealed class UserCreateResponse : BaseDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
-sealed class UserCreateMapper : Mapper<UserCreateRequest, UserCreateResponse, User>
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class UserCreateRequestMapper
 {
-    public override User ToEntity(UserCreateRequest r)
-    {
-        return new User
-        {
-            Username = r.Username,
-            Email = r.Email,
-            FirstName = r.FirstName,
-            LastName = r.LastName,
-            IsActive = r.IsActive,
-            UserRoles = r.Roles.Select(x => new UserRole { RoleId = x }).ToList(),
-        };
-    }
+    [MapProperty("Roles", "UserRoles", Use = nameof(RolesToUserRoles)),
+     MapperIgnoreSource(nameof(UserCreateRequest.Password))]
+    public partial User Map(UserCreateRequest request);
 
-    public override UserCreateResponse FromEntity(User e)
-    {
-        return new UserCreateResponse
-        {
-            Id = e.Id,
-            Username = e.Username,
-            UsernameNormalized = e.UsernameNormalized,
-            Email = e.Email,
-            EmailNormalized = e.EmailNormalized,
-            FirstName = e.FirstName,
-            LastName = e.LastName,
-            IsActive = e.IsActive,
-            Roles = e.UserRoles.Select(x => x.RoleId).ToList(),
-        };
-    }
+    private static ICollection<UserRole> RolesToUserRoles(List<Guid> roles)
+        => roles.Select(x => new UserRole { RoleId = x }).ToList();
 }
 
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class UserCreateResponseMapper
+{
+    [MapProperty("UserRoles", "Roles", Use = nameof(UserRolesToRoles))]
+    public partial UserCreateResponse Map(User entity);
+    
+    private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
+        => userRoles.Select(x => x.RoleId).ToList();
+}
 

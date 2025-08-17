@@ -3,19 +3,13 @@ using Backend.ErrorHandling;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Allow = Backend.Permissions.Allow;
+using Backend.Permissions;
 
 namespace Backend.Features.Identity.Endpoints.Roles;
 
-sealed class ChangePermissionsEndpoint : Endpoint<ChangePermissionsRequest, ChangePermissionsResponse>
+sealed class ChangePermissionsEndpoint(IRoleService roleService)
+    : Endpoint<ChangePermissionsRequest, ChangePermissionsResponse>
 {
-    private readonly IRoleService _roleService;
-
-    public ChangePermissionsEndpoint(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     public override void Configure()
     {
         Put("change-permissions/{id}");
@@ -26,7 +20,7 @@ sealed class ChangePermissionsEndpoint : Endpoint<ChangePermissionsRequest, Chan
     public override async Task HandleAsync(ChangePermissionsRequest request, CancellationToken cancellationToken)
     {
         // get entity from db
-        var entity = await _roleService.Roles()
+        var entity = await roleService.Roles()
             .Include(x => x.RolePermissions)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
@@ -50,9 +44,9 @@ sealed class ChangePermissionsEndpoint : Endpoint<ChangePermissionsRequest, Chan
         }
 
         // save entity to db
-        await _roleService.UpdateAsync(entity);
+        await roleService.UpdateAsync(entity);
         await SendAsync(
-            new ChangePermissionsResponse
+            new()
             {
                 Id = entity.Id,
                 Permissions = entity.RolePermissions.Select(x => x.PermissionId).ToList()
