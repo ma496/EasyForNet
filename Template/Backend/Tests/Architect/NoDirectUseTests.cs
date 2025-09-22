@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Tests.Architect;
 
-public class NoDirectUseTests(ITestOutputHelper OutputHelper)
+public class NoDirectUseTests(ITestOutputHelper output)
 {
     [Fact]
     public void ClassesWithNoDirectUseAttribute_ShouldNotBeUsedDirectly()
@@ -82,7 +82,7 @@ public class NoDirectUseTests(ITestOutputHelper OutputHelper)
         // Assert
         Assert.False(testResult.IsSuccessful);
         
-        OutputHelper.WriteLine(GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
+        output.WriteLine(GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
     }
 
     private static string GetFailingTypesMessage(TestResult result, IReadOnlyList<Type> typesWithNoDirectUseAttribute)

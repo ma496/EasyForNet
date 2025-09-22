@@ -31,13 +31,23 @@ export const searchableItems: SearchableItem[] = [
     url: '/roles/create',
     permissions: [Allow.Role_Create],
   },
+
   {
-    title: 'search_settings',
-    url: '/settings',
+    title: 'search_ui_buttons',
+    url: '/ui/buttons',
   },
   {
-    title: 'search_change_password',
-    url: '/change-password',
+    title: 'search_ui_cards',
+    url: '/ui/cards',
+  },
+  {
+    title: 'search_ui_date_picker',
+    url: '/ui/date-picker',
+  },
+
+  {
+    title: 'search_ui_treeview',
+    url: '/ui/treeview',
   },
   {
     title: 'search_profile',

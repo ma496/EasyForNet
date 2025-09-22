@@ -1,4 +1,4 @@
-import { Users, Shield, Settings, Home, User, Lock } from "lucide-react"
+import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, List, TreePine, FormInput } from "lucide-react"
 import { Allow } from "./allow"
 
 export type NavItemGroup = {
@@ -87,10 +87,37 @@ export const navItems: (NavItem | NavItemGroup)[] = [
           }
         ]
       },
+
+    ]
+  },
+  {
+    title: 'nav_components',
+    items: [
       {
-        title: 'nav_settings',
-        url: '/settings',
-        icon: Settings,
+        title: 'nav_ui_form_elements',
+        url: '/ui/form-elements',
+        icon: FormInput,
+      },
+      {
+        title: 'nav_ui_buttons',
+        url: '/ui/buttons',
+        icon: Zap,
+      },
+      {
+        title: 'nav_ui_cards',
+        url: '/ui/cards',
+        icon: Palette,
+      },
+      {
+        title: 'nav_ui_date_picker',
+        url: '/ui/date-picker',
+        icon: Calendar,
+      },
+
+      {
+        title: 'nav_ui_treeview',
+        url: '/ui/treeview',
+        icon: TreePine,
       },
     ]
   },

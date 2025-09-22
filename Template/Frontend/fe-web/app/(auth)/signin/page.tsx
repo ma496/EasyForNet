@@ -2,14 +2,14 @@ import SigninForm from '@/app/(auth)/signin/_components/signin-form';
 import LanguageDropdown from '@/components/custom/language-dropdown';
 import { Metadata } from 'next';
 import React from 'react';
-import { getTranslation } from '@/i18n';
+import { getTranslationAsync } from '@/i18n';
 
 export const metadata: Metadata = {
   title: 'Login Boxed',
 };
 
-const BoxedSignIn = () => {
-  const { t } = getTranslation();
+const BoxedSignIn = async () => {
+  const { t } = await getTranslationAsync();
 
   return (
     <div>

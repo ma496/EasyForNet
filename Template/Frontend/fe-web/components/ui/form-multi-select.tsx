@@ -76,8 +76,8 @@ export const FormMultiSelect = ({
     } else {
       newValue.push(val);
     }
-    helpers.setValue(newValue);
-    helpers.setTouched(true);
+    helpers.setValue(newValue)
+      .finally(() => helpers.setTouched(true))
   };
 
   const handleClear = (e: React.MouseEvent) => {
@@ -172,10 +172,10 @@ export const FormMultiSelect = ({
         {open && (
           <div
             className={cn(
-              "absolute left-0 right-0 mt-1 z-50 bg-white dark:bg-[#1b2e4b] border border-[rgb(224,230,237)] dark:border-[#253b5c] rounded shadow-lg max-h-60 overflow-auto",
+              "absolute left-0 mt-1 z-50 bg-white dark:bg-[#1b2e4b] border border-[rgb(224,230,237)] dark:border-[#253b5c] rounded shadow-lg overflow-hidden min-w-full",
               "custom-select"
             )}
-            style={{ maxHeight: `${maxVisibleItems * 40}px` }}
+            style={{ maxHeight: `${maxVisibleItems * 40 + (searchable ? 50 : 0)}px` }}
           >
             {searchable && (
               <div className="flex items-center px-2 py-2 border-b border-gray-100 dark:border-[#253b5c] bg-white dark:bg-[#1b2e4b] sticky top-0 z-10">
@@ -190,7 +190,7 @@ export const FormMultiSelect = ({
                 />
               </div>
             )}
-            <ul className="max-h-48 overflow-auto">
+            <ul className="overflow-auto" style={{ maxHeight: `${maxVisibleItems * 40}px` }}>
               {filteredOptions.length === 0 && (
                 <li className="px-4 py-2 text-gray-400">No options</li>
               )}

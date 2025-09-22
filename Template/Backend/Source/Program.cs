@@ -109,7 +109,7 @@ app.UseCors()
        {
            c.Binding.ReflectionCache.AddFromBackend();
            c.Errors.UseProblemDetails();
-           c.Endpoints.RoutePrefix = "api/v1";
+           c.Endpoints.RoutePrefix = bld.Configuration.GetRequiredSection("RoutePrefix").Value;
            c.Security.RoleClaimType = ClaimTypes.Role;
            c.Security.PermissionsClaimType = ClaimConstants.Permission;
            c.Errors.UseProblemDetails(x =>

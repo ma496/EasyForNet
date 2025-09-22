@@ -2,9 +2,9 @@ import { getLocalStorageValue, setLocalStorageValue } from '@/lib/utils'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { localeStorageConst } from '@/lib/constants'
 import { environment } from '@/config/environment'
-import { TokenResponse } from '@/store/api/account/dto/token-response'
+import { TokenResponse } from '@/store/api/identity/account/dto/token-response'
 import { jwtDecode } from 'jwt-decode'
-import { RefreshTokenResponse } from './account/dto/refresh-token-response'
+import { RefreshTokenResponse } from './identity/account/dto/refresh-token-response'
 
 export const appApi = createApi({
   reducerPath: 'appApi',

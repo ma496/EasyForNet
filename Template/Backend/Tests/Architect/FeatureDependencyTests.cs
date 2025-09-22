@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Tests.Architect;
 
-public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper) : AppTestsBase(App)
+public class FeatureDependencyTests(App app, ITestOutputHelper output) : AppTestsBase(app)
 {
     [Fact]
     public void Features_Should_Not_Have_Unwanted_Dependencies()
@@ -27,7 +27,7 @@ public class FeatureDependencyTests(App App, ITestOutputHelper TestOutputHelper)
         var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
       
         Assert.False(testOutput.IsSuccess);
-        TestOutputHelper.WriteLine("Feature dependency failed:\n" + FormatFailureMessage(testOutput));
+        output.WriteLine("Feature dependency failed:\n" + FormatFailureMessage(testOutput));
         
         MustHaveForbiddenTypes(testOutput, typeof(FeatureBStat), 
             [typeof(IFeatureAOneService)]);

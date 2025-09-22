@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 import { getTranslation } from '@/i18n';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useResetPasswordMutation } from '@/store/api/account/account-api';
+import { useResetPasswordMutation } from '@/store/api/identity/account/account-api';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
@@ -51,7 +51,7 @@ export const ResetPasswordForm = () => {
         text: t('password_has_been_reset'),
         icon: 'success',
       });
-      router.push('signin');
+      router.push('/signin');
     }
   };
 

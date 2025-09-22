@@ -7,12 +7,8 @@ using Tests.Seeder;
 
 namespace Tests.Features.Identity.Core;
 
-public class AuthTokenServiceTests : AppTestsBase
+public class AuthTokenServiceTests(App app) : AppTestsBase(app)
 {
-    public AuthTokenServiceTests(App app) : base(app)
-    {
-    }
-
     [Fact]
     public async Task IsValidRefreshTokenAsync_ShouldReturnTrue_WhenTokenIsValid()
     {

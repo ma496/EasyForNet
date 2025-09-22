@@ -194,14 +194,36 @@ export const TreeView = ({
   });
   const [intermediateState, setIntermediateState] = React.useState<Set<string>>(new Set());
 
-  // Track defaultSelectedIds changes
+  // Track defaultSelectedIds changes but prevent infinite loops
   React.useEffect(() => {
     const newState: SelectionState = {};
     defaultSelectedIds.forEach((id) => {
       newState[id] = true;
     });
+
+    // Calculate parent states based on children selections
+    const calculateParentStates = (nodes: TreeNode[]) => {
+      nodes.forEach(node => {
+        if (node.children && node.children.length > 0) {
+          // First, process children recursively
+          calculateParentStates(node.children);
+
+          // Then check if all children are selected
+          const allChildrenSelected = node.children.every(child => newState[child.id] === true);
+          if (allChildrenSelected) {
+            newState[node.id] = true;
+          }
+        }
+      });
+    };
+
+    // Only calculate parent states if we have data and selected IDs
+    if (data.length > 0 && defaultSelectedIds.length > 0) {
+      calculateParentStates(data);
+    }
+
     setSelectedState(newState);
-  }, [defaultSelectedIds]);
+  }, [JSON.stringify(defaultSelectedIds)]);
 
   // Simplified node mapping
   const nodeMap = React.useMemo(() => {
@@ -256,7 +278,7 @@ export const TreeView = ({
     return ancestors;
   }, [parentChildMap]);
 
-  // Simplified selection handler
+  // Improved selection handler
   const handleSelectionChange = React.useCallback((id: string, checked: boolean) => {
     setSelectedState(prev => {
       const newState = { ...prev };
@@ -277,9 +299,27 @@ export const TreeView = ({
         if (ancestorNode && ancestorNode.children) {
           // Check if all children are checked to update parent state
           const allChildrenSelected = ancestorNode.children.every(
-            child => newState[child.id] === true
+            child => {
+              const childId = child.id;
+              return newState[childId] === true;
+            }
           );
-          newState[ancestorId] = allChildrenSelected;
+          const someChildrenSelected = ancestorNode.children.some(
+            child => {
+              const childId = child.id;
+              return newState[childId] === true;
+            }
+          );
+
+          // Update parent state based on children
+          if (allChildrenSelected) {
+            newState[ancestorId] = true;
+          } else if (!someChildrenSelected) {
+            newState[ancestorId] = false;
+          } else {
+            // Some but not all children selected - parent should be unchecked
+            newState[ancestorId] = false;
+          }
         }
       });
 
@@ -287,10 +327,9 @@ export const TreeView = ({
     });
   }, [nodeMap, getDescendantIds, getAncestorIds]);
 
-  // Calculate intermediate states separately
+  // Calculate intermediate states separately (without causing infinite loops)
   React.useEffect(() => {
     const newIntermediateState = new Set<string>();
-    const stateUpdates: { [key: string]: boolean } = {};
 
     const processNode = (node: TreeNode): { checked: number, total: number } => {
       if (!node.children || node.children.length === 0) {
@@ -302,28 +341,18 @@ export const TreeView = ({
       const checkedCount = counts.reduce((sum, count) => sum + count.checked, 0);
       const totalCount = counts.reduce((sum, count) => sum + count.total, 0);
 
-      // If all children are checked, ensure parent is also checked
-      if (checkedCount === totalCount && totalCount > 0 && !selectedState[node.id]) {
-        stateUpdates[node.id] = true;
-      }
       // If some children are checked but not all, mark as intermediate
-      else if (checkedCount > 0 && checkedCount < totalCount) {
+      if (checkedCount > 0 && checkedCount < totalCount) {
         newIntermediateState.add(node.id);
       }
 
       return {
-        checked: (selectedState[node.id] || stateUpdates[node.id]) ? totalCount : checkedCount,
+        checked: selectedState[node.id] ? totalCount : checkedCount,
         total: totalCount
       };
     };
 
     data.forEach(processNode);
-
-    // Apply state updates if needed
-    if (Object.keys(stateUpdates).length > 0) {
-      setSelectedState(prev => ({ ...prev, ...stateUpdates }));
-    }
-
     setIntermediateState(newIntermediateState);
   }, [data, selectedState]);
 

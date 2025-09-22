@@ -2,18 +2,14 @@ using Backend;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Roles;
 using Microsoft.EntityFrameworkCore;
-using Xunit.Abstractions;
 
 namespace Tests.Features.Identity.Endpoints.Roles;
 
 public class ChangePermissionsTests : AppTestsBase
 {
-    private readonly ITestOutputHelper _output;
-
-    public ChangePermissionsTests(App app, ITestOutputHelper output) : base(app)
+    public ChangePermissionsTests(App app) : base(app)
     {
         SetAuthToken().Wait();
-        _output = output;
     }
 
     [Fact]

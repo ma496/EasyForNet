@@ -20,7 +20,7 @@ indent_size = 2
 [*.{html}]
 indent_size = 2
 
-[*.{py,java}]
+[*.{cs,csproj,py,java}]
 indent_size = 4
 
 [*.md]

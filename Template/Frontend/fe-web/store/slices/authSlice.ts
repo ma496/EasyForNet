@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { GetUserInfoResponse } from "../api/account/dto/get-user-info-response"
-import { TokenResponse } from "../api/account/dto/token-response"
+import { GetUserInfoResponse } from "../api/identity/account/dto/get-user-info-response"
+import { TokenResponse } from "../api/identity/account/dto/token-response"
 import { localeStorageConst } from "@/lib/constants"
 import { setLocalStorageValue } from "@/lib/utils"
 

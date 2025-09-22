@@ -57,7 +57,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
           {index === activePathItems.length - 1 ? (
             <span>{t(item.title)}</span>
           ) : (
-            <Link href={item.url} className="text-primary hover:underline">
+            <Link href={item.url as any} className="text-primary hover:underline">
               {t(item.title)}
             </Link>
           )}

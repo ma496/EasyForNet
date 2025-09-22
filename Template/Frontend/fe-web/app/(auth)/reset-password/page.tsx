@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import React from 'react';
 import { ResetPasswordForm } from './_components/reset-password-form';
 import LanguageDropdown from '@/components/custom/language-dropdown';
-import { getTranslation } from '@/i18n';
+import { getTranslationAsync } from '@/i18n';
 
 export const metadata: Metadata = {
   title: 'Reset Password',
 };
 
-const ResetPassword = () => {
-  const { t } = getTranslation();
+const ResetPassword = async () => {
+  const { t } = await getTranslationAsync();
 
   return (
     <div>

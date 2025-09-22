@@ -4,22 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Seeder;
 
-public class TestsDataSeeder
+public class TestsDataSeeder(IUserService userService, IRoleService roleService, IPermissionService permissionService)
 {
-    private readonly IUserService _userService;
-    private readonly IRoleService _roleService;
-    private readonly IPermissionService _permissionService;
-
-    public TestsDataSeeder(IUserService userService, IRoleService roleService, IPermissionService permissionService)
-    {
-        _userService = userService;
-        _roleService = roleService;
-        _permissionService = permissionService;
-    }
-
     public async Task SeedAsync()
     {
-        var permissions = await _permissionService.Permissions().ToListAsync();
+        var permissions = await permissionService.Permissions().ToListAsync();
 
         await CreateUserWithRole(permissions, UserConst.Test, RoleConst.Test);
         await CreateUserWithRole(permissions, UserConst.TestOne, RoleConst.TestOne);
@@ -28,20 +17,20 @@ public class TestsDataSeeder
 
     private async Task CreateUserWithRole(List<Permission> permissions, string username, string roleName)
     {
-        var role = await _roleService.GetByNameAsync(roleName) ??
-            await _roleService.CreateAsync(new Role { Default = true, Name = roleName });
-        var rolePermissions = await _permissionService.GetRolePermissionsAsync(role.Id);
+        var role = await roleService.GetByNameAsync(roleName) ??
+            await roleService.CreateAsync(new Role { Default = true, Name = roleName });
+        var rolePermissions = await permissionService.GetRolePermissionsAsync(role.Id);
         var permissionsToAssign = permissions.Where(p => !rolePermissions.Any(rp => rp.Name == p.Name)).ToList();
         foreach (var permission in permissionsToAssign)
         {
-            await _roleService.AssignPermissionAsync(role.Id, permission.Id);
+            await roleService.AssignPermissionAsync(role.Id, permission.Id);
         }
 
-        var user = await _userService.GetByUsernameAsync(username) ??
-            await _userService.CreateAsync(new User { Default = true, Username = username, Email = $"{username}@example.com" }, "Test#123");
-        if (!await _userService.IsInRoleAsync(user.Id, role.Id))
+        var user = await userService.GetByUsernameAsync(username) ??
+            await userService.CreateAsync(new User { Default = true, Username = username, Email = $"{username}@example.com" }, "Test#123");
+        if (!await userService.IsInRoleAsync(user.Id, role.Id))
         {
-            await _userService.AssignRoleAsync(user.Id, role.Id);
+            await userService.AssignRoleAsync(user.Id, role.Id);
         }
     }
 }

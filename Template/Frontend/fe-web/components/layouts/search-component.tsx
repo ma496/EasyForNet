@@ -42,7 +42,7 @@ const SearchComponent = () => {
     } else if (event.key === 'ArrowUp') {
       setActiveIndex((prevIndex) => (prevIndex - 1 + searchResults.length) % searchResults.length);
     } else if (event.key === 'Enter' && activeIndex >= 0) {
-      router.push(searchResults[activeIndex].url);
+      router.push(searchResults[activeIndex].url as any);
       setSearchQuery('');
       setSearchResults([]);
       setActiveIndex(-1);
@@ -63,7 +63,7 @@ const SearchComponent = () => {
         e.preventDefault();
         setSearch(false);
         if (searchResults.length > 0) {
-          router.push(searchResults[0].url);
+          router.push(searchResults[0].url as any);
           setSearchQuery('');
           setSearchResults([]);
         }
@@ -83,7 +83,7 @@ const SearchComponent = () => {
             {searchResults.map((item: SearchableItem, index) => (
               <li key={item.url} className={index === activeIndex ? 'bg-primary/10 text-primary hover:bg-primary/5' : 'hover:text-primary hover:bg-primary/5'}>
                 <Link
-                  href={item.url}
+                  href={item.url as any}
                   className="block px-4 py-2"
                   onClick={() => {
                     setSearchQuery('');

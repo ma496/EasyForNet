@@ -7,8 +7,8 @@ import * as Yup from 'yup'
 import { getTranslation } from '@/i18n';
 import { Formik, Form } from 'formik';
 import { FormInput } from '@/components/ui/form-input';
-import { useLoginMutation } from '@/store/api/account/account-api';
-import { useLazyGetUserInfoQuery } from '@/store/api/account/account-api';
+import { useLoginMutation } from '@/store/api/identity/account/account-api';
+import { useLazyGetUserInfoQuery } from '@/store/api/identity/account/account-api';
 import { useAppDispatch } from '@/store/hooks';
 import { login, setUserInfo } from '@/store/slices/authSlice';
 import { Button } from '@/components/ui/button';

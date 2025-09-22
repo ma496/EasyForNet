@@ -5,7 +5,7 @@ using TypeDefinition = Mono.Cecil.TypeDefinition;
 
 namespace Tests.Architect;
 
-public class ArchitectHelperTests(App App) : AppTestsBase(App) 
+public class ArchitectHelperTests(App app) : AppTestsBase(app) 
 {
     [Fact]
     public void GetDependencies()

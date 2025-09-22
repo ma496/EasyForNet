@@ -1,0 +1,238 @@
+/* React Day Picker Custom Styles */
+@import 'react-day-picker/style.css';
+
+/* Custom DatePicker Theme Integration */
+.rdp-custom {
+  --rdp-accent-color: #4361ee;
+  /* Primary color */
+  --rdp-accent-background-color: #4361ee;
+  --rdp-day-height: 36px;
+  --rdp-day-width: 36px;
+  --rdp-day_button-height: 34px;
+  --rdp-day_button-width: 34px;
+  --rdp-day_button-border-radius: 6px;
+  --rdp-selected-border: 1px solid #4361ee;
+  --rdp-today-color: #4361ee;
+  --rdp-disabled-opacity: 0.5;
+  --rdp-outside-opacity: 0.5;
+  --rdp-range_middle-background-color: rgba(67, 97, 238, 0.1);
+  --rdp-range_middle-color: #4361ee;
+  --rdp-range_start-background: #4361ee;
+  --rdp-range_end-background: #4361ee;
+  --rdp-nav_button-disabled-opacity: 0.3;
+  --rdp-multiple-selected-background: #4361ee;
+  --rdp-multiple-selected-color: white;
+}
+
+/* Dark mode overrides */
+.dark .rdp-custom {
+  --rdp-accent-color: #4361ee;
+  --rdp-accent-background-color: #4361ee;
+  --rdp-today-color: #4361ee;
+  --rdp-range_middle-background-color: rgba(67, 97, 238, 0.2);
+  --rdp-multiple-selected-background: #4361ee;
+  --rdp-multiple-selected-color: white;
+}
+
+/* Core interaction styles */
+.rdp-custom .rdp-day_button:hover:not([disabled]):not(.rdp-selected) {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: #4361ee;
+}
+
+.rdp-custom .rdp-selected {
+  background-color: #4361ee !important;
+  color: white !important;
+}
+
+.rdp-custom .rdp-today:not(.rdp-selected) {
+  font-weight: 600;
+  color: #4361ee;
+}
+
+.dark .rdp-custom .rdp-day_button:hover:not([disabled]):not(.rdp-selected) {
+  background-color: rgba(67, 97, 238, 0.2);
+  color: #4361ee;
+}
+
+.dark .rdp-custom .rdp-today:not(.rdp-selected) {
+  color: #4361ee;
+}
+
+/* Navigation button styles */
+.rdp-custom .rdp-nav_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rdp-custom .rdp-nav_button:hover:not([disabled]) {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+.rdp-custom .rdp-nav_button[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Navigation button focus styles */
+.rdp-custom .rdp-nav_button:focus {
+  outline: 2px solid #4361ee;
+  outline-offset: 2px;
+}
+
+.dark .rdp-custom .rdp-nav_button:focus {
+  outline: 2px solid #4361ee;
+}
+
+/* Month caption styles */
+.rdp-custom .rdp-month_caption {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 50px;
+  min-height: 40px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .rdp-custom .rdp-month_caption {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Month caption label */
+.rdp-custom .rdp-caption_label {
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+  flex: 1;
+}
+
+/* Month caption nav styles moved to default */
+
+/* Month caption */
+.rdp-custom .rdp-caption_label {
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+  flex: 1;
+}
+
+/* Weekday headers */
+.rdp-custom .rdp-weekday {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.7;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Day cells */
+.rdp-custom .rdp-day_button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.rdp-custom .rdp-day_button[disabled] {
+  cursor: not-allowed;
+}
+
+/* Range selection styles */
+.rdp-custom .rdp-range_start {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: #4361ee;
+  color: white;
+}
+
+.rdp-custom .rdp-range_end {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #4361ee;
+  color: white;
+}
+
+.rdp-custom .rdp-range_middle {
+  border-radius: 0;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: #4361ee;
+}
+
+.rdp-custom .rdp-range_start .rdp-day_button {
+  background-color: #4361ee;
+  color: white;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rdp-custom .rdp-range_end .rdp-day_button {
+  background-color: #4361ee;
+  color: white;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rdp-custom .rdp-range_middle .rdp-day_button {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: #4361ee;
+  border-radius: 0;
+}
+
+/* Multiple selection styles */
+.rdp-custom .rdp-multiple-selected {
+  background-color: #4361ee !important;
+  color: white !important;
+  border-radius: 6px !important;
+}
+
+.rdp-custom .rdp-multiple-selected .rdp-day_button {
+  background-color: #4361ee !important;
+  color: white !important;
+  border-radius: 6px !important;
+}
+
+/* Dark mode multiple selection */
+.dark .rdp-custom .rdp-multiple-selected {
+  background-color: #4361ee !important;
+  color: white !important;
+}
+
+.dark .rdp-custom .rdp-multiple-selected .rdp-day_button {
+  background-color: #4361ee !important;
+  color: white !important;
+}
+
+.dark .rdp-custom .rdp-day_button:hover:not([disabled]):not(.rdp-selected),
+.dark .rdp-custom .rdp-day:not(.rdp-selected) .rdp-day_button:hover:not([disabled]) {
+  background-color: rgba(67, 97, 238, 0.2) !important;
+  color: #4361ee !important;
+}
+
+/* Focus styles for accessibility - moved to global styles */
+
+/* Dark mode navigation buttons */
+.dark .rdp-custom .rdp-nav_button:hover:not([disabled]) {
+  background-color: rgba(67, 97, 238, 0.2);
+}
+
+/* Icon styles handled by component */
+
+/* Focus styles moved to global styles */
+
+/* z-index handled by parent container */
+
+/* Navigation button positioning handled by default styles */

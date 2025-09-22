@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 import { getTranslation } from '@/i18n';
 import { useRouter } from 'next/navigation';
-import { useForgetPasswordMutation } from '@/store/api/account/account-api';
+import { useForgetPasswordMutation } from '@/store/api/identity/account/account-api';
 import Swal from 'sweetalert2';
 import { Form, Formik } from 'formik';
 import { Button } from '@/components/ui/button';
@@ -35,7 +35,7 @@ export const ForgetPasswordForm = () => {
         text: t('forget_password_check_email'),
         icon: 'success',
       })
-      router.push('signin');
+      router.push('/signin');
     }
   };
 

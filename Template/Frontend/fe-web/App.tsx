@@ -5,7 +5,7 @@ import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, togg
 import AppLoading from '@/components/layouts/app-loading';
 import { getTranslation } from '@/i18n';
 import { setUserInfo } from './store/slices/authSlice';
-import { useLazyGetUserInfoQuery } from './store/api/account/account-api';
+import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api';
 import { usePathname, useRouter } from 'next/navigation';
 import { localeStorageConst } from './lib/constants';
 

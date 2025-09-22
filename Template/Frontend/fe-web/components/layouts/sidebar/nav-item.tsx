@@ -39,7 +39,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
             {item.children.filter(child => child.show !== false).map((child, index) => (
               <li key={`${item.title}-child-${index}`}>
                 <Link
-                  href={child.url}
+                  href={child.url as any}
                   className={`flex items-center ${pathname === child.url ? 'active' : ''}`}
                 >
                   {child.icon ? (
@@ -59,7 +59,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
 
   return (
     <div className="nav-item">
-      <Link href={item.url} className={`group ${pathname === item.url ? 'active' : ''}`}>
+      <Link href={item.url as any} className={`group ${pathname === item.url ? 'active' : ''}`}>
         <div className="flex items-center">
           {item.icon && <item.icon className="shrink-0 w-5 h-5 group-hover:!text-primary" />}
           <span className={`text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark`}>
