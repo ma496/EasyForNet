@@ -15,14 +15,14 @@
         <PackageReference Include="FastEndpoints.Security" Version="7.1.1" />
         <PackageReference Include="FastEndpoints.Swagger" Version="7.1.1" />
         <PackageReference Include="Hangfire.AspNetCore" Version="1.8.22" />
-        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.12" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.13" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
         <PackageReference Include="Riok.Mapperly" Version="4.3.0" />
-        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.10" />
+        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.1" />
     </ItemGroup>
 
     <ItemGroup>
