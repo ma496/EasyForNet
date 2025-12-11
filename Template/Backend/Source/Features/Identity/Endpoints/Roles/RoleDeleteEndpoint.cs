@@ -1,10 +1,6 @@
-using Backend.Base.Dto;
-using Backend.ErrorHandling;
-using Backend.Features.Identity.Core;
-using FluentValidation;
-using Backend.Permissions;
-
 namespace Backend.Features.Identity.Endpoints.Roles;
+
+using Backend.Features.Identity.Core;
 
 sealed class RoleDeleteEndpoint(IRoleService roleService) : Endpoint<RoleDeleteRequest, RoleDeleteResponse>
 {
@@ -21,15 +17,15 @@ sealed class RoleDeleteEndpoint(IRoleService roleService) : Endpoint<RoleDeleteR
         var entity = await roleService.GetByIdAsync(request.Id);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default role cannot be deleted", ErrorCodes.DefaultRoleCannotBeDeleted);
+            ThrowError("Default role cannot be deleted", ErrorCodes.DefaultRoleCannotBeDeleted);
 
         // Delete the entity from the db
         await roleService.DeleteAsync(entity);
-        await SendAsync(new RoleDeleteResponse { Success = true }, cancellation: cancellationToken);
+        await Send.ResponseAsync(new() { Success = true }, cancellation: cancellationToken);
     }
 }
 

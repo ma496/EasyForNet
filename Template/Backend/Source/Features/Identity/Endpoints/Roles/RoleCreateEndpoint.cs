@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using FluentValidation;
-using Backend.Permissions;
-using Riok.Mapperly.Abstractions;
-
-namespace Backend.Features.Identity.Endpoints.Roles;
 
 sealed class RoleCreateEndpoint(IRoleService roleService)
     : Endpoint<RoleCreateRequest, RoleCreateResponse>
@@ -24,7 +20,7 @@ sealed class RoleCreateEndpoint(IRoleService roleService)
         // save entity to db
         await roleService.CreateAsync(entity);
         var responseMapper = new RoleCreateResponseMapper();
-        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 

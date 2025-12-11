@@ -1,8 +1,7 @@
-using Backend.ErrorHandling;
+namespace Backend.Features.Identity.Endpoints.Account;
+
 using Backend.Features.Identity.Core;
 using Microsoft.Extensions.Options;
-
-namespace Backend.Features.Identity.Endpoints.Account;
 
 public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
 {
@@ -67,7 +66,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
     {
         var user = await _userService.GetByIdAsync(Guid.Parse(request.UserId));
         if (user == null)
-            this.ThrowError(r => r.UserId, "User not found", ErrorCodes.UserNotFound);
+            ThrowError(r => r.UserId, "User not found", ErrorCodes.UserNotFound);
 
         var roles = await _userService.GetUserRolesAsync(user.Id);
         var permissions = await _userService.GetUserPermissionsAsync(user.Id);

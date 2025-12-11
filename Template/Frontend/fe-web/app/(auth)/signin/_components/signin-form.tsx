@@ -1,32 +1,32 @@
-'use client';
-import IconLockDots from '@/components/icon/icon-lock-dots';
-import IconMail from '@/components/icon/icon-mail';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+'use client'
+import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n';
-import { Formik, Form } from 'formik';
-import { FormInput } from '@/components/ui/form-input';
-import { useLoginMutation } from '@/store/api/identity/account/account-api';
-import { useLazyGetUserInfoQuery } from '@/store/api/identity/account/account-api';
-import { useAppDispatch } from '@/store/hooks';
-import { login, setUserInfo } from '@/store/slices/authSlice';
-import { Button } from '@/components/ui/button';
-import { FormPasswordInput } from '@/components/ui/form-password-input';
-import Link from 'next/link';
+import { getTranslation } from '@/i18n'
+import { Formik, Form } from 'formik'
+import { FormInput } from '@/components/ui/form-input'
+import { useLoginMutation } from '@/store/api/identity/account/account-api'
+import { useLazyGetUserInfoQuery } from '@/store/api/identity/account/account-api'
+import { useAppDispatch } from '@/store/hooks'
+import { login, setUserInfo } from '@/store/slices/authSlice'
+import { Button } from '@/components/ui/button'
+import { FormPasswordInput } from '@/components/ui/form-password-input'
+import Link from 'next/link'
+import { Mail, Lock } from 'lucide-react'
 
 const SigninForm = () => {
-  const router = useRouter();
-  const { t } = getTranslation();
+  const router = useRouter()
+  const { t } = getTranslation()
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required(t('validation_usernameRequired'))
-      .min(3, t('validation_usernameMin'))
-      .max(50, t('validation_usernameMax')),
-    password: Yup.string().required(t('validation_passwordRequired'))
-      .min(8, t('validation_passwordMin'))
-      .max(50, t('validation_passwordMax')),
-  });
+    username: Yup.string()
+      .required(t('validation_required'))
+      .min(3, t('validation_minLength', { count: 3 }))
+      .max(50, t('validation_maxLength', { count: 50 })),
+    password: Yup.string()
+      .required(t('validation_required'))
+      .min(8, t('validation_minLength', { count: 8 }))
+      .max(50, t('validation_maxLength', { count: 50 })),
+  })
 
   type LoginFormValues = Yup.InferType<typeof validationSchema>
 
@@ -36,59 +36,36 @@ const SigninForm = () => {
 
   const submitForm = async (values: LoginFormValues) => {
     const loginRes = await loginApi(values)
-    if (loginRes.error) {
-      return
-    }
     if (loginRes.data) {
       dispatch(login(loginRes.data))
     }
     const userInfoRes = await getUserInfo()
     if (userInfoRes.data) {
       dispatch(setUserInfo(userInfoRes.data))
-      router.push(`/`, { scroll: false })
+      router.push(`/app`, { scroll: false })
     }
-  };
+  }
 
   return (
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      validationSchema={validationSchema}
-      onSubmit={submitForm}>
+    <Formik initialValues={{ username: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form className="space-y-5 dark:text-white">
-          <FormInput
-            label={t('label_username')}
-            name="username"
-            placeholder={t('placeholder_username')}
-            icon={<IconMail fill={true} />}
-          />
-          <FormPasswordInput
-            label={t('label_password')}
-            name="password"
-            placeholder={t('placeholder_password')}
-            icon={<IconLockDots fill={true} />}
-          />
+          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} />
+          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} />
 
           <div className="text-right">
-            <Link
-              href="/forget-password"
-              className="text-sm text-primary hover:underline dark:text-white"
-            >
+            <Link href="/forget-password" className="text-sm text-primary hover:underline dark:text-white">
               {t('link_forgotPassword')}
             </Link>
           </div>
 
-          <Button
-            type="submit"
-            className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
-            isLoading={isLogin || isLoadingUserInfo}
-          >
+          <Button type="submit" className="btn mt-6! w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLogin || isLoadingUserInfo}>
             {t('button_signin')}
           </Button>
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default SigninForm;
+export default SigninForm

@@ -1,4 +1,4 @@
-namespace Tests.Seeder;
+namespace Backend.Tests.Seeder;
 
 public static class UserConst
 {

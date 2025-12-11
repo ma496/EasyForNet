@@ -1,16 +1,16 @@
 using System.Security.Claims;
-using Backend.Data;
-using Backend.ErrorHandling;
+using System.Text.Json.Serialization;
 using Backend.External.Email;
 using Backend.Features.Identity.Core;
-using Backend.Permissions;
 using Backend.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using Backend.Features.FileManagement.Core;
+using Microsoft.AspNetCore.Http.Features;
+using Backend.Processors;
 
 var bld = WebApplication.CreateBuilder(args);
 
@@ -71,7 +71,13 @@ bld.Services.AddHangfireServer();
 
 // configure settings
 bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
+bld.Services.Configure<PayloadSetting>(bld.Configuration.GetSection("Payload"));
+bld.Services.Configure<FileSetting>(bld.Configuration.GetSection("File"));
 bld.Services.Configure<WebSetting>(bld.Configuration.GetSection("Web"));
+
+// rely on middleware and FormOptions to enforce limits to avoid abrupt connection resets
+bld.WebHost.ConfigureKestrel(o => o.Limits.MaxRequestBodySize = null);
+bld.Services.Configure<FormOptions>(o => o.MultipartBodyLengthLimit = 1073741824); // 1024 mb
 
 // configure services 
 bld.Services.AddFeatures();
@@ -98,32 +104,36 @@ using (var scope = app.Services.CreateScope())
     await seeder.SeedAsync();
 }
 
-app.UseMiddleware<UnsupportedMediaTypeMiddleware>();
-app.UseMiddleware<DbUpdateExceptionHandlingMiddleware>();
-
 app.UseCors()
    .UseAuthentication()
    .UseAuthorization()
    .UseFastEndpoints(
        c =>
        {
-           c.Binding.ReflectionCache.AddFromBackend();
-           c.Errors.UseProblemDetails();
-           c.Endpoints.RoutePrefix = bld.Configuration.GetRequiredSection("RoutePrefix").Value;
-           c.Security.RoleClaimType = ClaimTypes.Role;
-           c.Security.PermissionsClaimType = ClaimConstants.Permission;
-           c.Errors.UseProblemDetails(x =>
-           {
-               x.IndicateErrorCode = true;     //serializes the fluentvalidation error code
-               x.TypeValue = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1";
-               x.TitleValue = "One or more validation errors occurred.";
-               x.TitleTransformer = pd => pd.Status switch
-               {
-                   400 => "Validation Error",
-                   404 => "Not Found",
-                   _ => "One or more errors occurred!"
-               };
-           });
+            c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+            c.Endpoints.Configurator = ep =>
+            {
+                ep.PreProcessor<ToLargePayloadProcessor>(Order.Before);
+                ep.PostProcessor<ExceptionProcessor>(Order.After);
+                ep.PostProcessor<UnsupportedMediaTypeResponseProcessor>(Order.After);
+            };
+            // c.Binding.ReflectionCache.AddFromBackend();
+            c.Endpoints.RoutePrefix = bld.Configuration.GetRequiredSection("RoutePrefix").Value;
+            c.Versioning.Prefix = "v";
+            c.Security.RoleClaimType = ClaimTypes.Role;
+            c.Security.PermissionsClaimType = ClaimConstants.Permission;
+            c.Errors.UseProblemDetails(x =>
+            {
+                x.IndicateErrorCode = true;     //serializes the fluentvalidation error code
+                x.TypeValue = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1";
+                x.TitleValue = "One or more validation errors occurred.";
+                x.TitleTransformer = pd => pd.Status switch
+                {
+                    400 => "Validation Error",
+                    404 => "Not Found",
+                    _ => "One or more errors occurred!"
+                };
+            });
        })
    .UseSwaggerGen();
 
@@ -136,8 +146,9 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 // Move recurring jobs setup after database is ready
 using (app.Services.CreateScope())
 {
-    RecurringJob.AddOrUpdate<IAuthTokenService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
-    RecurringJob.AddOrUpdate<ITokenService>("delete-expired-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
+    RecurringJob.AddOrUpdate<IAuthTokenCleanService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
+    RecurringJob.AddOrUpdate<ITokenCleanService>("delete-expired-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
+    RecurringJob.AddOrUpdate<IDeleteUnactiveFilesService>("delete-unactive-files", service => service.DeleteAsync(), Cron.Daily);
 }
 
 app.Run();

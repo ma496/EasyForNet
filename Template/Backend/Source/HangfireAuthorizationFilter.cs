@@ -1,6 +1,6 @@
-using Hangfire.Dashboard;
-
 namespace Backend;
+
+using Hangfire.Dashboard;
 
 public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
 {

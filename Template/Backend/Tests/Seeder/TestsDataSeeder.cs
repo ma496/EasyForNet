@@ -1,12 +1,11 @@
+namespace Backend.Tests.Seeder;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Tests.Seeder;
 
 public class TestsDataSeeder(IUserService userService, IRoleService roleService, IPermissionService permissionService)
 {
-    public async Task SeedAsync()
+    public async Task SeedAsync(HttpClient _)
     {
         var permissions = await permissionService.Permissions().ToListAsync();
 

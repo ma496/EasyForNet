@@ -7,5 +7,5 @@
 }
 
 .dark .sortable-drag {
-  @apply rotate-[10deg] bg-black;
+  @apply rotate-10 bg-black;
 }

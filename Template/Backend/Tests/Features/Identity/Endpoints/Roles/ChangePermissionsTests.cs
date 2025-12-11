@@ -1,28 +1,27 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
+using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Identity.Endpoints.Roles;
-using Microsoft.EntityFrameworkCore;
 
-namespace Tests.Features.Identity.Endpoints.Roles;
-
-public class ChangePermissionsTests : AppTestsBase
+public class ChangePermissionsTests(App app) : AppTestsBase(app)
 {
-    public ChangePermissionsTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Change_Permissions()
     {
+        await SetAuthTokenAsync();
+
         var roleService = App.Services.GetRequiredService<IRoleService>();
         var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-        var role = await roleService.CreateAsync(new()
-        {
-            Name = $"TestRole_{Helper.UniqueNumber()}",
-            Description = "Test Role"
-        });
+        var permissions = await permissionService
+                                .Permissions()
+                                .Take(2)
+                                .Select(x => x.Id)
+                                .ToListAsync(cancellationToken: TestContext.Current.CancellationToken);
+        var faker = new Faker<Role>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var role = await roleService.CreateAsync(faker.Generate());
 
         var (rsp, res) = await App.Client.PUTAsync<ChangePermissionsEndpoint, ChangePermissionsRequest, ChangePermissionsResponse>(
             new()
@@ -38,14 +37,19 @@ public class ChangePermissionsTests : AppTestsBase
     [Fact]
     public async Task Change_Permissions_Of_Role_Already_Has_Permissions()
     {
+        await SetAuthTokenAsync();
+
         var roleService = App.Services.GetRequiredService<IRoleService>();
         var permissionService = App.Services.GetRequiredService<IPermissionService>();
-        var permissions = await permissionService.Permissions().Take(2).Select(x => x.Id).ToListAsync();
-        var role = await roleService.CreateAsync(new()
-        {
-            Name = $"TestRole_{Helper.UniqueNumber()}",
-            Description = "Test Role"
-        });
+        var permissions = await permissionService
+                                .Permissions()
+                                .Take(2)
+                                .Select(x => x.Id)
+                                .ToListAsync(cancellationToken: TestContext.Current.CancellationToken);
+        var faker = new Faker<Role>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var role = await roleService.CreateAsync(faker.Generate());
         var (rsp, res) = await App.Client.PUTAsync<ChangePermissionsEndpoint, ChangePermissionsRequest, ChangePermissionsResponse>(
            new()
            {
@@ -53,7 +57,12 @@ public class ChangePermissionsTests : AppTestsBase
                Permissions = permissions
            });
 
-        var newPermissions = await permissionService.Permissions().Skip(2).Take(2).Select(x => x.Id).ToListAsync();
+        var newPermissions = await permissionService
+                                   .Permissions()
+                                   .Skip(2)
+                                   .Take(2)
+                                   .Select(x => x.Id)
+                                   .ToListAsync(cancellationToken: TestContext.Current.CancellationToken);
         var mixPermissions = new List<Guid> { permissions[0] };
         mixPermissions.AddRange(newPermissions);
 

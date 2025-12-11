@@ -1,6 +1,7 @@
 {
-    "semi": true,
+    "semi": false,
     "singleQuote": true,
     "printWidth": 200,
-    "plugins": ["prettier-plugin-tailwindcss"]
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindStylesheet": "./styles/tailwind.css"
 }

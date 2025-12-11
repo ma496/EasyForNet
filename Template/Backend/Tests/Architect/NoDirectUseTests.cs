@@ -1,9 +1,9 @@
+namespace Backend.Tests.Architect;
+
 using Backend.Attributes;
 using Mono.Cecil;
 using NetArchTest.Rules;
-using Xunit.Abstractions;
-
-namespace Tests.Architect;
+using TestResult = NetArchTest.Rules.TestResult;
 
 public class NoDirectUseTests(ITestOutputHelper output)
 {
@@ -11,7 +11,7 @@ public class NoDirectUseTests(ITestOutputHelper output)
     public void ClassesWithNoDirectUseAttribute_ShouldNotBeUsedDirectly()
     {
         // Arrange
-        var assembly = typeof(Program).Assembly;
+        var assembly = typeof(global::Program).Assembly;
 
         var typesWithNoDirectUseAttribute = Types.InAssembly(assembly)
             .That()

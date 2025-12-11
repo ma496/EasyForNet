@@ -1,11 +1,12 @@
-using System.Text.Json.Serialization;
-
 namespace Backend.Permissions;
+
+using System.Text.Json.Serialization;
 
 public class PermissionDefinition(string name, string displayName)
 {
     public string Name { get; set; } = name;
     public string DisplayName { get; set; } = displayName;
+    public bool Include { get; set; } = true;
 
     [JsonIgnore]
     public PermissionDefinition? Parent { get; set; }

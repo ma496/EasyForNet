@@ -1,8 +1,8 @@
+namespace Backend.Extensions;
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-
-namespace Backend.Extensions;
 
 public static class EndpointExtension
 {

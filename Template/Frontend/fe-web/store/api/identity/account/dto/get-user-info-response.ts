@@ -1,12 +1,10 @@
-import { ImageDto } from "@/store/api/base/dto/image-dto"
-
 export type GetUserInfoResponse = {
   id: string
   username: string
   email: string
   firstName: string
   lastName: string
-  image: ImageDto
+  image: string | null
   roles: GetUserInfoRole[]
 }
 

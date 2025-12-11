@@ -2,6 +2,7 @@ namespace Backend.ErrorHandling;
 
 public static class ErrorCodes
 {
+    public const string InternalServerError = "internal_server_error";
     public const string DuplicateValue = "duplicate_value";
     public const string DuplicatePropertyValue = "duplicate_property_value";
     public const string RequiredFieldMissing = "required_field_missing";
@@ -12,6 +13,7 @@ public static class ErrorCodes
     public const string InvalidCurrentPassword = "invalid_current_password";
     public const string InvalidToken = "invalid_token";
     public const string TokenExpired = "token_expired";
+    public const string PayloadTooLarge = "payload_too_large";
     public const string InvalidUsernamePassword = "invalid_username_password";
     public const string InvalidEmailPassword = "invalid_email_password";
     public const string UserNotActive = "user_not_active";

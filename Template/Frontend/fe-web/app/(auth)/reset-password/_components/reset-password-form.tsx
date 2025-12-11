@@ -1,62 +1,60 @@
 'use client'
-import * as Yup from 'yup';
-import { getTranslation } from '@/i18n';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useResetPasswordMutation } from '@/store/api/identity/account/account-api';
-import Swal from 'sweetalert2';
-import { Form, Formik } from 'formik';
-import { Button } from '@/components/ui/button';
-import { FormPasswordInput } from '@/components/ui/form-password-input';
-import IconLockDots from '@/components/icon/icon-lock-dots';
+import * as Yup from 'yup'
+import { getTranslation } from '@/i18n'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useResetPasswordMutation } from '@/store/api/identity/account/account-api'
+import { Form, Formik } from 'formik'
+import { Button } from '@/components/ui/button'
+import { FormPasswordInput } from '@/components/ui/form-password-input'
+import { Lock } from 'lucide-react'
+import { errorAlert, successAlert } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string) => string) => {
+const createValidationSchema = (t: (key: string, params?: any) => string) => {
   return Yup.object().shape({
     password: Yup.string()
-      .required(t('validation_passwordRequired'))
-      .min(8, t('validation_passwordMin'))
-      .max(50, t('validation_passwordMax')),
+      .required(t('validation_required'))
+      .min(8, t('validation_minLength', { count: 8 }))
+      .max(50, t('validation_maxLength', { count: 50 })),
     confirmPassword: Yup.string()
-      .required(t('validation_confirmPasswordRequired'))
-      .oneOf([Yup.ref('password')], t('validation_passwordsMustMatch')),
-  });
-};
+      .required(t('validation_required'))
+      .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_new_password') })),
+  })
+}
 
 export const ResetPasswordForm = () => {
-  const { t } = getTranslation();
-  const validationSchema = createValidationSchema(t);
+  const { t } = getTranslation()
+  const validationSchema = createValidationSchema(t)
   type ResetPasswordFormValues = Yup.InferType<typeof validationSchema>
-  const [resetPassword, { isLoading }] = useResetPasswordMutation()
+  const [resetPassword, { isLoading: isResettingPassword }] = useResetPasswordMutation()
   const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
 
   const onSubmit = async (data: ResetPasswordFormValues) => {
     if (!token) {
-      Swal.fire({
-        title: t('error'),
+      errorAlert({
         text: t('invalid_or_expired_token'),
-        icon: 'error',
-      });
-      return;
+      })
+      return
     }
 
     const result = await resetPassword({
       token,
       password: data.password,
-    });
+    })
 
     if (!result.error) {
-      Swal.fire({
+      successAlert({
         title: t('reset_password_success'),
         text: t('password_has_been_reset'),
         icon: 'success',
-      });
-      router.push('/signin');
+      })
+      router.push('/signin')
     }
-  };
+  }
 
   return (
-    <div className='panel flex flex-col gap-4 min-w-[300px] sm:min-w-[500px]'>
+    <div className="panel flex min-w-[300px] flex-col gap-4 sm:min-w-[500px]">
       <Formik
         initialValues={{
           password: '',
@@ -66,21 +64,11 @@ export const ResetPasswordForm = () => {
         onSubmit={onSubmit}
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
-          <Form noValidate className='flex flex-col gap-4'>
-            <FormPasswordInput
-              name='password'
-              label={t('label_new_password')}
-              placeholder={t('placeholder_new_password')}
-              icon={<IconLockDots fill={true} />}
-            />
-            <FormPasswordInput
-              name='confirmPassword'
-              label={t('label_confirm_password')}
-              placeholder={t('placeholder_confirm_password')}
-              icon={<IconLockDots fill={true} />}
-            />
-            <div className='flex justify-end'>
-              <Button type='submit' isLoading={isLoading}>
+          <Form noValidate className="flex flex-col gap-4">
+            <FormPasswordInput name="password" label={t('label_new_password')} placeholder={t('placeholder_new_password')} icon={<Lock size={16} />} autoFocus={true} />
+            <FormPasswordInput name="confirmPassword" label={t('label_confirm_password')} placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} />
+            <div className="flex justify-end">
+              <Button type="submit" isLoading={isResettingPassword}>
                 {t('reset_password')}
               </Button>
             </div>
@@ -88,5 +76,5 @@ export const ResetPasswordForm = () => {
         )}
       </Formik>
     </div>
-  );
-};
+  )
+}

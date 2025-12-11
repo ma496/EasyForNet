@@ -1,33 +1,33 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react'
 
 const ScrollToTop = () => {
-  const [showTopButton, setShowTopButton] = useState(false);
+  const [showTopButton, setShowTopButton] = useState(false)
 
   const goToTop = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  };
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  }
 
   const onScrollHandler = () => {
     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-      setShowTopButton(true);
+      setShowTopButton(true)
     } else {
-      setShowTopButton(false);
+      setShowTopButton(false)
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener('scroll', onScrollHandler);
+    window.addEventListener('scroll', onScrollHandler)
     return () => {
-      window.removeEventListener('onscroll', onScrollHandler);
-    };
-  });
+      window.removeEventListener('onscroll', onScrollHandler)
+    }
+  })
 
   return (
     <div className="fixed bottom-6 z-50 ltr:right-6 rtl:left-6">
       {showTopButton && (
-        <button type="button" className="btn btn-outline-primary animate-pulse rounded-full bg-[#fafafa] p-2 dark:bg-[#060818] dark:hover:bg-primary" onClick={goToTop}>
+        <button type="button" className="btn animate-pulse rounded-full btn-outline-primary bg-[#fafafa] p-2 dark:bg-[#060818] dark:hover:bg-primary" onClick={goToTop}>
           <svg width="24" height="24" className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               opacity="0.5"
@@ -44,7 +44,7 @@ const ScrollToTop = () => {
         </button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ScrollToTop;
+export default ScrollToTop

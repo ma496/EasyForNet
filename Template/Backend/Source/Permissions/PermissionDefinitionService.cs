@@ -1,6 +1,12 @@
+namespace Backend.Permissions;
+
 using Backend.Attributes;
 
-namespace Backend.Permissions;
+public interface IPermissionDefinitionService
+{
+    IReadOnlyList<PermissionDefinition> GetPermissions();
+    IReadOnlyList<FlattenedPermission> GetFlattenedPermissions();
+}
 
 [NoDirectUse]
 public class PermissionDefinitionService(PermissionDefinitionContext context) : IPermissionDefinitionService

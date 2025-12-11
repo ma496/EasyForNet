@@ -1,8 +1,7 @@
-using Backend.Attributes;
-using Backend.Base;
-using Backend.Features.Identity.Core;
-
 namespace Backend.Features.Identity;
+
+using Backend.Attributes;
+using Backend.Features.Identity.Core;
 
 [BypassNoDirectUse]
 public class IdentityFeature : IFeature
@@ -16,5 +15,7 @@ public class IdentityFeature : IFeature
         services.AddScoped<IAuthTokenService, AuthTokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuthTokenCleanService, AuthTokenCleanService>();
+        services.AddScoped<ITokenCleanService, TokenCleanService>();
     }
 }

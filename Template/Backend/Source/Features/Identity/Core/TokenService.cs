@@ -1,9 +1,7 @@
-using Backend.Attributes;
-using Backend.Data;
-using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Core;
+
+using Backend.Attributes;
+using Backend.Features.Identity.Core.Entities;
 
 public interface ITokenService
 {
@@ -12,7 +10,6 @@ public interface ITokenService
     Task UsedTokenAsync(Token token);
     Task<Token?> GetTokenAsync(string token);
     Task DeleteTokenAsync(Token token);
-    Task DeleteExpiredTokensAsync();
 }
 
 [NoDirectUse]
@@ -49,10 +46,5 @@ public class TokenService(AppDbContext dbContext) : ITokenService
     {
         dbContext.Tokens.Remove(token);
         await dbContext.SaveChangesAsync();
-    }
-
-    public async Task DeleteExpiredTokensAsync()
-    {
-        await dbContext.Tokens.Where(t => t.Expiry < DateTime.UtcNow).ExecuteDeleteAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Backend.Base.Dto;
+namespace Backend.Base.Dto;
 
 public interface IBaseDto
 {}

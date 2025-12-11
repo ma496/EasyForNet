@@ -1,8 +1,6 @@
-using Backend.Base.Dto;
-using Backend.Features.Identity.Core;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Endpoints.Permissions;
+
+using Backend.Features.Identity.Core;
 
 sealed class GetPermissionsEndpoint(IPermissionService permissionService) : EndpointWithoutRequest<GetPermissionsResponse>
 {
@@ -24,7 +22,7 @@ sealed class GetPermissionsEndpoint(IPermissionService permissionService) : Endp
             })
             .ToListAsync(cancellationToken);
 
-        await SendAsync(new GetPermissionsResponse
+        await Send.ResponseAsync(new()
         {
             Permissions = permissions
         }, cancellation: cancellationToken);

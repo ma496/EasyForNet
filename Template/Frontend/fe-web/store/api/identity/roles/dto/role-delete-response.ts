@@ -1,4 +1,4 @@
-import { BaseDto } from "@/store/api/base/dto/base-dto"
+import { BaseDto } from '@/store/api/base/dto/base-dto'
 
 export type RoleDeleteResponse = BaseDto<string> & {
   success: boolean

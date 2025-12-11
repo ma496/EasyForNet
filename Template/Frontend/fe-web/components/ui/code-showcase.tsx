@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -33,27 +33,14 @@ export const CodeShowcase = ({ title, description, preview, code, className = ''
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-lg">{title}</CardTitle>
-            {description && (
-              <p className="text-sm text-white-dark mt-1">{description}</p>
-            )}
+            {description && <p className="mt-1 text-sm text-white-dark">{description}</p>}
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode(!showCode)}
-              icon={showCode ? <EyeIcon size={16} /> : <CodeIcon size={16} />}
-            >
+            <Button variant="outline" size="sm" onClick={() => setShowCode(!showCode)} icon={showCode ? <EyeIcon size={16} /> : <CodeIcon size={16} />}>
               {showCode ? 'Preview' : 'Code'}
             </Button>
             {showCode && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCopyCode}
-                icon={copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
-                className={copied ? 'text-success' : ''}
-              >
+              <Button variant="outline" size="sm" onClick={handleCopyCode} icon={copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />} className={copied ? 'text-success' : ''}>
                 {copied ? 'Copied!' : 'Copy'}
               </Button>
             )}
@@ -63,14 +50,12 @@ export const CodeShowcase = ({ title, description, preview, code, className = ''
       <CardContent>
         {showCode ? (
           <div className="relative">
-            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm">
+            <pre className="overflow-x-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800">
               <code className="language-tsx">{code}</code>
             </pre>
           </div>
         ) : (
-          <div className="min-h-[100px] flex items-center justify-center">
-            {preview}
-          </div>
+          <div className="flex min-h-[100px] items-center justify-center">{preview}</div>
         )}
       </CardContent>
     </Card>

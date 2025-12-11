@@ -1,9 +1,7 @@
-using Backend.Attributes;
-using Backend.Data;
-using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Core;
+
+using Backend.Attributes;
+using Backend.Features.Identity.Core.Entities;
 
 public interface IPermissionService
 {
@@ -11,11 +9,15 @@ public interface IPermissionService
     Task<Permission?> GetByNameAsync(string name);
     IQueryable<Permission> Permissions();
     Task<Permission> CreateAsync(Permission permission);
+    Task CreateAsync(List<Permission> permissions);
     Task UpdateAsync(Permission permission);
     Task DeleteAsync(Guid id);
+    Task DeleteAsync(List<Guid> ids);
     Task DeleteAsync(Permission permission);
     Task<List<Permission>> GetRolePermissionsAsync(Guid roleId);
     Task<List<Permission>> GetUserPermissionsAsync(Guid userId);
+    Task RemovePermissionFromAllRoles(Guid permissionId);
+    Task RemovePermissionsFromAllRoles(List<Guid> permissionIds);
 }
 
 [NoDirectUse]
@@ -43,6 +45,12 @@ public class PermissionService(AppDbContext dbContext) : IPermissionService
         return permission;
     }
 
+    public async Task CreateAsync(List<Permission> permissions)
+    {
+        dbContext.Permissions.AddRange(permissions);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task UpdateAsync(Permission permission)
     {
         dbContext.Permissions.Update(permission);
@@ -56,6 +64,13 @@ public class PermissionService(AppDbContext dbContext) : IPermissionService
         {
             await DeleteAsync(permission);
         }
+    }
+
+    public async Task DeleteAsync(List<Guid> ids)
+    {
+        await dbContext.Permissions
+            .Where(p => ids.Contains(p.Id))
+            .ExecuteDeleteAsync();
     }
 
     public async Task DeleteAsync(Permission permission)
@@ -80,5 +95,19 @@ public class PermissionService(AppDbContext dbContext) : IPermissionService
             .Select(rp => rp.Permission)
             .Distinct()
             .ToListAsync();
+    }
+
+    public async Task RemovePermissionFromAllRoles(Guid permissionId)
+    {
+        await dbContext.RolePermissions
+            .Where(rp => rp.PermissionId == permissionId)
+            .ExecuteDeleteAsync();
+    }
+
+    public async Task RemovePermissionsFromAllRoles(List<Guid> permissionIds)
+    {
+        await dbContext.RolePermissions
+            .Where(rp => permissionIds.Contains(rp.PermissionId))
+            .ExecuteDeleteAsync();
     }
 } 

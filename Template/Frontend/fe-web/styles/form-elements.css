@@ -64,18 +64,18 @@ input[type='range']:active::-webkit-slider-thumb {
 }
 
 .noUi-target {
-  @apply !h-2 !shadow-none dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark;
+  @apply h-2! shadow-none! dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark;
 }
 
 .noUi-horizontal .noUi-handle {
-  @apply !h-5 !w-6 cursor-pointer border border-[#D3D3D3] !shadow-[inset_0_0_1px_#fff,inset_0_1px_7px_#ebebeb,0_3px_6px_-3px_#bbb] dark:border-[#3b3f5c] dark:!bg-[#3b3f5c] dark:!shadow-none;
+  @apply h-5! w-6! cursor-pointer border border-[#D3D3D3] shadow-[inset_0_0_1px_#fff,inset_0_1px_7px_#ebebeb,0_3px_6px_-3px_#bbb]! dark:border-[#3b3f5c] dark:bg-[#3b3f5c]! dark:shadow-none!;
 }
 
 .noUi-tooltip {
-  @apply border-[#D3D3D3] !shadow-none dark:border-[#253b5c] dark:!bg-[#1b2e4b] dark:text-white-dark;
+  @apply border-[#D3D3D3] shadow-none! dark:border-[#253b5c] dark:bg-[#1b2e4b]! dark:text-white-dark;
 }
 
 .noUi-handle:before,
   .noUi-handle:after {
-  @apply !h-1.5;
+  @apply h-1.5!;
 }

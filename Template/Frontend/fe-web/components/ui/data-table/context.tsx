@@ -1,61 +1,50 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
-import {
-  ColumnDef,
-  SortingState,
-  PaginationState,
-  VisibilityState,
-  RowSelectionState,
-  Table,
-  getPaginationRowModel,
-  getCoreRowModel,
-  useReactTable,
-  getSortedRowModel,
-} from '@tanstack/react-table';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react'
+import { ColumnDef, SortingState, PaginationState, VisibilityState, RowSelectionState, Table, getPaginationRowModel, getCoreRowModel, useReactTable, getSortedRowModel } from '@tanstack/react-table'
 
 interface DataTableContextProps<TData> {
-  data: TData[];
-  rowCount?: number;
-  columns: ColumnDef<TData, any>[];
-  sorting: SortingState;
-  setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
-  pagination: PaginationState;
-  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
-  globalFilter: string;
-  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-  columnVisibility: VisibilityState;
-  setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>;
-  pageSizeOptions: number[];
-  rowSelection: RowSelectionState;
-  setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
-  enableRowSelection: boolean;
-  table: Table<TData>;
-  isFetching?: boolean;
+  data: TData[]
+  rowCount?: number
+  columns: ColumnDef<TData, any>[]
+  sorting: SortingState
+  setSorting: React.Dispatch<React.SetStateAction<SortingState>>
+  pagination: PaginationState
+  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
+  globalFilter: string
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>
+  columnVisibility: VisibilityState
+  setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>
+  pageSizeOptions: number[]
+  rowSelection: RowSelectionState
+  setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>
+  enableRowSelection: boolean
+  table: Table<TData>
+  isFetching?: boolean
 }
 
-const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined);
+const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined)
 
 export function useDataTable<TData>() {
-  const context = useContext(DataTableContext);
+  const context = useContext(DataTableContext)
   if (context === undefined) {
-    throw new Error('useDataTable must be used within a DataTableProvider');
+    throw new Error('useDataTable must be used within a DataTableProvider')
   }
-  return context as DataTableContextProps<TData>;
+  return context as DataTableContextProps<TData>
 }
 
 interface DataTableProviderProps<TData> {
-  children: ReactNode;
-  data: TData[];
-  rowCount?: number;
-  columns: ColumnDef<TData, any>[];
-  pageSizeOptions?: number[];
-  enableRowSelection?: boolean;
-  sorting: SortingState;
-  setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
-  pagination: PaginationState;
-  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
-  globalFilter: string;
-  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-  isFetching?: boolean;
+  children: ReactNode
+  data: TData[]
+  rowCount?: number
+  columns: ColumnDef<TData, any>[]
+  pageSizeOptions?: number[]
+  enableRowSelection?: boolean
+  sorting: SortingState
+  setSorting: React.Dispatch<React.SetStateAction<SortingState>>
+  pagination: PaginationState
+  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
+  globalFilter: string
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>
+  isFetching?: boolean
 }
 
 export function DataTableProvider<TData>({
@@ -73,8 +62,8 @@ export function DataTableProvider<TData>({
   setGlobalFilter,
   isFetching,
 }: DataTableProviderProps<TData>) {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const table = useReactTable({
     data,
     columns,
@@ -98,7 +87,7 @@ export function DataTableProvider<TData>({
     manualSorting: true,
     manualPagination: true,
     manualFiltering: true,
-  });
+  })
 
   useEffect(() => {
     table.firstPage()
@@ -124,21 +113,8 @@ export function DataTableProvider<TData>({
       table,
       isFetching,
     }),
-    [
-      data,
-      rowCount,
-      columns,
-      sorting,
-      pagination,
-      globalFilter,
-      columnVisibility,
-      pageSizeOptions,
-      rowSelection,
-      enableRowSelection,
-      table,
-      isFetching,
-    ]
-  );
+    [data, rowCount, columns, sorting, pagination, globalFilter, columnVisibility, pageSizeOptions, rowSelection, enableRowSelection, table, isFetching],
+  )
 
-  return <DataTableContext.Provider value={value}>{children}</DataTableContext.Provider>;
+  return <DataTableContext.Provider value={value}>{children}</DataTableContext.Provider>
 }

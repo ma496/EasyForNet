@@ -12,7 +12,7 @@
 
 .calendar-wrapper table > thead > tr > th[role="presentation"],
 .calendar-wrapper table > tbody > tr > td {
-  @apply !p-0;
+  @apply p-0!;
 }
 
 .calendar-wrapper table th.fc-day {

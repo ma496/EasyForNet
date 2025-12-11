@@ -1,4 +1,4 @@
-import { BaseDto } from "./base-dto"
+import { BaseDto } from './base-dto'
 
 export type CreatableDto = {
   createdAt: string
@@ -12,11 +12,8 @@ export type UpdatableDto = {
 
 export type AuditableDto = CreatableDto & UpdatableDto
 
-export type GenericCreatableDto<TId> = {
-} & CreatableDto & BaseDto<TId>
+export type GenericCreatableDto<TId> = {} & CreatableDto & BaseDto<TId>
 
-export type GenericUpdatableDto<TId> = {
-} & UpdatableDto & BaseDto<TId>
+export type GenericUpdatableDto<TId> = {} & UpdatableDto & BaseDto<TId>
 
-export type GenericAuditableDto<TId> = {
-} & AuditableDto & BaseDto<TId>
+export type GenericAuditableDto<TId> = {} & AuditableDto & BaseDto<TId>

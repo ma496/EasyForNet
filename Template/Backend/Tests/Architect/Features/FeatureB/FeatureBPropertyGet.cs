@@ -1,7 +1,9 @@
-using Tests.Architect.Features.FeatureA;
+namespace Backend.Tests.Architect.Features.FeatureB;
+
+using Backend.Tests.Architect.Features.FeatureA;
+
 // ReSharper disable ArrangeAccessorOwnerBody
 
-namespace Tests.Architect.Features.FeatureB;
 
 public class FeatureBPropertyGet
 {

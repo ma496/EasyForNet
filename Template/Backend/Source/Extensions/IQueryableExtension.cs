@@ -1,20 +1,13 @@
+namespace Backend.Extensions;
+
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using Backend.Base;
-using Backend.Base.Dto;
 using Backend.Data.Entities.Base;
-
-namespace Backend.Extensions;
 
 public static class IQueryableExtension
 {
-    public static IQueryable<T> ToPage<T>(this IQueryable<T> query, int page, int pageSize)
-    {
-        return query.Skip((page - 1) * pageSize).Take(pageSize);
-    }
-
-    public static IQueryable<T> Process<T>(this IQueryable<T> query, ListRequestDto request)
-        where T : class
+    public static IQueryable<T> Process<T, TId>(this IQueryable<T> query, ListRequestDto<TId> request)
+        where T : class, IBaseEntity<TId>
     {
         var processQuery = query;
 
@@ -50,11 +43,16 @@ public static class IQueryableExtension
             processQuery = processQuery.OrderBy($"{nameof(IBaseEntity<object>.Id)} desc");
         }
 
-        processQuery = !request.All
+        if (request.IncludeIds?.Count > 0)
+        {
+            processQuery = processQuery.Where(x => request.IncludeIds.Contains(x.Id));
+        }
+
+        processQuery = request.All || request.IncludeIds?.Count > 0
             ? processQuery
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize)
-            : processQuery;
+            : processQuery
+                .Skip<T>((request.Page - 1) * request.PageSize)
+                .Take<T>(request.PageSize);
 
         return processQuery;
     }

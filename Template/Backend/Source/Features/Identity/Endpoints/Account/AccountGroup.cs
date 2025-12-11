@@ -4,6 +4,6 @@ public class AccountGroup : Group
 {
     public AccountGroup()
     {
-        Configure("account", ep => ep.Description(x => x.WithTags("Account")));
+        Configure("account", ep => {});
     }
 }

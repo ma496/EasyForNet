@@ -1,10 +1,10 @@
+namespace Backend.Tests.Architect;
+
 using System.Reflection;
 using Backend.Attributes;
 using Mono.Cecil;
 using NetArchTest.Rules;
 using TypeDefinition = Mono.Cecil.TypeDefinition;
-
-namespace Tests.Architect;
 
 public record FeatureDependencyTestOutput(bool IsSuccess,
                                           string FeatureNamespace,

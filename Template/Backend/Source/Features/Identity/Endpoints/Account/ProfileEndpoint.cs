@@ -1,9 +1,6 @@
-using Backend.Base.Dto;
-using Backend.Data;
-using Backend.Features.Identity.Core;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Endpoints.Account;
+
+using Backend.Features.Identity.Core;
 
 sealed class ProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     : EndpointWithoutRequest<UserProfileResponse>
@@ -26,20 +23,15 @@ sealed class ProfileEndpoint(AppDbContext dbContext, ICurrentUserService current
                     Email = x.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    Image = x.Image != null ? new ImageDto
-                    {
-                        ImageBase64 = Convert.ToBase64String(x.Image.Data),
-                        ContentType = x.Image.ContentType,
-                        FileName = x.Image.FileName
-                    } : null,
+                    Image = x.Image,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
         if (user is null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
-        await SendAsync(user, cancellation: cancellationToken);
+        await Send.ResponseAsync(user, cancellation: cancellationToken);
     }
 }
 
@@ -50,7 +42,7 @@ sealed class UserProfileResponse
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public ImageDto? Image { get; set; }
+    public string? Image { get; set; }
 }
 
 

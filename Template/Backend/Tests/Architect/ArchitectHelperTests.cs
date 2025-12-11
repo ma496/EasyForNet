@@ -1,9 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
-using Mono.Cecil;
-using Tests.Architect.Features.FeatureA;
-using TypeDefinition = Mono.Cecil.TypeDefinition;
+namespace Backend.Tests.Architect;
 
-namespace Tests.Architect;
+using System.Diagnostics.CodeAnalysis;
+using Backend.Tests.Architect.Features.FeatureA;
+using Mono.Cecil;
+using TypeDefinition = Mono.Cecil.TypeDefinition;
 
 public class ArchitectHelperTests(App app) : AppTestsBase(app) 
 {

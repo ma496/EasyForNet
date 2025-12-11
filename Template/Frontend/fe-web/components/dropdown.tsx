@@ -1,73 +1,77 @@
-'use client';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { usePopper } from 'react-popper';
-import { Placement } from '@popperjs/core';
+import { forwardRef, useImperativeHandle, useState, useRef, useEffect, ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 
 interface DropdownProps {
-  button: React.ReactNode;
-  children: React.ReactNode;
-  placement?: Placement;
-  offset?: any;
-  btnClassName?: string;
-  isDisabled?: boolean;
+  placement?: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end'
+  button: ReactNode
+  children: ReactNode
+  btnClassName?: string
+  isDisabled?: boolean
 }
 
-const Dropdown = (props: DropdownProps, forwardedRef: any) => {
-  const [visibility, setVisibility] = useState<any>(false);
+export interface DropdownRef {
+  close: () => void
+}
 
-  const referenceRef = useRef<any>(null);
-  const popperRef = useRef<any>(null);
+const Dropdown = forwardRef<DropdownRef, DropdownProps>((props, ref) => {
+  const [visibility, setVisibility] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const { styles, attributes } = usePopper(referenceRef.current, popperRef.current, {
-    placement: props.placement || 'bottom-end',
-    modifiers: [
-      {
-        name: 'offset',
-        options: {
-          offset: props.offset || [0],
-        },
-      },
-    ],
-  });
-
-  const handleDocumentClick = (event: any) => {
-    if (referenceRef.current.contains(event.target) || popperRef.current.contains(event.target)) {
-      return;
-    }
-
-    setVisibility(false);
-  };
+  useImperativeHandle(ref, () => ({
+    close() {
+      setVisibility(false)
+    },
+  }))
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleDocumentClick);
-    return () => {
-      document.removeEventListener('mousedown', handleDocumentClick);
-    };
-  }, []);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setVisibility(false)
+      }
+    }
 
-  useImperativeHandle(forwardedRef, () => ({
-    close() {
-      setVisibility(false);
-    },
-  }));
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  const getDropdownPosition = () => {
+    switch (props.placement) {
+      case 'top-start':
+        return 'bottom-full left-0'
+      case 'top-end':
+        return 'bottom-full right-0'
+      case 'bottom-end':
+        return 'top-full right-0'
+      case 'right-start':
+        return 'left-full top-0'
+      case 'right-end':
+        return 'left-full bottom-0'
+      case 'left-start':
+        return 'right-full top-0'
+      case 'left-end':
+        return 'right-full bottom-0'
+      case 'bottom-start':
+      default:
+        return 'top-full left-0'
+    }
+  }
 
   return (
-    <>
-      <button
-        ref={referenceRef}
-        type="button"
-        className={props.btnClassName}
-        onClick={() => setVisibility(!visibility)}
-        disabled={props.isDisabled}
-      >
+    <div className="relative inline-block" ref={dropdownRef}>
+      <button type="button" className={cn('cursor-pointer', props.btnClassName)} onClick={() => setVisibility(!visibility)} disabled={props.isDisabled}>
         {props.button}
       </button>
+      {visibility && (
+        <div className={`absolute z-10 ${getDropdownPosition()}`}>
+          <div className="rounded-md bg-white dark:bg-gray-800 dark:text-white">{props.children}</div>
+        </div>
+      )}
+    </div>
+  )
+})
 
-      <div ref={popperRef} style={styles.popper} {...attributes.popper} className="z-50" onClick={() => setVisibility(!visibility)}>
-        {visibility && props.children}
-      </div>
-    </>
-  );
-};
+Dropdown.displayName = 'Dropdown'
 
-export default forwardRef(Dropdown);
+export default Dropdown

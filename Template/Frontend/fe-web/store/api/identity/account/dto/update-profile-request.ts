@@ -1,6 +1,6 @@
 export type UpdateProfileRequest = {
   email: string
-  firstName: string
-  lastName: string
-  image: File | null
+  firstName: string | undefined
+  lastName: string | undefined
+  image: string | undefined
 }

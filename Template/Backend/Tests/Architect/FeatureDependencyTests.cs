@@ -1,16 +1,15 @@
-using Tests.Architect.Features.FeatureA;
-using Tests.Architect.Features.FeatureB;
-using Tests.Architect.Features.FeatureB.Stat;
-using Xunit.Abstractions;
+namespace Backend.Tests.Architect;
 
-namespace Tests.Architect;
+using Backend.Tests.Architect.Features.FeatureA;
+using Backend.Tests.Architect.Features.FeatureB;
+using Backend.Tests.Architect.Features.FeatureB.Stat;
 
 public class FeatureDependencyTests(App app, ITestOutputHelper output) : AppTestsBase(app)
 {
     [Fact]
     public void Features_Should_Not_Have_Unwanted_Dependencies()
     {
-      var assembly = typeof(Program).Assembly;
+      var assembly = typeof(global::Program).Assembly;
       const string baseFeatureNamespace = "Backend.Features";
       var featureDependencyTester = App.Services.GetRequiredService<IFeatureDependencyTester>();
       var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
@@ -22,7 +21,7 @@ public class FeatureDependencyTests(App app, ITestOutputHelper output) : AppTest
     public void Features_Should_Have_Unwanted_Dependencies()
     {
         var assembly = GetType().Assembly;
-        const string baseFeatureNamespace = "Tests.Architect.Features";
+        const string baseFeatureNamespace = "Backend.Tests.Architect.Features";
         var featureDependencyTester = App.Services.GetRequiredService<IFeatureDependencyTester>();
         var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
       

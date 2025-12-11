@@ -1,8 +1,8 @@
+namespace Backend.Features.Identity.Core;
+
 using System.Security.Cryptography;
 using System.Text;
 using Backend.Attributes;
-
-namespace Backend.Features.Identity.Core;
 
 public interface IPasswordHasher
 {

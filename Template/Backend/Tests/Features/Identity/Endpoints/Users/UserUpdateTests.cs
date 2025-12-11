@@ -1,50 +1,39 @@
-using Backend;
-using Backend.ErrorHandling;
+namespace Backend.Tests.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
-using Microsoft.EntityFrameworkCore;
-using Tests.Seeder;
 
-namespace Tests.Features.Identity.Endpoints.Users;
-
-public class UserUpdateTests : AppTestsBase
+public class UserUpdateTests(App app) : AppTestsBase(app)
 {
-    public UserUpdateTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Update_User()
     {
+        await SetAuthTokenAsync();
+
         var roleService = App.Services.GetRequiredService<IRoleService>();
-        UserCreateRequest request = new()
-        {
-            Username = $"updateuser{Helper.UniqueNumber()}",
-            Email = $"update{Helper.UniqueNumber()}@example.com",
-            Password = "Password123!",
-            FirstName = "Update",
-            LastName = "User",
-            IsActive = true,
-            Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
-        };
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var request = faker.Generate();
+        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        UserUpdateRequest updateRequest = new()
-        {
-            Id = createRes.Id,
-            Email = $"update_modified{Helper.UniqueNumber()}@example.com",
-            FirstName = "Updated",
-            LastName = "UserModified",
-            IsActive = false,
-            Roles = [(await roleService.GetByNameAsync(RoleConst.TestOne))!.Id, (await roleService.GetByNameAsync(RoleConst.TestTwo))!.Id]
-        };
+        var updateFaker = new Faker<UserUpdateRequest>()
+            .RuleFor(u => u.Id, f => createRes.Id)
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => false);
+        var updateRequest = updateFaker.Generate();
+        updateRequest.Roles = [(await roleService.GetByNameAsync(RoleConst.TestOne))!.Id, (await roleService.GetByNameAsync(RoleConst.TestTwo))!.Id];
         var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        updateRes.Email.Should().Be(updateRequest.Email);
         updateRes.FirstName.Should().Be(updateRequest.FirstName);
         updateRes.LastName.Should().Be(updateRequest.LastName);
         updateRes.IsActive.Should().Be(updateRequest.IsActive);
@@ -54,15 +43,15 @@ public class UserUpdateTests : AppTestsBase
     [Fact]
     public async Task Update_NonExistent_User()
     {
-        var (updateRsp, _) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Email = "nonexistent@example.com",
-                FirstName = "Non",
-                LastName = "Existent",
-                IsActive = true
-            });
+        await SetAuthTokenAsync();
+
+        var updateFaker = new Faker<UserUpdateRequest>()
+            .RuleFor(u => u.Id, f => Guid.NewGuid())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var updateRequest = updateFaker.Generate();
+        var (updateRsp, _) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
@@ -70,17 +59,18 @@ public class UserUpdateTests : AppTestsBase
     [Fact]
     public async Task Update_Admin_User_Should_Fail()
     {
+        await SetAuthTokenAsync();
+
         // Get the default user
         var defaultUser = await App.Services.GetRequiredService<IUserService>()
             .Users()
-            .FirstAsync(u => u.Username == "admin");
+            .FirstAsync(u => u.Username == "admin", cancellationToken: TestContext.Current.CancellationToken);
 
         var roleService = App.Services.GetRequiredService<IRoleService>();
         var (updateRsp, res) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, ProblemDetails>(
             new()
             {
                 Id = defaultUser.Id,
-                Email = "modified_default@example.com",
                 FirstName = "Modified",
                 LastName = "Default",
                 IsActive = false,

@@ -1,10 +1,6 @@
-using Backend.Base.Dto;
-using Backend.ErrorHandling;
-using Backend.Features.Identity.Core;
-using FluentValidation;
-using Backend.Permissions;
-
 namespace Backend.Features.Identity.Endpoints.Users;
+
+using Backend.Features.Identity.Core;
 
 sealed class UserDeleteEndpoint(IUserService userService) : Endpoint<UserDeleteRequest, UserDeleteResponse>
 {
@@ -21,15 +17,15 @@ sealed class UserDeleteEndpoint(IUserService userService) : Endpoint<UserDeleteR
         var entity = await userService.GetByIdAsync(request.Id);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default user cannot be deleted", ErrorCodes.DefaultUserCannotBeDeleted);
+            ThrowError("Default user cannot be deleted", ErrorCodes.DefaultUserCannotBeDeleted);
 
         // Delete the entity from the db
         await userService.DeleteAsync(request.Id);
-        await SendAsync(new() { Success = true }, cancellation: cancellationToken);
+        await Send.ResponseAsync(new() { Success = true }, cancellation: cancellationToken);
     }
 }
 

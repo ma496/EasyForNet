@@ -1,42 +1,30 @@
-"use client";
+'use client'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
+import { useId } from 'react'
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  className?: string;
-  error?: string;
-  showError?: boolean;
+  label?: string
+  name: string
+  className?: string
+  error?: string
+  showError?: boolean
 }
 
-export const Textarea = ({
-  label,
-  className,
-  error,
-  showError = true,
-  id,
-  ...props
-}: TextareaProps) => {
-  const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+export const Textarea = ({ label, name, id, className, error, showError = true, autoComplete = 'off', ...props }: TextareaProps) => {
+  const textareaId = id ?? useId()
 
   return (
-    <div className={cn(
-      className,
-      error && showError && 'has-error'
-    )}>
+    <div className={cn(className, error && showError && 'has-error')}>
       {label && (
-        <label htmlFor={textareaId} className="label form-label">{label}</label>
+        <label htmlFor={textareaId} className="label form-label">
+          {label}
+        </label>
       )}
       <div className="relative text-white-dark">
-        <textarea
-          {...props}
-          id={textareaId}
-          className="form-textarea"
-        />
+        <textarea {...props} name={name} id={textareaId} autoComplete={autoComplete} className="form-textarea" />
       </div>
-      {showError && error && (
-        <div className="text-danger mt-1">{error}</div>
-      )}
+      {showError && error && <div className="mt-1 text-danger">{error}</div>}
     </div>
-  );
-};
+  )
+}

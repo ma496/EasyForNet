@@ -1,6 +1,6 @@
-using Backend.Data.Entities.Base;
-
 namespace Backend.Features.Identity.Core.Entities;
+
+using Backend.Data.Entities.Base;
 
 public class Role : AuditableEntity<Guid>, IHasNormalizedProperties
 {

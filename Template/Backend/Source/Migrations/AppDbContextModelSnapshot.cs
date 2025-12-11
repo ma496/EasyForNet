@@ -17,12 +17,46 @@ namespace Backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.AuthToken", b =>
+            modelBuilder.Entity("Backend.Features.FileManagement.Core.Entities.UploadFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("UploadFiles", "file-management");
+                });
+
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.AuthToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,10 +89,10 @@ namespace Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuthTokens");
+                    b.ToTable("AuthTokens", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Permission", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Permission", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,10 +123,10 @@ namespace Backend.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Role", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,10 +163,10 @@ namespace Backend.Migrations
                     b.HasIndex("NameNormalized")
                         .IsUnique();
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.RolePermission", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.RolePermission", b =>
                 {
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
@@ -156,10 +190,10 @@ namespace Backend.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RolePermissions");
+                    b.ToTable("RolePermissions", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Token", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Token", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,10 +228,10 @@ namespace Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,6 +255,9 @@ namespace Backend.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Image")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -258,10 +295,10 @@ namespace Backend.Migrations
                     b.HasIndex("UsernameNormalized")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -285,12 +322,12 @@ namespace Backend.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", "identity");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.AuthToken", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.AuthToken", b =>
                 {
-                    b.HasOne("Backend.Data.Entities.Identity.User", "User")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.User", "User")
                         .WithMany("AuthTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -299,15 +336,15 @@ namespace Backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.RolePermission", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.RolePermission", b =>
                 {
-                    b.HasOne("Backend.Data.Entities.Identity.Permission", "Permission")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.Permission", "Permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Data.Entities.Identity.Role", "Role")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -318,9 +355,9 @@ namespace Backend.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Token", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Token", b =>
                 {
-                    b.HasOne("Backend.Data.Entities.Identity.User", "User")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,45 +366,15 @@ namespace Backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.UserRole", b =>
                 {
-                    b.OwnsOne("Backend.Data.Entities.Image", "Image", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("ContentType")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<byte[]>("Data")
-                                .IsRequired()
-                                .HasColumnType("bytea");
-
-                            b1.Property<string>("FileName")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("Backend.Data.Entities.Identity.UserRole", b =>
-                {
-                    b.HasOne("Backend.Data.Entities.Identity.Role", "Role")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Data.Entities.Identity.User", "User")
+                    b.HasOne("Backend.Features.Identity.Core.Entities.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -378,19 +385,19 @@ namespace Backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Permission", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.Role", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.Role", b =>
                 {
                     b.Navigation("RolePermissions");
 
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Backend.Data.Entities.Identity.User", b =>
+            modelBuilder.Entity("Backend.Features.Identity.Core.Entities.User", b =>
                 {
                     b.Navigation("AuthTokens");
 

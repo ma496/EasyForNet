@@ -1,15 +1,16 @@
+namespace Backend.Data;
+
 using System.Linq.Expressions;
 using Backend.Data.Entities.Base;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Backend.Data;
+using Backend.Features.FileManagement.Core.Entities;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options,
                           ICurrentUserService currentUserService)
     : DbContext(options)
 {
+    // Identity
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<Permission> Permissions => Set<Permission>();
@@ -17,6 +18,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<AuthToken> AuthTokens => Set<AuthToken>();
     public DbSet<Token> Tokens => Set<Token>();
+
+    // FileManagement
+    public DbSet<UploadFile> UploadFiles => Set<UploadFile>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,7 +31,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
         SoftDeleteFilter(modelBuilder);
     }
 
-    private void SoftDeleteFilter(ModelBuilder modelBuilder)
+    private static void SoftDeleteFilter(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                      .Where(t => typeof(ISoftDelete).IsAssignableFrom(t.ClrType)))

@@ -1,10 +1,12 @@
-import { getTranslationAsync } from '@/i18n';
+import { getTranslation } from '@/i18n'
 
-const Footer = async () => {
-  const { t } = await getTranslationAsync();
+const Footer = () => {
+  const { t } = getTranslation()
   return (
-    <div className="p-6 pt-0 mt-auto text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">© {new Date().getFullYear()}. {t('footer_copyright')}</div>
-  );
-};
+    <div className="mt-auto px-6 pt-0 text-center sm:ltr:text-left sm:rtl:text-right dark:text-white-dark">
+      © {new Date().getFullYear()}. {t('footer_copyright')}
+    </div>
+  )
+}
 
-export default Footer;
+export default Footer

@@ -1,17 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { GetUserInfoResponse } from "../api/identity/account/dto/get-user-info-response"
-import { TokenResponse } from "../api/identity/account/dto/token-response"
-import { localeStorageConst } from "@/lib/constants"
-import { setLocalStorageValue } from "@/lib/utils"
-
-type AuthState = {
-  user: GetUserInfoResponse | null
-  isAuthenticated: boolean
-}
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GetUserInfoResponse } from '../api/identity/account/dto/get-user-info-response'
+import { TokenResponse } from '../api/identity/account/dto/token-response'
+import { localeStorageConst } from '@/lib/constants'
+import { AuthState, setLocalStorageValue } from '@/lib/utils'
 
 const initialState: AuthState = {
   user: null,
-  isAuthenticated: false
+  isAuthenticated: false,
 }
 
 export const authSlice = createSlice({
@@ -31,27 +26,8 @@ export const authSlice = createSlice({
       setLocalStorageValue(localeStorageConst.login, null)
       state.user = null
       state.isAuthenticated = false
-    }
-  }
+    },
+  },
 })
 
-export const {
-  setUserInfo,
-  login,
-  logout
-} = authSlice.actions
-
-// Add new selector function
-export const isAllowed = (state: AuthState, permissions: string[]): boolean => {
-  if (!state.user || !state.user.roles) return false;
-  if (!permissions || permissions.length === 0) return true;
-
-  // console.log(permissions)
-
-  // Check if any of the user's role permissions match the required permissions
-  return state.user.roles.some(role =>
-    role.permissions?.some(permission =>
-      permissions.includes(permission.name)
-    )
-  );
-};
+export const { setUserInfo, login, logout } = authSlice.actions

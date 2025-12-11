@@ -1,3 +1,1 @@
-export type EmptyRequest = {
-    
-}
+export type EmptyRequest = {}

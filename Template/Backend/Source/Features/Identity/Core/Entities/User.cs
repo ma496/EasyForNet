@@ -1,7 +1,6 @@
-using Backend.Data.Entities;
-using Backend.Data.Entities.Base;
-
 namespace Backend.Features.Identity.Core.Entities;
+
+using Backend.Data.Entities.Base;
 
 public class User : AuditableEntity<Guid>, IHasNormalizedProperties
 {
@@ -15,7 +14,7 @@ public class User : AuditableEntity<Guid>, IHasNormalizedProperties
     public string? LastName { get; set; }
     public bool IsActive { get; set; } = true;
     public DateTime? LastLoginAt { get; set; }
-    public Image? Image { get; set; }
+    public string? Image { get; set; }
 
     public ICollection<UserRole> UserRoles { get; set; } = [];
     public ICollection<AuthToken> AuthTokens { get; set; } = [];

@@ -1,9 +1,11 @@
-using Tests.Architect.Features.FeatureA;
+namespace Backend.Tests.Architect.Features.FeatureB;
+
+using Backend.Tests.Architect.Features.FeatureA;
+
 // ReSharper disable NotAccessedField.Local
 // ReSharper disable UnusedVariable
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-namespace Tests.Architect.Features.FeatureB;
 
 public class FeatureBPropertySet
 {

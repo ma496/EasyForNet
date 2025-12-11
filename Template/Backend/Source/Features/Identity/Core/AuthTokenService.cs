@@ -1,15 +1,12 @@
-using Backend.Attributes;
-using Backend.Data;
-using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Core;
+
+using Backend.Attributes;
+using Backend.Features.Identity.Core.Entities;
 
 public interface IAuthTokenService
 {
     Task<AuthToken> SaveTokenAsync(TokenResponse rsp);
     Task<bool> IsValidRefreshTokenAsync(TokenRequest req);
-    Task DeleteExpiredTokensAsync();
 }
 
 [NoDirectUse]
@@ -35,10 +32,5 @@ public class AuthTokenService(AppDbContext dbContext) : IAuthTokenService
         var userId = Guid.Parse(req.UserId);
         return await dbContext.AuthTokens
             .AnyAsync(at => at.UserId == userId && at.RefreshToken == req.RefreshToken && at.RefreshExpiry > DateTime.UtcNow);
-    }
-
-    public async Task DeleteExpiredTokensAsync()
-    {
-        await dbContext.AuthTokens.Where(at => at.RefreshExpiry < DateTime.UtcNow).ExecuteDeleteAsync();
     }
 }

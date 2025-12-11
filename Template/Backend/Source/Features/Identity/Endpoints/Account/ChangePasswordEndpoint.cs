@@ -1,9 +1,6 @@
-using Backend.Data;
-using Backend.ErrorHandling;
-using Backend.Features.Identity.Core;
-using FluentValidation;
-
 namespace Backend.Features.Identity.Endpoints.Account;
+
+using Backend.Features.Identity.Core;
 
 sealed class ChangePasswordEndpoint(AppDbContext dbContext,
                                     ICurrentUserService currentUserService,
@@ -22,17 +19,17 @@ sealed class ChangePasswordEndpoint(AppDbContext dbContext,
         var user = await dbContext.Users.FindAsync([userId], cancellationToken);
         if (user is null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         var verified = await userService.ValidatePasswordAsync(user, request.CurrentPassword);
         if (!verified)
         {
-            this.ThrowError(x => x.CurrentPassword, "Current password is invalid", ErrorCodes.InvalidCurrentPassword);
+            ThrowError(x => x.CurrentPassword, "Current password is invalid", ErrorCodes.InvalidCurrentPassword);
             return;
         }
         await userService.UpdatePasswordAsync(user, request.NewPassword);
-        await SendOkAsync(cancellationToken);
+        await Send.OkAsync(cancellationToken);
     }
 }
 

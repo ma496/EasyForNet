@@ -1,29 +1,23 @@
-using Backend;
-using Backend.ErrorHandling;
+namespace Backend.Tests.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
 
-namespace Tests.Features.Identity.Endpoints.Users;
-
-public class UserDeleteTests : AppTestsBase
+public class UserDeleteTests(App app) : AppTestsBase(app)
 {
-    public UserDeleteTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Delete_User()
     {
-        UserCreateRequest request = new()
-        {
-            Username = $"deleteuser{Helper.UniqueNumber()}",
-            Email = $"delete{Helper.UniqueNumber()}@example.com",
-            Password = "Password123!",
-            FirstName = "Delete",
-            LastName = "User",
-            IsActive = true
-        };
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var request = faker.Generate();
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -51,6 +45,8 @@ public class UserDeleteTests : AppTestsBase
     [Fact]
     public async Task Delete_NonExistent_User()
     {
+        await SetAuthTokenAsync();
+
         var (deleteRsp, _) = await App.Client.DELETEAsync<UserDeleteEndpoint, UserDeleteRequest, UserDeleteResponse>(
             new()
             {
@@ -63,6 +59,8 @@ public class UserDeleteTests : AppTestsBase
     [Fact]
     public async Task Cannot_Delete_Admin_User()
     {
+        await SetAuthTokenAsync();
+
         // Get the default user (admin from seeder)
         var userService = App.Services.GetRequiredService<IUserService>();
         var defaultUser = await userService.GetByUsernameAsync("admin");

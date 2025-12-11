@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Backend.Permissions;
-using Riok.Mapperly.Abstractions;
-
-namespace Backend.Features.Identity.Endpoints.Roles;
 
 sealed class RoleGetEndpoint(IRoleService roleService) : Endpoint<RoleGetRequest, RoleGetResponse>
 {
@@ -25,12 +21,12 @@ sealed class RoleGetEndpoint(IRoleService roleService) : Endpoint<RoleGetRequest
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
 
         var responseMapper = new RoleGetResponseMapper();
-        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 

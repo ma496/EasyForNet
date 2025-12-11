@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using FluentValidation;
-using Riok.Mapperly.Abstractions;
-using Backend.Permissions;
-
-namespace Backend.Features.Identity.Endpoints.Users;
 
 sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateRequest, UserCreateResponse>
 {
@@ -23,7 +19,7 @@ sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateR
         // save entity to db
         await userService.CreateAsync(entity, request.Password);
         var responseMapper = new UserCreateResponseMapper();
-        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 

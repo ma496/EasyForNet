@@ -1,4 +1,4 @@
-﻿namespace Backend.Data.Entities.Base;
+namespace Backend.Data.Entities.Base;
 
 public interface IBaseEntity
 {}

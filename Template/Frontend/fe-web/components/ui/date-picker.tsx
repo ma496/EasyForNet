@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useId } from 'react'
 import { DayPicker, getDefaultClassNames, DateRange } from 'react-day-picker'
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -9,6 +9,8 @@ import { format } from 'date-fns'
 
 // Base props interface
 interface BaseDatePickerProps {
+  name: string
+  id?: string
   placeholder?: string
   disabled?: boolean
   className?: string
@@ -43,57 +45,18 @@ export type DatePickerProps = SingleDatePickerProps | MultipleDatePickerProps | 
 // Helper component to handle the DayPicker with proper typing
 const DayPickerWrapper = ({ mode, selected, onSelect, classNames, components, ...props }: any) => {
   if (mode === 'multiple') {
-    return (
-      <DayPicker
-        mode="multiple"
-        selected={selected as Date[]}
-        onSelect={onSelect}
-        classNames={classNames}
-        components={components}
-        showOutsideDays={true}
-        {...props}
-      />
-    )
+    return <DayPicker mode="multiple" selected={selected as Date[]} onSelect={onSelect} classNames={classNames} components={components} showOutsideDays={true} {...props} />
   }
 
   if (mode === 'range') {
-    return (
-      <DayPicker
-        mode="range"
-        selected={selected as DateRange}
-        onSelect={onSelect}
-        classNames={classNames}
-        components={components}
-        showOutsideDays={true}
-        {...props}
-      />
-    )
+    return <DayPicker mode="range" selected={selected as DateRange} onSelect={onSelect} classNames={classNames} components={components} showOutsideDays={true} {...props} />
   }
 
-  return (
-    <DayPicker
-      mode="single"
-      selected={selected as Date}
-      onSelect={onSelect}
-      classNames={classNames}
-      components={components}
-      showOutsideDays={true}
-      {...props}
-    />
-  )
+  return <DayPicker mode="single" selected={selected as Date} onSelect={onSelect} classNames={classNames} components={components} showOutsideDays={true} {...props} />
 }
 
 export const DatePicker = (props: DatePickerProps) => {
-  const {
-    selected,
-    onSelect,
-    placeholder = 'Select date...',
-    disabled = false,
-    className,
-    showIcon = true,
-    mode = 'single',
-    label
-  } = props
+  const { name, id, selected, onSelect, placeholder = 'Select date...', disabled = false, className, showIcon = true, mode = 'single', label } = props
 
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -139,11 +102,11 @@ export const DatePicker = (props: DatePickerProps) => {
     root: `${defaultClassNames.root} rdp-custom bg-white dark:bg-black border border-white-light dark:border-[#17263c] rounded-md p-4 shadow-lg`,
     months: `${defaultClassNames.months} flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0`,
     month: `${defaultClassNames.month} space-y-4`,
-    month_caption: `${defaultClassNames.month_caption} !flex !justify-center !py-2 !relative !items-center !px-14 !min-h-10 !border-b !border-white-light dark:!border-[#17263c]`,
+    month_caption: `${defaultClassNames.month_caption} flex! justify-center! py-2! relative! items-center! px-14! min-h-10! border-b! border-white-light! dark:border-[#17263c]!`,
     caption_label: `${defaultClassNames.caption_label} text-sm font-medium text-black dark:text-white-dark`,
-    nav: `${defaultClassNames.nav} !absolute !inset-0 !flex !items-center !justify-between !pointer-events-none !z-15`,
-    button_previous: `${defaultClassNames.button_previous} !absolute !left-2 !top-1/2 !-translate-y-1/2 !h-7 !w-7 !bg-transparent !p-0 !opacity-70 hover:!opacity-100 !text-black dark:!text-white-dark !pointer-events-auto !rounded !border-0 !flex !items-center !justify-center !cursor-pointer !transition-all !z-25`,
-    button_next: `${defaultClassNames.button_next} !absolute !right-2 !top-1/2 !-translate-y-1/2 !h-7 !w-7 !bg-transparent !p-0 !opacity-70 hover:!opacity-100 !text-black dark:!text-white-dark !pointer-events-auto !rounded !border-0 !flex !items-center !justify-center !cursor-pointer !transition-all !z-25`,
+    nav: `${defaultClassNames.nav} absolute! inset-0! flex! items-center! justify-between! pointer-events-none! z-15!`,
+    button_previous: `${defaultClassNames.button_previous} absolute! left-2! top-1/2! -translate-y-1/2! h-7! w-7! bg-transparent! p-0! opacity-70! hover:opacity-100! text-black! dark:text-white-dark! pointer-events-auto! rounded-sm! border-0! flex! items-center! justify-center! cursor-pointer! transition-all! z-25!`,
+    button_next: `${defaultClassNames.button_next} absolute! right-2! top-1/2! -translate-y-1/2! h-7! w-7! bg-transparent! p-0! opacity-70! hover:opacity-100! text-black! dark:text-white-dark! pointer-events-auto! rounded-sm! border-0! flex! items-center! justify-center! cursor-pointer! transition-all! z-25!`,
     month_grid: `${defaultClassNames.month_grid} w-full border-collapse space-y-1`,
     weekdays: `${defaultClassNames.weekdays} flex`,
     weekday: `${defaultClassNames.weekday} text-black/50 dark:text-white/50 rounded-md w-9 font-normal text-[0.8rem]`,
@@ -156,30 +119,30 @@ export const DatePicker = (props: DatePickerProps) => {
     disabled: `text-muted-foreground opacity-50 cursor-not-allowed`,
     range_middle: `aria-selected:bg-accent aria-selected:text-accent-foreground`,
     multiple: `rdp-multiple`,
-    hidden: `invisible`
+    hidden: `invisible`,
   }
 
+  const controlId = id ?? useId()
+
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       {label && (
-        <label className="label form-label mb-2 block">{label}</label>
+        <label htmlFor={controlId} className="label mb-2 block form-label">
+          {label}
+        </label>
       )}
       <div ref={containerRef}>
         <Button
           type="button"
           variant="outline"
-          className={cn(
-            "w-full justify-start text-left font-normal form-input !border !p-2 !shadow-none",
-            !selected && "text-muted-foreground",
-            disabled && "cursor-not-allowed opacity-50"
-          )}
+          className={cn('form-input w-full justify-start border! p-2! text-left font-normal shadow-none!', !selected && 'text-muted-foreground', disabled && 'cursor-not-allowed opacity-50')}
+          id={controlId}
+          name={name}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
         >
-          <div className="flex items-center w-full">
-            {showIcon && (
-              <Calendar className="mr-2 h-4 w-4" />
-            )}
+          <div className="flex w-full items-center">
+            {showIcon && <Calendar className="mr-2 h-4 w-4" />}
             <span className="flex-1">{formatSelectedDate()}</span>
           </div>
         </Button>
@@ -191,7 +154,7 @@ export const DatePicker = (props: DatePickerProps) => {
               selected={selected}
               onSelect={(date: any) => {
                 if (onSelect) {
-                  (onSelect as any)(date)
+                  ;(onSelect as any)(date)
                 }
                 if (mode === 'single') {
                   setIsOpen(false)
@@ -199,14 +162,10 @@ export const DatePicker = (props: DatePickerProps) => {
               }}
               classNames={{
                 ...customClassNames,
-                root: `${customClassNames.root} rdp-mode-${mode}`
+                root: `${customClassNames.root} rdp-mode-${mode}`,
               }}
               components={{
-                Chevron: ({ orientation }: any) => (
-                  orientation === 'left' ?
-                    <ChevronLeft className="h-4 w-4" /> :
-                    <ChevronRight className="h-4 w-4" />
-                )
+                Chevron: ({ orientation }: any) => (orientation === 'left' ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />),
               }}
               fixedWeeks
               fromYear={1900}

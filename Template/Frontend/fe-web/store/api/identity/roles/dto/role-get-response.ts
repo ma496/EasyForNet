@@ -1,7 +1,6 @@
-import { BaseDto } from "@/store/api/base/dto/base-dto"
-import { AuditableDto } from "@/store/api/base/dto/auditable-dto"
+import { GenericAuditableDto } from '@/store/api/base/dto/auditable-dto'
 
-export type RoleGetResponse = BaseDto<string> & AuditableDto & {
+export type RoleGetResponse = GenericAuditableDto<string> & {
   name: string
   nameNormalized: string
   description: string

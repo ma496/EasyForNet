@@ -1,5 +1,5 @@
 // ReSharper disable UnusedVariable
-namespace Tests.Architect.Features.FeatureA;
+namespace Backend.Tests.Architect.Features.FeatureA;
 
 public interface IFeatureAOneService
 {

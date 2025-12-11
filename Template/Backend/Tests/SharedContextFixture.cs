@@ -1,25 +1,27 @@
-using Backend.Data;
-using Tests.Seeder;
+namespace Backend.Tests;
 
-namespace Tests;
-
-public class SharedContextFixture : AppFixture<Backend.Program>
+public class SharedContextFixture : AppFixture<Program>
 {
-
-    protected override async Task SetupAsync()
+    protected override async ValueTask SetupAsync()
     {
+        await TestsHelper.SetNewAuthTokenAsync(Client);
         var testsDataSeeder = Services.GetRequiredService<TestsDataSeeder>();
-        await testsDataSeeder.SeedAsync();
+        await testsDataSeeder.SeedAsync(Client);
     }
 
-    protected override async Task TearDownAsync()
+    protected override async ValueTask TearDownAsync()
     {
-        var dbContext = Services.GetRequiredService<AppDbContext>();
-        await dbContext.Database.EnsureDeletedAsync();
+        await DeleteDatabaseAsync();
     }
 
     protected override void ConfigureServices(IServiceCollection s)
     {
         s.AddScoped<TestsDataSeeder>();
+    }
+    
+    private async Task DeleteDatabaseAsync()
+    {
+        var dbContext = Services.GetRequiredService<AppDbContext>();
+        await dbContext.Database.EnsureDeletedAsync();
     }
 }

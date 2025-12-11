@@ -1,5 +1,5 @@
-import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, List, TreePine, FormInput } from "lucide-react"
-import { Allow } from "./allow"
+import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Tag, Box, Layers } from 'lucide-react'
+
 
 export type NavItemGroup = {
   title: string
@@ -15,121 +15,124 @@ export type NavItem = {
   show?: boolean
   isActive?: boolean
   children?: NavItem[]
-  permissions?: string[]
 }
 
 export const navItems: (NavItem | NavItemGroup)[] = [
   {
     title: 'nav_dashboard',
-    url: '/',
+    url: '/app',
     icon: Home,
     children: [
       {
         title: 'nav_dashboard_sales',
-        url: '/',
-      }
-    ]
+        url: '/app',
+      },
+    ],
   },
   {
     title: 'nav_administration',
     items: [
       {
         title: 'nav_users',
-        url: '/users/list',
+        url: '/app/users/list',
         icon: Users,
-        permissions: [Allow.User_View],
+
         children: [
           {
             title: 'nav_users_list',
-            url: '/users/list',
-            permissions: [Allow.User_View],
+            url: '/app/users/list',
+
           },
           {
             title: 'nav_users_create',
-            url: '/users/create',
-            permissions: [Allow.User_Create],
+            url: '/app/users/create',
+
           },
           {
             title: 'nav_users_update',
-            url: '/users/update/{id}',
-            permissions: [Allow.User_Update],
+            url: '/app/users/update/{id}',
+
             show: false,
-          }
-        ]
+          },
+        ],
       },
       {
         title: 'nav_roles',
-        url: '/roles/list',
+        url: '/app/roles/list',
         icon: Shield,
-        permissions: [Allow.Role_View],
+
         children: [
           {
             title: 'nav_roles_list',
-            url: '/roles/list',
-            permissions: [Allow.Role_View],
+            url: '/app/roles/list',
+
           },
           {
             title: 'nav_roles_create',
-            url: '/roles/create',
-            permissions: [Allow.Role_Create],
+            url: '/app/roles/create',
+
           },
           {
             title: 'nav_roles_update',
-            url: '/roles/update/{id}',
-            permissions: [Allow.Role_Update],
+            url: '/app/roles/update/{id}',
+
             show: false,
           },
           {
             title: 'nav_roles_change_permissions',
-            url: '/roles/change-permissions/{id}',
-            permissions: [Allow.Role_ChangePermissions],
-            show: false,
-          }
-        ]
-      },
+            url: '/app/roles/change-permissions/{id}',
 
-    ]
+            show: false,
+          },
+        ],
+      },
+    ],
   },
   {
     title: 'nav_components',
     items: [
       {
         title: 'nav_ui_form_elements',
-        url: '/ui/form-elements',
+        url: '/app/ui/form-elements',
         icon: FormInput,
       },
       {
         title: 'nav_ui_buttons',
-        url: '/ui/buttons',
+        url: '/app/ui/buttons',
         icon: Zap,
       },
       {
         title: 'nav_ui_cards',
-        url: '/ui/cards',
+        url: '/app/ui/cards',
         icon: Palette,
       },
       {
         title: 'nav_ui_date_picker',
-        url: '/ui/date-picker',
+        url: '/app/ui/date-picker',
         icon: Calendar,
       },
 
       {
         title: 'nav_ui_treeview',
-        url: '/ui/treeview',
+        url: '/app/ui/treeview',
         icon: TreePine,
       },
-    ]
+      {
+        title: 'nav_ui_file_upload',
+        url: '/app/ui/file-upload',
+        icon: Upload,
+      },
+    ],
   },
   {
     title: 'nav_change_password',
-    url: '/change-password',
+    url: '/app/change-password',
     icon: Lock,
     show: false,
   },
   {
     title: 'nav_profile',
-    url: '/profile',
+    url: '/app/profile',
     icon: User,
     show: false,
   },

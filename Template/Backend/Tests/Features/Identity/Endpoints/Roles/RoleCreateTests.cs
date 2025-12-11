@@ -1,18 +1,14 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Endpoints.Roles;
 
-namespace Tests.Features.Identity.Endpoints.Roles;
-
-public class RoleCreateTests : AppTestsBase
+public class RoleCreateTests(App app) : AppTestsBase(app)
 {
-    public RoleCreateTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Invalid_Input()
     {
+        await SetAuthTokenAsync();
+
         RoleCreateRequest request = new()
         {
             Name = "",
@@ -28,11 +24,12 @@ public class RoleCreateTests : AppTestsBase
     [Fact]
     public async Task Valid_Input()
     {
-        RoleCreateRequest request = new()
-        {
-            Name = $"TestRole{Helper.UniqueNumber()}",
-            Description = "Test Role Description",
-        };
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<RoleCreateRequest>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var request = faker.Generate();
         var (rsp, res) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);

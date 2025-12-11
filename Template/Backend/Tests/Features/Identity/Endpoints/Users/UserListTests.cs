@@ -1,31 +1,25 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Endpoints.Users;
 
-namespace Tests.Features.Identity.Endpoints.Users;
-
-public class UserListTests : AppTestsBase
+public class UserListTests(App app) : AppTestsBase(app)
 {
-    public UserListTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task List_Users()
     {
-        // Create multiple users
-        for (int i = 0; i < 3; i++)
+        await SetAuthTokenAsync();  
+
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var requests = faker.Generate(3);
+        foreach (var request in requests)
         {
-            await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
-                new()
-                {
-                    Username = $"listuser{Helper.UniqueNumber()}",
-                    Email = $"list{Helper.UniqueNumber()}@example.com",
-                    Password = "Password123!",
-                    FirstName = $"List{i}",
-                    LastName = "User",
-                    IsActive = true
-                });
+            await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
         }
 
         // Get list of users
@@ -44,19 +38,19 @@ public class UserListTests : AppTestsBase
     [Fact]
     public async Task List_Users_Pagination()
     {
-        // Create multiple users
-        for (int i = 0; i < 5; i++)
+        await SetAuthTokenAsync();  
+
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var requests = faker.Generate(5);
+        foreach (var request in requests)
         {
-            await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(
-                new()
-                {
-                    Username = $"pageuser{Helper.UniqueNumber()}",
-                    Email = $"page{Helper.UniqueNumber()}@example.com",
-                    Password = "Password123!",
-                    FirstName = $"Page{i}",
-                    LastName = "User",
-                    IsActive = true
-                });
+            await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
         }
 
         // Get first page with 2 users

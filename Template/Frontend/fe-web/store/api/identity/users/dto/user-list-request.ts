@@ -1,5 +1,3 @@
-import { ListRequestDto } from "@/store/api/base/dto/list-request-dto";
+import { ListRequestDto } from '@/store/api/base/dto/list-request-dto'
 
-export type UserListRequest = ListRequestDto & {
-}
-
+export type UserListRequest = ListRequestDto<string> & {}

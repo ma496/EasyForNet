@@ -1,13 +1,7 @@
-using Backend.Base.Dto;
-using Backend.ErrorHandling;
+namespace Backend.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Backend.Permissions;
-using Riok.Mapperly.Abstractions;
-
-namespace Backend.Features.Identity.Endpoints.Users;
 
 sealed class UserUpdateEndpoint(IUserService userService)
     : Endpoint<UserUpdateRequest, UserUpdateResponse>
@@ -27,11 +21,11 @@ sealed class UserUpdateEndpoint(IUserService userService)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default user cannot be updated", ErrorCodes.DefaultUserCannotBeUpdated);
+            ThrowError("Default user cannot be updated", ErrorCodes.DefaultUserCannotBeUpdated);
 
         var requestMapper = new UserUpdateRequestMapper();
         requestMapper.Update(request, entity);
@@ -50,13 +44,12 @@ sealed class UserUpdateEndpoint(IUserService userService)
         // save entity to db
         await userService.UpdateAsync(entity);
         var responseMapper = new UserUpdateResponseMapper();
-        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 
 public sealed class UserUpdateRequest : BaseDto<Guid>
 {
-    public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }
@@ -67,7 +60,6 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 {
     public UserUpdateValidator()
     {
-        RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(100);
         RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50).When(x => !x.FirstName.IsNullOrEmpty());
         RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50).When(x => !x.LastName.IsNullOrEmpty());
     }
@@ -75,8 +67,6 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 
 public sealed class UserUpdateResponse : BaseDto<Guid>
 {
-    public string Email { get; set; } = null!;
-    public string EmailNormalized { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public bool IsActive { get; set; }

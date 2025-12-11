@@ -1,8 +1,6 @@
-using Backend.ErrorHandling;
-using Backend.Features.Identity.Core;
-using FluentValidation;
-
 namespace Backend.Features.Identity.Endpoints.Account;
+
+using Backend.Features.Identity.Core;
 
 sealed class TokenEndpoint(IUserService userService) : Endpoint<TokenReq, TokenResponse>
 {
@@ -19,13 +17,13 @@ sealed class TokenEndpoint(IUserService userService) : Endpoint<TokenReq, TokenR
         var errorMessage = !req.IsEmail ? "Username or password is invalid" : "Email or password is invalid";
         var errorCode = !req.IsEmail ? ErrorCodes.InvalidUsernamePassword : ErrorCodes.InvalidEmailPassword;
         if (user == null)
-            this.ThrowError(errorMessage, errorCode);
+            ThrowError(errorMessage, errorCode);
 
         var result = await userService.ValidatePasswordAsync(user, req.Password);
         if (!result)
-            this.ThrowError(errorMessage, errorCode);
+            ThrowError(errorMessage, errorCode);
         if (!user.IsActive)
-            this.ThrowError("User is not active", ErrorCodes.UserNotActive);
+            ThrowError("User is not active", ErrorCodes.UserNotActive);
 
         var roles = await userService.GetUserRolesAsync(user.Id);
         var permissions = await userService.GetUserPermissionsAsync(user.Id);

@@ -1,13 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace Backend.Features.Identity.Core.Entities.Configuration;
+
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermission>
 {
     public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
-        builder.ToTable("RolePermissions");
+        builder.ToTable("RolePermissions", "identity");
 
         builder.HasKey(rp => new { rp.RoleId, rp.PermissionId });
 

@@ -1,23 +1,18 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Endpoints.Roles;
 
-namespace Tests.Features.Identity.Endpoints.Roles;
-
-public class RoleGetTests : AppTestsBase
+public class RoleGetTests(App app) : AppTestsBase(app)
 {
-    public RoleGetTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Get_Role()
     {
-        RoleCreateRequest request = new()
-        {
-            Name = $"GetRole{Helper.UniqueNumber()}",
-            Description = "Get Role Description",
-        };
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<RoleCreateRequest>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var request = faker.Generate();
         var (createRsp, createRes) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -36,6 +31,8 @@ public class RoleGetTests : AppTestsBase
     [Fact]
     public async Task Get_NonExistent_Role()
     {
+        await SetAuthTokenAsync();
+
         var (getRsp, _) = await App.Client.GETAsync<RoleGetEndpoint, RoleGetRequest, RoleGetResponse>(
             new()
             {

@@ -1,27 +1,21 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Endpoints.Roles;
 
-namespace Tests.Features.Identity.Endpoints.Roles;
-
-public class RoleListTests : AppTestsBase
+public class RoleListTests(App app) : AppTestsBase(app)
 {
-    public RoleListTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task List_Roles()
     {
-        // Create multiple roles
-        for (int i = 0; i < 3; i++)
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<RoleCreateRequest>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var requests = faker.Generate(3);
+        foreach (var request in requests)
         {
-            await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(
-                new()
-                {
-                    Name = $"ListRole{Helper.UniqueNumber()}",
-                    Description = $"List Role {i} Description",
-                });
+            await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
         }
 
         // Get list of roles
@@ -40,15 +34,15 @@ public class RoleListTests : AppTestsBase
     [Fact]
     public async Task List_Roles_Pagination()
     {
-        // Create multiple roles
-        for (int i = 0; i < 5; i++)
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<RoleCreateRequest>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var requests = faker.Generate(5);
+        foreach (var request in requests)
         {
-            await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(
-                new()
-                {
-                    Name = $"PageRole{Helper.UniqueNumber()}",
-                    Description = $"Page Role {i} Description",
-                });
+            await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
         }
 
         // Get first page with 2 roles

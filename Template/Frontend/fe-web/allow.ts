@@ -9,4 +9,4 @@ export const Allow = {
   Role_Update: 'Role.Update',
   Role_Delete: 'Role.Delete',
   Role_ChangePermissions: 'Role.ChangePermissions',
-} as const;
+} as const

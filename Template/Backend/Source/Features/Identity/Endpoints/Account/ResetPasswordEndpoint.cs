@@ -1,8 +1,6 @@
-using Backend.Data;
-using Backend.ErrorHandling;
-using Backend.Features.Identity.Core;
-
 namespace Backend.Features.Identity.Endpoints.Account;
+
+using Backend.Features.Identity.Core;
 
 sealed class ResetPasswordEndpoint(ITokenService tokenService,
                                    IUserService userService,
@@ -22,17 +20,17 @@ sealed class ResetPasswordEndpoint(ITokenService tokenService,
         var token = await tokenService.GetTokenAsync(request.Token);
         if (token == null)
         {
-            this.ThrowError("Token is invalid", ErrorCodes.InvalidToken);
+            ThrowError("Token is invalid", ErrorCodes.InvalidToken);
         }
         var isTokenValid = await tokenService.ValidateTokenAsync(token.Value);
         if (!isTokenValid)
         {
-            this.ThrowError("Token is expired", ErrorCodes.TokenExpired);
+            ThrowError("Token is expired", ErrorCodes.TokenExpired);
         }
         var user = await userService.GetByIdAsync(token.UserId);
         if (user == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         user.PasswordHash = passwordHasher.HashPassword(request.Password);
@@ -42,7 +40,7 @@ sealed class ResetPasswordEndpoint(ITokenService tokenService,
         await tokenService.UsedTokenAsync(token);
         await transaction.CommitAsync(cancellationToken);
 
-        await SendOkAsync(cancellation: cancellationToken);
+        await Send.OkAsync(cancellation: cancellationToken);
     }
 }
 

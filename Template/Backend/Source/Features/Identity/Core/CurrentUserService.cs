@@ -1,7 +1,7 @@
+namespace Backend.Features.Identity.Core;
+
 using System.Security.Claims;
 using Backend.Attributes;
-
-namespace Backend.Features.Identity.Core;
 
 public interface ICurrentUserService
 {

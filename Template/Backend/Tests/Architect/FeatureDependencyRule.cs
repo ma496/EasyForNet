@@ -1,7 +1,7 @@
 using Backend.Attributes;
 using NetArchTest.Rules;
 
-namespace Tests.Architect
+namespace Backend.Tests.Architect
 {
     public class FeatureDependencyRule(IEnumerable<string> otherFeatureNamespaces) : ICustomRule
     {

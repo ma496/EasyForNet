@@ -1,7 +1,9 @@
+namespace Backend.Tests.Architect.Features.FeatureA;
+
 using Backend.Attributes;
+
 // ReSharper disable UnusedVariable
 
-namespace Tests.Architect.Features.FeatureA;
 
 [AllowOutside]
 public interface IFeatureAAllowOutsideService

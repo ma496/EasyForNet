@@ -1,9 +1,6 @@
-using Backend.Base.Dto;
-using Backend.Data;
-using Backend.Features.Identity.Core;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Features.Identity.Endpoints.Account;
+
+using Backend.Features.Identity.Core;
 
 sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     : EndpointWithoutRequest<UserGetInfoResponse>
@@ -30,12 +27,7 @@ sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService current
                 Email = x.Email,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                Image = x.Image != null ? new ImageDto
-                {
-                    ImageBase64 = Convert.ToBase64String(x.Image.Data),
-                    FileName = x.Image.FileName,
-                    ContentType = x.Image.ContentType
-                } : null,
+                Image = x.Image,
                 Roles = x.UserRoles.Select(ur => new UserGetInfoResponse.RoleDto
                 {
                     Id = ur.RoleId,
@@ -51,10 +43,10 @@ sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService current
             .FirstOrDefaultAsync(cancellationToken);
         if (user is null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
-        await SendAsync(user, cancellation: cancellationToken);
+        await Send.ResponseAsync(user, cancellation: cancellationToken);
     }
 }
 
@@ -65,7 +57,7 @@ sealed class UserGetInfoResponse
     public string Email { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public ImageDto? Image { get; set; }
+    public string? Image { get; set; }
 
     public List<RoleDto> Roles { get; set; } = [];
 

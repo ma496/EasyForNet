@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Backend.Permissions;
-using Riok.Mapperly.Abstractions;
-
-namespace Backend.Features.Identity.Endpoints.Roles;
 
 sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListRequest, RoleListResponse>
 {
@@ -45,11 +41,11 @@ sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListReque
             Total = total
         };
 
-        await SendAsync(response, cancellation: cancellationToken);
+        await Send.ResponseAsync(response, cancellation: cancellationToken);
     }
 }
 
-sealed class RoleListRequest : ListRequestDto
+sealed class RoleListRequest : ListRequestDto<Guid>
 {
 }
 
@@ -57,7 +53,7 @@ sealed class RoleListValidator : Validator<RoleListRequest>
 {
     public RoleListValidator()
     {
-        Include(new ListRequestDtoValidator());
+        Include(new ListRequestDtoValidator<Guid>());
     }
 }
 

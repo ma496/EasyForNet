@@ -1,6 +1,6 @@
-using Backend.Attributes;
+namespace Backend.Tests.Architect.Features.FeatureA;
 
-namespace Tests.Architect.Features.FeatureA;
+using Backend.Attributes;
 
 [AllowOutside]
 public class FeatureATwoAllowOutsideModel

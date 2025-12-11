@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
-using Backend.ErrorHandling;
+namespace Backend.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Backend.Permissions;
-
-namespace Backend.Features.Identity.Endpoints.Roles;
 
 sealed class ChangePermissionsEndpoint(IRoleService roleService)
     : Endpoint<ChangePermissionsRequest, ChangePermissionsResponse>
@@ -25,11 +21,11 @@ sealed class ChangePermissionsEndpoint(IRoleService roleService)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default role permissions cannot be changed", ErrorCodes.DefaultRolePermissionsCannotBeChanged);
+            ThrowError("Default role permissions cannot be changed", ErrorCodes.DefaultRolePermissionsCannotBeChanged);
 
         // update role permissions based on request and already assigned permissions
         var permissionsToAssign = request.Permissions.Where(x => !entity.RolePermissions.Any(rp => rp.PermissionId == x)).ToList();
@@ -45,7 +41,7 @@ sealed class ChangePermissionsEndpoint(IRoleService roleService)
 
         // save entity to db
         await roleService.UpdateAsync(entity);
-        await SendAsync(
+        await Send.ResponseAsync(
             new()
             {
                 Id = entity.Id,

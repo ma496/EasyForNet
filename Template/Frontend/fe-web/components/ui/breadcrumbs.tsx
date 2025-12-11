@@ -1,17 +1,16 @@
 'use client'
 
-import { NavItem, NavItemGroup, navItems } from "@/nav-items"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { getTranslation } from "@/i18n"
+import { NavItem, NavItemGroup, navItems } from '@/nav-items'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { getTranslation } from '@/i18n'
 
 const findActivePathItems = (items: (NavItem | NavItemGroup)[], pathname: string): NavItem[] => {
   const result: NavItem[] = []
 
   const findInItems = (items: NavItem[], currentPath: string) => {
     for (const item of items) {
-      if (item.url === currentPath
-        || (item.url.includes('{id}') && currentPath.match(new RegExp(item.url.replace('{id}', '[^/]+'))))) {
+      if (item.url === currentPath || (item.url.includes('{id}') && currentPath.match(new RegExp(item.url.replace('{id}', '[^/]+'))))) {
         result.push(item)
         return true
       }
@@ -48,7 +47,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
   return (
     <ul className={`flex space-x-2 rtl:space-x-reverse ${className || ''}`}>
       <li>
-        <Link href="/" className="text-primary hover:underline">
+        <Link href="/app" className="text-primary hover:underline">
           {t('nav_home')}
         </Link>
       </li>

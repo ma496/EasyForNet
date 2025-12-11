@@ -1,6 +1,6 @@
-using Tests.Architect.Features.FeatureA;
+namespace Backend.Tests.Architect.Features.FeatureB;
 
-namespace Tests.Architect.Features.FeatureB;
+using Backend.Tests.Architect.Features.FeatureA;
 
 public class FeatureBMethodReturnTuple
 {

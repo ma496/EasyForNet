@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Tests.Architect;
+namespace Backend.Tests;
 
-namespace Tests;
+using Backend.Tests.Architect;
+using Microsoft.AspNetCore.Hosting;
 
-public class App : AppFixture<Backend.Program>
+public class App : AppFixture<Program>
 {
-    protected override Task SetupAsync()
+    protected override ValueTask SetupAsync()
     {
         // place one-time setup for the fixture here
-        return Task.CompletedTask;
+        return new(Task.CompletedTask);
     }
 
     protected override void ConfigureApp(IWebHostBuilder a)
@@ -22,9 +22,9 @@ public class App : AppFixture<Backend.Program>
         s.AddScoped<IFeatureDependencyTester, FeatureDependencyTester>();
     }
 
-    protected override Task TearDownAsync()
+    protected override ValueTask TearDownAsync()
     {
         // do cleanups here
-        return Task.CompletedTask;
+        return new(Task.CompletedTask);
     }
 }

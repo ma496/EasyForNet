@@ -1,58 +1,65 @@
-import { Allow } from "./allow";
-
 export type SearchableItem = {
-  title: string;
-  url: string;
-  permissions?: string[];
+  title: string
+  url: string
+
 }
 
 export const searchableItems: SearchableItem[] = [
   {
-    title: 'search_home',
-    url: '/',
+    title: 'search_dashboard',
+    url: '/app',
   },
   {
     title: 'search_users',
-    url: '/users/list',
-    permissions: [Allow.User_View],
+    url: '/app/users/list',
+
   },
   {
     title: 'search_users_create',
-    url: '/users/create',
-    permissions: [Allow.User_Create],
+    url: '/app/users/create',
+
   },
   {
     title: 'search_roles',
-    url: '/roles/list',
-    permissions: [Allow.Role_View],
+    url: '/app/roles/list',
+
   },
   {
     title: 'search_roles_create',
-    url: '/roles/create',
-    permissions: [Allow.Role_Create],
-  },
+    url: '/app/roles/create',
 
-  {
-    title: 'search_ui_buttons',
-    url: '/ui/buttons',
-  },
-  {
-    title: 'search_ui_cards',
-    url: '/ui/cards',
-  },
-  {
-    title: 'search_ui_date_picker',
-    url: '/ui/date-picker',
-  },
-
-  {
-    title: 'search_ui_treeview',
-    url: '/ui/treeview',
   },
   {
     title: 'search_profile',
-    url: '/profile',
+    url: '/app/profile',
   },
-];
+  {
+    title: 'search_change_password',
+    url: '/app/change-password',
+  },
 
-
+  {
+    title: 'search_ui_form_elements',
+    url: '/app/ui/form-elements',
+  },
+  {
+    title: 'search_ui_buttons',
+    url: '/app/ui/buttons',
+  },
+  {
+    title: 'search_ui_cards',
+    url: '/app/ui/cards',
+  },
+  {
+    title: 'search_ui_date_picker',
+    url: '/app/ui/date-picker',
+  },
+  {
+    title: 'search_ui_treeview',
+    url: '/app/ui/treeview',
+  },
+  {
+    title: 'search_ui_file_upload',
+    url: '/app/ui/file-upload',
+  },
+]

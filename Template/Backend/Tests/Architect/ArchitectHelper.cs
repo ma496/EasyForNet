@@ -1,7 +1,7 @@
+namespace Backend.Tests.Architect;
+
 using Mono.Cecil;
 using TypeDefinition = Mono.Cecil.TypeDefinition;
-
-namespace Tests.Architect;
 
 public static class ArchitectHelper
 {

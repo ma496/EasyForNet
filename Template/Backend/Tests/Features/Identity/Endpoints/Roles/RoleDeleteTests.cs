@@ -1,26 +1,20 @@
-using Backend;
-using Backend.ErrorHandling;
+namespace Backend.Tests.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Roles;
 
-namespace Tests.Features.Identity.Endpoints.Roles;
-
-public class RoleDeleteTests : AppTestsBase
+public class RoleDeleteTests(App app) : AppTestsBase(app)
 {
-    public RoleDeleteTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Delete_Role()
     {
+        await SetAuthTokenAsync();
+
         // First create a role
-        RoleCreateRequest request = new()
-        {
-            Name = $"DeleteRole{Helper.UniqueNumber()}",
-            Description = "Delete Role Description",
-        };
+        var faker = new Faker<RoleCreateRequest>()
+            .RuleFor(u => u.Name, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Description, f => f.Lorem.Sentence());
+        var request = faker.Generate();
         var (createRsp, createRes) = await App.Client.POSTAsync<RoleCreateEndpoint, RoleCreateRequest, RoleCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -48,6 +42,8 @@ public class RoleDeleteTests : AppTestsBase
     [Fact]
     public async Task Delete_NonExistent_Role()
     {
+        await SetAuthTokenAsync();
+
         var (deleteRsp, _) = await App.Client.DELETEAsync<RoleDeleteEndpoint, RoleDeleteRequest, RoleDeleteResponse>(
             new()
             {
@@ -60,6 +56,8 @@ public class RoleDeleteTests : AppTestsBase
     [Fact]
     public async Task Cannot_Delete_Admin_Role()
     {
+        await SetAuthTokenAsync();
+
         // Get a default role (Test role from seeder)
         var roleService = App.Services.GetRequiredService<IRoleService>();
         var defaultRole = await roleService.GetByNameAsync("Admin");

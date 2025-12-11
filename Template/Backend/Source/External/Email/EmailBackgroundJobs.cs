@@ -1,7 +1,7 @@
+namespace Backend.External.Email;
+
 using Backend.Attributes;
 using Hangfire;
-
-namespace Backend.External.Email;
 
 public interface IEmailBackgroundJobs
 {

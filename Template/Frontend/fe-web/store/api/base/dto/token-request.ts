@@ -1,4 +1,4 @@
 export type TokenRequest = {
-    userId: string
-    refreshToken: string
+  userId: string
+  refreshToken: string
 }

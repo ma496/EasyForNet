@@ -1,7 +1,6 @@
-using Backend.Data.Entities.Base;
-using Microsoft.EntityFrameworkCore;
-
 namespace Backend.Data.Entities;
+
+using Backend.Data.Entities.Base;
 
 [Owned]
 public class Image : ValueObject

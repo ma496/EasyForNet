@@ -1,6 +1,6 @@
-using Tests.Architect.Features.FeatureA;
+namespace Backend.Tests.Architect.Features.FeatureB.Stat;
 
-namespace Tests.Architect.Features.FeatureB.Stat;
+using Backend.Tests.Architect.Features.FeatureA;
 
 public static class FeatureBStat
 {

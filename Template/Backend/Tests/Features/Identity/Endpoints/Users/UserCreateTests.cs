@@ -1,21 +1,17 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
-using Tests.Seeder;
+using Backend.Tests.Seeder;
 
-namespace Tests.Features.Identity.Endpoints.Users;
-
-public class UserCreateTests : AppTestsBase
+public class UserCreateTests(App app) : AppTestsBase(app)
 {
-    public UserCreateTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Invalid_Input()
     {
-        UserCreateRequest request = new()
+        await SetAuthTokenAsync();
+
+        var request = new UserCreateRequest
         {
             Username = "a",
             Email = "invalid-email",
@@ -34,17 +30,18 @@ public class UserCreateTests : AppTestsBase
     [Fact]
     public async Task Valid_Input()
     {
+        await SetAuthTokenAsync();
+
         var roleService = App.Services.GetRequiredService<IRoleService>();
-        UserCreateRequest request = new()
-        {
-            Username = $"test123{Helper.UniqueNumber()}",
-            Email = $"test123{Helper.UniqueNumber()}@example.com",
-            Password = "Password123!",
-            FirstName = "Test",
-            LastName = "User",
-            IsActive = true,
-            Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
-        };
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var request = faker.Generate();
+        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);

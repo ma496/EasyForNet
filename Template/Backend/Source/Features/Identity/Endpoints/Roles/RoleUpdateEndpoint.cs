@@ -1,13 +1,7 @@
-using Backend.Base.Dto;
-using Backend.ErrorHandling;
+namespace Backend.Features.Identity.Endpoints.Roles;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Backend.Permissions;
-using Riok.Mapperly.Abstractions;
-
-namespace Backend.Features.Identity.Endpoints.Roles;
 
 sealed class RoleUpdateEndpoint(IRoleService roleService)
     : Endpoint<RoleUpdateRequest, RoleUpdateResponse>
@@ -26,11 +20,11 @@ sealed class RoleUpdateEndpoint(IRoleService roleService)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
         if (entity.Default)
-            this.ThrowError("Default role cannot be updated", ErrorCodes.DefaultRoleCannotBeUpdated);
+            ThrowError("Default role cannot be updated", ErrorCodes.DefaultRoleCannotBeUpdated);
 
         var requestMapper = new RoleUpdateRequestMapper();
         requestMapper.Update(request, entity);
@@ -38,7 +32,7 @@ sealed class RoleUpdateEndpoint(IRoleService roleService)
         // save entity to db
         await roleService.UpdateAsync(entity);
         var responseMapper = new RoleUpdateResponseMapper();
-        await SendAsync(responseMapper.Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(responseMapper.Map(entity), cancellation: cancellationToken);
     }
 }
 

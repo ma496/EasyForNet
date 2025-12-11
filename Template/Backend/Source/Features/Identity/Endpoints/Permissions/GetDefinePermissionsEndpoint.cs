@@ -1,5 +1,3 @@
-using Backend.Permissions;
-
 namespace Backend.Features.Identity.Endpoints.Permissions;
 
 sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissionDefinitionService) : EndpointWithoutRequest<GetDefinePermissionsResponse>
@@ -14,7 +12,7 @@ sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissio
     {
         var permissions = permissionDefinitionService.GetPermissions();
 
-        await SendAsync(new GetDefinePermissionsResponse
+        await Send.ResponseAsync(new()
         {
             Permissions = permissions
         }, cancellation: cancellationToken);

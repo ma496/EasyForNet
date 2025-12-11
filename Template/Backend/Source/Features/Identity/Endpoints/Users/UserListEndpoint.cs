@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Riok.Mapperly.Abstractions;
-using Backend.Permissions;
-
-namespace Backend.Features.Identity.Endpoints.Users;
 
 sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListRequest, UserListResponse>
 {
@@ -47,11 +43,11 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
             Total = total
         };
 
-        await SendAsync(response, cancellation: cancellationToken);
+        await Send.ResponseAsync(response, cancellation: cancellationToken);
     }
 }
 
-sealed class UserListRequest : ListRequestDto
+sealed class UserListRequest : ListRequestDto<Guid>
 {
 }
 
@@ -59,7 +55,7 @@ sealed class UserListValidator : Validator<UserListRequest>
 {
     public UserListValidator()
     {
-        Include(new ListRequestDtoValidator());
+        Include(new ListRequestDtoValidator<Guid>());
     }
 }
 

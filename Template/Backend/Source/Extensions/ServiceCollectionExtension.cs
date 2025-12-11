@@ -1,5 +1,3 @@
-using Backend.Base;
-
 namespace Backend.Extensions;
 
 public static class ServiceCollectionExtension

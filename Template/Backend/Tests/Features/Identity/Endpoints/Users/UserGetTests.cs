@@ -1,27 +1,22 @@
-using Backend;
+namespace Backend.Tests.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Endpoints.Users;
 
-namespace Tests.Features.Identity.Endpoints.Users;
-
-public class UserGetTests : AppTestsBase
+public class UserGetTests(App app) : AppTestsBase(app)
 {
-    public UserGetTests(App app) : base(app)
-    {
-        SetAuthToken().Wait();
-    }
-
     [Fact]
     public async Task Get_User()
     {
-        UserCreateRequest request = new()
-        {
-            Username = $"getuser{Helper.UniqueNumber()}",
-            Email = $"get{Helper.UniqueNumber()}@example.com",
-            Password = "Password123!",
-            FirstName = "Get",
-            LastName = "User",
-            IsActive = true
-        };
+        await SetAuthTokenAsync();
+
+        var faker = new Faker<UserCreateRequest>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
+            .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.IsActive, f => true);
+        var request = faker.Generate();
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -40,6 +35,8 @@ public class UserGetTests : AppTestsBase
     [Fact]
     public async Task Get_NonExistent_User()
     {
+        await SetAuthTokenAsync();
+
         var (getRsp, _) = await App.Client.GETAsync<UserGetEndpoint, UserGetRequest, UserGetResponse>(
             new()
             {

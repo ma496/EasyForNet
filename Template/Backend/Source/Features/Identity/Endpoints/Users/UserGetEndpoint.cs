@@ -1,11 +1,7 @@
-using Backend.Base.Dto;
+namespace Backend.Features.Identity.Endpoints.Users;
+
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Riok.Mapperly.Abstractions;
-using Backend.Permissions;
-
-namespace Backend.Features.Identity.Endpoints.Users;
 
 sealed class UserGetEndpoint(IUserService userService) : Endpoint<UserGetRequest, UserGetResponse>
 {
@@ -25,11 +21,11 @@ sealed class UserGetEndpoint(IUserService userService) : Endpoint<UserGetRequest
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (entity == null)
         {
-            await SendNotFoundAsync(cancellationToken);
+            await Send.NotFoundAsync(cancellationToken);
             return;
         }
 
-        await SendAsync(new UserGetResponseMapper().Map(entity), cancellation: cancellationToken);
+        await Send.ResponseAsync(new UserGetResponseMapper().Map(entity), cancellation: cancellationToken);
     }
 }
 
