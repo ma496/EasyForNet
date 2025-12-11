@@ -1,10 +1,10 @@
 # FullStack Template & Tool
 
-A full-stack template built with ASP.NET 9 and Next.js, featuring a CLI tool for generating projects and API endpoints.
+A full-stack template built with ASP.NET 10 and Next.js 16, featuring a CLI tool for generating projects and API endpoints.
 
 ## Prerequisites
 
-- .NET 9.0
+- .NET 10.0
 - PostgreSQL
 - Node.js
 
@@ -106,15 +106,13 @@ dotnet test
 - **JWT Authentication & Refresh Tokens** – Secure authentication with built-in refresh token handling.  
 - **Permissions-Based Authorization** – Fine-grained access control using flexible permissions, ensuring users can only perform authorized actions.  
 - **Role & Permission Management** – Define roles and assign permissions dynamically through frontend.  
-- **User Management** – Includes endpoints and pages for user CRUD operations, changing passwords, and handling forgotten/reset passwords.  
-- **Rapid CRUD Endpoints** – Use the `dotnet efn crud` command to generate fully authorized CRUD endpoints with permissions in one step, maintaining consistency and speeding up development.  
-- **Rapid RTK Query Endpoints** – Use the `dotnet efn rtk` command to generate fully authorized RTK Query endpoints in one step, maintaining consistency and speeding up development.
-- **Custom Endpoint Creation** – Generate individual endpoints as needed while following a structured convention.  
+- **User Management** – Includes endpoints and pages for user CRUD operations, changing passwords, and handling forgotten/reset passwords.   
 - **Localization** – Support multiple languages.  
 - **Self-Hosted Background Email Service** – Send emails directly from your own server without relying on third-party services.  
 - **Automatic Token Cleanup Jobs**  
   - `delete-expired-auth-tokens` – A recurring job that runs once per day to remove expired authentication tokens. The schedule can be customized.  
   - `delete-expired-tokens` – A recurring job that runs once per day to remove expired tokens used for the "Forgot Password" functionality. The schedule can be customized.  
+  - `delete-unused-files` – A recurring job that runs once per day to remove unused files. The schedule can be customized.
 
 ## Custom Development
 
