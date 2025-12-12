@@ -1,4 +1,4 @@
-namespace EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+namespace Backend.Features.{{featureName}}.Endpoints.{{entitiesName}};
 
 public sealed class {{entitiesName}}Group : Group
 {

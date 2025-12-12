@@ -1,6 +1,6 @@
-namespace EasyBiz.Tests.Features.{{featureName}}.Endpoints.{{entitiesName}};
+namespace Backend.Tests.Features.{{featureName}}.Endpoints.{{entitiesName}};
 
-using EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+using Backend.Features.{{featureName}}.Endpoints.{{entitiesName}};
 
 public class {{entityName}}GetTests(App app, ITestOutputHelper output) : AppTestsBase(app)
 {

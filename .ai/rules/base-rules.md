@@ -12,7 +12,7 @@ The backend is a .NET web application built with the following key technologies:
 *   **Object Mapping:** Mapperly for efficient object-to-object mapping.
 *   **Authentication:** FastEndpoints.Security is used for authentication.
 
-The backend project is located in `src/backend`. The main project file is `src/backend/Source/EasyBiz.csproj`.
+The backend project is located in `src/backend`. The main project file is `src/backend/Source/Backend.csproj`.
 
 ### Building and Running the Backend
 

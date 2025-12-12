@@ -1,6 +1,6 @@
-namespace EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+namespace Backend.Features.{{featureName}}.Endpoints.{{entitiesName}};
 
-using EasyBiz.Features.{{featureName}}.Core.Entities;
+using Backend.Features.{{featureName}}.Core.Entities;
 
 public sealed class {{entityName}}ListEndpoint(AppDbContext dbContext) : Endpoint<{{entityName}}ListRequest, {{entityName}}ListResponse>
 {
