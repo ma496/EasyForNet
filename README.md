@@ -1,6 +1,6 @@
-# FullStack Template & Tool
+# FullStack Template
 
-A full-stack template built with ASP.NET 10 and Next.js 16, featuring a CLI tool for generating projects and API endpoints.
+A full-stack template built with ASP.NET 10 and Next.js 16. It’s well-structured, includes essential features, and lets you build applications quickly. It also works seamlessly with AI, including built-in rules for generating various parts of the project.
 
 ## Prerequisites
 
