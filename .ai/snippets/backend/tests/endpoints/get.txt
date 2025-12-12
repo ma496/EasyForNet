@@ -1,0 +1,49 @@
+namespace EasyBiz.Tests.Features.{{featureName}}.Endpoints.{{entitiesName}};
+
+using EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+
+public class {{entityName}}GetTests(App app, ITestOutputHelper output) : AppTestsBase(app)
+{
+    [Fact]
+    public async Task Get_{{entityName}}()
+    {
+        await SetAuthTokenAsync();
+
+        // Create a new entity first
+        // Before writing this test, read the {{entityName}}Configuration.cs file to identify which properties have a unique index.
+        var request = new Faker<{{entityName}}CreateRequest>()
+            .RuleFor(u => u.Name, f => f.Company.CompanyName() + f.UniqueIndex)
+            .Generate();
+        var (createRsp, createRes) = await App.Client.POSTAsync<{{entityName}}CreateEndpoint, {{entityName}}CreateRequest, {{entityName}}CreateResponse>(request);
+
+        if (createRsp.StatusCode != HttpStatusCode.Created)
+        {
+            output.WriteLine(await createRsp.Content.ReadAsStringAsync());
+        }
+
+        createRsp.StatusCode.Should().Be(HttpStatusCode.Created);
+
+        var (getRsp, getRes) = await App.Client.GETAsync<{{entityName}}GetEndpoint, {{entityName}}GetRequest, {{entityName}}GetResponse>(
+            new()
+            {
+                Id = createRes.Id
+            });
+
+        getRsp.StatusCode.Should().Be(HttpStatusCode.OK);
+        // Add assertions here
+    }
+
+    [Fact]
+    public async Task Get_NonExistent_{{entityName}}()
+    {
+        await SetAuthTokenAsync();
+        
+        var (getRsp, _) = await App.Client.GETAsync<{{entityName}}GetEndpoint, {{entityName}}GetRequest, {{entityName}}GetResponse>(
+            new()
+            {
+                Id = Guid.NewGuid()
+            });
+
+        getRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+}

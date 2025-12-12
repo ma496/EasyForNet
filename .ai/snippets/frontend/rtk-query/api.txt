@@ -1,0 +1,78 @@
+import { appApi } from "@/store/api/_app-api"
+import { {{entityNamePascal}}CreateRequest } from "./dto/{{entityName}}-create-request"
+import { {{entityNamePascal}}CreateResponse } from "./dto/{{entityName}}-create-response"
+import { {{entityNamePascal}}DeleteRequest } from "./dto/{{entityName}}-delete-request"
+import { {{entityNamePascal}}DeleteResponse } from "./dto/{{entityName}}-delete-response"
+import { {{entityNamePascal}}GetRequest } from "./dto/{{entityName}}-get-request"
+import { {{entityNamePascal}}GetResponse } from "./dto/{{entityName}}-get-response"
+import { {{entityNamePascal}}ListRequest } from "./dto/{{entityName}}-list-request"
+import { {{entityNamePascal}}ListResponse } from "./dto/{{entityName}}-list-response"
+import { {{entityNamePascal}}UpdateRequest } from "./dto/{{entityName}}-update-request"
+import { {{entityNamePascal}}UpdateResponse } from "./dto/{{entityName}}-update-response"
+
+export const {{entitiesName}}Api = appApi.enhanceEndpoints({
+  addTagTypes: ["{{entitiesNamePascal}}"],
+}).injectEndpoints({
+  overrideExisting: false,
+  endpoints: (builder) => ({
+    {{entityName}}Create: builder.mutation<{{entityNamePascal}}CreateResponse, {{entityNamePascal}}CreateRequest>({
+      query: (input) => ({
+        url: "/{{entitiesName}}",
+        method: "POST",
+        body: input
+      }),
+      invalidatesTags: ["{{entitiesNamePascal}}"]
+    }),
+    {{entityName}}Update: builder.mutation<{{entityNamePascal}}UpdateResponse, {{entityNamePascal}}UpdateRequest>({
+      query: (input) => ({
+        url: `/{{entitiesName}}/${input.id}`,
+        method: "PUT",
+        body: { ...input, id: undefined }
+      }),
+      invalidatesTags: (result, error, arg) => [
+        "{{entitiesNamePascal}}",
+        { type: "{{entitiesNamePascal}}", id: arg.id }
+      ]
+    }),
+    {{entityName}}Delete: builder.mutation<{{entityNamePascal}}DeleteResponse, {{entityNamePascal}}DeleteRequest>({
+      query: (input) => ({
+        url: `/{{entitiesName}}/${input.id}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: (result, error, arg) => [
+        "{{entitiesNamePascal}}",
+        { type: "{{entitiesNamePascal}}", id: arg.id }
+      ]
+    }),
+    {{entityName}}Get: builder.query<{{entityNamePascal}}GetResponse, {{entityNamePascal}}GetRequest>({
+      query: (input) => ({
+        url: `/{{entitiesName}}/${input.id}`,
+        method: "GET"
+      }),
+      providesTags: (result, error, arg) => [
+        { type: "{{entitiesNamePascal}}", id: arg.id }
+      ]
+    }),
+    {{entityName}}List: builder.query<{{entityNamePascal}}ListResponse, {{entityNamePascal}}ListRequest>({
+      query: ({ page, pageSize, sortField, sortDirection, search, all, includeIds }) => ({
+        url: "/{{entitiesName}}",
+        params: {
+          page,
+          pageSize,
+          sortField,
+          sortDirection,
+          search,
+          all,
+          includeIds, 
+        },
+        method: "GET"
+      }),
+      providesTags: (result) => [
+        "{{entitiesNamePascal}}",
+        ...(result?.items?.map(item => ({ type: "{{entitiesNamePascal}}" as const, id: item.id })) ?? [])
+      ]
+    })
+  }),
+})
+
+export const { use{{entityNamePascal}}CreateMutation, use{{entityNamePascal}}UpdateMutation, use{{entityNamePascal}}DeleteMutation, use{{entityNamePascal}}GetQuery, useLazy{{entityNamePascal}}GetQuery, use{{entityNamePascal}}ListQuery, useLazy{{entityNamePascal}}ListQuery } = {{entitiesName}}Api

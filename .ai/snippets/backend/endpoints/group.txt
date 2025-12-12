@@ -1,0 +1,9 @@
+namespace EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+
+public sealed class {{entitiesName}}Group : Group
+{
+    public {{entitiesName}}Group()
+    {
+        Configure("{{entitiesNameLower}}", ep => {});
+    }
+}

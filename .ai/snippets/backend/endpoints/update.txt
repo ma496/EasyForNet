@@ -1,0 +1,85 @@
+namespace EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+
+using EasyBiz.Features.{{featureName}}.Core.Entities;
+
+public sealed class {{entityName}}UpdateEndpoint(AppDbContext dbContext) : Endpoint<{{entityName}}UpdateRequest, {{entityName}}UpdateResponse>
+{
+    public override void Configure()
+    {
+        Put("/{id}");
+        Group<{{entitiesName}}Group>();
+        Permissions(Allow.{{entityName}}_Update);
+    }
+
+    public override async Task HandleAsync({{entityName}}UpdateRequest req, CancellationToken ct)
+    {
+        var entity = await dbContext.{{entitiesName}}
+            .Include(x => x.{{childEntitiesName}})
+            .FirstOrDefaultAsync(x => x.Id == req.Id, ct);
+
+        if (entity == null)
+        {
+            await SendNotFoundAsync(ct);
+            return;
+        }
+
+        var requestMapper = new {{entityName}}UpdateRequestMapper();
+        requestMapper.Map(req, entity);
+
+        // TODO: Add logic to update, add, and remove child entities
+
+        await dbContext.SaveChangesAsync(ct);
+
+        var responseMapper = new {{entityName}}UpdateResponseMapper();
+        var response = responseMapper.Map(entity);
+
+        await SendAsync(response, cancellation: ct);
+    }
+}
+
+public class {{entityName}}UpdateRequest(Guid Id, string Name, string? Description, Guid? {{foreignKeyName}}Id, ICollection<{{childEntityName}}UpdateRequest> {{childEntitiesName}});
+public class {{childEntityName}}UpdateRequest(Guid Id, string Name);
+
+public sealed class {{entityName}}UpdateValidator : Validator<{{entityName}}UpdateRequest>
+{
+    public {{entityName}}UpdateValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(100);
+        RuleFor(x => x.Description).MinimumLength(10).MaximumLength(500);
+        RuleForEach(x => x.{{childEntitiesName}}).SetValidator(new {{childEntityName}}UpdateValidator());
+    }
+}
+
+public sealed class {{childEntityName}}UpdateValidator : Validator<{{childEntityName}}UpdateRequest>
+{
+    public {{childEntityName}}UpdateValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(100);
+    }
+}
+
+public class {{entityName}}UpdateResponse
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public Guid? {{foreignKeyName}}Id { get; set; }
+    public ICollection<{{childEntityName}}UpdateResponse> {{childEntitiesName}} { get; set; } = [];
+}
+public class {{childEntityName}}UpdateResponse(Guid Id, string Name);
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class {{entityName}}UpdateRequestMapper
+{
+    [MapperIgnoreSource(nameof({{entityName}}UpdateRequest.Id))]
+    [MapperIgnoreSource(nameof({{entityName}}UpdateRequest.{{childEntitiesName}}))]
+    public partial void Map({{entityName}}UpdateRequest request, {{entityName}} entity);
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
+public partial class {{entityName}}UpdateResponseMapper
+{
+    public partial {{entityName}}UpdateResponse Map({{entityName}} entity);
+}

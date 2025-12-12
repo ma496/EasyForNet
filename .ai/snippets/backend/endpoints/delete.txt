@@ -1,0 +1,58 @@
+namespace EasyBiz.Features.{{featureName}}.Endpoints.{{entitiesName}};
+
+using EasyBiz.Features.{{featureName}}.Core.Entities;
+
+public sealed class {{entityName}}DeleteEndpoint(AppDbContext dbContext) : Endpoint<{{entityName}}DeleteRequest>
+{
+    public override void Configure()
+    {
+        Delete("/{id}");
+        Group<{{entitiesName}}Group>();
+        Permissions(Allow.{{entityName}}_Delete);
+    }
+
+    public override async Task HandleAsync({{entityName}}DeleteRequest request, CancellationToken cancellationToken)
+    {
+        var {{entityName}} = await dbContext.{{entitiesName}}
+            .Where(x => x.Id == request.Id)
+            .Select(x => new 
+            {
+                x.Id,
+                // TODO: Project any properties needed for validation (e.g., check for related entities).
+                // HasChildren = x.Children.Any()
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if ({{entityName}} == null)
+        {
+            await SendNotFoundAsync(cancellationToken);
+            return;
+        }
+
+        // TODO: Add validation logic here based on the projected properties.
+        // if ({{entityName}}.HasChildren)
+        // {
+        //     ThrowError("First delete all related entities.", "ErrorCodeForRelatedEntities");
+        // }
+
+        var entity = new {{entityName}} { Id = {{entityName}}.Id };
+        dbContext.{{entitiesName}}.Attach(entity);
+        dbContext.{{entitiesName}}.Remove(entity);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        await SendNoContentAsync(cancellationToken);
+    }
+}
+
+public sealed class {{entityName}}DeleteRequest
+{
+    public Guid Id { get; set; }
+}
+
+public sealed class {{entityName}}DeleteValidator : Validator<{{entityName}}DeleteRequest>
+{
+    public {{entityName}}DeleteValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
