@@ -1,0 +1,80 @@
+using System.Reflection;
+using EasyForNetTool.Generator;
+using EasyForNetTool.Parsing;
+
+namespace EasyForNetTool;
+
+internal class Program
+{
+    static async Task Main(string[] args)
+    {
+        try
+        {
+            if (args.Length == 0)
+            {
+                Console.WriteLine($"EasyForNet Tool Version v{Helpers.GetVersion()}");
+                Console.WriteLine("-------------");
+                Console.WriteLine("\nUsage:");
+                ShowHelp();
+                return;
+            }
+            if (args.Length == 1 && (args[0] == "--help" || args[0] == "-h"))
+            {
+                Console.WriteLine("Usage:");
+                ShowHelp();
+                return;
+            }
+            if (args.Length == 2 && (args[1] == "--help" || args[1] == "-h"))
+            {
+                ShowHelp(args[0]);
+                return;
+            }
+            if (args.Length == 1 && (args[0] == "--version" || args[0] == "-v"))
+            {
+                Console.WriteLine($"EasyForNet Tool Version v{Helpers.GetVersion()}");
+                return;
+            }
+
+            var argument = new Parser().Parse(args);
+            await new CodeGenerator().Generate(argument);
+        }
+        catch (UserFriendlyException ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (!Helpers.IsProduction())
+                Console.WriteLine($"{ex.Message}\n{ex.StackTrace}");
+            else
+                Console.WriteLine($"Error: {ex.Message}");
+            Console.ResetColor();
+        }
+        catch (TargetInvocationException ex)
+        {
+            if (ex.InnerException == null || !(ex.InnerException is UserFriendlyException))
+                throw;
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (!Helpers.IsProduction())
+                Console.WriteLine($"{ex.InnerException?.Message}\n{ex.InnerException?.StackTrace}");
+            else
+                Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            Console.ResetColor();
+        }
+    }
+
+    static void ShowHelp(string? command = null)
+    {
+        Console.WriteLine("  use like this");
+        Console.WriteLine("  efn {command} {options}");
+        var arguments = ArgumentInfo.Arguments().Where(a => command == null || (a.Name == command || a.ShortName == command));
+        foreach (var arg in arguments)
+        {
+            Console.WriteLine();
+            Console.WriteLine("  command");
+            Console.WriteLine($"  {arg.Name}, {arg.ShortName}, {arg.Description}");
+            Console.WriteLine("  options");
+            foreach (var opt in arg.Options.Where(x => !x.IsInternal))
+            {
+                Console.WriteLine($"    {opt.Name}, {opt.ShortName}, Required: {opt.Required}, {opt.Description}");
+            }
+        }
+    }
+}

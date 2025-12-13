@@ -1,0 +1,320 @@
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using EasyForNetTool.Extensions;
+using EasyForNetTool.Parsing;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Formatting;
+
+namespace EasyForNetTool.Generator;
+
+public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
+{
+    public override async Task Generate(CreateProjectArgument argument)
+    {
+        var version = "1.1.1";
+        var templateBaseDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "EasyForNet",
+            "Templates"
+        );
+        var versionedTemplateDir = Path.Combine(templateBaseDir, version);
+        var gitUrl = "https://github.com/ma496/EasyForNet.git";
+
+        try
+        {
+            if (!Directory.Exists(versionedTemplateDir))
+            {
+                Console.WriteLine("Creating template directory...");
+                Directory.CreateDirectory(versionedTemplateDir);
+
+                Console.WriteLine("Cloning template repository...");
+                try
+                {
+                    await ExecuteCommand("git", $"clone {gitUrl} \"{versionedTemplateDir}\"");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to clone template repository. Please ensure Git is installed and accessible. Error: {ex.Message}", ex);
+                }
+
+                Console.WriteLine($"Checking out version {version}...");
+                try
+                {
+                    await ExecuteCommand("git", $"-C \"{versionedTemplateDir}\" checkout tags/v{version}");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to checkout version {version}. The version might not exist. Error: {ex.Message}", ex);
+                }
+            }
+
+            Console.WriteLine("Copying template files...");
+            var backendProjectPath = Path.Combine(versionedTemplateDir, "src", "backend");
+            var webProjectPath = Path.Combine(versionedTemplateDir, "src", "frontend", "web");
+            var pascalCaseProjectName = argument.Name.ToPascalCase();
+            var kebabCaseProjectName = argument.Name.ToKebabCase();
+            var targetPath = Path.Combine(Directory.GetCurrentDirectory(), argument.Output ?? string.Empty, kebabCaseProjectName);
+            var srcTargetPath = Path.Combine(targetPath, "src");
+            var backendTargetPath = Path.Combine(srcTargetPath, "backend");
+            var backendProjectTargetPath = Path.Combine(backendTargetPath, "Source");
+            var backendTestProjectTargetPath = Path.Combine(backendTargetPath, "Tests");
+            var webTargetPath = Path.Combine(srcTargetPath, "frontend", "web");
+
+            if (Directory.Exists(targetPath))
+            {
+                throw new UserFriendlyException($"Directory '{targetPath}' already exists. Please choose a different project name or location.");
+            }
+
+            Directory.CreateDirectory(targetPath);
+            if (!Directory.Exists(backendTargetPath))
+                Directory.CreateDirectory(backendTargetPath);
+            if (!Directory.Exists(webTargetPath))
+                Directory.CreateDirectory(webTargetPath);
+
+            Console.WriteLine("Copying project files...");
+            CopyDirectory(backendProjectPath, backendTargetPath, true, ["Migrations"]);
+            CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Development.json");
+            CopyDirectory(webProjectPath, webTargetPath, true);
+            CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
+            CopyDirectory($"{versionedTemplateDir}/.config", $"{targetPath}/.config", true);
+            CopyDirectory($"{versionedTemplateDir}/.ai", $"{targetPath}/.ai", true);
+
+            Console.WriteLine("Customizing project files...");
+            // update connection string
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
+            // update Meta.cs
+            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Meta.cs"), @"InternalsVisibleTo\s*\(\s*""Backend\.Tests""\s*\)", $@"InternalsVisibleTo(""{pascalCaseProjectName}.Tests"")");
+            // update Program.cs
+            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Program.cs"), @"c\.Binding\.ReflectionCache\.AddFromBackend", $@"c.Binding.ReflectionCache.AddFrom{pascalCaseProjectName}");
+            // update project name
+            RenameFile(backendProjectTargetPath, "Backend.csproj", $"{pascalCaseProjectName}.csproj");
+            await AdjustNamespaceAsync(backendProjectTargetPath, "Backend", pascalCaseProjectName);
+            // update FeatureDependencyTests.cs
+            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, "Architect", "FeatureDependencyTests.cs"), @"Backend", $@"{pascalCaseProjectName}");
+            // update test project name
+            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, "Backend.Tests.csproj"), @"Backend\.csproj", $@"{pascalCaseProjectName}.csproj");
+            RenameFile(backendTestProjectTargetPath, "Backend.Tests.csproj", $"{pascalCaseProjectName}.Tests.csproj");
+            await AdjustNamespaceAsync(backendTestProjectTargetPath, "Backend", pascalCaseProjectName);
+            // update package.json and package-lock.json
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
+            // update .md and .txt files in .ai directory
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.", $"{pascalCaseProjectName}.", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.csproj", $"{pascalCaseProjectName}.csproj", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.Tests\.csproj", $"{pascalCaseProjectName}.Tests.csproj", ".md", ".txt");
+
+            Console.WriteLine("Creating solution file...");
+            var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");
+            await ExecuteCommand("dotnet", $"new sln -n {pascalCaseProjectName} -o \"{Path.GetDirectoryName(solutionPath)}\"");
+
+            // Add projects to solution
+            var projectFiles = Directory.GetFiles(backendTargetPath, "*.csproj", SearchOption.AllDirectories);
+            foreach (var projectFile in projectFiles)
+            {
+                Console.WriteLine($"Adding project: {Path.GetFileName(projectFile)}");
+                await ExecuteCommand("dotnet", $"sln \"{solutionPath}\" add \"{projectFile}\"");
+            }
+
+            Console.WriteLine("Project creation completed successfully!");
+        }
+        catch (UserFriendlyException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            if (Directory.Exists(versionedTemplateDir) && !Directory.EnumerateFileSystemEntries(versionedTemplateDir).Any())
+            {
+                try
+                {
+                    Directory.Delete(versionedTemplateDir, true);
+                }
+                catch
+                {
+                    // Ignore cleanup errors
+                }
+            }
+            throw new Exception($"Failed to generate project: {ex.Message}", ex);
+        }
+    }
+
+    private static async Task ExecuteCommand(string command, string arguments)
+    {
+        try
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = command,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            if (command == "git" && !IsGitInstalled())
+            {
+                throw new Exception("Git is not installed or not accessible in the system PATH.");
+            }
+
+            process.Start();
+
+            var timeoutTask = Task.Delay(TimeSpan.FromMinutes(5));
+            var processTask = process.WaitForExitAsync();
+
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
+
+            var completedTask = await Task.WhenAny(processTask, timeoutTask);
+            if (completedTask == timeoutTask)
+            {
+                process.Kill();
+                throw new Exception($"Command timed out after 5 minutes: {command} {arguments}");
+            }
+
+            if (process.ExitCode != 0)
+                throw new Exception($"Command failed with exit code {process.ExitCode}:\nCommand: {command} {arguments}\nError: {error}\nOutput: {output}");
+        }
+        catch (Exception ex) when (ex is not InvalidOperationException)
+        {
+            throw new Exception($"Failed to execute command: {command} {arguments}\nError: {ex.Message}", ex);
+        }
+    }
+
+    private static bool IsGitInstalled()
+    {
+        try
+        {
+            using var process = Process.Start(new ProcessStartInfo
+            {
+                FileName = "git",
+                Arguments = "--version",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            });
+            return process?.WaitForExit(5000) == true && process.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void CopyDirectory(string sourceDir, string targetDir, bool recursive, string[]? ignoreDirectories = null)
+    {
+        var dir = new DirectoryInfo(sourceDir);
+        var dirs = dir.GetDirectories()
+            .Where(d => ignoreDirectories is null || !ignoreDirectories.Contains(d.Name))
+            .ToArray();
+
+        Directory.CreateDirectory(targetDir);
+
+        foreach (var file in dir.GetFiles())
+        {
+            var targetFilePath = Path.Combine(targetDir, file.Name);
+            file.CopyTo(targetFilePath);
+        }
+
+        if (recursive)
+        {
+            foreach (var subDir in dirs)
+            {
+                var newTargetDir = Path.Combine(targetDir, subDir.Name);
+                CopyDirectory(subDir.FullName, newTargetDir, true, ignoreDirectories);
+            }
+        }
+    }
+
+    private static void RenameFile(string directory, string oldName, string newName)
+    {
+        var filePath = Path.Combine(directory, oldName);
+        var newFilePath = Path.Combine(directory, newName);
+        if (filePath != newFilePath)
+            File.Move(filePath, newFilePath);
+    }
+
+    private static async Task ReplaceInFile(string filePath, string regularExpression, string replacement)
+    {
+        var text = await File.ReadAllTextAsync(filePath);
+        if (Regex.IsMatch(text, regularExpression))
+        {
+            text = Regex.Replace(text, regularExpression, replacement);
+            await File.WriteAllTextAsync(filePath, text);
+        }
+    }
+
+    private static async Task ReplaceInFiles(string directory, string regularExpression, string replacement, params string[] extensions)
+    {
+        foreach (var file in Directory
+            .EnumerateFiles(directory, $"*.*", SearchOption.AllDirectories)
+            .Where(f => extensions.Contains(Path.GetExtension(f))))
+        {
+            await ReplaceInFile(file, regularExpression, replacement);
+        }
+
+    }
+
+    public static async Task AdjustNamespaceAsync(string directory, string oldRoot, string newRoot)
+    {
+        foreach (var file in Directory.EnumerateFiles(directory, "*.cs", SearchOption.AllDirectories))
+        {
+            var text = await File.ReadAllTextAsync(file);
+
+            var tree = CSharpSyntaxTree.ParseText(text);
+            var root = await tree.GetRootAsync();
+
+            var rewriter = new NamespaceRewriter(oldRoot, newRoot);
+            var newRootNode = rewriter.Visit(root);
+
+            // Create a workspace to format the document
+            using var workspace = new AdhocWorkspace();
+            var formattedNode = Formatter.Format(newRootNode, workspace);
+
+            await File.WriteAllTextAsync(file, formattedNode.ToFullString());
+        }
+    }
+
+    private static void CopyFiles(string sourceDirectory, string targetDirectory, params string[] fileNames)
+    {
+        foreach (var fileName in fileNames)
+        {
+            var sourceFilePath = Path.Combine(sourceDirectory, fileName);
+            var targetFilePath = Path.Combine(targetDirectory, fileName);
+
+            if (File.Exists(sourceFilePath))
+            {
+                File.Copy(sourceFilePath, targetFilePath, overwrite: true);
+            }
+            else
+            {
+                throw new Exception($"File '{fileName}' does not exist in the source directory '{sourceDirectory}'.");
+            }
+        }
+    }
+
+    private static void CopyFrom(string sourceDirectory, string targetDirectory, string from, string to)
+    {
+        var sourceFilePath = Path.Combine(sourceDirectory, from);
+        var targetFilePath = Path.Combine(targetDirectory, to);
+
+        if (File.Exists(sourceFilePath))
+        {
+            File.Copy(sourceFilePath, targetFilePath, overwrite: true);
+        }
+        else
+        {
+            throw new Exception($"File '{from}' does not exist in the source directory '{sourceDirectory}'.");
+        }
+    }
+}
