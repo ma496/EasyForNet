@@ -129,7 +129,6 @@ Your stars motivate me to:
 - Add more features and improvements
 - Maintain documentation
 - Provide better support
-- Create more developer tools
 
 Thank you for your support! 👍
 
