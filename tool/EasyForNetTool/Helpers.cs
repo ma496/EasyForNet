@@ -28,4 +28,18 @@ public static class Helpers
         return true;
 #endif
     }
+    public static string? GetRootNamespace(string path)
+    {
+        var projectPath = Directory.GetFiles(path, "*.csproj").FirstOrDefault();
+        if (string.IsNullOrEmpty(projectPath))
+            return null;
+
+        var rootNamespace = Path.GetFileNameWithoutExtension(projectPath);
+        var content = File.ReadAllText(projectPath);
+        var match = Regex.Match(content, @"<RootNamespace>(.*?)</RootNamespace>");
+        if (match.Success)
+            rootNamespace = match.Groups[1].Value;
+
+        return rootNamespace;
+    }
 }
