@@ -20,31 +20,33 @@ public class HelpersTests : IDisposable
     }
 
     [Fact]
-    public void GetRootNamespace_ReturnsNull_WhenNoCsprojFound()
+    public void GetProjectInfo_ReturnsNulls_WhenNoCsprojFound()
     {
         // Act
-        var result = Helpers.GetRootNamespace(_testDirectory);
+        var result = Helpers.GetProjectInfo(_testDirectory);
 
         // Assert
-        Assert.Null(result);
+        Assert.Null(result.projectName);
+        Assert.Null(result.rootNamespace);
     }
 
     [Fact]
-    public void GetRootNamespace_ReturnsFileNameWithoutExtension_WhenNoRootNamespaceTag()
+    public void GetProjectInfo_ReturnsCorrectInfo_WhenNoRootNamespaceTag()
     {
         // Arrange
         var csprojPath = Path.Combine(_testDirectory, "MyProject.csproj");
         File.WriteAllText(csprojPath, "<Project Sdk=\"Microsoft.NET.Sdk\"></Project>");
 
         // Act
-        var result = Helpers.GetRootNamespace(_testDirectory);
+        var result = Helpers.GetProjectInfo(_testDirectory);
 
         // Assert
-        Assert.Equal("MyProject", result);
+        Assert.Equal("MyProject", result.projectName);
+        Assert.Equal("MyProject", result.rootNamespace);
     }
 
     [Fact]
-    public void GetRootNamespace_ReturnsRootNamespaceTagValue_WhenTagExists()
+    public void GetProjectInfo_ReturnsCorrectInfo_WhenTagExists()
     {
         // Arrange
         var csprojPath = Path.Combine(_testDirectory, "MyProject.csproj");
@@ -57,14 +59,15 @@ public class HelpersTests : IDisposable
         File.WriteAllText(csprojPath, content);
 
         // Act
-        var result = Helpers.GetRootNamespace(_testDirectory);
+        var result = Helpers.GetProjectInfo(_testDirectory);
 
         // Assert
-        Assert.Equal("Custom.Namespace", result);
+        Assert.Equal("MyProject", result.projectName);
+        Assert.Equal("Custom.Namespace", result.rootNamespace);
     }
 
     [Fact]
-    public void GetRootNamespace_ReturnsRootNamespaceTagValue_WhenTagExistsOneLine()
+    public void GetProjectInfo_ReturnsCorrectInfo_WhenTagExistsOneLine()
     {
         // Arrange
         var csprojPath = Path.Combine(_testDirectory, "MyProject.csproj");
@@ -72,9 +75,10 @@ public class HelpersTests : IDisposable
         File.WriteAllText(csprojPath, content);
 
         // Act
-        var result = Helpers.GetRootNamespace(_testDirectory);
+        var result = Helpers.GetProjectInfo(_testDirectory);
 
         // Assert
-        Assert.Equal("Custom.Namespace", result);
+        Assert.Equal("MyProject", result.projectName);
+        Assert.Equal("Custom.Namespace", result.rootNamespace);
     }
 }
