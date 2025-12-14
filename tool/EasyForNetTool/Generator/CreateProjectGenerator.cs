@@ -81,6 +81,16 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             CopyDirectory($"{versionedTemplateDir}/.ai", $"{targetPath}/.ai", true);
 
             Console.WriteLine("Customizing project files...");
+            var (backendProjectName, backendProjectRootNamespace) = Helpers.GetProjectInfo(backendProjectTargetPath);
+            if (string.IsNullOrEmpty(backendProjectName) || string.IsNullOrEmpty(backendProjectRootNamespace))
+            {
+                throw new UserFriendlyException($"Failed to get root namespace from project '{backendProjectTargetPath}'. csproj file is not found.");
+            }
+            var (backendTestProjectName, backendTestProjectRootNamespace) = Helpers.GetProjectInfo(backendTestProjectTargetPath);
+            if (string.IsNullOrEmpty(backendTestProjectName) || string.IsNullOrEmpty(backendTestProjectRootNamespace))
+            {
+                throw new UserFriendlyException($"Failed to get root namespace from project '{backendTestProjectTargetPath}'. csproj file is not found.");
+            }
             // update connection string
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
@@ -89,25 +99,27 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
             // update Meta.cs
-            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Meta.cs"), @"InternalsVisibleTo\s*\(\s*""Backend\.Tests""\s*\)", $@"InternalsVisibleTo(""{pascalCaseProjectName}.Tests"")");
+            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Meta.cs"), $@"InternalsVisibleTo\s*\(\s*""{Regex.Escape(backendTestProjectName)}""\s*\)", $@"InternalsVisibleTo(""{pascalCaseProjectName}.Tests"")");
             // update Program.cs
-            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Program.cs"), @"c\.Binding\.ReflectionCache\.AddFromBackend", $@"c.Binding.ReflectionCache.AddFrom{pascalCaseProjectName}");
+            await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Program.cs"), $@"c\.Binding\.ReflectionCache\.AddFrom{Regex.Escape(backendProjectName)}", $@"c.Binding.ReflectionCache.AddFrom{pascalCaseProjectName}");
             // update project name
-            RenameFile(backendProjectTargetPath, "Backend.csproj", $"{pascalCaseProjectName}.csproj");
-            await AdjustNamespaceAsync(backendProjectTargetPath, "Backend", pascalCaseProjectName);
+            RenameFile(backendProjectTargetPath, $"{backendProjectName}.csproj", $"{pascalCaseProjectName}.csproj");
+            await AdjustNamespaceAsync(backendProjectTargetPath, backendProjectRootNamespace, pascalCaseProjectName);
             // update FeatureDependencyTests.cs
-            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, "Architect", "FeatureDependencyTests.cs"), @"Backend", $@"{pascalCaseProjectName}");
+            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, "Architect", "FeatureDependencyTests.cs"), $@"{Regex.Escape(backendProjectRootNamespace)}", $@"{pascalCaseProjectName}");
             // update test project name
-            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, "Backend.Tests.csproj"), @"Backend\.csproj", $@"{pascalCaseProjectName}.csproj");
-            RenameFile(backendTestProjectTargetPath, "Backend.Tests.csproj", $"{pascalCaseProjectName}.Tests.csproj");
-            await AdjustNamespaceAsync(backendTestProjectTargetPath, "Backend", pascalCaseProjectName);
+            await ReplaceInFile(Path.Combine(backendTestProjectTargetPath, $"{backendTestProjectName}.csproj"), @$"{Regex.Escape("Backend")}\.csproj", $@"{pascalCaseProjectName}.csproj");
+            RenameFile(backendTestProjectTargetPath, $"{backendTestProjectName}.csproj", $"{pascalCaseProjectName}.Tests.csproj");
+            await AdjustNamespaceAsync(backendTestProjectTargetPath, backendProjectRootNamespace, pascalCaseProjectName);
+            await AdjustNamespaceAsync(backendTestProjectTargetPath, backendTestProjectRootNamespace, $"{pascalCaseProjectName}.Tests");
             // update package.json and package-lock.json
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
             // update .md and .txt files in .ai directory
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.", $"{pascalCaseProjectName}.", ".md", ".txt");
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.csproj", $"{pascalCaseProjectName}.csproj", ".md", ".txt");
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), @"Backend\.Tests\.csproj", $"{pascalCaseProjectName}.Tests.csproj", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendProjectRootNamespace)}\.", $"{pascalCaseProjectName}.", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendTestProjectRootNamespace)}\.", $"{pascalCaseProjectName}.Tests.", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendProjectName)}\.csproj", $"{pascalCaseProjectName}.csproj", ".md", ".txt");
+            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendTestProjectName)}\.csproj", $"{pascalCaseProjectName}.Tests.csproj", ".md", ".txt");
 
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");
