@@ -12,7 +12,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 {
     public override async Task Generate(CreateProjectArgument argument)
     {
-        var version = "1.1.1";
+        var version = "1.1.2";
         var templateBaseDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "EasyForNet",
@@ -112,6 +112,8 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             RenameFile(backendTestProjectTargetPath, $"{backendTestProjectName}.csproj", $"{pascalCaseProjectName}.Tests.csproj");
             await AdjustNamespaceAsync(backendTestProjectTargetPath, backendProjectRootNamespace, pascalCaseProjectName);
             await AdjustNamespaceAsync(backendTestProjectTargetPath, backendTestProjectRootNamespace, $"{pascalCaseProjectName}.Tests");
+            // replace Easy For Net text with project name in web project
+            await ReplaceInFiles(webTargetPath, @"Easy\s+For\s+Net", $@"{kebabCaseProjectName.Split('-').Select(x => char.ToUpper(x[0]) + x[1..]).Aggregate((current, next) => current + " " + next)}", ".tsx");
             // update package.json and package-lock.json
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
