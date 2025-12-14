@@ -118,6 +118,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             // update package.json and package-lock.json
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "packages..name", kebabCaseProjectName);
             // update .md and .txt files in .ai directory
             await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendProjectRootNamespace)}\.", $"{pascalCaseProjectName}.", ".md", ".txt");
             await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendTestProjectRootNamespace)}\.", $"{pascalCaseProjectName}.Tests.", ".md", ".txt");
