@@ -39,6 +39,37 @@ public class ArgumentInfo
                     },
                 ]
             },
+            new ArgumentInfo
+            {
+                Type = ArgumentType.CreateFeature,
+                Name = "createfeature",
+                ShortName = "cf",
+                Description = "Create a new feature.",
+                Options =
+                [
+                    new ArgumentOption
+                    {
+                        Name = "--featureName",
+                        ShortName = "-n",
+                        Description = "Name of feature.",
+                        Required = true,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--project",
+                        ShortName = "-p",
+                        Description = "Path of project.",
+                        Required = false,
+                    },
+                    new ArgumentOption
+                    {
+                        Name = "--output",
+                        ShortName = "-o",
+                        Description = "Output path.",
+                        Required = false,
+                    },
+                ]
+            },
         ];
     }
 }

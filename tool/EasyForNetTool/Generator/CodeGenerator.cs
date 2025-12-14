@@ -10,6 +10,10 @@ public class CodeGenerator
         {
             await new CreateProjectGenerator().Generate(createProjectArgument);
         }
+        else if (argument is CreateFeatureArgument createFeatureArgument)
+        {
+            await new CreateFeatureGenerator().Generate(createFeatureArgument);
+        }
         else
             throw new Exception($"Invalid argument type: {argument.Type}");
     }
