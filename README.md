@@ -41,9 +41,18 @@ dotnet efn cp -n {name} -o {path}
 - `-n {name}`: Specifies the name of the new project.
 - `-o {path}`: (Optional) Specifies the output directory for the new project.
 
+## Build Backend
+
+To build the backend project, navigate to the `{name}/src/backend` directory and run the following command:
+
+```sh
+dotnet tool restore
+dotnet build
+```
+
 ## Change Connection Strings
 
-By default, the EasyForNet sets up connection strings for PostgreSQL in the `appsettings.json`, `appsettings.Development.json` and `appsettings.Testing.json` files. To change the connection strings, follow these steps:
+Go to `{name}/src/backend/Source` directory. By default, the EasyForNet sets up connection strings for PostgreSQL in the `appsettings.json`, `appsettings.Development.json` and `appsettings.Testing.json` files. To change the connection strings, follow these steps:
 
 1. Open the `appsettings.Development.json` file. Update the `DefaultConnection` and `Hangfire` connection strings with your PostgreSQL connection details:
 
@@ -70,9 +79,17 @@ By default, the EasyForNet sets up connection strings for PostgreSQL in the `app
     }
     ```
 
+## Add Migration
+
+Go to `{name}/src/backend/Source` directory and run the following command:
+
+```sh
+dotnet ef migrations add Initial
+```
+
 ## Run the Backend Project
 
-To run the project, navigate to the src/backend/Source directory and execute the following command:
+To run the project, navigate to the `{name}/src/backend/Source` directory and execute the following command:
 
 ```sh
 dotnet run
@@ -82,7 +99,7 @@ Once the project is running, open your browser and go to [http://localhost:5000/
 
 ## Run the Frontend Project
 
-To run the project, navigate to the src/frontend/web directory and execute the following command:
+To run the project, navigate to the `{name}/src/frontend/web` directory and execute the following command:
 
 ```sh
 npm run dev
@@ -95,7 +112,7 @@ Default credentials:
 
 ## Run the Tests
 
-To run the tests, navigate to the Tests directory and execute the following command:
+To run the tests, navigate to the `{name}/src/backend/Tests` directory and execute the following command:
 
 ```sh
 dotnet test

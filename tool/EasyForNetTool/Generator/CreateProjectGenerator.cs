@@ -12,7 +12,8 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 {
     public override async Task Generate(CreateProjectArgument argument)
     {
-        var version = "1.1.2";
+        var version = Helpers.GetVersion();
+        // var version = "1.1.2";
         var templateBaseDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "EasyForNet",
