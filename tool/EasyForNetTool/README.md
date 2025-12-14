@@ -97,6 +97,14 @@ dotnet run
 
 Once the project is running, open your browser and go to [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html) to view the Swagger documentation for the endpoints.
 
+## Install the Frontend Dependencies
+
+To install the frontend dependencies, navigate to the `{name}/src/frontend/web` directory and execute the following command:
+
+```sh
+npm install
+```
+
 ## Run the Frontend Project
 
 To run the project, navigate to the `{name}/src/frontend/web` directory and execute the following command:
