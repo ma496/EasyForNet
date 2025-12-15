@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "ni18n.config.ts.js",
+    "ni18n.config.js",
     ".next\\dev/types/**/*.ts",
     ".next\\dev/types/**/*.ts",
     ".next/dev/types/**/*.ts"
