@@ -141,7 +141,7 @@ dotnet test
 
 ## Custom Development
 
-For custom development, you can connect with me on [LinkedIn](https://www.linkedin.com/in/muhammad-ali-a5481b1b8/)
+For custom development, you can email me at `easyfornet@outlook.com`
 
 ## Star the Project
 
