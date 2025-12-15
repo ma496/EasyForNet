@@ -42,7 +42,7 @@ const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdown
 
   const themeConfig = useAppSelector((state) => state.theme)
   const setLocale = (flag: string) => {
-    if (flag.toLowerCase() === 'ae' || flag.toLowerCase() === 'ur' || flag.toLowerCase() === 'ar') {
+    if (flag.toLowerCase() === 'ur' || flag.toLowerCase() === 'ar') {
       dispatch(toggleRTL('rtl'))
     } else {
       dispatch(toggleRTL('ltr'))
