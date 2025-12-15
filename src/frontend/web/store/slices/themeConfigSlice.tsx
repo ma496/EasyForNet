@@ -4,6 +4,7 @@ import themeConfig from '@/theme.config'
 type Language = {
   code: string
   name: string
+  isRTL: boolean
 }
 
 type ThemeConfigState = {
@@ -32,10 +33,10 @@ const initialState: ThemeConfigState = {
   locale: themeConfig.locale,
   semidark: themeConfig.semidark,
   languageList: [
-    { code: 'en', name: 'English' },
-    { code: 'ur', name: 'Urdu' },
-    { code: 'zh', name: 'Chinese' },
-    { code: 'ar', name: 'Arabic' },
+    { code: 'en', name: 'English', isRTL: false },
+    { code: 'ur', name: 'Urdu', isRTL: true },
+    { code: 'zh', name: 'Chinese', isRTL: false },
+    { code: 'ar', name: 'Arabic', isRTL: true },
   ],
 }
 
