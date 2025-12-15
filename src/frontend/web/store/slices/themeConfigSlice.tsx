@@ -34,9 +34,9 @@ const initialState: ThemeConfigState = {
   semidark: themeConfig.semidark,
   languageList: [
     { code: 'en', name: 'English', isRTL: false },
+    { code: 'ar', name: 'Arabic', isRTL: true },
     { code: 'ur', name: 'Urdu', isRTL: true },
     { code: 'zh', name: 'Chinese', isRTL: false },
-    { code: 'ar', name: 'Arabic', isRTL: true },
   ],
 }
 
