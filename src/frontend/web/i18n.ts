@@ -4,9 +4,13 @@ import en from './public/locales/en.json'
 import ur from './public/locales/ur.json'
 import zh from './public/locales/zh.json'
 import ar from './public/locales/ar.json'
+import hi from './public/locales/hi.json'
+import es from './public/locales/es.json'
+import fr from './public/locales/fr.json'
+import ru from './public/locales/ru.json'
 
 
-const langObj: any = { en, ur, zh, ar }
+const langObj: any = { en, ur, zh, ar, hi, es, fr, ru }
 
 const getLangAsync = async () => {
   let lang = null

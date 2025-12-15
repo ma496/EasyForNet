@@ -37,6 +37,10 @@ const initialState: ThemeConfigState = {
     { code: 'ar', name: 'Arabic', isRTL: true },
     { code: 'ur', name: 'Urdu', isRTL: true },
     { code: 'zh', name: 'Chinese', isRTL: false },
+    { code: 'es', name: 'Spanish', isRTL: false },
+    { code: 'fr', name: 'French', isRTL: false },
+    { code: 'hi', name: 'Hindi', isRTL: false },
+    { code: 'ru', name: 'Russian', isRTL: false },
   ],
 }
 
