@@ -2,8 +2,10 @@ const cookieObj = typeof window === 'undefined' ? require('next/headers') : requ
 
 import en from './public/locales/en.json'
 import ur from './public/locales/ur.json'
+import zh from './public/locales/zh.json'
 
-const langObj: any = { en, ur }
+
+const langObj: any = { en, ur, zh }
 
 const getLangAsync = async () => {
   let lang = null

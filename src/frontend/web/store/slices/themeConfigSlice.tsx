@@ -34,6 +34,7 @@ const initialState: ThemeConfigState = {
   languageList: [
     { code: 'en', name: 'English' },
     { code: 'ur', name: 'Urdu' },
+    { code: 'zh', name: 'Chinese' },
   ],
 }
 
