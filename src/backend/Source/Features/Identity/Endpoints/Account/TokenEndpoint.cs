@@ -2,7 +2,7 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
-sealed class TokenEndpoint(IUserService userService) : Endpoint<TokenReq, TokenResponse>
+sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting) : Endpoint<TokenReq, TokenResponse>
 {
     public override void Configure()
     {
@@ -24,7 +24,7 @@ sealed class TokenEndpoint(IUserService userService) : Endpoint<TokenReq, TokenR
             ThrowError(errorMessage, errorCode);
         if (!user.IsActive)
             ThrowError("User is not active", ErrorCodes.UserNotActive);
-        if (!user.IsEmailVerified)
+        if (signinSetting.Value?.IsEmailVerificationRequired == true && !user.IsEmailVerified)
             ThrowError("Email is not verified", ErrorCodes.EmailNotVerified);
 
         var roles = await userService.GetUserRolesAsync(user.Id);

@@ -13,6 +13,7 @@ import { UpdateProfileRequest } from './dto/update-profile-request'
 
 import { SignupRequest } from './dto/signup-request'
 import { VerifyEmailRequest } from './dto/verify-email-request'
+import { SignupResponse } from './dto/signup-response'
 
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,
@@ -24,7 +25,7 @@ export const accountApi = appApi.injectEndpoints({
         body: input,
       }),
     }),
-    signup: builder.mutation<void, SignupRequest>({
+    signup: builder.mutation<SignupResponse, SignupRequest>({
       query: (input) => ({
         url: '/account/signup',
         method: 'POST',

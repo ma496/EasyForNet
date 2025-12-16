@@ -16,7 +16,7 @@ import { CheckCircle } from 'lucide-react'
 const SignupForm = () => {
   const router = useRouter()
   const { t } = getTranslation()
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -41,8 +41,17 @@ const SignupForm = () => {
   const [signupApi, { isLoading }] = useSignupMutation()
 
   const submitForm = async (values: SignupFormValues) => {
-    await signupApi(values).unwrap()
-    setSuccessMessage(t('msg_signup_success') || 'Registration successful! Please check your email to verify your account.')
+    const response = await signupApi(values)
+    if (response.error) {
+      return
+    }
+
+    if (response.data?.isEmailVerificationRequired) {
+      setSuccessMessage(t('msg_signup_success_verify_email'))
+    }
+    else {
+      setSuccessMessage(t('msg_signup_success'))
+    }
   }
 
   if (successMessage) {

@@ -9,8 +9,10 @@ using Microsoft.Extensions.Options;
 sealed class SignupEndpoint(IUserService userService,
                             ITokenService tokenService,
                             IEmailBackgroundJobs emailBackgroundJobs,
-                            IOptions<WebSetting> webSetting)
-    : Endpoint<SignupRequest>
+                            IOptions<WebSetting> webSetting,
+                            IOptions<SigninSetting> signinSetting,
+                            AppDbContext dbContext)
+    : Endpoint<SignupRequest, SignupResponse>
 {
     public override void Configure()
     {
@@ -33,29 +35,58 @@ sealed class SignupEndpoint(IUserService userService,
             ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
         }
 
-        var user = new User
+        try
         {
-            Email = request.Email,
-            Username = request.Username,
-            IsActive = true,
-            IsEmailVerified = false
-        };
-        user.NormalizeProperties();
+            using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            var user = new User
+            {
+                Email = request.Email,
+                Username = request.Username,
+                IsActive = true,
+                IsEmailVerified = false
+            };
+            user.NormalizeProperties();
 
-        await userService.CreateAsync(user, request.Password);
+            await userService.CreateAsync(user, request.Password);
 
-        // Generate verification token
-        var token = await tokenService.GenerateTokenAsync(user);
+            var roleId = await dbContext.Roles
+                .Where(x => x.Name == "Public")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (roleId == null)
+            {
+                ThrowError("Role not found", ErrorCodes.RoleNotFound);
+            }
+            await userService.AssignRoleAsync(user.Id, roleId);
 
-        // Send verification email
-        emailBackgroundJobs.Enqueue(user.Email, "Verify Email",
-            @$"
+            if (signinSetting.Value.IsEmailVerificationRequired)
+            {
+                // Generate verification token
+                var token = await tokenService.GenerateTokenAsync(user);
+
+                // Send verification email
+                emailBackgroundJobs.Enqueue(user.Email, "Verify Email",
+                    @$"
             <div>
                 <p>Click the link below to verify your email:</p>
                 <a href=""{webSetting.Value.Url}/verify-email?token={token.Value}"">Verify Email</a>
             </div>", true);
 
-        await Send.OkAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+
+                await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = true }, cancellationToken);
+            }
+            else
+            {
+                await transaction.CommitAsync(cancellationToken);
+
+                await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = false }, cancellationToken);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }
 
@@ -89,4 +120,9 @@ sealed class SignupValidator : Validator<SignupRequest>
         RuleFor(x => x.ConfirmPassword)
             .Equal(x => x.Password);
     }
+}
+
+sealed class SignupResponse
+{
+    public bool IsEmailVerificationRequired { get; set; }
 }

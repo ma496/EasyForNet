@@ -71,6 +71,7 @@ bld.Services.AddHangfireServer();
 
 // configure settings
 bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
+bld.Services.Configure<SigninSetting>(bld.Configuration.GetSection("Signin"));
 bld.Services.Configure<PayloadSetting>(bld.Configuration.GetSection("Payload"));
 bld.Services.Configure<FileSetting>(bld.Configuration.GetSection("File"));
 bld.Services.Configure<WebSetting>(bld.Configuration.GetSection("Web"));
