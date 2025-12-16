@@ -49,7 +49,7 @@ public class DataSeeder(IUserService userService,
 
         // admin user
         var adminUser = await userService.GetByUsernameAsync("admin") ??
-            await userService.CreateAsync(new User { Default = true, Username = "admin", Email = "admin@example.com" }, "Admin#123");
+            await userService.CreateAsync(new User { Default = true, Username = "admin", Email = "admin@example.com", IsEmailVerified = true }, "Admin#123");
         if (!await userService.IsInRoleAsync(adminUser.Id, adminRole.Id))
         {
             await userService.AssignRoleAsync(adminUser.Id, adminRole.Id);
@@ -78,7 +78,7 @@ public class DataSeeder(IUserService userService,
 
         // public user
         var publicUser = await userService.GetByUsernameAsync("public") ??
-            await userService.CreateAsync(new User { Default = true, Username = "public", Email = "public@example.com" }, "Public#123");
+            await userService.CreateAsync(new User { Default = true, Username = "public", Email = "public@example.com", IsEmailVerified = true }, "Public#123");
         if (!await userService.IsInRoleAsync(publicUser.Id, publicUserRole.Id))
         {
             await userService.AssignRoleAsync(publicUser.Id, publicUserRole.Id);

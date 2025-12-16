@@ -18,6 +18,9 @@ public static class ErrorCodes
     public const string InvalidEmailPassword = "invalid_email_password";
     public const string UserNotActive = "user_not_active";
     public const string UserNotFound = "user_not_found";
+    public const string EmailNotVerified = "email_not_verified";
+    public const string EmailAlreadyExists = "email_already_exists";
+    public const string UsernameAlreadyExists = "username_already_exists";
     public const string DefaultRolePermissionsCannotBeChanged = "default_role_permissions_cannot_be_changed";
     public const string DefaultRoleCannotBeDeleted = "default_role_cannot_be_deleted";
     public const string DefaultRoleCannotBeUpdated = "default_role_cannot_be_updated";

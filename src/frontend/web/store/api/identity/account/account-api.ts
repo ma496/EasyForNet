@@ -11,12 +11,29 @@ import { ForgetPasswordRequest } from './dto/forget-password-request'
 import { ResetPasswordRequest } from './dto/reset-password-request'
 import { UpdateProfileRequest } from './dto/update-profile-request'
 
+import { SignupRequest } from './dto/signup-request'
+import { VerifyEmailRequest } from './dto/verify-email-request'
+
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
     login: builder.mutation<TokenResponse, TokenRequest>({
       query: (input) => ({
         url: '/account/token',
+        method: 'POST',
+        body: input,
+      }),
+    }),
+    signup: builder.mutation<void, SignupRequest>({
+      query: (input) => ({
+        url: '/account/signup',
+        method: 'POST',
+        body: input,
+      }),
+    }),
+    verifyEmail: builder.mutation<void, VerifyEmailRequest>({
+      query: (input) => ({
+        url: '/account/verify-email',
         method: 'POST',
         body: input,
       }),
@@ -73,6 +90,8 @@ export const accountApi = appApi.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useSignupMutation,
+  useVerifyEmailMutation,
   useChangePasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,

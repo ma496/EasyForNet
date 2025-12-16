@@ -53,13 +53,19 @@ const SigninForm = () => {
           <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} />
           <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} />
 
-          <div className="text-right">
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2">
+              <span className="text-sm dark:text-gray-400">{t('text_dont_have_account')}</span>
+              <Link href="/signup" className="text-sm text-primary hover:underline dark:text-white">
+                {t('link_signup')}
+              </Link>
+            </div>
             <Link href="/forget-password" className="text-sm text-primary hover:underline dark:text-white">
               {t('link_forgotPassword')}
             </Link>
           </div>
 
-          <Button type="submit" className="btn mt-6! w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLogin || isLoadingUserInfo}>
+          <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLogin || isLoadingUserInfo}>
             {t('button_signin')}
           </Button>
         </Form>

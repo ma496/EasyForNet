@@ -24,6 +24,8 @@ sealed class TokenEndpoint(IUserService userService) : Endpoint<TokenReq, TokenR
             ThrowError(errorMessage, errorCode);
         if (!user.IsActive)
             ThrowError("User is not active", ErrorCodes.UserNotActive);
+        if (!user.IsEmailVerified)
+            ThrowError("Email is not verified", ErrorCodes.EmailNotVerified);
 
         var roles = await userService.GetUserRolesAsync(user.Id);
         var permissions = await userService.GetUserPermissionsAsync(user.Id);
