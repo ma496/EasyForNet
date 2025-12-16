@@ -40,9 +40,13 @@ const SigninForm = () => {
       dispatch(login(loginRes.data))
     }
     const userInfoRes = await getUserInfo()
-    if (userInfoRes.data) {
+    if (!loginRes.error && userInfoRes.data) {
       dispatch(setUserInfo(userInfoRes.data))
-      router.push(`/app`, { scroll: false })
+      if (userInfoRes.data.roles.find((role) => role.name === 'Public')) {
+        router.push(`/`, { scroll: false })
+      } else {
+        router.push(`/app`, { scroll: false })
+      }
     }
   }
 
