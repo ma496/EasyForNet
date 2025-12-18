@@ -273,3 +273,5 @@ settings.local.json
 
 # Custom Files
 appsettings.Development.json
+appsettings.Testing.json
+appsettings.Production.json
