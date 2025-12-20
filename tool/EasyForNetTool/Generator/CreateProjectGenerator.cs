@@ -76,6 +76,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             Console.WriteLine("Copying project files...");
             CopyDirectory(backendProjectPath, backendTargetPath, true, ["Migrations"]);
             CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Development.json");
+            CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Testing.json");
             CopyDirectory(webProjectPath, webTargetPath, true);
             CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
             CopyDirectory($"{versionedTemplateDir}/.config", $"{targetPath}/.config", true);
@@ -93,12 +94,15 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
                 throw new UserFriendlyException($"Failed to get root namespace from project '{backendTestProjectTargetPath}'. csproj file is not found.");
             }
             // update connection string
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password=123456");
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
-            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password=123456");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "Auth.Jwt.Key", Guid.NewGuid().ToString());
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password={{password}}");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password={{password}}");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "Auth.Jwt.Key", Guid.NewGuid().ToString());
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password={{password}}");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Development.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName};Username=postgres;Password={{password}}");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "Auth.Jwt.Key", Guid.NewGuid().ToString());
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "ConnectionStrings.DefaultConnection", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password={{password}}");
+            await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(backendProjectTargetPath, "appsettings.Testing.json"), "Hangfire.Storage.ConnectionString", $"Host=localhost;Port=5432;Database={pascalCaseProjectName}Test;Username=postgres;Password={{password}}");
             // update Meta.cs
             await ReplaceInFile(Path.Combine(backendProjectTargetPath, "Meta.cs"), $@"InternalsVisibleTo\s*\(\s*""{Regex.Escape(backendTestProjectName)}""\s*\)", $@"InternalsVisibleTo(""{pascalCaseProjectName}.Tests"")");
             // update Program.cs

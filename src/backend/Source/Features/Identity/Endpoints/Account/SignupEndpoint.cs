@@ -49,15 +49,15 @@ sealed class SignupEndpoint(IUserService userService,
 
             await userService.CreateAsync(user, request.Password);
 
-            var roleId = await dbContext.Roles
+            var publicRole = await dbContext.Roles
                 .Where(x => x.Name == "Public")
-                .Select(x => x.Id)
+                .Select(x => new { x.Id })
                 .FirstOrDefaultAsync(cancellationToken);
-            if (roleId == null)
+            if (publicRole == null)
             {
                 ThrowError("Role not found", ErrorCodes.RoleNotFound);
             }
-            await userService.AssignRoleAsync(user.Id, roleId);
+            await userService.AssignRoleAsync(user.Id, publicRole.Id);
 
             if (signinSetting.Value.IsEmailVerificationRequired)
             {
