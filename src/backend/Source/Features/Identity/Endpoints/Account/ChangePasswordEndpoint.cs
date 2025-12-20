@@ -5,7 +5,7 @@ using Backend.Features.Identity.Core;
 sealed class ChangePasswordEndpoint(AppDbContext dbContext,
                                     ICurrentUserService currentUserService,
                                     IUserService userService)
-    : Endpoint<ChangePasswordRequest>
+    : Endpoint<ChangePasswordRequest, EmptyResponse>
 {
     public override void Configure()
     {

@@ -9,7 +9,7 @@ sealed class ForgetPasswordEndpoint(ITokenService tokenService,
                                     IUserService userService,
                                     IEmailBackgroundJobs emailBackgroundJobs,
                                     IOptions<WebSetting> webSetting)
-    : Endpoint<ForgetPasswordRequest>
+    : Endpoint<ForgetPasswordRequest, EmptyResponse>
 {
     public override void Configure()
     {
