@@ -4,14 +4,15 @@ import * as Yup from 'yup'
 import { getTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form-input'
-import { useLoginMutation } from '@/store/api/identity/account/account-api'
-import { useLazyGetUserInfoQuery } from '@/store/api/identity/account/account-api'
+import { Mail, Lock, Info } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useLoginMutation, useLazyGetUserInfoQuery, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
 import { login, setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
 import { FormPasswordInput } from '@/components/ui/form-password-input'
 import Link from 'next/link'
-import { Mail, Lock } from 'lucide-react'
+import { Toast } from '@/lib/utils/notification'
 
 const SigninForm = () => {
   const router = useRouter()
@@ -32,10 +33,38 @@ const SigninForm = () => {
 
   const [loginApi, { isLoading: isLogin }] = useLoginMutation()
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
+  const [resendVerifyEmailApi, { isLoading: isResending }] = useResendVerifyEmailMutation()
   const dispatch = useAppDispatch()
+
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false)
+  const [registeredEmail, setRegisteredEmail] = useState('')
+  const [countdown, setCountdown] = useState(0)
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1)
+      }, 1000)
+    }
+    return () => {
+      if (timer) clearInterval(timer)
+    }
+  }, [countdown])
 
   const submitForm = async (values: LoginFormValues) => {
     const loginRes = await loginApi(values)
+    if (loginRes.error) {
+      const errorData = (loginRes.error as any).data
+      const verificationError = errorData?.errors?.find((err: any) => err.code === 'email_not_verified')
+      if (verificationError) {
+        setRegisteredEmail(values.username) // In this app username can be email or username
+        setShowVerificationMessage(true)
+        setCountdown(15)
+      }
+      return
+    }
+
     if (loginRes.data) {
       dispatch(login(loginRes.data))
     }
@@ -48,6 +77,48 @@ const SigninForm = () => {
         router.push(`/app`, { scroll: false })
       }
     }
+  }
+
+  const handleResendEmail = async () => {
+    if (countdown > 0 || isResending) return
+
+    try {
+      const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
+      if (response.error) {
+        return
+      }
+      Toast.fire({
+        title: t('msg_resend_email_success'),
+        icon: 'success',
+      })
+      setCountdown(15)
+    } catch (error) {
+      // Error is handled by api middleware/toast
+    }
+  }
+
+  if (showVerificationMessage) {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
+        <Info size={48} className="text-primary" />
+        <h2 className="text-2xl font-bold">{t('title_email_not_verified')}</h2>
+        <p>{t('msg_email_not_verified')}</p>
+
+        <Button
+          type="button"
+          className="btn btn-outline-primary w-full mt-2"
+          onClick={handleResendEmail}
+          disabled={countdown > 0 || isResending}
+          isLoading={isResending}
+        >
+          {countdown > 0 ? t('text_resend_email_wait', { seconds: countdown }) : t('button_resend_email')}
+        </Button>
+
+        <Button type="button" className="btn btn-primary w-full mt-2" onClick={() => setShowVerificationMessage(false)}>
+          {t('button_back_to_signin')}
+        </Button>
+      </div>
+    )
   }
 
   return (

@@ -243,5 +243,7 @@
   "link_signup": "साइन अप",
   "button_resend_email": "सत्यापन ईमेल दोबारा भेजें",
   "msg_resend_email_success": "सत्यापन ईमेल दोबारा भेजा गया है।",
-  "text_resend_email_wait": "कृपया ${seconds} सेकंड प्रतीक्षा करें"
+  "text_resend_email_wait": "कृपया ${seconds} सेकंड प्रतीक्षा करें",
+  "title_email_not_verified": "ईमेल सत्यापन आवश्यक है",
+  "msg_email_not_verified": "आपका ईमेल पता अभी तक सत्यापित नहीं हुआ है। कृपया सत्यापन लिंक के लिए अपना इनबॉक्स जाँचें या पुन: भेजने के लिए नीचे दिए गए बटन पर क्लिक करें।"
 }

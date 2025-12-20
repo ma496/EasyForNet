@@ -66,7 +66,6 @@ sealed class ResendVerifyEmailValidator : Validator<ResendVerifyEmailRequest>
     public ResendVerifyEmailValidator()
     {
         RuleFor(x => x.EmailOrUsername)
-            .NotEmpty()
-            .EmailAddress();
+            .NotEmpty();
     }
 }

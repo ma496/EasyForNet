@@ -243,5 +243,7 @@
   "link_signup": "Sign Up",
   "button_resend_email": "Resend Verification Email",
   "msg_resend_email_success": "Verification email has been resent.",
-  "text_resend_email_wait": "Please wait ${seconds}s"
+  "text_resend_email_wait": "Please wait ${seconds}s",
+  "title_email_not_verified": "Email Verification Required",
+  "msg_email_not_verified": "Your email address is not verified. Please check your inbox for the verification link or click the button below to resend it."
 }

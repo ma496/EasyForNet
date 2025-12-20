@@ -243,5 +243,7 @@
   "link_signup": "سائن اپ",
   "button_resend_email": "تصدیقی ای میل دوبارہ بھیجیں",
   "msg_resend_email_success": "تصدیقی ای میل دوبارہ بھیجا گیا ہے۔",
-  "text_resend_email_wait": "براہ کرم ${seconds} سیکنڈ انتظار کریں"
+  "text_resend_email_wait": "براہ کرم انتظار کریں ${seconds}s",
+  "title_email_not_verified": "ای میل کی تصدیق ضروری ہے",
+  "msg_email_not_verified": "آپ کے ای میل ایڈریس کی تصدیق نہیں ہوئی ہے۔ براہ کرم تصدیقی لنک کے لیے اپنا ان باکس چیک کریں یا دوبارہ بھیجنے کے لیے نیچے والے بٹن پر کلک کریں۔"
 }

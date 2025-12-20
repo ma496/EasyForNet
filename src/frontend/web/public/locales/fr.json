@@ -243,5 +243,7 @@
   "link_signup": "S'inscrire",
   "button_resend_email": "Renvoyer l'e-mail de vérification",
   "msg_resend_email_success": "L'e-mail de vérification a été renvoyé.",
-  "text_resend_email_wait": "Veuillez patienter ${seconds} secondes"
+  "text_resend_email_wait": "Veuillez patienter ${seconds}s",
+  "title_email_not_verified": "Vérification de l'e-mail requise",
+  "msg_email_not_verified": "Votre adresse e-mail n'est pas vérifée. Veuillez consulter votre boîte de réception pour le lien de vérification ou cliquez sur le bouton ci-dessous pour le renvoyer."
 }

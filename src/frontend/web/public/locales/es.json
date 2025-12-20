@@ -243,5 +243,7 @@
   "link_signup": "Registrarse",
   "button_resend_email": "Reenviar correo de verificación",
   "msg_resend_email_success": "El correo de verificación ha sido reenviado.",
-  "text_resend_email_wait": "Por favor espere ${seconds}s"
+  "text_resend_email_wait": "Por favor espere ${seconds}s",
+  "title_email_not_verified": "Verificación de correo electrónico requerida",
+  "msg_email_not_verified": "Su dirección de correo electrónico no está verificada. Por favor, revise su bandeja de entrada para el enlace de verificación o haga clic en el botón de abajo para reenviarlo."
 }

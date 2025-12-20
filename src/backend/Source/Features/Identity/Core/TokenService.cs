@@ -7,6 +7,7 @@ public interface ITokenService
 {
     Task<Token> GenerateTokenAsync(User user);
     Task<bool> ValidateTokenAsync(string token);
+    bool ValidateToken(Token token);
     Task UsedTokenAsync(Token token);
     Task<Token?> GetTokenAsync(string token);
     Task DeleteTokenAsync(Token token);
@@ -28,6 +29,11 @@ public class TokenService(AppDbContext dbContext) : ITokenService
         return await dbContext
                      .Tokens
                      .AnyAsync(t => !t.IsUsed && t.Value == token && t.Expiry > DateTime.UtcNow);
+    }
+
+    public bool ValidateToken(Token token)
+    {
+        return !token.IsUsed && token.Expiry > DateTime.UtcNow;
     }
 
     public async Task UsedTokenAsync(Token token)
