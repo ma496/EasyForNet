@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "El correo no está verificado",
   "validation_email": "Formato de correo no válido",
   "text_dont_have_account": "¿No tiene una cuenta?",
-  "link_signup": "Registrarse"
+  "link_signup": "Registrarse",
+  "button_resend_email": "Reenviar correo de verificación",
+  "msg_resend_email_success": "El correo de verificación ha sido reenviado.",
+  "text_resend_email_wait": "Por favor espere ${seconds}s"
 }

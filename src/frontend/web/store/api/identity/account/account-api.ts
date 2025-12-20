@@ -14,6 +14,7 @@ import { UpdateProfileRequest } from './dto/update-profile-request'
 import { SignupRequest } from './dto/signup-request'
 import { VerifyEmailRequest } from './dto/verify-email-request'
 import { SignupResponse } from './dto/signup-response'
+import { ResendVerifyEmailRequest } from './dto/resend-verify-email-request'
 
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,
@@ -35,6 +36,13 @@ export const accountApi = appApi.injectEndpoints({
     verifyEmail: builder.mutation<void, VerifyEmailRequest>({
       query: (input) => ({
         url: '/account/verify-email',
+        method: 'POST',
+        body: input,
+      }),
+    }),
+    resendVerifyEmail: builder.mutation<void, ResendVerifyEmailRequest>({
+      query: (input) => ({
+        url: '/account/resend-verify-email',
         method: 'POST',
         body: input,
       }),
@@ -93,6 +101,7 @@ export const {
   useLoginMutation,
   useSignupMutation,
   useVerifyEmailMutation,
+  useResendVerifyEmailMutation,
   useChangePasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,

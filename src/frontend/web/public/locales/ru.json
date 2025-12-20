@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "Email не подтвержден",
   "validation_email": "Неверный формат email",
   "text_dont_have_account": "Нет аккаунта?",
-  "link_signup": "Зарегистрироваться"
+  "link_signup": "Зарегистрироваться",
+  "button_resend_email": "Отправить письмо подтверждения повторно",
+  "msg_resend_email_success": "Письмо подтверждения было отправлено повторно.",
+  "text_resend_email_wait": "Пожалуйста, подождите ${seconds} секунд"
 }

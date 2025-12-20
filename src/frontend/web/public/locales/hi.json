@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "ईमेल सत्यापित नहीं है",
   "validation_email": "अमान्य ईमेल प्रारूप",
   "text_dont_have_account": "क्या आपके पास खाता नहीं है?",
-  "link_signup": "साइन अप"
+  "link_signup": "साइन अप",
+  "button_resend_email": "सत्यापन ईमेल दोबारा भेजें",
+  "msg_resend_email_success": "सत्यापन ईमेल दोबारा भेजा गया है।",
+  "text_resend_email_wait": "कृपया ${seconds} सेकंड प्रतीक्षा करें"
 }

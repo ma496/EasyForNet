@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "البريد الإلكتروني غير تم التحقق منه",
   "validation_email": "تنسيق البريد الإلكتروني غير صالح",
   "text_dont_have_account": "ليس لديك حساب؟",
-  "link_signup": "تسجيل"
+  "link_signup": "تسجيل",
+  "button_resend_email": "إعادة إرسال بريد التحقق",
+  "msg_resend_email_success": "تمت إعادة إرسال بريد التحقق.",
+  "text_resend_email_wait": "الرجاء الانتظار ${seconds} ثانية"
 }

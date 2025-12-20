@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "电子邮件未验证",
   "validation_email": "无效的电子邮件格式",
   "text_dont_have_account": "还没有账号？",
-  "link_signup": "注册"
+  "link_signup": "注册",
+  "button_resend_email": "重新发送验证邮件",
+  "msg_resend_email_success": "验证邮件已重新发送。",
+  "text_resend_email_wait": "请稍等 ${seconds} 秒"
 }

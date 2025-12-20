@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "ای میل کی تصدیق نہیں کی گئی ہے",
   "validation_email": "غلط ای میل فارمیٹ",
   "text_dont_have_account": "کیا آپ کا اکاؤنٹ نہیں ہے؟",
-  "link_signup": "سائن اپ"
+  "link_signup": "سائن اپ",
+  "button_resend_email": "تصدیقی ای میل دوبارہ بھیجیں",
+  "msg_resend_email_success": "تصدیقی ای میل دوبارہ بھیجا گیا ہے۔",
+  "text_resend_email_wait": "براہ کرم ${seconds} سیکنڈ انتظار کریں"
 }

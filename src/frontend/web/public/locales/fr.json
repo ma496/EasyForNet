@@ -240,5 +240,8 @@
   "server_error_email_not_verified": "L'email n'est pas vérifié",
   "validation_email": "Format d'email invalide",
   "text_dont_have_account": "Vous n'avez pas de compte ?",
-  "link_signup": "S'inscrire"
+  "link_signup": "S'inscrire",
+  "button_resend_email": "Renvoyer l'e-mail de vérification",
+  "msg_resend_email_success": "L'e-mail de vérification a été renvoyé.",
+  "text_resend_email_wait": "Veuillez patienter ${seconds} secondes"
 }

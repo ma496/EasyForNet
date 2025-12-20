@@ -5,18 +5,36 @@ import * as Yup from 'yup'
 import { getTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form-input'
-import { useSignupMutation } from '@/store/api/identity/account/account-api'
+import { useSignupMutation, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
 import { Button } from '@/components/ui/button'
 import { FormPasswordInput } from '@/components/ui/form-password-input'
 import Link from 'next/link'
 import { Mail, Lock } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
+import { Toast } from '@/lib/utils/notification'
 
 const SignupForm = () => {
   const router = useRouter()
   const { t } = getTranslation()
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
+  const [registeredEmail, setRegisteredEmail] = useState<string>('')
+  const [countdown, setCountdown] = useState(0)
+
+  const [signupApi, { isLoading }] = useSignupMutation()
+  const [resendVerifyEmailApi, { isLoading: isResending }] = useResendVerifyEmailMutation()
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1)
+      }, 1000)
+    }
+    return () => {
+      if (timer) clearInterval(timer)
+    }
+  }, [countdown])
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -38,30 +56,59 @@ const SignupForm = () => {
 
   type SignupFormValues = Yup.InferType<typeof validationSchema>
 
-  const [signupApi, { isLoading }] = useSignupMutation()
-
   const submitForm = async (values: SignupFormValues) => {
     const response = await signupApi(values)
     if (response.error) {
       return
     }
 
+    setRegisteredEmail(values.email)
     if (response.data?.isEmailVerificationRequired) {
       setSuccessMessage(t('msg_signup_success_verify_email'))
-    }
-    else {
+      setCountdown(15)
+    } else {
       setSuccessMessage(t('msg_signup_success'))
     }
   }
 
+  const handleResendEmail = async () => {
+    if (countdown > 0 || isResending) return
+
+    try {
+      await resendVerifyEmailApi({ email: registeredEmail }).unwrap()
+      Toast.fire({
+        title: t('msg_resend_email_success'),
+        icon: 'success',
+      })
+      setCountdown(15)
+    } catch (error) {
+      // Error is handled by api middleware/toast
+    }
+  }
+
   if (successMessage) {
+    const isVerificationRequired = successMessage === t('msg_signup_success_verify_email')
+
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <CheckCircle size={48} className="text-green-500" />
-        <h2 className="text-2xl font-bold">{t('title_signup_success') || 'Success!'}</h2>
+        <h2 className="text-2xl font-bold">{t('title_signup_success')}</h2>
         <p>{successMessage}</p>
-        <Link href="/signin" className="btn btn-primary mt-4">
-          {t('button_back_to_signin') || 'Back to Sign In'}
+
+        {isVerificationRequired && (
+          <Button
+            type="button"
+            className="btn btn-outline-primary w-full mt-2"
+            onClick={handleResendEmail}
+            disabled={countdown > 0 || isResending}
+            isLoading={isResending}
+          >
+            {countdown > 0 ? t('text_resend_email_wait', { seconds: countdown }) : t('button_resend_email')}
+          </Button>
+        )}
+
+        <Link href="/signin" className="btn btn-primary w-full mt-2">
+          {t('button_back_to_signin')}
         </Link>
       </div>
     )
