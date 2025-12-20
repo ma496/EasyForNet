@@ -60,7 +60,6 @@ const SigninForm = () => {
       if (verificationError) {
         setRegisteredEmail(values.username) // In this app username can be email or username
         setShowVerificationMessage(true)
-        setCountdown(15)
       }
       return
     }
@@ -82,19 +81,15 @@ const SigninForm = () => {
   const handleResendEmail = async () => {
     if (countdown > 0 || isResending) return
 
-    try {
-      const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
-      if (response.error) {
-        return
-      }
-      Toast.fire({
-        title: t('msg_resend_email_success'),
-        icon: 'success',
-      })
-      setCountdown(15)
-    } catch (error) {
-      // Error is handled by api middleware/toast
+    const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
+    if (response.error) {
+      return
     }
+    Toast.fire({
+      title: t('msg_resend_email_success'),
+      icon: 'success',
+    })
+    setCountdown(15)
   }
 
   if (showVerificationMessage) {
