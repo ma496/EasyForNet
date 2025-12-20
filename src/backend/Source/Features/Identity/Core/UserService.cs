@@ -8,6 +8,7 @@ public interface IUserService
     Task<User?> GetByIdAsync(Guid id);
     Task<User?> GetByUsernameAsync(string username);
     Task<User?> GetByEmailAsync(string email);
+    Task<User?> GetByEmailOrUsernameAsync(string emailOrUsername);
     IQueryable<User> Users();
     Task<User> CreateAsync(User user, string password);
     Task UpdateAsync(User user);
@@ -39,6 +40,11 @@ public class UserService(AppDbContext dbContext, IPasswordHasher passwordHasher)
     public async Task<User?> GetByEmailAsync(string email)
     {
         return await dbContext.Users.FirstOrDefaultAsync(u => u.EmailNormalized == email.ToLowerInvariant());
+    }
+
+    public async Task<User?> GetByEmailOrUsernameAsync(string emailOrUsername)
+    {
+        return await dbContext.Users.FirstOrDefaultAsync(u => u.EmailNormalized == emailOrUsername.ToLowerInvariant() || u.UsernameNormalized == emailOrUsername.ToLowerInvariant());
     }
 
     public IQueryable<User> Users()

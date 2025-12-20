@@ -75,7 +75,10 @@ const SignupForm = () => {
     if (countdown > 0 || isResending) return
 
     try {
-      await resendVerifyEmailApi({ email: registeredEmail }).unwrap()
+      const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
+      if (response.error) {
+        return
+      }
       Toast.fire({
         title: t('msg_resend_email_success'),
         icon: 'success',

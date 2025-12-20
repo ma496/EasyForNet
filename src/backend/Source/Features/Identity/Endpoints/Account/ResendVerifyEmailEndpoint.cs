@@ -27,7 +27,7 @@ sealed class ResendVerifyEmailEndpoint(IUserService userService,
             return;
         }
 
-        var user = await userService.GetByEmailAsync(request.Email);
+        var user = await userService.GetByEmailOrUsernameAsync(request.EmailOrUsername);
         if (user == null)
         {
             // For security reasons, don't reveal that the user doesn't exist
@@ -58,14 +58,14 @@ sealed class ResendVerifyEmailEndpoint(IUserService userService,
 
 sealed class ResendVerifyEmailRequest
 {
-    public string Email { get; set; } = null!;
+    public string EmailOrUsername { get; set; } = null!;
 }
 
 sealed class ResendVerifyEmailValidator : Validator<ResendVerifyEmailRequest>
 {
     public ResendVerifyEmailValidator()
     {
-        RuleFor(x => x.Email)
+        RuleFor(x => x.EmailOrUsername)
             .NotEmpty()
             .EmailAddress();
     }
