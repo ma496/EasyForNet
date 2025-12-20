@@ -15,17 +15,11 @@ const CTA = () => {
             </p>
             <div className="mt-6 flex max-w-md gap-x-4">
               <Link
-                href="https://github.com"
+                href="https://github.com/ma496/EasyForNet"
                 target="_blank"
                 className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Star on GitHub
-              </Link>
-              <Link
-                href="/signin"
-                className="flex-none rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                View Demo
               </Link>
             </div>
           </div>

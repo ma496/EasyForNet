@@ -29,13 +29,13 @@ const Hero = () => {
                     href="/signin"
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
                   >
-                    Live Demo
+                    Signin
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </div>
                 <div className="mt-3 sm:ml-3 sm:mt-0">
                   <Link
-                    href="https://github.com"
+                    href="https://github.com/ma496/EasyForNet"
                     target="_blank"
                     className="flex w-full items-center justify-center rounded-md border border-gray-200 bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 md:py-4 md:text-lg dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 transition-all hover:scale-105"
                   >
