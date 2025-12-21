@@ -39,7 +39,37 @@ export const authUrls: AuthUrl[] = [
   },
 ]
 
+export const getMatchedAuthUrl = (url: string): AuthUrl | undefined => {
+  const pathname = url.split('?')[0]
+  const matches = authUrls.filter((authUrl) => {
+    if (authUrl.url === pathname) {
+      return true
+    }
+
+    // Handle dynamic segments like {id}
+    if (authUrl.url.includes('{')) {
+      const pattern = authUrl.url.replace(/\{[^}]+\}/g, '[^/]+')
+      const regex = new RegExp(`^${pattern}$`)
+      return regex.test(pathname)
+    }
+
+    return false
+  })
+
+  if (matches.length > 1) {
+    throw new Error(
+      `Multiple auth URLs matched for: ${url}. Matches: ${matches.map((m) => m.url).join(', ')}`,
+    )
+  }
+
+  if (matches.length === 0) {
+    return undefined
+  }
+
+  return matches[0]
+}
+
 export const isAuthUrl = (url: string) => {
-  return url.includes('/app/') || authUrls.some((authUrl) => authUrl.url === url)
+  return url.includes('/app/') || !!getMatchedAuthUrl(url)
 }
 
