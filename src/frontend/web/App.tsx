@@ -6,12 +6,17 @@ import AppLoading from '@/components/layouts/app-loading'
 import { getTranslation } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
-import { getToken } from './lib/utils'
+import { getToken, isAllowed } from './lib/utils'
+import { usePathname, useRouter } from 'next/navigation'
+import { getMatchedAuthUrl } from './auth-urls'
 
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()
   const { initLocale } = getTranslation()
+  const pathname = usePathname()
+  const router = useRouter()
+  const authState = useAppSelector((state) => state.auth)
   const [isLoading, setIsLoading] = useState(true)
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
 
@@ -41,6 +46,15 @@ function App({ children }: PropsWithChildren) {
 
     setIsLoading(false)
   }, [dispatch, initLocale, themeConfig.theme, themeConfig.menu, themeConfig.layout, themeConfig.rtlClass, themeConfig.animation, themeConfig.navbar, themeConfig.locale, themeConfig.semidark])
+
+  useEffect(() => {
+    if (isLoadingUserInfo) return
+
+    const matchedUrl = getMatchedAuthUrl(pathname)
+    if (matchedUrl?.permissions && !isAllowed(authState, matchedUrl.permissions)) {
+      router.push('/unauthorized' as any)
+    }
+  }, [pathname, authState.user, isLoadingUserInfo])
 
   return (
     <div
