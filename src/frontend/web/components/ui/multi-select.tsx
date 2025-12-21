@@ -102,11 +102,11 @@ export const MultiSelect = ({
           {options
             .filter((opt) => value.includes(opt.value))
             .map((opt) => (
-              <span key={opt.value} className="badge flex items-center gap-1 badge-outline-secondary pr-1">
+              <span key={opt.value} className="badge flex items-center gap-1 badge-outline-secondary pe-1">
                 {opt.label}
                 <div
                   role="button"
-                  className="ml-1 text-xs text-primary hover:text-danger focus:outline-hidden"
+                  className="ms-1 text-xs text-primary hover:text-danger focus:outline-hidden"
                   tabIndex={-1}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -130,7 +130,7 @@ export const MultiSelect = ({
         <button
           type="button"
           className={cn(
-            'form-input flex min-h-[40px] w-full cursor-pointer flex-wrap items-center gap-1 bg-transparent py-[2px] pr-10 text-left',
+            'form-input flex min-h-[40px] w-full cursor-pointer flex-wrap items-center gap-1 bg-transparent py-[2px] pe-10 text-left',
             icon && 'ps-10',
             disabled && 'pointer-events-none opacity-60',
             size === 'sm' && 'py-[4px] text-xs',

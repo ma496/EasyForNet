@@ -13,7 +13,7 @@ const Hero = () => {
           <main className="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="text-center">
               <div className="inline-flex items-center rounded-full border border-gray-200 bg-white/50 px-3 py-1 text-sm font-medium text-gray-800 backdrop-blur-sm dark:border-gray-800 dark:bg-white/5 dark:text-gray-200 mb-6">
-                <span className="flex h-2 w-2 rounded-full bg-primary mr-2"></span>
+                <span className="flex h-2 w-2 rounded-full bg-primary me-2"></span>
                 Open Source .NET & Next.js Template
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
@@ -30,16 +30,16 @@ const Hero = () => {
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
                   >
                     Signin
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ms-2 h-5 w-5" />
                   </Link>
                 </div>
-                <div className="mt-3 sm:ml-3 sm:mt-0">
+                <div className="mt-3 sm:ms-3 sm:mt-0">
                   <Link
                     href="https://github.com/ma496/EasyForNet"
                     target="_blank"
                     className="flex w-full items-center justify-center rounded-md border border-gray-200 bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 md:py-4 md:text-lg dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 transition-all hover:scale-105"
                   >
-                    <Code2 className="mr-2 h-5 w-5" />
+                    <Code2 className="me-2 h-5 w-5" />
                     View Source
                   </Link>
                 </div>

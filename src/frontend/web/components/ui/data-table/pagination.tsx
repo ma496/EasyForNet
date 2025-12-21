@@ -130,14 +130,14 @@ export function DataTablePagination<TData>({ className = '', siblingCount = 1 }:
 
   return (
     <div className={cn('mt-5 flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between', className)}>
-      <div className="flex items-center justify-center sm:ltr:ml-0 sm:rtl:mr-0">
+      <div className="flex items-center justify-center sm:ms-0">
         <div className="flex items-center">
           <span className="whitespace-nowrap">{t('table_pagination_showing_entries', { from, to, totalRecords: rowCount })}</span>
         </div>
-        <div className="flex items-center ltr:ml-3 rtl:mr-3">
+        <div className="flex items-center ms-3">
           <select
             id={useId()}
-            className="w-auto min-w-14 appearance-none rounded-md border border-white-light bg-white bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-size-[1.25rem_1.25rem] bg-no-repeat py-1 text-sm font-semibold text-black cursor-pointer ltr:bg-position-[right_0.2rem_center] ltr:pl-2 ltr:pr-7 rtl:bg-position-[left_0.2rem_center] rtl:pl-7 rtl:pr-2 dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark"
+            className="w-auto min-w-14 appearance-none rounded-md border border-white-light bg-white bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-size-[1.25rem_1.25rem] bg-no-repeat py-1 text-sm font-semibold text-black cursor-pointer bg-inline-end-[0.2rem] ps-2 pe-7 dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark"
             value={table.getState().pagination.pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}
           >

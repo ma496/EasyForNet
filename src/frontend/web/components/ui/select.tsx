@@ -112,7 +112,7 @@ export const Select = ({
         <button
           type="button"
           className={cn(
-            'form-input flex min-h-[40px] w-full cursor-pointer items-center gap-1 bg-transparent pr-10 text-left',
+            'form-input flex min-h-[40px] w-full cursor-pointer items-center gap-1 bg-transparent pe-10 text-left',
             icon && 'ps-10',
             disabled && 'pointer-events-none opacity-60',
             size === 'sm' && 'py-1.5 text-xs',

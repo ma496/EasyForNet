@@ -61,9 +61,9 @@ const Features = () => {
                   <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-primary/10 text-primary">
                     <feature.icon className="h-6 w-6" aria-hidden="true" />
                   </div>
-                  <p className="ml-16 text-lg font-medium leading-6 text-gray-900 dark:text-white">{feature.name}</p>
+                  <p className="ms-16 text-lg font-medium leading-6 text-gray-900 dark:text-white">{feature.name}</p>
                 </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-500 dark:text-gray-400">{feature.description}</dd>
+                <dd className="mt-2 ms-16 text-base text-gray-500 dark:text-gray-400">{feature.description}</dd>
               </div>
             ))}
           </dl>

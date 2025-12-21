@@ -61,7 +61,7 @@ const Header = () => {
             </button>
           </div>
 
-          <div className="ms-auto flex items-center space-x-1.5 sm:ms-0 sm:flex-1 lg:space-x-2 dark:text-[#d0d2d6]">
+          <div className="ms-auto flex items-center gap-1.5 sm:ms-0 sm:flex-1 lg:gap-2 dark:text-[#d0d2d6]">
             <div className="ms-2 hidden sm:me-auto sm:block">
               <SearchComponent />
             </div>

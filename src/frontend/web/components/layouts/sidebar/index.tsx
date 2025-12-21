@@ -125,8 +125,8 @@ const Sidebar = () => {
         <div className="h-full bg-white dark:bg-black">
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/app" className="flex shrink-0 items-center main-logo">
-              <img className="ml-[5px] w-8 flex-none" src="/assets/images/icon.png" alt="logo" />
-              <span className="align-middle text-[18px] font-semibold lg:inline ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light">Easy For Net</span>
+              <img className="ms-[5px] w-8 flex-none" src="/assets/images/icon.png" alt="logo" />
+              <span className="align-middle text-[18px] font-semibold lg:inline ms-1.5 dark:text-white-light">Easy For Net</span>
             </Link>
 
             <button

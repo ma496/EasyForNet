@@ -45,14 +45,14 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
   const { t } = getTranslation()
 
   return (
-    <ul className={`flex space-x-2 rtl:space-x-reverse ${className || ''}`}>
+    <ul className={`flex gap-2 ${className || ''}`}>
       <li>
         <Link href="/app" className="text-primary hover:underline">
           {t('nav_home')}
         </Link>
       </li>
       {activePathItems.map((item, index) => (
-        <li key={item.url} className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
+        <li key={item.url} className="before:content-['/'] before:me-2">
           {index === activePathItems.length - 1 ? (
             <span>{t(item.title)}</span>
           ) : (
