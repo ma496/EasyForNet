@@ -8,6 +8,7 @@ export const ImportantToast = Swal.mixin({
   timer: 7000,
   timerProgressBar: true,
   showConfirmButton: false,
+  showCloseButton: true,
 })
 export const Toast = Swal.mixin({
   toast: true,
@@ -15,6 +16,7 @@ export const Toast = Swal.mixin({
   timer: 3000,
   timerProgressBar: true,
   showConfirmButton: false,
+  showCloseButton: true,
 })
 
 export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
