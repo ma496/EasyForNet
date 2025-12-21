@@ -34,6 +34,17 @@ function App({ children }: PropsWithChildren) {
   }, [])
 
   useEffect(() => {
+    if (isLoadingUserInfo) return
+
+    if (!authState.isAuthenticated || !authState.user) return
+
+    const matchedUrl = getMatchedAuthUrl(pathname)
+    if (matchedUrl?.permissions && matchedUrl.permissions.length > 0 && !isAllowed(authState, matchedUrl.permissions)) {
+      router.push('/unauthorized' as any)
+    }
+  }, [pathname, authState.user, isLoadingUserInfo])
+
+  useEffect(() => {
     dispatch(toggleTheme(localStorage.getItem('theme') || themeConfig.theme))
     dispatch(toggleMenu(localStorage.getItem('menu') || themeConfig.menu))
     dispatch(toggleLayout(localStorage.getItem('layout') || themeConfig.layout))
@@ -46,15 +57,6 @@ function App({ children }: PropsWithChildren) {
 
     setIsLoading(false)
   }, [dispatch, initLocale, themeConfig.theme, themeConfig.menu, themeConfig.layout, themeConfig.rtlClass, themeConfig.animation, themeConfig.navbar, themeConfig.locale, themeConfig.semidark])
-
-  useEffect(() => {
-    if (isLoadingUserInfo) return
-
-    const matchedUrl = getMatchedAuthUrl(pathname)
-    if (matchedUrl?.permissions && !isAllowed(authState, matchedUrl.permissions)) {
-      router.push('/unauthorized' as any)
-    }
-  }, [pathname, authState.user, isLoadingUserInfo])
 
   return (
     <div
