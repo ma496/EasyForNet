@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GetUserInfoResponse } from '../api/identity/account/dto/get-user-info-response'
 import { TokenResponse } from '../api/identity/account/dto/token-response'
-import { localeStorageConst } from '@/lib/constants'
-import { AuthState, setLocalStorageValue } from '@/lib/utils'
+import { AuthState, setToken } from '@/lib/utils'
 
 const initialState: AuthState = {
   user: null,
@@ -18,12 +17,12 @@ export const authSlice = createSlice({
       state.isAuthenticated = payload !== null
     },
     login(state, { payload }: PayloadAction<TokenResponse>) {
-      setLocalStorageValue(localeStorageConst.login, payload)
+      setToken(payload)
       state.user = null
       state.isAuthenticated = true
     },
     logout(state) {
-      setLocalStorageValue(localeStorageConst.login, null)
+      setToken(null)
       state.user = null
       state.isAuthenticated = false
     },

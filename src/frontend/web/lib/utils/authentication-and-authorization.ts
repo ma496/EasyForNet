@@ -2,9 +2,8 @@ import { environment } from "@/config/environment"
 import { GetUserInfoResponse } from "@/store/api/identity/account/dto/get-user-info-response"
 import { RefreshTokenResponse } from "@/store/api/identity/account/dto/refresh-token-response"
 import { jwtDecode } from "jwt-decode"
-import { getLocalStorageValue } from "./common"
 import { TokenResponse } from "@/store/api/identity/account/dto/token-response"
-import { localeStorageConst } from "../constants"
+import { constants } from "."
 
 export type AuthState = {
   user: GetUserInfoResponse | null
@@ -19,9 +18,27 @@ export const isAllowed = (state: AuthState, permissions: string[]): boolean => {
   return state.user.roles.some((role) => role.permissions?.some((permission) => permissions.includes(permission.name)))
 }
 
-export const getToken = () => {
-  const tokenInfo = getLocalStorageValue<TokenResponse>(localeStorageConst.login)
-  return tokenInfo
+const cookieObj = typeof window === 'undefined' ? require('next/headers') : require('universal-cookie')
+
+export const getToken = async () => {
+  if (typeof window !== 'undefined') {
+    const cookies = new cookieObj(null, { path: '/' })
+    return (cookies.get(constants.signin) as TokenResponse) || null
+  } else {
+    const cookies = await cookieObj.cookies()
+    const token = cookies.get(constants.signin)?.value
+    return token ? (JSON.parse(decodeURIComponent(token)) as TokenResponse) : null
+  }
+}
+
+export const setToken = (token: TokenResponse | null) => {
+  if (typeof window === 'undefined') return
+  const cookies = new cookieObj(null, { path: '/' })
+  if (token) {
+    cookies.set(constants.signin, token, { path: '/' })
+  } else {
+    cookies.remove(constants.signin, { path: '/' })
+  }
 }
 
 export function isTokenExpired(token?: string) {

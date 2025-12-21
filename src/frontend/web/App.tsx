@@ -6,23 +6,19 @@ import AppLoading from '@/components/layouts/app-loading'
 import { getTranslation } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
-import { usePathname, useRouter } from 'next/navigation'
-import { getToken, isTokenExpired } from './lib/utils'
-import { isAuthUrl } from './auth-urls'
+import { getToken } from './lib/utils'
 
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()
   const { initLocale } = getTranslation()
   const [isLoading, setIsLoading] = useState(true)
-  const pathname = usePathname()
-  const router = useRouter()
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const tokenInfo = getToken()
-      if (!isTokenExpired(tokenInfo?.accessToken)) {
+      const tokenInfo = await getToken()
+      if (tokenInfo?.accessToken) {
         const result = await getUserInfo()
         if (result.data) {
           dispatch(setUserInfo(result.data))
@@ -31,17 +27,6 @@ function App({ children }: PropsWithChildren) {
     }
     fetchUserInfo()
   }, [])
-
-  useEffect(() => {
-    const redirectToSignin = async () => {
-      const isAuthRequired = isAuthUrl(pathname)
-      const tokenInfo = getToken()
-      if (isAuthRequired && isTokenExpired(tokenInfo?.accessToken)) {
-        router.push('/signin')
-      }
-    }
-    redirectToSignin()
-  }, [pathname])
 
   useEffect(() => {
     dispatch(toggleTheme(localStorage.getItem('theme') || themeConfig.theme))
