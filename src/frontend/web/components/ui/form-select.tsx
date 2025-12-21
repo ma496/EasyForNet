@@ -49,7 +49,7 @@ export const FormSelect = ({
   const hasError = meta.touched && meta.error
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
-  const containerRef = useRef<HTMLDivElement>(null!)
+  const containerRef = useRef<HTMLDivElement>(null)
   const isRTL = useAppSelector((s) => s.theme.rtlClass) === 'rtl'
   const generatedId = useId()
   const controlId = id ?? generatedId

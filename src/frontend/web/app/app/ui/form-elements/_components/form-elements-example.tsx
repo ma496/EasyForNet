@@ -238,7 +238,7 @@ const [multiValue, setMultiValue] = useState([])
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting }) => {
-                alert(`Form submitted successfully!\n\nValues:\n${JSON.stringify(values, null, 2)}`)
+                alert(`Form submitted successfully!\n\nValues:\n${JSON.stringify(values, undefined, 2)}`)
                 setSubmitting(false)
               }}
             >
@@ -287,7 +287,7 @@ const [multiValue, setMultiValue] = useState([])
                       type="button"
                       variant="outline"
                       onClick={() => {
-                        const valuesText = JSON.stringify(values, null, 2)
+                        const valuesText = JSON.stringify(values, undefined, 2)
                         alert(`Current values:\n\n${valuesText}`)
                       }}
                     >
@@ -298,7 +298,7 @@ const [multiValue, setMultiValue] = useState([])
                   {/* Current Values Display */}
                   <Card className="bg-gray-50 p-4 dark:bg-gray-900">
                     <h4 className="mb-2 font-medium">Current Form Values:</h4>
-                    <pre className="overflow-auto text-sm text-gray-600 dark:text-gray-300">{JSON.stringify(values, null, 2)}</pre>
+                    <pre className="overflow-auto text-sm text-gray-600 dark:text-gray-300">{JSON.stringify(values, undefined, 2)}</pre>
                   </Card>
                 </Form>
               )}
@@ -373,7 +373,7 @@ const [multiValue, setMultiValue] = useState([])
                     checkbox: generalCheckbox,
                     radio: generalRadio,
                   },
-                  null,
+                  undefined,
                   2,
                 )}
               </pre>

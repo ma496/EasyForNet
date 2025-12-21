@@ -3,5 +3,5 @@ export type UpdateProfileResponse = {
   email: string
   firstName: string
   lastName: string
-  image: string | null
+  image?: string
 }

@@ -34,25 +34,25 @@ const Sidebar = () => {
 
   const getFilteredNavItems = () => {
     // Helper function to recursively filter children
-    const filterNavItem = (item: NavItem): NavItem | null => {
+    const filterNavItem = (item: NavItem): NavItem | undefined => {
       // Check if the item should be shown and if the user has permission
       if (item.show === false) {
-        return null
+        return undefined
       }
 
       // Check permissions from authUrls
       const authUrl = authUrls.find((u) => u.url === item.url)
       if (authUrl?.permissions && !isAllowed(authState, authUrl.permissions)) {
-        return null
+        return undefined
       }
 
       // If item has children, recursively filter them
       if (item.children && item.children.length > 0) {
-        const filteredChildren = item.children.map(filterNavItem).filter((child): child is NavItem => child !== null)
+        const filteredChildren = item.children.map(filterNavItem).filter((child): child is NavItem => child !== undefined)
 
         // If no children remain after filtering, don't show the parent
         if (filteredChildren.length === 0) {
-          return null
+          return undefined
         }
 
         // Return a new item with filtered children
@@ -70,7 +70,7 @@ const Sidebar = () => {
     return navItems.reduce<(NavItem | NavItemGroup)[]>((filtered, item) => {
       if (isNavItemGroup(item)) {
         // For groups, filter each item in the group
-        const filteredItems = item.items.map(filterNavItem).filter((groupItem): groupItem is NavItem => groupItem !== null)
+        const filteredItems = item.items.map(filterNavItem).filter((groupItem): groupItem is NavItem => groupItem !== undefined)
 
         // Only include the group if it has at least one valid item
         if (filteredItems.length > 0) {
@@ -82,7 +82,7 @@ const Sidebar = () => {
       } else {
         // For regular items, apply the filter directly
         const filteredItem = filterNavItem(item)
-        if (filteredItem !== null) {
+        if (filteredItem !== undefined) {
           filtered.push(filteredItem)
         }
       }

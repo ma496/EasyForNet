@@ -235,7 +235,7 @@ export const FormLazySelect = <TItem, TRequest>({
   const handleClear = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      helpers.setValue(null) // or '' depending on requirement, usually null/undefined for "no selection"
+      helpers.setValue(undefined)
       setSearch('')
     },
     [helpers],

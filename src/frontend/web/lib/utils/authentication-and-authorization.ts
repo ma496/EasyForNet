@@ -6,7 +6,7 @@ import { TokenResponse } from "@/store/api/identity/account/dto/token-response"
 import { constants } from "."
 
 export type AuthState = {
-  user: GetUserInfoResponse | null
+  user: GetUserInfoResponse | undefined
   isAuthenticated: boolean
 }
 
@@ -23,17 +23,17 @@ const cookieObj = typeof window === 'undefined' ? require('next/headers') : requ
 export const getToken = async () => {
   if (typeof window !== 'undefined') {
     const cookies = new cookieObj(null, { path: '/' })
-    return (cookies.get(constants.signin) as TokenResponse) || null
+    return (cookies.get(constants.signin) as TokenResponse) || undefined
   } else {
     const cookies = await cookieObj.cookies()
     const token = cookies.get(constants.signin)?.value
-    return token ? (JSON.parse(decodeURIComponent(token)) as TokenResponse) : null
+    return token ? (JSON.parse(decodeURIComponent(token)) as TokenResponse) : undefined
   }
 }
 
-export const setToken = (token: TokenResponse | null) => {
+export const setToken = (token: TokenResponse | undefined) => {
   if (typeof window === 'undefined') return
-  const cookies = new cookieObj(null, { path: '/' })
+  const cookies = new cookieObj(undefined, { path: '/' })
   if (token) {
     cookies.set(constants.signin, token, { path: '/' })
   } else {
@@ -59,5 +59,5 @@ export async function refreshToken(userId: string, refreshToken: string) {
     const data: RefreshTokenResponse = await result.json()
     return data
   }
-  return null
+  return undefined
 }

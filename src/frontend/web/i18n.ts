@@ -13,9 +13,9 @@ import ru from './public/locales/ru.json'
 const langObj: any = { en, ur, zh, ar, hi, es, fr, ru }
 
 const getLangAsync = async () => {
-  let lang = null
+  let lang = undefined
   if (typeof window !== 'undefined') {
-    const cookies = new cookieObj(null, { path: '/' })
+    const cookies = new cookieObj(undefined, { path: '/' })
     lang = cookies.get('i18nextLng')
   } else {
     const cookies = await cookieObj.cookies()
@@ -25,9 +25,9 @@ const getLangAsync = async () => {
 }
 
 const getLang = () => {
-  let lang = null
+  let lang = undefined
   if (typeof window !== 'undefined') {
-    const cookies = new cookieObj(null, { path: '/' })
+    const cookies = new cookieObj(undefined, { path: '/' })
     lang = cookies.get('i18nextLng')
   } else {
     // For server-side, return default language when sync access is needed
@@ -58,7 +58,7 @@ export const getTranslation = () => {
   const i18n = {
     language: lang,
     changeLanguage: (lang: string) => {
-      const cookies = new cookieObj(null, { path: '/' })
+      const cookies = new cookieObj(undefined, { path: '/' })
       cookies.set('i18nextLng', lang)
     },
   }
@@ -88,7 +88,7 @@ export const getTranslationAsync = async () => {
   const i18n = {
     language: lang,
     changeLanguage: (lang: string) => {
-      const cookies = new cookieObj(null, { path: '/' })
+      const cookies = new cookieObj(undefined, { path: '/' })
       cookies.set('i18nextLng', lang)
     },
   }

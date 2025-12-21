@@ -4,7 +4,7 @@ import { TokenResponse } from '../api/identity/account/dto/token-response'
 import { AuthState, setToken } from '@/lib/utils'
 
 const initialState: AuthState = {
-  user: null,
+  user: undefined,
   isAuthenticated: false,
 }
 
@@ -12,18 +12,18 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUserInfo(state, { payload }: PayloadAction<GetUserInfoResponse | null>) {
+    setUserInfo(state, { payload }: PayloadAction<GetUserInfoResponse | undefined>) {
       state.user = payload
-      state.isAuthenticated = payload !== null
+      state.isAuthenticated = payload !== undefined
     },
     login(state, { payload }: PayloadAction<TokenResponse>) {
       setToken(payload)
-      state.user = null
+      state.user = undefined
       state.isAuthenticated = true
     },
     logout(state) {
-      setToken(null)
-      state.user = null
+      setToken(undefined)
+      state.user = undefined
       state.isAuthenticated = false
     },
   },

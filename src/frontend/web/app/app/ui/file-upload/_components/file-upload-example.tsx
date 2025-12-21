@@ -99,7 +99,7 @@ export const FileUploadExample = () => {
                 maxSizeBytes={2 * 1024 * 1024}
                 validateFile={(file) => {
                   if (!file.type.startsWith('image/')) return 'Only images are allowed'
-                  return null
+                  return undefined
                 }}
                 onUploaded={async (res) => {
                   console.log(res)

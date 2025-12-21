@@ -31,7 +31,7 @@ export interface FileUploadProps {
   forceDelete?: boolean // file delete only when forceDelete is true
   maxSizeBytes?: number
   onClear?: () => void
-  validateFile?: (file: File) => string | null
+  validateFile?: (file: File) => string | undefined
   showError?: boolean
   children?: (ctx: {
     open: () => void
@@ -73,7 +73,7 @@ export const FileUpload = ({
 }: FileUploadProps) => {
   const inputId = id ?? useId()
   const { t } = getTranslation()
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const [selectedFileName, setSelectedFileName] = useState<string>('')
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | undefined>(undefined)
   const [response, setResponse] = useState<FileUploadResponse | undefined>(undefined)

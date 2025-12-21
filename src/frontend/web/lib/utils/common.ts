@@ -16,8 +16,8 @@ export function setLocalStorageValue(key: string, value: any) {
   }
 }
 
-export function getLocalStorageValue<T>(key: string, fallbackValue: T | null = null): T | null {
-  if (typeof window === 'undefined') return null
+export function getLocalStorageValue<T>(key: string, fallbackValue: T | undefined = undefined): T | undefined {
+  if (typeof window === 'undefined') return undefined
 
   const stored = localStorage.getItem(key)
   return stored ? JSON.parse(stored) : fallbackValue
@@ -27,10 +27,10 @@ export const shortName = (name: string | undefined, username: string | undefined
   const shortName =
     name && name.length >= 2
       ? name
-          .split(' ')
-          .slice(0, 2)
-          .map((n) => n[0])
-          .join('')
+        .split(' ')
+        .slice(0, 2)
+        .map((n) => n[0])
+        .join('')
       : username && username.length >= 2
         ? username.slice(0, 2)
         : ''

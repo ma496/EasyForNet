@@ -4,5 +4,5 @@ export type GetUserProfileResponse = {
   email: string
   firstName: string
   lastName: string
-  image: string | null
+  image?: string
 }

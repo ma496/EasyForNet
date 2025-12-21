@@ -17,10 +17,10 @@ export async function proxy(request: NextRequest) {
     if (refreshTokenInfo && refreshTokenInfo.accessToken) {
       setToken(refreshTokenInfo)
     } else if (isAuthRequired) {
-      setToken(null)
+      setToken(undefined)
       return NextResponse.redirect(new URL('/signin', request.url))
     } else {
-      setToken(null)
+      setToken(undefined)
     }
   }
 

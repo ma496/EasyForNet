@@ -4,7 +4,7 @@ export type GetUserInfoResponse = {
   email: string
   firstName: string
   lastName: string
-  image: string | null
+  image?: string
   roles: GetUserInfoRole[]
 }
 

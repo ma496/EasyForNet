@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
     to: Yup.date()
       .nullable()
       .when('from', {
-        is: (from: Date) => from != null,
+        is: (from: Date) => from != undefined,
         then: (schema) => schema.min(Yup.ref('from'), 'End date must be after start date'),
         otherwise: (schema) => schema,
       }),
