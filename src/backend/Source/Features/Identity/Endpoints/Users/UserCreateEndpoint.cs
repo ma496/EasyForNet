@@ -16,6 +16,7 @@ sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateR
     {
         var requestMapper = new UserCreateRequestMapper();
         var entity = requestMapper.Map(request);
+        entity.IsEmailVerified = true;
         // save entity to db
         await userService.CreateAsync(entity, request.Password);
         var responseMapper = new UserCreateResponseMapper();

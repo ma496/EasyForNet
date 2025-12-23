@@ -7,6 +7,7 @@ import { User, LogOut, Lock } from 'lucide-react'
 import Dropdown, { DropdownRef } from '../dropdown'
 import { useEffect, useRef, useState } from 'react'
 import { useLazyFileGetQuery } from '@/store/api/file-management/files/files-api'
+import { useSignoutMutation } from '@/store/api/identity/account/account-api'
 
 const NavUser = () => {
   const { user } = useAppSelector((state) => state.auth)
@@ -24,7 +25,10 @@ const NavUser = () => {
     }
   }
 
-  const logoutAction = () => {
+  const [logoutApi] = useSignoutMutation()
+
+  const logoutAction = async () => {
+    await logoutApi()
     dispatch(logout())
     router.push('/signin')
   }

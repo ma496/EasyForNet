@@ -6,7 +6,7 @@ import AppLoading from '@/components/layouts/app-loading'
 import { getTranslation } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
-import { getToken, isAllowed } from './lib/utils'
+import { isAllowed } from './lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import { getMatchedAuthUrl } from './auth-urls'
 
@@ -22,12 +22,9 @@ function App({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const tokenInfo = await getToken()
-      if (tokenInfo?.accessToken) {
-        const result = await getUserInfo()
-        if (result.data) {
-          dispatch(setUserInfo(result.data))
-        }
+      const result = await getUserInfo()
+      if (result.data) {
+        dispatch(setUserInfo(result.data))
       }
     }
     fetchUserInfo()

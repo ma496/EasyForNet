@@ -94,6 +94,12 @@ export const accountApi = appApi.injectEndpoints({
         body: input,
       }),
     }),
+    signout: builder.mutation<void, void>({
+      query: () => ({
+        url: '/account/signout',
+        method: 'POST',
+      }),
+    }),
   }),
 })
 
@@ -110,4 +116,5 @@ export const {
   useGetUserProfileQuery,
   useRefreshTokenMutation,
   useUpdateProfileMutation,
+  useSignoutMutation,
 } = accountApi

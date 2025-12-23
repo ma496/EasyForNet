@@ -34,7 +34,12 @@ bld.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(bld.Configuration.GetConnectionString("DefaultConnection")));
 
 bld.Services
-    .AddAuthenticationCookie(TimeSpan.FromMinutes(bld.Configuration.GetValue<int>("Auth:AccessTokenValidity")))
+    .AddAuthenticationCookie(TimeSpan.FromMinutes(bld.Configuration.GetValue<int>("Auth:AccessTokenValidity")), options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure Secure is true
+        options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+    })
     .AddAuthenticationJwtBearer(x => x.SigningKey = bld.Configuration["Auth:Jwt:Key"])
     .AddAuthentication(o =>
    {
@@ -111,30 +116,30 @@ app.UseCors()
    .UseFastEndpoints(
        c =>
        {
-            c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-            c.Endpoints.Configurator = ep =>
-            {
-                ep.PreProcessor<ToLargePayloadProcessor>(Order.Before);
-                ep.PostProcessor<ExceptionProcessor>(Order.After);
-                ep.PostProcessor<UnsupportedMediaTypeResponseProcessor>(Order.After);
-            };
-            // c.Binding.ReflectionCache.AddFromBackend();
-            c.Endpoints.RoutePrefix = bld.Configuration.GetRequiredSection("RoutePrefix").Value;
-            c.Versioning.Prefix = "v";
-            c.Security.RoleClaimType = ClaimTypes.Role;
-            c.Security.PermissionsClaimType = ClaimConstants.Permission;
-            c.Errors.UseProblemDetails(x =>
-            {
-                x.IndicateErrorCode = true;     //serializes the fluentvalidation error code
-                x.TypeValue = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1";
-                x.TitleValue = "One or more validation errors occurred.";
-                x.TitleTransformer = pd => pd.Status switch
-                {
-                    400 => "Validation Error",
-                    404 => "Not Found",
-                    _ => "One or more errors occurred!"
-                };
-            });
+           c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+           c.Endpoints.Configurator = ep =>
+           {
+               ep.PreProcessor<ToLargePayloadProcessor>(Order.Before);
+               ep.PostProcessor<ExceptionProcessor>(Order.After);
+               ep.PostProcessor<UnsupportedMediaTypeResponseProcessor>(Order.After);
+           };
+           // c.Binding.ReflectionCache.AddFromBackend();
+           c.Endpoints.RoutePrefix = bld.Configuration.GetRequiredSection("RoutePrefix").Value;
+           c.Versioning.Prefix = "v";
+           c.Security.RoleClaimType = ClaimTypes.Role;
+           c.Security.PermissionsClaimType = ClaimConstants.Permission;
+           c.Errors.UseProblemDetails(x =>
+           {
+               x.IndicateErrorCode = true;     //serializes the fluentvalidation error code
+               x.TypeValue = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1";
+               x.TitleValue = "One or more validation errors occurred.";
+               x.TitleTransformer = pd => pd.Status switch
+               {
+                   400 => "Validation Error",
+                   404 => "Not Found",
+                   _ => "One or more errors occurred!"
+               };
+           });
        })
    .UseSwaggerGen();
 

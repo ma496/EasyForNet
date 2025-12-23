@@ -8,7 +8,7 @@ import { Mail, Lock, Info } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useLoginMutation, useLazyGetUserInfoQuery, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
-import { login, setUserInfo } from '@/store/slices/authSlice'
+import { setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
 import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import Link from 'next/link'
@@ -64,11 +64,10 @@ const SigninForm = () => {
       return
     }
 
-    if (loginRes.data) {
-      dispatch(login(loginRes.data))
-    }
+    if (loginRes.error) return
+
     const userInfoRes = await getUserInfo()
-    if (!loginRes.error && userInfoRes.data) {
+    if (userInfoRes.data) {
       dispatch(setUserInfo(userInfoRes.data))
       if (userInfoRes.data.roles.find((role) => role.name === 'Public')) {
         router.push(`/`, { scroll: false })
