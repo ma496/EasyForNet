@@ -9,9 +9,10 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
   className?: string
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
-export const Textarea = ({ label, name, id, className, error, showError = true, autoComplete = 'off', ...props }: TextareaProps) => {
+export const Textarea = ({ label, name, id, className, error, showError = true, autoComplete = 'off', required = false, ...props }: TextareaProps) => {
   const textareaId = id ?? useId()
 
   return (
@@ -19,6 +20,7 @@ export const Textarea = ({ label, name, id, className, error, showError = true, 
       {label && (
         <label htmlFor={textareaId} className="label form-label">
           {label}
+          {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div className="relative text-white-dark">

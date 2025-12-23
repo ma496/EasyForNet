@@ -10,9 +10,10 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   showValidation?: boolean
   className?: string
   icon?: React.ReactNode
+  required?: boolean
 }
 
-export const FormInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', ...props }: FormInputProps) => {
+export const FormInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', required = false, ...props }: FormInputProps) => {
   const [field, meta] = useField(name)
   const hasError = meta.touched && meta.error
   const generatedId = useId()
@@ -23,6 +24,7 @@ export const FormInput = ({ label, name, id, showValidation = true, className, i
       {label && (
         <label htmlFor={inputId} className="label form-label">
           {label}
+          {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div className="relative text-white-dark">

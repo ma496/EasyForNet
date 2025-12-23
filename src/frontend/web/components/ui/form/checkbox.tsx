@@ -33,9 +33,10 @@ interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
   className?: string
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
-export const Checkbox = ({ label, name, className, variant, size, error, showError = true, id, ...props }: CheckboxProps) => {
+export const Checkbox = ({ label, name, className, variant, size, error, showError = true, id, required = false, ...props }: CheckboxProps) => {
   const checkboxId = id ?? useId()
 
   return (
@@ -48,6 +49,7 @@ export const Checkbox = ({ label, name, className, variant, size, error, showErr
             className={cn('ms-1 mb-0 flex cursor-pointer items-center leading-none select-none', size === 'sm' && 'text-xs', size === 'default' && 'text-sm', size === 'lg' && 'text-base')}
           >
             {label}
+            {required && <span className="ms-1 text-danger">*</span>}
           </label>
         )}
       </div>

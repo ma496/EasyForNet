@@ -16,6 +16,7 @@ interface BaseDatePickerProps {
   className?: string
   showIcon?: boolean
   label?: string
+  required?: boolean
 }
 
 // Single date picker props
@@ -56,7 +57,7 @@ const DayPickerWrapper = ({ mode, selected, onSelect, classNames, components, ..
 }
 
 export const DatePicker = (props: DatePickerProps) => {
-  const { name, id, selected, onSelect, placeholder = 'Select date...', disabled = false, className, showIcon = true, mode = 'single', label } = props
+  const { name, id, selected, onSelect, placeholder = 'Select date...', disabled = false, className, showIcon = true, mode = 'single', label, required = false } = props
 
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -129,6 +130,7 @@ export const DatePicker = (props: DatePickerProps) => {
       {label && (
         <label htmlFor={controlId} className="label mb-2 block form-label">
           {label}
+          {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div ref={containerRef}>

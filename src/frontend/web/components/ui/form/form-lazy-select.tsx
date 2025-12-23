@@ -37,6 +37,7 @@ interface FormLazySelectProps<TItem, TRequest> {
   size?: 'default' | 'sm' | 'lg'
   pageSize: number
   generateRequest?: (search: string, page: number, pageSize: number) => TRequest
+  required?: boolean
 }
 
 export const FormLazySelect = <TItem, TRequest>({
@@ -58,6 +59,7 @@ export const FormLazySelect = <TItem, TRequest>({
   size = 'default',
   pageSize,
   generateRequest,
+  required = false,
 }: FormLazySelectProps<TItem, TRequest>) => {
   const [field, meta, helpers] = useField(name)
   const hasError = meta.touched && meta.error
@@ -251,7 +253,12 @@ export const FormLazySelect = <TItem, TRequest>({
 
   return (
     <div className={cn(className, meta.touched && hasError && 'has-error')} ref={containerRef}>
-      {label && <label htmlFor={controlId}>{label}</label>}
+      {label && (
+        <label htmlFor={controlId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className={cn('relative text-white-dark', 'custom-select')}>
         <button
           type="button"

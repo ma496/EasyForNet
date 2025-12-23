@@ -245,34 +245,34 @@ const [multiValue, setMultiValue] = useState([])
               {({ isSubmitting, values }) => (
                 <Form className="space-y-6">
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormInput name="username" label="Username *" placeholder="Enter your username" icon={<User className="h-4 w-4" />} />
+                    <FormInput name="username" label="Username" placeholder="Enter your username" icon={<User className="h-4 w-4" />} required={true} />
 
-                    <FormInput name="email" type="email" label="Email Address *" placeholder="Enter your email" icon={<Mail className="h-4 w-4" />} />
+                    <FormInput name="email" type="email" label="Email Address" placeholder="Enter your email" icon={<Mail className="h-4 w-4" />} required={true} />
                   </div>
 
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormPasswordInput name="password" label="Password *" placeholder="Enter your password" icon={<Lock className="h-4 w-4" />} />
+                    <FormPasswordInput name="password" label="Password" placeholder="Enter your password" icon={<Lock className="h-4 w-4" />} required={true} />
 
-                    <FormSelect name="country" label="Country *" options={countries} placeholder="Select your country" icon={<MapPin className="h-4 w-4" />} />
+                    <FormSelect name="country" label="Country" options={countries} placeholder="Select your country" icon={<MapPin className="h-4 w-4" />} required={true} />
                   </div>
 
                   <FormTextarea name="bio" label="Biography" placeholder="Tell us about yourself (optional)" rows={4} />
 
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormMultiSelect name="skills" label="Skills *" options={skills} placeholder="Select your skills" icon={<Tag className="h-4 w-4" />} />
+                    <FormMultiSelect name="skills" label="Skills" options={skills} placeholder="Select your skills" icon={<Tag className="h-4 w-4" />} required={true} />
 
-                    <FormSelect name="projectType" label="Project Type *" options={projectTypes} placeholder="Select project type" icon={<Briefcase className="h-4 w-4" />} />
+                    <FormSelect name="projectType" label="Project Type" options={projectTypes} placeholder="Select project type" icon={<Briefcase className="h-4 w-4" />} required={true} />
                   </div>
 
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormDatePicker name="birthDate" label="Birth Date *" placeholder="Select your birth date" />
+                    <FormDatePicker name="birthDate" label="Birth Date" placeholder="Select your birth date" required={true} />
 
                     <div className="space-y-4">
-                      <label className="label form-label">Gender *</label>
+                      <label className="label form-label">Gender</label>
                       <div className="flex gap-6">
-                        <FormRadio name="gender" value="male" label="Male" />
-                        <FormRadio name="gender" value="female" label="Female" />
-                        <FormRadio name="gender" value="other" label="Other" />
+                        <FormRadio name="gender" value="male" label="Male" required={true} />
+                        <FormRadio name="gender" value="female" label="Female" required={true} />
+                        <FormRadio name="gender" value="other" label="Other" required={true} />
                       </div>
                     </div>
                   </div>

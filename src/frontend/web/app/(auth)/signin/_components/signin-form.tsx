@@ -120,8 +120,8 @@ const SigninForm = () => {
     <Formik initialValues={{ username: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form className="space-y-5 dark:text-white">
-          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} />
-          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} />
+          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
+          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-between items-center">
             <div className="flex gap-2">

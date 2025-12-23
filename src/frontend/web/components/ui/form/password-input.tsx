@@ -11,9 +11,10 @@ interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement>
   icon?: React.ReactNode
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
-export const PasswordInput = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', ...props }: PasswordInputProps) => {
+export const PasswordInput = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', required = false, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
   const inputId = id ?? useId()
 
@@ -26,6 +27,7 @@ export const PasswordInput = ({ label, name, id, className, icon, error, showErr
       {label && (
         <label htmlFor={inputId} className="label form-label">
           {label}
+          {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div className="relative text-white-dark">

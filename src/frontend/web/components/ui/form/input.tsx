@@ -10,9 +10,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
-export const Input = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', ...props }: InputProps) => {
+export const Input = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', required = false, ...props }: InputProps) => {
   const generatedId = useId()
   const inputId = id ?? generatedId
 
@@ -21,6 +22,7 @@ export const Input = ({ label, name, id, className, icon, error, showError = tru
       {label && (
         <label htmlFor={inputId} className="label form-label">
           {label}
+          {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div className="relative text-white-dark">

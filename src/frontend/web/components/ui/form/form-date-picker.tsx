@@ -9,6 +9,7 @@ interface FormSingleDatePickerProps extends Omit<SingleDatePickerProps, 'selecte
   name: string
   id?: string
   showValidation?: boolean
+  required?: boolean
 }
 
 // Multiple date picker form props
@@ -16,6 +17,7 @@ interface FormMultipleDatePickerProps extends Omit<MultipleDatePickerProps, 'sel
   name: string
   id?: string
   showValidation?: boolean
+  required?: boolean
 }
 
 // Range date picker form props
@@ -23,13 +25,14 @@ interface FormRangeDatePickerProps extends Omit<RangeDatePickerProps, 'selected'
   name: string
   id?: string
   showValidation?: boolean
+  required?: boolean
 }
 
 // Union type for all form date picker props
 export type FormDatePickerProps = FormSingleDatePickerProps | FormMultipleDatePickerProps | FormRangeDatePickerProps
 
 export const FormDatePicker = (props: FormDatePickerProps) => {
-  const { name, id, label, showValidation = true, className, mode = 'single', ...restProps } = props
+  const { name, id, label, showValidation = true, className, mode = 'single', required = false, ...restProps } = props
 
   const [field, meta, helpers] = useField(name)
   const hasError = meta.touched && meta.error
@@ -40,7 +43,7 @@ export const FormDatePicker = (props: FormDatePickerProps) => {
 
   return (
     <div className={cn(className, meta.touched && (hasError ? 'has-error' : ''))}>
-      <DatePicker {...restProps} mode={mode} label={label} name={name} id={id} selected={field.value} onSelect={handleSelect} />
+      <DatePicker {...restProps} mode={mode} label={label} name={name} id={id} selected={field.value} onSelect={handleSelect} required={required} />
       {showValidation && meta.touched && hasError && <div className="mt-1 text-danger">{typeof meta.error === 'string' ? meta.error : JSON.stringify(meta.error)}</div>}
     </div>
   )

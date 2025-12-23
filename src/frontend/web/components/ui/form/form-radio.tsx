@@ -33,9 +33,10 @@ interface FormRadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
   name: string
   showValidation?: boolean
   className?: string
+  required?: boolean
 }
 
-export const FormRadio = ({ label, name, id, showValidation = true, className, variant, size, ...props }: FormRadioProps) => {
+export const FormRadio = ({ label, name, id, showValidation = true, className, variant, size, required = false, ...props }: FormRadioProps) => {
   const [field, meta] = useField({ name, type: 'radio', value: props.value })
   const hasError = meta.touched && meta.error
   const inputId = id ?? useId()
@@ -50,6 +51,7 @@ export const FormRadio = ({ label, name, id, showValidation = true, className, v
             className={cn('ms-1 mb-0 flex cursor-pointer items-center leading-none select-none', size === 'sm' && 'text-xs', size === 'default' && 'text-sm', size === 'lg' && 'text-base')}
           >
             {label}
+            {required && <span className="ms-1 text-danger">*</span>}
           </label>
         )}
       </div>

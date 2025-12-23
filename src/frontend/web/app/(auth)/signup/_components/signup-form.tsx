@@ -121,10 +121,10 @@ const SignupForm = () => {
     <Formik initialValues={{ username: '', email: '', password: '', confirmPassword: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form className="space-y-5 dark:text-white">
-          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} />
-          <FormInput label={t('label_email')} name="email" placeholder={t('placeholder_email')} icon={<Mail size={16} />} />
-          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} />
-          <FormPasswordInput label={t('label_confirm_password')} name="confirmPassword" placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} />
+          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
+          <FormInput label={t('label_email')} name="email" placeholder={t('placeholder_email')} icon={<Mail size={16} />} required={true} />
+          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} required={true} />
+          <FormPasswordInput label={t('label_confirm_password')} name="confirmPassword" placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-end gap-2">
             <span className="text-sm">{t('text_already_have_account')}</span>

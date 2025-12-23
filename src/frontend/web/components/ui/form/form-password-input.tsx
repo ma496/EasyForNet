@@ -11,9 +11,10 @@ interface FormPasswordInputProps extends React.InputHTMLAttributes<HTMLInputElem
   showValidation?: boolean
   className?: string
   icon?: React.ReactNode
+  required?: boolean
 }
 
-export const FormPasswordInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', ...props }: FormPasswordInputProps) => {
+export const FormPasswordInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', required = false, ...props }: FormPasswordInputProps) => {
   const [field, meta] = useField(name)
   const [showPassword, setShowPassword] = useState(false)
   const hasError = meta.touched && meta.error
@@ -25,7 +26,12 @@ export const FormPasswordInput = ({ label, name, id, showValidation = true, clas
 
   return (
     <div className={cn(className, meta.touched && (hasError ? 'has-error' : ''))}>
-      {label && <label htmlFor={inputId}>{label}</label>}
+      {label && (
+        <label htmlFor={inputId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className="relative text-white-dark">
         <input {...field} {...props} name={name} id={inputId} autoComplete={autoComplete} type={showPassword ? 'text' : 'password'} className={cn('form-input', icon && 'ps-10', 'pe-10')} />
         {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}

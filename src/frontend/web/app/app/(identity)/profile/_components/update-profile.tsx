@@ -137,7 +137,7 @@ export const UpdateProfile = () => {
             </div>
 
             <div>
-              <FormInput label={t('label_email')} name="email" type="email" placeholder={t('placeholder_email')} icon={<Mail size={18} />} />
+              <FormInput label={t('label_email')} name="email" type="email" placeholder={t('placeholder_email')} icon={<Mail size={18} />} required={true} />
             </div>
 
             <div className="flex justify-end">

@@ -220,9 +220,9 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
               {({ isSubmitting, values }) => (
                 <Form className="space-y-6">
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormDatePicker name="birthDate" label="Birth Date" placeholder="Select your birth date" />
+                    <FormDatePicker name="birthDate" label="Birth Date" placeholder="Select your birth date" required={true} />
 
-                    <FormDatePicker name="appointmentDate" label="Appointment Date" placeholder="Select appointment date" />
+                    <FormDatePicker name="appointmentDate" label="Appointment Date" placeholder="Select appointment date" required={true} />
                   </div>
 
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -306,6 +306,12 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
                     <td className="p-2">undefined</td>
                     <td className="p-2">Optional label text</td>
                   </tr>
+                  <tr>
+                    <td className="p-2 font-mono">required</td>
+                    <td className="p-2">boolean</td>
+                    <td className="p-2">false</td>
+                    <td className="p-2">Display required asterisk</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -341,6 +347,12 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
                     <td className="p-2">boolean</td>
                     <td className="p-2">true</td>
                     <td className="p-2">Show validation errors</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-mono">required</td>
+                    <td className="p-2">boolean</td>
+                    <td className="p-2">false</td>
+                    <td className="p-2">Display required asterisk</td>
                   </tr>
                   <tr>
                     <td className="p-2 font-mono">...DatePickerProps</td>

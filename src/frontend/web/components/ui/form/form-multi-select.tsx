@@ -27,6 +27,7 @@ interface FormMultiSelectProps {
   maxVisibleItems?: number
   disabled?: boolean
   size?: 'default' | 'sm' | 'lg'
+  required?: boolean
 }
 
 export const FormMultiSelect = ({
@@ -42,6 +43,7 @@ export const FormMultiSelect = ({
   maxVisibleItems = 5,
   disabled = false,
   size = 'default',
+  required = false,
 }: FormMultiSelectProps) => {
   const [field, meta, helpers] = useField(name)
   const hasError = meta.touched && meta.error
@@ -120,7 +122,12 @@ export const FormMultiSelect = ({
 
   return (
     <div className={cn(className, meta.touched && hasError && 'has-error')} ref={containerRef}>
-      {label && <label htmlFor={controlId}>{label}</label>}
+      {label && (
+        <label htmlFor={controlId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className={cn('relative text-white-dark', 'custom-select')}>
         <button
           type="button"

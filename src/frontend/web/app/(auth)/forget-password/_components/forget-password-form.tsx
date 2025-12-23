@@ -50,7 +50,7 @@ export const ForgetPasswordForm = () => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className="flex flex-col gap-4">
-            <FormInput name="email" type="email" label={t('label_email')} placeholder={t('placeholder_email')} icon={<Mail size={16} />} autoFocus={true} />
+            <FormInput name="email" type="email" label={t('label_email')} placeholder={t('placeholder_email')} icon={<Mail size={16} />} autoFocus={true} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isForgettingPassword}>
                 {t('send_reset_link')}

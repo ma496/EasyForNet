@@ -58,6 +58,7 @@ export const RoleCreateForm = () => {
               label={t('label_roleName')}
               placeholder={t('placeholder_roleName')}
               autoFocus={true}
+              required={true}
             />
             <FormTextarea
               name="description"

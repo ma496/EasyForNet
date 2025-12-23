@@ -61,9 +61,9 @@ export const ChangePasswordForm = () => {
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <Form noValidate className="flex flex-col gap-4">
-            <FormPasswordInput name="currentPassword" label={t('label_currentPassword')} placeholder={t('placeholder_currentPassword')} icon={<Lock size={18} />} autoFocus={true} />
-            <FormPasswordInput name="newPassword" label={t('label_newPassword')} placeholder={t('placeholder_newPassword')} icon={<Lock size={18} />} />
-            <FormPasswordInput name="confirmPassword" label={t('label_confirmPassword')} placeholder={t('placeholder_confirmPassword')} icon={<Lock size={18} />} />
+            <FormPasswordInput name="currentPassword" label={t('label_currentPassword')} placeholder={t('placeholder_currentPassword')} icon={<Lock size={18} />} autoFocus={true} required={true} />
+            <FormPasswordInput name="newPassword" label={t('label_newPassword')} placeholder={t('placeholder_newPassword')} icon={<Lock size={18} />} required={true} />
+            <FormPasswordInput name="confirmPassword" label={t('label_confirmPassword')} placeholder={t('placeholder_confirmPassword')} icon={<Lock size={18} />} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isChangingPassword}>
                 {t('form_submit')}

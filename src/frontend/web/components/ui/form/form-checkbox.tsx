@@ -35,9 +35,10 @@ interface FormCheckboxProps extends InputAttributes, VariantProps<typeof formChe
   name: string
   showValidation?: boolean
   className?: string
+  required?: boolean
 }
 
-export const FormCheckbox = ({ label, name, id, showValidation = true, className, variant, size, ...props }: FormCheckboxProps) => {
+export const FormCheckbox = ({ label, name, id, showValidation = true, className, variant, size, required = false, ...props }: FormCheckboxProps) => {
   const [field, meta] = useField({ name, type: 'checkbox' })
   const hasError = meta.touched && meta.error
   const inputId = id ?? useId()
@@ -52,6 +53,7 @@ export const FormCheckbox = ({ label, name, id, showValidation = true, className
             className={cn('ms-1 mb-0 flex cursor-pointer items-center leading-none select-none', size === 'sm' && 'text-xs', size === 'default' && 'text-sm', size === 'lg' && 'text-base')}
           >
             {label}
+            {required && <span className="ms-1 text-danger">*</span>}
           </label>
         )}
       </div>

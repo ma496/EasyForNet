@@ -28,6 +28,7 @@ interface FormSelectProps {
   disabled?: boolean
   size?: 'default' | 'sm' | 'lg'
   clearable?: boolean
+  required?: boolean
 }
 
 export const FormSelect = ({
@@ -44,6 +45,7 @@ export const FormSelect = ({
   disabled = false,
   size = 'default',
   clearable = true,
+  required = false,
 }: FormSelectProps) => {
   const [field, meta, helpers] = useField(name)
   const hasError = meta.touched && meta.error
@@ -96,7 +98,12 @@ export const FormSelect = ({
 
   return (
     <div className={cn(className, meta.touched && hasError && 'has-error')} ref={containerRef}>
-      {label && <label htmlFor={controlId}>{label}</label>}
+      {label && (
+        <label htmlFor={controlId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className={cn('relative text-white-dark', 'custom-select')}>
         <button
           type="button"

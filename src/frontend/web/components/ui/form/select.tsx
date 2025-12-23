@@ -32,6 +32,7 @@ interface SelectProps {
   disabled?: boolean
   size?: 'default' | 'sm' | 'lg'
   clearable?: boolean
+  required?: boolean
 }
 
 export const Select = ({
@@ -53,6 +54,7 @@ export const Select = ({
   disabled = false,
   size = 'default',
   clearable = true,
+  required = false,
 }: SelectProps) => {
   const hasError = touched && error
   const [open, setOpen] = useState(false)
@@ -107,7 +109,12 @@ export const Select = ({
 
   return (
     <div className={cn(className, hasError && 'has-error')} ref={containerRef}>
-      {label && <label htmlFor={controlId}>{label}</label>}
+      {label && (
+        <label htmlFor={controlId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className={cn('relative text-white-dark', 'custom-select')}>
         <button
           type="button"

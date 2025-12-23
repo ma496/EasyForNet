@@ -86,12 +86,14 @@ export const UserCreateForm = () => {
               label={t('label_username')}
               placeholder={t('placeholder_username')}
               autoFocus={true}
+              required={true}
             />
             <FormInput
               name="email"
               type="email"
               label={t('label_email')}
               placeholder={t('placeholder_email')}
+              required={true}
             />
             <FormInput
               name="firstName"
@@ -107,11 +109,13 @@ export const UserCreateForm = () => {
               name="password"
               label={t('label_password')}
               placeholder={t('placeholder_password')}
+              required={true}
             />
             <FormPasswordInput
               name="confirmPassword"
               label={t('label_confirmPassword')}
               placeholder={t('placeholder_confirmPassword')}
+              required={true}
             />
             <div className="sm:col-span-2">
               <FormLazyMultiSelect<RoleListDto, RoleListRequest>

@@ -33,9 +33,10 @@ interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
   className?: string
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
-export const Radio = ({ label, name, id, className, variant, size, error, showError = true, ...props }: RadioProps) => {
+export const Radio = ({ label, name, id, className, variant, size, error, showError = true, required = false, ...props }: RadioProps) => {
   const radioId = id ?? useId()
 
   return (
@@ -48,6 +49,7 @@ export const Radio = ({ label, name, id, className, variant, size, error, showEr
             className={cn('ms-1 mb-0 flex cursor-pointer items-center leading-none select-none', size === 'sm' && 'text-xs', size === 'default' && 'text-sm', size === 'lg' && 'text-base')}
           >
             {label}
+            {required && <span className="ms-1 text-danger">*</span>}
           </label>
         )}
       </div>

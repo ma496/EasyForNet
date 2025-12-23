@@ -30,6 +30,7 @@ interface MultiSelectProps {
   size?: 'default' | 'sm' | 'lg'
   error?: string
   showError?: boolean
+  required?: boolean
 }
 
 export const MultiSelect = ({
@@ -49,6 +50,7 @@ export const MultiSelect = ({
   size = 'default',
   error,
   showError = true,
+  required = false,
 }: MultiSelectProps) => {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -125,7 +127,12 @@ export const MultiSelect = ({
 
   return (
     <div className={cn(className, error && showError && 'has-error')} ref={containerRef}>
-      {label && <label htmlFor={controlId}>{label}</label>}
+      {label && (
+        <label htmlFor={controlId}>
+          {label}
+          {required && <span className="ms-1 text-danger">*</span>}
+        </label>
+      )}
       <div className={cn('relative text-white-dark', 'custom-select')}>
         <button
           type="button"
