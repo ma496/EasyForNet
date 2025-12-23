@@ -66,9 +66,9 @@ const Header = () => {
               <SearchComponent />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <div>
-                <ThemeChanger theme={themeConfig.theme} size={19} className="mb-[4px]" />
+                <ThemeChanger theme={themeConfig.theme} />
               </div>
 
               <div>

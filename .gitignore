@@ -275,3 +275,6 @@ settings.local.json
 appsettings.Development.json
 appsettings.Testing.json
 appsettings.Production.json
+
+# Custom directories
+uploads/

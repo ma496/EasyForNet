@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 const languageDropdownVariants = cva('', {
   variants: {
     onlyFlag: {
-      true: 'block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60',
+      true: 'block w-9 h-9 p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60',
       false: 'flex items-center gap-2.5 rounded-lg border border-white-dark/30 bg-white px-2 py-1.5 text-white-dark hover:border-primary hover:text-primary dark:bg-black',
     },
   },
@@ -52,7 +52,7 @@ const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdown
   }
 
   return (
-    <div className={cn('dropdown', className)}>
+    <div className={cn(`dropdown ${onlyFlag ? 'w-9 h-9' : ''}`, className)}>
       {i18n.language && (
         <Dropdown
           ref={dropdownRef}
@@ -73,7 +73,7 @@ const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdown
               )}
               {onlyFlag && (
                 <div>
-                  <img className="h-5 w-5 rounded-full object-cover" src={`/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />
+                  <img className="w-5 h-5 rounded-full object-cover" src={`/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />
                 </div>
               )}
             </>

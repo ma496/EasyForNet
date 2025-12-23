@@ -43,12 +43,18 @@ const NavUser = () => {
   }, [user?.image])
 
   return (
-    <div className="dropdown">
+    <div className="dropdown w-9 h-9">
       <Dropdown
         ref={dropdownRef}
         placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-        btnClassName="relative group block"
-        button={<img className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src={avatarUrl ?? '/assets/images/default-avatar.svg'} alt="userProfile" />}
+        btnClassName="block w-9 h-9 p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
+        button={
+          avatarUrl ? (
+            <img className="w-5 h-5 rounded-full object-cover saturate-50 group-hover:saturate-100" src={avatarUrl} alt="userProfile" />
+          ) : (
+            <User className="w-5 h-5 rounded-full object-cover saturate-50 group-hover:saturate-100" />
+          )
+        }
       >
         <ul className="w-[230px] py-0! font-semibold text-dark dark:text-white-light/90">
           <li>

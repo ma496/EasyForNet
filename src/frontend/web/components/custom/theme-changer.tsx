@@ -5,23 +5,22 @@ import { cn } from '@/lib/utils'
 
 interface ThemeChangerProps {
   theme: string
-  size?: number
   className?: string
 }
 
-const ThemeChanger = ({ theme, size = 18, className }: ThemeChangerProps) => {
+const ThemeChanger = ({ theme, className }: ThemeChangerProps) => {
   const dispatch = useDispatch()
 
   const getThemeIcon = () => {
     switch (theme) {
       case 'light':
-        return <Sun size={size} />
+        return <Sun />
       case 'dark':
-        return <Moon size={size} />
+        return <Moon />
       case 'system':
-        return <Laptop size={size} />
+        return <Laptop />
       default:
-        return <Sun size={size} />
+        return <Sun />
     }
   }
 
@@ -40,7 +39,7 @@ const ThemeChanger = ({ theme, size = 18, className }: ThemeChangerProps) => {
 
   return (
     <button
-      className={cn('flex cursor-pointer items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60', className)}
+      className={cn('flex w-9 h-9 cursor-pointer items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60', className)}
       onClick={() => dispatch(toggleTheme(getNextTheme()))}
     >
       {getThemeIcon()}
