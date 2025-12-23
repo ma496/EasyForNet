@@ -1,7 +1,7 @@
 'use client'
 
 import { CodeShowcase } from '@/components/ui/code-showcase'
-import { FileUpload } from '@/components/ui/file-upload'
+import { FileUpload } from '@/components/ui/form/file-upload'
 import { Pencil, Trash2 } from 'lucide-react'
 import { IconButton } from '@/components/ui/icon-button'
 import { confirmDeleteAlert } from '@/lib/utils'

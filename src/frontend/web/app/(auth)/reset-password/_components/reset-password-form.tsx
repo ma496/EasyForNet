@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useResetPasswordMutation } from '@/store/api/identity/account/account-api'
 import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
-import { FormPasswordInput } from '@/components/ui/form-password-input'
+import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Lock } from 'lucide-react'
 import { errorAlert, successAlert } from '@/lib/utils'
 

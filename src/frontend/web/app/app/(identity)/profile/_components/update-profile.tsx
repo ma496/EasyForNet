@@ -1,7 +1,7 @@
 'use client'
 
 import { useGetUserProfileQuery, useLazyGetUserInfoQuery, useUpdateProfileMutation } from '@/store/api/identity/account/account-api'
-import { FormInput } from '@/components/ui/form-input'
+import { FormInput } from '@/components/ui/form/form-input'
 import { useAppDispatch } from '@/store/hooks'
 import { setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import { Formik, Form } from 'formik'
 import { getTranslation } from '@/i18n'
 import { UpdateProfileRequest } from '@/store/api/identity/account/dto/update-profile-request'
 import { confirmDeleteAlert, successAlert } from '@/lib/utils'
-import { FileUpload } from '@/components/ui/file-upload'
+import { FileUpload } from '@/components/ui/form/file-upload'
 import { IconButton } from '@/components/ui/icon-button'
 
 const createValidationSchema = (t: (key: string, params?: any) => string) => {

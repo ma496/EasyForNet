@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useId } from 'react'
 import { DayPicker, getDefaultClassNames, DateRange } from 'react-day-picker'
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from './button'
+import { Button } from '../button'
 import { format } from 'date-fns'
 
 // Base props interface
@@ -154,7 +154,7 @@ export const DatePicker = (props: DatePickerProps) => {
               selected={selected}
               onSelect={(date: any) => {
                 if (onSelect) {
-                  ;(onSelect as any)(date)
+                  ; (onSelect as any)(date)
                 }
                 if (mode === 'single') {
                   setIsOpen(false)

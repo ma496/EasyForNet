@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 import { useRoleCreateMutation } from '@/store/api/identity/roles/roles-api'
 import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
-import { FormInput } from '@/components/ui/form-input'
-import { FormTextarea } from '@/components/ui/form-textarea'
+import { FormInput } from '@/components/ui/form/form-input'
+import { FormTextarea } from '@/components/ui/form/form-textarea'
 import { successAlert } from '@/lib/utils'
 
 const createValidationSchema = (t: (key: string, params?: any) => string) => {

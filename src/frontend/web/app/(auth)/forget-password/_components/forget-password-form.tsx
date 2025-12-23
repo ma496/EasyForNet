@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForgetPasswordMutation } from '@/store/api/identity/account/account-api'
 import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
-import { FormInput } from '@/components/ui/form-input'
+import { FormInput } from '@/components/ui/form/form-input'
 import { Mail } from 'lucide-react'
 import { successAlert } from '@/lib/utils'
 
