@@ -37,7 +37,9 @@ const createValidationSchema = (t: (key: string, params?: any) => string) => {
       .required(t('validation_required'))
       .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_password') })),
     isActive: Yup.boolean().required(),
-    roles: Yup.array().of(Yup.string()).required(t('validation_required')),
+    roles: Yup.array().of(Yup.string())
+      .required(t('validation_required'))
+      .min(1, t('validation_atLeastOneSelected')),
   })
 }
 
@@ -127,6 +129,7 @@ export const UserCreateForm = () => {
                 getValue={(role) => role.id}
                 size="sm"
                 pageSize={20}
+                required={true}
               />
             </div>
             <div className="sm:col-span-2">

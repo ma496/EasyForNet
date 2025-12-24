@@ -200,6 +200,7 @@
   "validation_maxLength": "يجب ألا يتجاوز الحقل ${max} حرفًا",
   "validation_invalidEmail": "البريد الإلكتروني غير صالح",
   "validation_mustMatch": "يجب أن يتطابق الحقل مع ${otherField}",
+  "validation_atLeastOneSelected": "يجب تحديد عنصر واحد على الأقل",
   "server_error_internal_server_error": "خطأ داخلي في الخادم",
   "server_error_duplicate_value": "قيمة مكررة",
   "server_error_duplicate_property_value": "قيمة الخاصية مكررة",

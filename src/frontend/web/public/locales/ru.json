@@ -200,6 +200,7 @@
   "validation_maxLength": "Поле не должно превышать ${max} символов",
   "validation_invalidEmail": "Неверный адрес эл. почты",
   "validation_mustMatch": "Поле должно совпадать с ${otherField}",
+  "validation_atLeastOneSelected": "Необходимо выбрать хотя бы один элемент",
   "server_error_internal_server_error": "Внутренняя ошибка сервера",
   "server_error_duplicate_value": "Дублирующееся значение",
   "server_error_duplicate_property_value": "Дублирующееся значение свойства",

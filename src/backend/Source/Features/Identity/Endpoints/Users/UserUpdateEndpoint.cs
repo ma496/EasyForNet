@@ -62,6 +62,7 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
     {
         RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50).When(x => !x.FirstName.IsNullOrEmpty());
         RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50).When(x => !x.LastName.IsNullOrEmpty());
+        RuleFor(x => x.Roles).NotEmpty();
     }
 }
 

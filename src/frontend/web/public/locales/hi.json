@@ -200,6 +200,7 @@
   "validation_maxLength": "फ़ील्ड ${max} वर्णों से अधिक नहीं होना चाहिए",
   "validation_invalidEmail": "अमान्य ईमेल",
   "validation_mustMatch": "फ़ील्ड ${otherField} के साथ मेलखाना चाहिए",
+  "validation_atLeastOneSelected": "कम से कम एक आइटम का चयन करना होगा",
   "server_error_internal_server_error": "आंतरिक सर्वर त्रुटि",
   "server_error_duplicate_value": "डुप्लिकेट मान",
   "server_error_duplicate_property_value": "डुप्लिकेट संपत्ति मान",

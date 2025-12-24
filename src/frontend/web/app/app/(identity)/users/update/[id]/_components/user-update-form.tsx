@@ -26,7 +26,8 @@ const createValidationSchema = (t: (key: string, params?: any) => string) => {
     isActive: Yup.boolean()
       .required(),
     roles: Yup.array().of(Yup.string())
-      .required(t('validation_required')),
+      .required(t('validation_required'))
+      .min(1, t('validation_atLeastOneSelected')),
   })
 }
 
@@ -110,6 +111,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
               getValue={(role) => role.id}
               size="sm"
               pageSize={20}
+              required={true}
             />
             <FormCheckbox
               name="isActive"

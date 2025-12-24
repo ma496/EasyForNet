@@ -200,6 +200,7 @@
   "validation_maxLength": "فیلڈ ${max} حروف سے زیادہ نہیں ہونا چاہیے",
   "validation_invalidEmail": "غلط ای میل",
   "validation_mustMatch": "فیلڈ ${otherField} سے مطابقت کریں",
+  "validation_atLeastOneSelected": "کم از کم ایک آئٹم منتخب کرنا ضروری ہے",
   "server_error_internal_server_error": "اندرونی سرور کی خرابی",
   "server_error_duplicate_value": "ڈپلیکیٹ قدر",
   "server_error_duplicate_property_value": "ڈپلیکیٹ پراپرٹی کی قدر",

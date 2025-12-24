@@ -44,6 +44,7 @@ sealed class UserCreateValidator : Validator<UserCreateRequest>
         RuleFor(x => x.Password).NotEmpty().MinimumLength(8).MaximumLength(50);
         RuleFor(x => x.FirstName).MinimumLength(3).MaximumLength(50).When(x => !x.FirstName.IsNullOrEmpty());
         RuleFor(x => x.LastName).MinimumLength(3).MaximumLength(50).When(x => !x.LastName.IsNullOrEmpty());
+        RuleFor(x => x.Roles).NotEmpty();
     }
 }
 

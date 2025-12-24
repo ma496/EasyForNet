@@ -200,6 +200,7 @@
   "validation_maxLength": "El campo no debe exceder los ${max} caracteres",
   "validation_invalidEmail": "Correo electrónico no válido",
   "validation_mustMatch": "El campo debe coincidir con ${otherField}",
+  "validation_atLeastOneSelected": "Al menos un elemento debe ser seleccionado",
   "server_error_internal_server_error": "Error interno del servidor",
   "server_error_duplicate_value": "Valor duplicado",
   "server_error_duplicate_property_value": "Valor de propiedad duplicado",

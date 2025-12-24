@@ -200,6 +200,7 @@
   "validation_maxLength": "此字段不得超过 ${max} 个字符",
   "validation_invalidEmail": "无效的电子邮件",
   "validation_mustMatch": "此字段必须与 ${otherField} 匹配",
+  "validation_atLeastOneSelected": "至少选择一项",
   "server_error_internal_server_error": "内部服务器错误",
   "server_error_duplicate_value": "重复值",
   "server_error_duplicate_property_value": "重复属性值",
