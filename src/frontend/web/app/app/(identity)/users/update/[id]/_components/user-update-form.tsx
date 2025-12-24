@@ -41,16 +41,18 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   const router = useRouter()
   const validationSchema = createValidationSchema(t)
   const { data: userData, isLoading: isLoadingUser } = useUserGetQuery({ id: userId })
-  const [fetchRoleList, { data: roleListData, isLoading: isLoadingRoles }] = useLazyRoleListQuery()
+  const [fetchSelectedRoles, { data: selectedRoles, isLoading: isLoadingSelectedRoles }] = useLazyRoleListQuery()
   const [updateUser, { isLoading: isUserSaving }] = useUserUpdateMutation()
 
   useEffect(() => {
-    fetchRoleList({
-      includeIds: userData?.roles,
-    })
+    if ((userData?.roles?.length ?? 0) > 0) {
+      fetchSelectedRoles({
+        includeIds: userData?.roles,
+      })
+    }
   }, [userData])
 
-  if (isLoadingUser || isLoadingRoles) {
+  if (isLoadingUser || isLoadingSelectedRoles) {
     return <div>{t('loading')}</div>
   }
 
@@ -102,7 +104,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
               name="roles"
               label={t('label_roles')}
               placeholder={t('placeholder_roles')}
-              selectedItems={roleListData?.items}
+              selectedItems={selectedRoles?.items}
               useLazyQuery={useLazyRoleListQuery}
               getLabel={(role) => role.name}
               getValue={(role) => role.id}
@@ -118,13 +120,13 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
                 type="button"
                 variant="outline"
                 onClick={() => router.push('/app/users/list')}
-                isLoading={isUserSaving || isLoadingUser || isLoadingRoles}
+                isLoading={isUserSaving || isLoadingUser || isLoadingSelectedRoles}
               >
                 {t('form_cancel')}
               </Button>
               <Button
                 type="submit"
-                isLoading={isUserSaving || isLoadingUser || isLoadingRoles}
+                isLoading={isUserSaving || isLoadingUser || isLoadingSelectedRoles}
               >
                 {t('form_submit')}
               </Button>
