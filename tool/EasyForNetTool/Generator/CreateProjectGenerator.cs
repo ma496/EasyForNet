@@ -81,6 +81,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
             CopyDirectory($"{versionedTemplateDir}/.config", $"{targetPath}/.config", true);
             CopyDirectory($"{versionedTemplateDir}/.ai", $"{targetPath}/.ai", true);
+            CopyDirectory($"{versionedTemplateDir}/.vscode", $"{targetPath}/.vscode", true);
 
             Console.WriteLine("Customizing project files...");
             var (backendProjectName, backendProjectRootNamespace) = Helpers.GetProjectInfo(backendProjectTargetPath);

@@ -238,7 +238,6 @@ _Pvt_Extensions
 src/WebUI/ClientApp/package-lock.json
 
 # IDE and Editor Files
-.vscode/
 *.swp
 *.swo
 *.swn
