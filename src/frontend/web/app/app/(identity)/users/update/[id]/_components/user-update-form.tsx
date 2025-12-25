@@ -17,6 +17,7 @@ import { SuccessToast } from '@/lib/utils'
 
 const createValidationSchema = (t: (key: string, params?: any) => string) => {
   return Yup.object().shape({
+    username: Yup.string(),
     firstName: Yup.string()
       .min(3, t('validation_minLength', { min: 3 }))
       .max(50, t('validation_maxLength', { max: 50 })),
@@ -62,8 +63,9 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   }
 
   const onSubmit = async (data: FormValues) => {
+    const { username, ...updateData } = data
     const result = await updateUser({
-      ...data,
+      ...updateData,
       id: userId,
       roles: data.roles.filter((role): role is string => role !== undefined),
     })
@@ -80,6 +82,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
     <div className="panel flex min-w-[300px] flex-col gap-4 sm:min-w-[500px]">
       <Formik<FormValues>
         initialValues={{
+          username: userData.username,
           firstName: userData.firstName || '',
           lastName: userData.lastName || '',
           isActive: userData.isActive,
@@ -90,6 +93,12 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
           <Form noValidate className="grid grid-cols-1 gap-4">
+            <FormInput
+              name="username"
+              label={t('label_username')}
+              placeholder={t('placeholder_username')}
+              disabled={true}
+            />
             <FormInput
               name="firstName"
               label={t('label_firstName')}
