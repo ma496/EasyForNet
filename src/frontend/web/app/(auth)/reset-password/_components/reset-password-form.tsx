@@ -47,7 +47,6 @@ export const ResetPasswordForm = () => {
       successAlert({
         title: t('reset_password_success'),
         text: t('password_has_been_reset'),
-        icon: 'success',
       })
       router.push('/signin')
     }

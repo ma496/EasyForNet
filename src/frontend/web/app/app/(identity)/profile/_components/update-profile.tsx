@@ -11,7 +11,7 @@ import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import { getTranslation } from '@/i18n'
 import { UpdateProfileRequest } from '@/store/api/identity/account/dto/update-profile-request'
-import { confirmDeleteAlert, successAlert } from '@/lib/utils'
+import { confirmDeleteAlert, SuccessToast } from '@/lib/utils'
 import { FileUpload } from '@/components/ui/form/file-upload'
 import { IconButton } from '@/components/ui/icon-button'
 
@@ -52,7 +52,9 @@ export const UpdateProfile = () => {
     const userInfo = await getUserInfo()
     if (userInfo.data) {
       dispatch(setUserInfo(userInfo.data))
-      successAlert({ text: t('success_profileUpdated') })
+      SuccessToast.fire({
+        title: t('success_profileUpdated'),
+      })
     }
   }
 

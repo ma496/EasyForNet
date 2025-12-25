@@ -33,7 +33,6 @@ export const ForgetPasswordForm = () => {
       successAlert({
         title: t('forget_password_success'),
         text: t('forget_password_check_email'),
-        icon: 'success',
       })
       router.push('/signin')
     }
