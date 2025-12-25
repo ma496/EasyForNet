@@ -5,7 +5,7 @@ import { SortDirection } from '@/store/api/base/sort-direction'
 import { UserListDto } from '@/store/api/identity/users/dto/user-list-response'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
 import { getTranslation } from '@/i18n'
-import { ExportFormat, exportData, isAllowed } from '@/lib/utils'
+import { ExportFormat, SuccessToast, exportData, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
@@ -15,7 +15,7 @@ import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
 import { DataTable } from '@/components/ui/data-table'
-import { confirmDeleteAlert, errorAlert, successAlert } from '@/lib/utils'
+import { confirmDeleteAlert, errorAlert } from '@/lib/utils'
 
 export const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -92,8 +92,8 @@ export const UserTable = () => {
     if (result.isConfirmed) {
       const response = await deleteUser({ id: userId })
       if (response.data?.success) {
-        await successAlert({
-          text: t('success_userDeleted'),
+        SuccessToast.fire({
+          title: t('success_userDeleted'),
         })
       } else if (response.data?.message) {
         await errorAlert({

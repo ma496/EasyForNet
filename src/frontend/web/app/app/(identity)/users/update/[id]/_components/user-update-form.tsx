@@ -13,7 +13,7 @@ import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { RoleListDto } from '@/store/api/identity/roles/dto/role-list-response'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
 import { useEffect } from 'react'
-import { successAlert } from '@/lib/utils'
+import { SuccessToast } from '@/lib/utils'
 
 const createValidationSchema = (t: (key: string, params?: any) => string) => {
   return Yup.object().shape({
@@ -69,8 +69,8 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
     })
 
     if (!result.error) {
-      await successAlert({
-        text: t('user_update_success'),
+      SuccessToast.fire({
+        title: t('user_update_success'),
       })
       router.push('/app/users/list')
     }

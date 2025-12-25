@@ -2,18 +2,28 @@ import { getTranslation } from '@/i18n'
 import { SweetAlertOptions, SweetAlertResult } from 'sweetalert2'
 
 const Swal = (await import('sweetalert2')).default
-export const ImportantToast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  timer: 7000,
-  timerProgressBar: true,
-  showConfirmButton: false,
-  showCloseButton: true,
-})
 export const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   timer: 3000,
+  timerProgressBar: true,
+  showConfirmButton: false,
+  showCloseButton: true,
+})
+export const SuccessToast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  timer: 5000,
+  icon: 'success',
+  timerProgressBar: true,
+  showConfirmButton: false,
+  showCloseButton: true,
+})
+export const ErrorToast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  timer: 7000,
+  icon: 'error',
   timerProgressBar: true,
   showConfirmButton: false,
   showCloseButton: true,

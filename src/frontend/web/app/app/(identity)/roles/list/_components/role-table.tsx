@@ -15,7 +15,7 @@ import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
 import { Allow } from '@/allow'
-import { confirmDeleteAlert, errorAlert, successAlert } from '@/lib/utils'
+import { confirmDeleteAlert, errorAlert, SuccessToast } from '@/lib/utils'
 
 export const RoleTable = () => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -90,8 +90,8 @@ export const RoleTable = () => {
     if (result.isConfirmed) {
       const response = await deleteRole({ id: roleId })
       if (response.data?.success) {
-        await successAlert({
-          text: t('success_roleDeleted'),
+        SuccessToast.fire({
+          title: t('success_roleDeleted'),
         })
       } else if (response.data?.message) {
         await errorAlert({

@@ -12,7 +12,7 @@ import { getTranslation } from '@/i18n'
 import { useRouter } from 'next/navigation'
 import AppLoading from '@/components/layouts/app-loading'
 import { Search } from 'lucide-react'
-import { successAlert } from '@/lib/utils'
+import { SuccessToast } from '@/lib/utils'
 
 const toTreeNodes = (definePermissions: PermissionDefinition[], permissions: PermissionDto[]): TreeNode[] => {
   let count = 1
@@ -116,8 +116,8 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
       permissions: changedPermissions,
     })
     if (!response.error) {
-      successAlert({
-        text: t('permissions_updated_successfully'),
+      SuccessToast.fire({
+        title: t('permissions_updated_successfully'),
       })
       router.push('/app/roles/list')
     }

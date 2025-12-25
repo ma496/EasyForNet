@@ -1,5 +1,5 @@
 import { getTranslation } from '@/i18n'
-import { errorAlert, ImportantToast, isTranslationKeyExist } from '@/lib/utils'
+import { errorAlert, ErrorToast, isTranslationKeyExist } from '@/lib/utils'
 
 const getValidationMessage = (errors: any) => {
   const { t } = getTranslation()
@@ -31,20 +31,20 @@ const isError = (payload: any, errorStatus: number, ignoreStatuses?: number[]): 
 export const errorHandler = (payload: any) => {
   const { t } = getTranslation()
   if (payload?.status === 'FETCH_ERROR') {
-    ImportantToast.fire({ title: t('connection_error_title'), text: t('connection_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('connection_error_title'), text: t('connection_error_message') })
   } else if (isError(payload, 400) && payload.data.errors) {
     errorAlert({ title: t('400_error_title'), text: getValidationMessage(payload.data.errors) })
   } else if (isError(payload, 401)) {
-    ImportantToast.fire({ title: t('401_error_title'), text: t('401_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('401_error_title'), text: t('401_error_message') })
   } else if (isError(payload, 403)) {
-    ImportantToast.fire({ title: t('403_error_title'), text: t('403_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('403_error_title'), text: t('403_error_message') })
   } else if (isError(payload, 404)) {
-    ImportantToast.fire({ title: t('404_error_title'), text: t('404_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('404_error_title'), text: t('404_error_message') })
   } else if (isError(payload, 413)) {
-    ImportantToast.fire({ title: t('413_error_title'), text: t('413_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('413_error_title'), text: t('413_error_message') })
   } else if (isError(payload, 415)) {
-    ImportantToast.fire({ title: t('415_error_title'), text: t('415_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('415_error_title'), text: t('415_error_message') })
   } else if (isError(payload, 500)) {
-    ImportantToast.fire({ title: t('500_error_title'), text: t('500_error_message'), icon: 'error' })
+    ErrorToast.fire({ title: t('500_error_title'), text: t('500_error_message') })
   }
 }
