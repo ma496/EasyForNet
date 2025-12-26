@@ -45,7 +45,6 @@ sealed class SignupEndpoint(IUserService userService,
                 IsActive = true,
                 IsEmailVerified = false
             };
-            user.NormalizeProperties();
 
             await userService.CreateAsync(user, request.Password);
 

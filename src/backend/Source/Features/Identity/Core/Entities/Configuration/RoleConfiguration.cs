@@ -8,6 +8,8 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.ToTable("Roles", "identity");
 
+        builder.HasIndex(r => r.Name)
+            .IsUnique();
         builder.HasIndex(r => r.NameNormalized)
             .IsUnique();
     }

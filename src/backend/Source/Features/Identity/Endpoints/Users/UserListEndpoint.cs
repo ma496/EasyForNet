@@ -25,8 +25,8 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
-                x.Username.ToLower().Contains(search)
-                || x.Email.ToLower().Contains(search)
+                x.UsernameNormalized.Contains(search)
+                || x.EmailNormalized.Contains(search)
                 || (x.FirstName != null && x.FirstName.ToLower().Contains(search))
                 || (x.LastName != null && x.LastName.ToLower().Contains(search)));
         }

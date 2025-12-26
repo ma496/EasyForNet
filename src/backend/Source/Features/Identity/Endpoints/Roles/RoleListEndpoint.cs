@@ -25,7 +25,7 @@ sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListReque
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
-                x.Name.ToLower().Contains(search)
+                x.NameNormalized.Contains(search)
                 || (x.Description != null && x.Description.ToLower().Contains(search)));
         }
 
