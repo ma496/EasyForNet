@@ -17,11 +17,11 @@ public sealed class {{entityName}}ListEndpoint(AppDbContext dbContext) : Endpoin
             .AsNoTracking()
             .AsQueryable();
 
-        var search = req.Search?.Trim().ToLower();
+        var search = req.Search?.Trim().ToLowerInvariant();
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(x => x.Name.ToLower().Contains(search)
-                                     || (x.Description != null && x.Description.ToLower().Contains(search)));
+            query = query.Where(x => x.Name.ToLowerInvariant().Contains(search)
+                                     || (x.Description != null && x.Description.ToLowerInvariant().Contains(search)));
         }
 
         var total = await query.CountAsync(ct);

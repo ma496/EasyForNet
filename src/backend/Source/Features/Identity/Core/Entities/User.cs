@@ -23,7 +23,7 @@ public class User : AuditableEntity<Guid>, IHasNormalizedProperties
 
     public void NormalizeProperties()
     {
-        UsernameNormalized = Username.ToLowerInvariant();
-        EmailNormalized = Email.ToLowerInvariant();
+        UsernameNormalized = Username.Trim().ToLowerInvariant();
+        EmailNormalized = Email.Trim().ToLowerInvariant();
     }
 }

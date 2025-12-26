@@ -76,12 +76,12 @@ public class ExceptionProcessor(IWebHostEnvironment env) : IGlobalPostProcessor
                     return (null, "A duplicate value was found.", ErrorCodes.DuplicateValue);
 
                 // Extract property name from constraint name (e.g. "IX_Users_Username" -> "username")
-                var property = constraintName.Split('_').Last().ToLower();
+                var property = constraintName.Split('_').Last().ToLowerInvariant();
                 return (property, $"A {property} with this value already exists.", ErrorCodes.DuplicatePropertyValue);
 
             // Not null violation
             case "23502":
-                var columnName = ex.ColumnName?.ToLower();
+                var columnName = ex.ColumnName?.ToLowerInvariant();
                 if (string.IsNullOrEmpty(columnName))
                     return (null, "A required field is missing.", ErrorCodes.RequiredFieldMissing);
 

@@ -21,14 +21,14 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
             .ThenInclude(x => x.Role)
             .AsQueryable();
 
-        var search = request.Search?.Trim().ToLower();
+        var search = request.Search?.Trim().ToLowerInvariant();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
-                x.UsernameNormalized.Contains(search)
-                || x.EmailNormalized.Contains(search)
-                || (x.FirstName != null && x.FirstName.ToLower().Contains(search))
-                || (x.LastName != null && x.LastName.ToLower().Contains(search)));
+                EF.Functions.Like(x.UsernameNormalized, $"%{search}%")
+                || EF.Functions.Like(x.EmailNormalized, $"%{search}%")
+                || EF.Functions.Like(x.FirstName, $"%{search}%")
+                || EF.Functions.Like(x.LastName, $"%{search}%"));
         }
 
         var total = await query.CountAsync(cancellationToken);

@@ -14,6 +14,6 @@ public class Role : AuditableEntity<Guid>, IHasNormalizedProperties
 
     public void NormalizeProperties()
     {
-        NameNormalized = Name.ToLowerInvariant();
+        NameNormalized = Name.Trim().ToLowerInvariant();
     }
 }

@@ -8,13 +8,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users", "identity");
 
-        builder.HasIndex(u => u.Username)
-            .IsUnique();
-        builder.HasIndex(u => u.Email)
-            .IsUnique();
         builder.HasIndex(u => u.UsernameNormalized)
             .IsUnique();
         builder.HasIndex(u => u.EmailNormalized)
+            .IsUnique();
+        builder.HasIndex(u => u.FirstName)
+            .IsUnique();
+        builder.HasIndex(u => u.LastName)
             .IsUnique();
     }
 }

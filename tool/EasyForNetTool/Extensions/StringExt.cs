@@ -19,14 +19,14 @@ public static class StringExt
 
     public static string ToKebabCase(this string value)
     {
-        return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + char.ToLower(x) : char.ToLower(x).ToString())).ToLower();
+        return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + char.ToLowerInvariant(x) : char.ToLowerInvariant(x).ToString())).ToLowerInvariant();
     }
 
     public static string ToLowerFirst(this string str)
     {
         if (string.IsNullOrEmpty(str))
             return str;
-        return char.ToLower(str[0]) + str[1..];
+        return char.ToLowerInvariant(str[0]) + str[1..];
     }
 
     public static string SplitReturnLast(this string str, string separator)

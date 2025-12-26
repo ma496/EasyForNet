@@ -21,12 +21,12 @@ sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListReque
             .Include(x => x.UserRoles)
             .AsQueryable();
 
-        var search = request.Search?.Trim().ToLower();
+        var search = request.Search?.Trim().ToLowerInvariant();
         if (!string.IsNullOrWhiteSpace(search))
         {
             query = query.Where(x =>
-                x.NameNormalized.Contains(search)
-                || (x.Description != null && x.Description.ToLower().Contains(search)));
+                EF.Functions.Like(x.NameNormalized, $"%{search}%")
+                || EF.Functions.Like(x.Description, $"%{search}%"));
         }
 
         var total = await query.CountAsync(cancellationToken);
