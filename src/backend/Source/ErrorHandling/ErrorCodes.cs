@@ -27,4 +27,5 @@ public static class ErrorCodes
     public const string DefaultUserCannotBeDeleted = "default_user_cannot_be_deleted";
     public const string DefaultUserCannotBeUpdated = "default_user_cannot_be_updated";
     public const string RoleNotFound = "role_not_found";
+    public const string RoleNameAlreadyExists = "role_name_already_exists";
 }

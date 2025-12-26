@@ -240,6 +240,7 @@
   "server_error_email_already_exists": "Email already exists",
   "server_error_username_already_exists": "Username already exists",
   "server_error_email_not_verified": "Email is not verified",
+  "server_error_role_name_already_exists": "Role name already exists",
   "validation_email": "Invalid email format",
   "text_dont_have_account": "Don't have an account?",
   "link_signup": "Sign Up",

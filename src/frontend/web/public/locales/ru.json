@@ -240,6 +240,7 @@
   "server_error_email_already_exists": "Email уже существует",
   "server_error_username_already_exists": "Имя пользователя уже существует",
   "server_error_email_not_verified": "Email не подтвержден",
+  "server_error_role_name_already_exists": "Имя роли уже существует",
   "validation_email": "Неверный формат email",
   "text_dont_have_account": "Нет аккаунта?",
   "link_signup": "Зарегистрироваться",

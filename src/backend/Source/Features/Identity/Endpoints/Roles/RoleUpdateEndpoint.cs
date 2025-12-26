@@ -3,7 +3,7 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
-sealed class RoleUpdateEndpoint(IRoleService roleService)
+sealed class RoleUpdateEndpoint(IRoleService roleService, AppDbContext dbContext)
     : Endpoint<RoleUpdateRequest, RoleUpdateResponse>
 {
     public override void Configure()
@@ -15,6 +15,13 @@ sealed class RoleUpdateEndpoint(IRoleService roleService)
 
     public override async Task HandleAsync(RoleUpdateRequest request, CancellationToken cancellationToken)
     {
+        var nameExists = await dbContext.Roles
+            .AnyAsync(x => x.Id != request.Id && x.NameNormalized == request.Name.Trim().ToLowerInvariant(), cancellationToken);
+        if (nameExists)
+        {
+            ThrowError("Role name already exists", ErrorCodes.RoleNameAlreadyExists);
+        }
+
         // get entity from db
         var entity = await roleService.Roles()
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);

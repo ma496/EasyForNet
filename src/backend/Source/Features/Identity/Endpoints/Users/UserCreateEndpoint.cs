@@ -3,7 +3,7 @@ namespace Backend.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
-sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateRequest, UserCreateResponse>
+sealed class UserCreateEndpoint(IUserService userService, AppDbContext dbContext) : Endpoint<UserCreateRequest, UserCreateResponse>
 {
     public override void Configure()
     {
@@ -14,6 +14,20 @@ sealed class UserCreateEndpoint(IUserService userService) : Endpoint<UserCreateR
 
     public override async Task HandleAsync(UserCreateRequest request, CancellationToken cancellationToken)
     {
+        var usernameExists = await dbContext.Users
+            .AnyAsync(x => x.UsernameNormalized == request.Username.Trim().ToLowerInvariant(), cancellationToken);
+        if (usernameExists)
+        {
+            ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
+        }
+        
+        var emailExists = await dbContext.Users
+            .AnyAsync(x => x.EmailNormalized == request.Email.Trim().ToLowerInvariant(), cancellationToken);
+        if (emailExists)
+        {
+            ThrowError("Email already exists", ErrorCodes.EmailAlreadyExists);
+        }
+        
         var requestMapper = new UserCreateRequestMapper();
         var entity = requestMapper.Map(request);
         entity.IsEmailVerified = true;

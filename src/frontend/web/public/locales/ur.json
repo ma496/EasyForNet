@@ -240,6 +240,7 @@
   "server_error_email_already_exists": "ای میل پہلے سے موجود ہے",
   "server_error_username_already_exists": "صارف نام پہلے سے موجود ہے",
   "server_error_email_not_verified": "ای میل کی تصدیق نہیں کی گئی ہے",
+  "server_error_role_name_already_exists": "رول نام پہلے سے موجود ہے",
   "validation_email": "غلط ای میل فارمیٹ",
   "text_dont_have_account": "کیا آپ کا اکاؤنٹ نہیں ہے؟",
   "link_signup": "سائن اپ",

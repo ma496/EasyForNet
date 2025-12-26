@@ -23,6 +23,13 @@ sealed class SignupEndpoint(IUserService userService,
 
     public override async Task HandleAsync(SignupRequest request, CancellationToken cancellationToken)
     {
+        var usernameExists = await dbContext.Users
+            .AnyAsync(x => x.UsernameNormalized == request.Username.Trim().ToLowerInvariant(), cancellationToken);
+        if (usernameExists)
+        {
+            ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
+        }
+        
         var emailExists = await dbContext.Users
             .AnyAsync(x => x.EmailNormalized == request.Email.Trim().ToLowerInvariant(), cancellationToken);
         if (emailExists)
@@ -30,15 +37,8 @@ sealed class SignupEndpoint(IUserService userService,
             ThrowError("Email already exists", ErrorCodes.EmailAlreadyExists);
         }
 
-        var usernameExists = await dbContext.Users
-            .AnyAsync(x => x.UsernameNormalized == request.Username.Trim().ToLowerInvariant(), cancellationToken);
-        if (usernameExists)
-        {
-            ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
-        }
-
         using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        
+
         var user = new User
         {
             Email = request.Email,

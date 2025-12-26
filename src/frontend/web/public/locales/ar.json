@@ -240,6 +240,7 @@
   "server_error_email_already_exists": "البريد الإلكتروني موجود بالفعل",
   "server_error_username_already_exists": "اسم المستخدم موجود بالفعل",
   "server_error_email_not_verified": "البريد الإلكتروني غير تم التحقق منه",
+  "server_error_role_name_already_exists": "اسم الدور موجود بالفعل",
   "validation_email": "تنسيق البريد الإلكتروني غير صالح",
   "text_dont_have_account": "ليس لديك حساب؟",
   "link_signup": "تسجيل",

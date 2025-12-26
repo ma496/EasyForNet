@@ -240,6 +240,7 @@
   "server_error_email_already_exists": "ईमेल पहले से मौजूद है",
   "server_error_username_already_exists": "उपयोगकर्ता नाम पहले से मौजूद है",
   "server_error_email_not_verified": "ईमेल सत्यापित नहीं है",
+  "server_error_role_name_already_exists": "रॉल नाम पहले से मौजूद है",
   "validation_email": "अमान्य ईमेल प्रारूप",
   "text_dont_have_account": "क्या आपके पास खाता नहीं है?",
   "link_signup": "साइन अप",
