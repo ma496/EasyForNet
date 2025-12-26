@@ -23,68 +23,64 @@ sealed class SignupEndpoint(IUserService userService,
 
     public override async Task HandleAsync(SignupRequest request, CancellationToken cancellationToken)
     {
-        var existingUser = await userService.GetByEmailAsync(request.Email);
-        if (existingUser != null)
+        var emailExists = await dbContext.Users
+            .AnyAsync(x => x.EmailNormalized == request.Email.Trim().ToLowerInvariant(), cancellationToken);
+        if (emailExists)
         {
             ThrowError("Email already exists", ErrorCodes.EmailAlreadyExists);
         }
 
-        var existingUsername = await userService.GetByUsernameAsync(request.Username);
-        if (existingUsername != null)
+        var usernameExists = await dbContext.Users
+            .AnyAsync(x => x.UsernameNormalized == request.Username.Trim().ToLowerInvariant(), cancellationToken);
+        if (usernameExists)
         {
             ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
         }
 
-        try
+        using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        
+        var user = new User
         {
-            using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-            var user = new User
-            {
-                Email = request.Email,
-                Username = request.Username,
-                IsActive = true,
-                IsEmailVerified = false
-            };
+            Email = request.Email,
+            Username = request.Username,
+            IsActive = true,
+            IsEmailVerified = false
+        };
 
-            await userService.CreateAsync(user, request.Password);
+        await userService.CreateAsync(user, request.Password);
 
-            var publicRole = await dbContext.Roles
-                .Where(x => x.Name == "Public")
-                .Select(x => new { x.Id })
-                .FirstOrDefaultAsync(cancellationToken);
-            if (publicRole == null)
-            {
-                ThrowError("Role not found", ErrorCodes.RoleNotFound);
-            }
-            await userService.AssignRoleAsync(user.Id, publicRole.Id);
+        var publicRole = await dbContext.Roles
+            .Where(x => x.Name == "Public")
+            .Select(x => new { x.Id })
+            .FirstOrDefaultAsync(cancellationToken);
+        if (publicRole == null)
+        {
+            throw new Exception("Public role not found");
+        }
+        await userService.AssignRoleAsync(user.Id, publicRole.Id);
 
-            if (signinSetting.Value.IsEmailVerificationRequired)
-            {
-                // Generate verification token
-                var token = await tokenService.GenerateTokenAsync(user);
+        if (signinSetting.Value.IsEmailVerificationRequired)
+        {
+            // Generate verification token
+            var token = await tokenService.GenerateTokenAsync(user);
 
-                // Send verification email
-                emailBackgroundJobs.Enqueue(user.Email, "Verify Email",
-                    @$"
+            // Send verification email
+            emailBackgroundJobs.Enqueue(user.Email, "Verify Email",
+                @$"
             <div>
                 <p>Click the link below to verify your email:</p>
                 <a href=""{webSetting.Value.Url}/verify-email?token={token.Value}"">Verify Email</a>
             </div>", true);
 
-                await transaction.CommitAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
 
-                await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = true }, cancellationToken);
-            }
-            else
-            {
-                await transaction.CommitAsync(cancellationToken);
-
-                await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = false }, cancellationToken);
-            }
+            await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = true }, cancellationToken);
         }
-        catch (Exception)
+        else
         {
-            throw;
+            await transaction.CommitAsync(cancellationToken);
+
+            await Send.OkAsync(new SignupResponse { IsEmailVerificationRequired = false }, cancellationToken);
         }
     }
 }
