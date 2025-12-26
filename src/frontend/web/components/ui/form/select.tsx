@@ -121,11 +121,12 @@ export const Select = ({
           className={cn(
             'form-input flex min-h-[40px] w-full cursor-pointer items-center gap-1 bg-transparent pe-10 text-left',
             icon && 'ps-10',
-            disabled && 'pointer-events-none opacity-60',
             size === 'sm' && 'py-1.5 text-xs',
             size === 'lg' && 'py-2.5 text-base',
-          )}
+          )
+          }
           id={controlId}
+          disabled={disabled}
           style={{ backgroundImage: 'none' }}
           onClick={() => setOpen((v) => !v)}
         >

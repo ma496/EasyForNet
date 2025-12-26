@@ -974,6 +974,10 @@
   /* Form */
   @apply w-full rounded-md border border-white-light bg-white px-4 py-2 text-sm text-black outline-hidden! focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:focus:border-primary;
 
+  &[disabled] {
+    @apply cursor-not-allowed opacity-60 bg-gray-100 dark:bg-[#1b2e4b];
+  }
+
   .has-error & {
     @apply border-danger bg-danger/8 text-danger placeholder-danger/70 focus:border-danger;
   }
@@ -985,6 +989,10 @@
 
 @utility form-textarea {
   @apply w-full rounded-md border border-white-light bg-white px-4 py-2 text-sm text-black outline-hidden! focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:focus:border-primary;
+
+  &[disabled] {
+    @apply cursor-not-allowed opacity-60 bg-gray-100 dark:bg-[#1b2e4b];
+  }
 
   .has-error & {
     @apply border-danger bg-danger/8 text-danger placeholder-danger/70 focus:border-danger;
@@ -998,6 +1006,10 @@
 @utility form-select {
   @apply w-full rounded-md border border-white-light bg-white px-4 py-2 text-sm text-black outline-hidden! focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:focus:border-primary;
 
+  &[disabled] {
+    @apply cursor-not-allowed opacity-60 bg-gray-100 dark:bg-[#1b2e4b];
+  }
+
   .has-error & {
     @apply border-danger bg-danger/8 text-danger placeholder-danger/70 focus:border-danger;
   }
@@ -1009,6 +1021,10 @@
 
 @utility form-multiselect {
   @apply w-full rounded-md border border-white-light bg-white px-4 py-2 text-sm text-black outline-hidden! focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-white-dark dark:focus:border-primary;
+
+  &[disabled] {
+    @apply cursor-not-allowed opacity-60 bg-gray-100 dark:bg-[#1b2e4b];
+  }
 
   .has-error & {
     @apply border-danger bg-danger/8 text-danger placeholder-danger/70 focus:border-danger;
@@ -1173,7 +1189,7 @@
   .has-error & {
     @apply border-danger;
   }
-  @apply h-5 w-5 cursor-pointer rounded-sm border-2 border-white-light bg-transparent text-primary shadow-none! outline-hidden! ring-0! ring-offset-0! checked:bg-size-[90%_90%] disabled:cursor-not-allowed disabled:bg-[#eee] ltr:mr-1.5 rtl:ml-1.5
+  @apply h-5 w-5 cursor-pointer rounded-sm border-2 border-white-light bg-transparent text-primary shadow-none! outline-hidden! ring-0! ring-offset-0! checked:bg-size-[90%_90%] disabled:cursor-not-allowed disabled:bg-[#eee] disabled:opacity-60 ltr:mr-1.5 rtl:ml-1.5
     dark:border-[#253b5c] dark:checked:border-transparent dark:disabled:bg-[#1b2e4b];
 
   &.outline-primary:checked {
@@ -1260,7 +1276,7 @@
 
 @utility form-radio {
   /* checkbox & radio */
-  @apply h-5 w-5 cursor-pointer rounded-sm border-2 border-white-light bg-transparent text-primary shadow-none! outline-hidden! ring-0! ring-offset-0! checked:bg-size-[90%_90%] disabled:cursor-not-allowed disabled:bg-[#eee] ltr:mr-1.5 rtl:ml-1.5
+  @apply h-5 w-5 cursor-pointer rounded-sm border-2 border-white-light bg-transparent text-primary shadow-none! outline-hidden! ring-0! ring-offset-0! checked:bg-size-[90%_90%] disabled:cursor-not-allowed disabled:bg-[#eee] disabled:opacity-60 ltr:mr-1.5 rtl:ml-1.5
     dark:border-[#253b5c] dark:checked:border-transparent dark:disabled:bg-[#1b2e4b];
   @apply rounded-full;
 

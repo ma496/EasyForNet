@@ -22,6 +22,7 @@ import { Select } from '@/components/ui/form/select'
 import { MultiSelect } from '@/components/ui/form/multi-select'
 import { Checkbox } from '@/components/ui/form/checkbox'
 import { Radio } from '@/components/ui/form/radio'
+import { DatePicker } from '@/components/ui/form/date-picker'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -434,6 +435,113 @@ const [multiValue, setMultiValue] = useState([])
               <MultiSelect name="multi-select-variants" label="Multi-Select" options={skills.slice(0, 5)} value={multiSelectDemo} onChange={setMultiSelectDemo} placeholder="Select multiple..." />
             </div>
           }
+
+        />
+
+        <CodeShowcase
+          title="Disabled Variants"
+          description="Disabled state for all form components"
+          code={`// Disabled components
+<Textarea disabled label="Disabled Textarea" />
+<Select disabled label="Disabled Select" />
+<MultiSelect disabled label="Disabled MultiSelect" />
+<DatePicker disabled label="Disabled DatePicker" />
+<Checkbox disabled checked label="Disabled Checkbox" />
+<Radio disabled checked label="Disabled Radio" />`}
+          preview={
+            <div className="space-y-4">
+              <Textarea name="disabled-textarea" disabled label="Disabled Textarea" placeholder="Cannot type here..." />
+
+              <Select
+                name="disabled-select"
+                disabled
+                label="Disabled Select"
+                options={countries}
+                value={countries[0].value}
+                onChange={() => { }}
+              />
+
+              <MultiSelect
+                name="disabled-multiselect"
+                disabled
+                label="Disabled MultiSelect"
+                options={skills}
+                value={[skills[0].value, skills[1].value]}
+                onChange={() => { }}
+              />
+
+              <DatePicker
+                name="disabled-date"
+                label="Disabled DatePicker"
+                disabled={true}
+                selected={new Date()}
+                onSelect={() => { }}
+              />
+
+              <div className="flex gap-4 pt-2">
+                <Checkbox name="disabled-checkbox" disabled checked label="Disabled Checkbox" />
+                <Radio name="disabled-radio" disabled checked value="on" label="Disabled Radio" onChange={() => { }} />
+              </div>
+            </div>
+          }
+        />
+
+        <CodeShowcase
+          title="Disabled Variants (Formik)"
+          description="Disabled state for Formik-integrated components"
+          code={`// Disabled Formik components
+<Formik initialValues={{...}} validationSchema={...}>
+  <Form>
+    <FormInput name="disabled-input" disabled label="Disabled Input" />
+    <FormSelect name="disabled-select" disabled label="Disabled Select" ... />
+    {/* ... other components */}
+  </Form>
+</Formik>`}
+          preview={
+            <Formik
+              initialValues={{
+                disabledInput: '',
+                disabledTextarea: '',
+                disabledSelect: countries[0].value,
+                disabledMultiSelect: [skills[0].value, skills[1].value],
+                disabledDate: new Date(),
+                disabledCheckbox: true,
+                disabledRadio: 'on'
+              }}
+              onSubmit={() => { }}
+            >
+              <Form className="space-y-4 w-full">
+                <FormInput name="disabledInput" disabled label="Disabled FormInput" placeholder="Cannot type here..." />
+
+                <FormTextarea name="disabledTextarea" disabled label="Disabled FormTextarea" placeholder="Cannot type here..." />
+
+                <FormSelect
+                  name="disabledSelect"
+                  disabled
+                  label="Disabled FormSelect"
+                  options={countries}
+                />
+
+                <FormMultiSelect
+                  name="disabledMultiSelect"
+                  disabled
+                  label="Disabled FormMultiSelect"
+                  options={skills}
+                />
+
+                <FormDatePicker
+                  name="disabledDate"
+                  label="Disabled FormDatePicker"
+                  disabled={true}
+                />
+
+                <div className="flex gap-4 pt-2">
+                  <FormCheckbox name="disabledCheckbox" disabled label="Disabled FormCheckbox" />
+                  <FormRadio name="disabledRadio" disabled value="on" label="Disabled FormRadio" />
+                </div>
+              </Form>
+            </Formik>
+          }
         />
       </div>
 
@@ -549,6 +657,6 @@ const [multiValue, setMultiValue] = useState([])
           </div>
         </div>
       </Card>
-    </div>
+    </div >
   )
 }

@@ -137,7 +137,7 @@ export const DatePicker = (props: DatePickerProps) => {
         <Button
           type="button"
           variant="outline"
-          className={cn('form-input w-full justify-start border! p-2! text-left font-normal shadow-none!', !selected && 'text-muted-foreground', disabled && 'cursor-not-allowed opacity-50')}
+          className={cn('form-input w-full justify-start border! p-2! text-left font-normal shadow-none!', !selected && 'text-muted-foreground')}
           id={controlId}
           name={name}
           onClick={() => !disabled && setIsOpen(!isOpen)}
