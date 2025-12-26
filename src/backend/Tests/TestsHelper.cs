@@ -7,7 +7,7 @@ public static class TestsHelper
 {
     public static async Task<string> GetNewAuthTokenAsync(HttpClient client, string username = "admin", string password = "Admin#123")
     {
-        var (_, res) = await client.POSTAsync<TokenEndpoint, TokenReq, TokenResponse>(
+        var (_, res) = await client.POSTAsync<TokenEndpoint, TokenRequest, TokenResponse>(
             new()
             {
                 Username = username,

@@ -29,7 +29,7 @@ const SigninForm = () => {
       .max(50, t('validation_maxLength', { count: 50 })),
   })
 
-  type LoginFormValues = Yup.InferType<typeof validationSchema>
+  type SigninFormValues = Yup.InferType<typeof validationSchema>
 
   const [tokenApi, { isLoading: isTokenLoading }] = useTokenMutation()
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
@@ -52,7 +52,7 @@ const SigninForm = () => {
     }
   }, [countdown])
 
-  const submitForm = async (values: LoginFormValues) => {
+  const submitForm = async (values: SigninFormValues) => {
     const tokenRes = await tokenApi(values)
     if (tokenRes.error) {
       const errorData = (tokenRes.error as any).data

@@ -2,7 +2,7 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
-sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting) : Endpoint<TokenReq, TokenResponse>
+sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting) : Endpoint<TokenRequest, TokenResponse>
 {
     public override void Configure()
     {
@@ -11,7 +11,7 @@ sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> sig
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(TokenReq req, CancellationToken c)
+    public override async Task HandleAsync(TokenRequest req, CancellationToken c)
     {
         var user = await (!req.IsEmail ? userService.GetByUsernameAsync(req.Username) : userService.GetByEmailAsync(req.Email));
         var errorMessage = !req.IsEmail ? "Username or password is invalid" : "Email or password is invalid";
@@ -44,11 +44,11 @@ sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> sig
             u.Claims.AddRange(claims);
         });
 
-        await userService.UpdateLastLoginAsync(user.Id);
+        await userService.UpdateLastSigninAsync(user.Id);
     }
 }
 
-sealed class TokenReq
+sealed class TokenRequest
 {
     public bool IsEmail { get; set; }
     public string Username { get; set; } = null!;
@@ -56,9 +56,9 @@ sealed class TokenReq
     public string Password { get; set; } = null!;
 }
 
-sealed class LoginValidator : Validator<TokenReq>
+sealed class TokenRequestValidator : Validator<TokenRequest>
 {
-    public LoginValidator()
+    public TokenRequestValidator()
     {
         When(x => !x.IsEmail, () =>
         {

@@ -3,7 +3,7 @@ namespace Backend.Features.Identity.Endpoints.Account;
 using Backend.Features.Identity.Core;
 using Microsoft.Extensions.Options;
 
-public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
+public class TokenService : RefreshTokenService<FastEndpoints.Security.TokenRequest, TokenResponse>
 {
     private readonly IUserService _userService;
     private readonly IAuthTokenService _authTokenService;
@@ -48,7 +48,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
     /// </summary>
     /// <param name="req"></param>
     /// <returns></returns>
-    public override async Task RefreshRequestValidationAsync(TokenRequest req)
+    public override async Task RefreshRequestValidationAsync(FastEndpoints.Security.TokenRequest req)
     {
         if (!await _authTokenService.IsValidRefreshTokenAsync(req))
             AddError(r => r.RefreshToken, "Refresh token is invalid!");
@@ -62,7 +62,7 @@ public class TokenService : RefreshTokenService<TokenRequest, TokenResponse>
     /// <param name="request"></param>
     /// <param name="privileges"></param>
     /// <returns></returns>
-    public override async Task SetRenewalPrivilegesAsync(TokenRequest request, UserPrivileges privileges)
+    public override async Task SetRenewalPrivilegesAsync(FastEndpoints.Security.TokenRequest request, UserPrivileges privileges)
     {
         var user = await _userService.GetByIdAsync(Guid.Parse(request.UserId));
         if (user == null)

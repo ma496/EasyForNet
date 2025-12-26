@@ -21,7 +21,7 @@ public interface IUserService
     Task RemoveRoleAsync(Guid userId, Guid roleId);
     Task<bool> IsInRoleAsync(Guid userId, Guid roleId);
     Task<User> UpdatePasswordAsync(User user, string password);
-    Task UpdateLastLoginAsync(Guid userId);
+    Task UpdateLastSigninAsync(Guid userId);
 }
 
 [NoDirectUse]
@@ -135,10 +135,10 @@ public class UserService(AppDbContext dbContext, IPasswordHasher passwordHasher)
         return user;
     }
 
-    public async Task UpdateLastLoginAsync(Guid userId)
+    public async Task UpdateLastSigninAsync(Guid userId)
     {
         await dbContext.Users
             .Where(u => u.Id == userId)
-            .ExecuteUpdateAsync(set => set.SetProperty(u => u.LastLoginAt, DateTime.UtcNow));
+            .ExecuteUpdateAsync(set => set.SetProperty(u => u.LastSigninAt, DateTime.UtcNow));
     }
 }

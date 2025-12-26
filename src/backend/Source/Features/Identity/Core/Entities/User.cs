@@ -14,7 +14,7 @@ public class User : AuditableEntity<Guid>, IHasNormalizedProperties
     public string? LastName { get; set; }
     public bool IsActive { get; set; } = true;
     public bool IsEmailVerified { get; set; }
-    public DateTime? LastLoginAt { get; set; }
+    public DateTime? LastSigninAt { get; set; }
     public string? Image { get; set; }
 
     public ICollection<UserRole> UserRoles { get; set; } = [];
