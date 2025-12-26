@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form/form-input'
 import { Mail, Lock, Info } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { useLoginMutation, useLazyGetUserInfoQuery, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
+import { useTokenMutation, useLazyGetUserInfoQuery, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
 import { setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
@@ -31,7 +31,7 @@ const SigninForm = () => {
 
   type LoginFormValues = Yup.InferType<typeof validationSchema>
 
-  const [loginApi, { isLoading: isLogin }] = useLoginMutation()
+  const [tokenApi, { isLoading: isTokenLoading }] = useTokenMutation()
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
   const [resendVerifyEmailApi, { isLoading: isResending }] = useResendVerifyEmailMutation()
   const dispatch = useAppDispatch()
@@ -53,9 +53,9 @@ const SigninForm = () => {
   }, [countdown])
 
   const submitForm = async (values: LoginFormValues) => {
-    const loginRes = await loginApi(values)
-    if (loginRes.error) {
-      const errorData = (loginRes.error as any).data
+    const tokenRes = await tokenApi(values)
+    if (tokenRes.error) {
+      const errorData = (tokenRes.error as any).data
       const verificationError = errorData?.errors?.find((err: any) => err.code === 'email_not_verified')
       if (verificationError) {
         setRegisteredEmail(values.username) // In this app username can be email or username
@@ -64,7 +64,7 @@ const SigninForm = () => {
       return
     }
 
-    if (loginRes.error) return
+    if (tokenRes.error) return
 
     const userInfoRes = await getUserInfo()
     if (userInfoRes.data) {
@@ -133,7 +133,7 @@ const SigninForm = () => {
             </Link>
           </div>
 
-          <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLogin || isLoadingUserInfo}>
+          <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isTokenLoading || isLoadingUserInfo}>
             {t('button_signin')}
           </Button>
         </Form>

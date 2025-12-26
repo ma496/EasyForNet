@@ -19,7 +19,7 @@ import { ResendVerifyEmailRequest } from './dto/resend-verify-email-request'
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
-    login: builder.mutation<TokenResponse, TokenRequest>({
+    token: builder.mutation<TokenResponse, TokenRequest>({
       query: (input) => ({
         url: '/account/token',
         method: 'POST',
@@ -104,7 +104,7 @@ export const accountApi = appApi.injectEndpoints({
 })
 
 export const {
-  useLoginMutation,
+  useTokenMutation,
   useSignupMutation,
   useVerifyEmailMutation,
   useResendVerifyEmailMutation,
