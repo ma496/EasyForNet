@@ -1,7 +1,11 @@
+'use client'
 import Link from 'next/link'
 import { ArrowRight, Code2 } from 'lucide-react'
+import { useAppSelector } from '@/store/hooks'
 
 const Hero = () => {
+  const authState = useAppSelector(s => s.auth)
+
   return (
     <div className="relative overflow-hidden bg-white dark:bg-black">
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -25,13 +29,25 @@ const Hero = () => {
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center">
                 <div className="rounded-md shadow">
-                  <Link
-                    href="/signin"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
-                  >
-                    Signin
-                    <ArrowRight className="ms-2 h-5 w-5" />
-                  </Link>
+                  {
+                    authState.isAuthenticated ? (
+                      <Link
+                        href="/app"
+                        className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
+                      >
+                        Dashboard
+                        <ArrowRight className="ms-2 h-5 w-5" />
+                      </Link>
+                    ) : (
+                      <Link
+                        href="/signin"
+                        className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
+                      >
+                        Signin
+                        <ArrowRight className="ms-2 h-5 w-5" />
+                      </Link>
+                    )
+                  }
                 </div>
                 <div className="mt-3 sm:ms-3 sm:mt-0">
                   <Link
