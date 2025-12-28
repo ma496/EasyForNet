@@ -45,12 +45,14 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
     {
         await SetAuthTokenAsync();
 
+        var roleService = App.Services.GetRequiredService<IRoleService>();
         var updateFaker = new Faker<UserUpdateRequest>()
             .RuleFor(u => u.Id, f => Guid.NewGuid())
             .RuleFor(u => u.FirstName, f => f.Name.FirstName())
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => true);
         var updateRequest = updateFaker.Generate();
+        updateRequest.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
         var (updateRsp, _) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);

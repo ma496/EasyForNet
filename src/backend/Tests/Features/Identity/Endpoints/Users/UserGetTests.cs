@@ -1,3 +1,5 @@
+using Backend.Features.Identity.Core;
+
 namespace Backend.Tests.Features.Identity.Endpoints.Users;
 
 using Backend.Features.Identity.Endpoints.Users;
@@ -9,6 +11,7 @@ public class UserGetTests(App app) : AppTestsBase(app)
     {
         await SetAuthTokenAsync();
 
+        var roleService = App.Services.GetRequiredService<IRoleService>();
         var faker = new Faker<UserCreateRequest>()
             .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex)
             .RuleFor(u => u.Email, f => f.Internet.Email() + f.UniqueIndex)
@@ -17,6 +20,7 @@ public class UserGetTests(App app) : AppTestsBase(app)
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => true);
         var request = faker.Generate();
+        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);

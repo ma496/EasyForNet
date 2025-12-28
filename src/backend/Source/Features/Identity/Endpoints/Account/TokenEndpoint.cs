@@ -2,7 +2,7 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
-sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting) : Endpoint<TokenRequest, TokenResponse>
+sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting, IOptions<AuthSetting> authSetting) : Endpoint<TokenRequest, TokenResponse>
 {
     public override void Configure()
     {
@@ -43,6 +43,19 @@ sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> sig
         {
             u.Claims.AddRange(claims);
         });
+
+        // Store refresh token in cookie
+        if (Response.RefreshToken != null)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(authSetting.Value.RefreshTokenValidity)
+            };
+            HttpContext.Response.Cookies.Append("refreshToken", $"{Response.UserId}:{Response.RefreshToken}", cookieOptions);
+        }
 
         await userService.UpdateLastSigninAsync(user.Id);
     }

@@ -20,7 +20,7 @@ export const hasAuthCookie = async () => {
   if (typeof window === 'undefined') {
     const cookies = await cookieObj.cookies()
     // Check for the standard ASP.NET Core cookie or configured name
-    return cookies.has('.AspNetCore.Cookies') || cookies.has('signin')
+    return cookies.has('.AspNetCore.Cookies') || cookies.has('refreshToken')
   }
   return false
 }
