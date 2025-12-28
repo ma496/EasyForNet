@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { logout } from '@/store/slices/authSlice'
+import { signout } from '@/store/slices/authSlice'
 import { useRouter } from 'next/navigation'
 import { getTranslation } from '@/i18n'
 import { User, LogOut, Lock } from 'lucide-react'
@@ -29,7 +29,7 @@ const NavUser = () => {
 
   const logoutAction = async () => {
     await logoutApi()
-    dispatch(logout())
+    dispatch(signout())
     router.push('/signin')
   }
 

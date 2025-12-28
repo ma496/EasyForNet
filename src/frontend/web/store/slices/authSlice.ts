@@ -15,11 +15,11 @@ export const authSlice = createSlice({
       state.user = payload
       state.isAuthenticated = payload !== undefined
     },
-    logout(state) {
+    signout(state) {
       state.user = undefined
       state.isAuthenticated = false
     },
   },
 })
 
-export const { setUserInfo, logout } = authSlice.actions
+export const { setUserInfo, signout } = authSlice.actions

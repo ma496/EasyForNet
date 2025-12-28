@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { environment } from '@/config/environment'
 import { Mutex } from 'async-mutex'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { logout } from '../slices/authSlice'
+import { signout } from '../slices/authSlice'
 
 const mutex = new Mutex()
 
@@ -47,7 +47,7 @@ const baseQueryWithReauth: BaseQueryFn<
           // Retry the initial query
           result = await baseQuery(args, api, extraOptions)
         } else {
-          api.dispatch(logout())
+          api.dispatch(signout())
           if (typeof window !== 'undefined' && window.location.pathname !== '/signin') {
             window.location.href = '/signin'
           }

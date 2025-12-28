@@ -4,7 +4,7 @@ import { getTranslation } from '@/i18n'
 import { useRouter } from 'next/navigation'
 import { useChangePasswordMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
-import { logout } from '@/store/slices/authSlice'
+import { signout } from '@/store/slices/authSlice'
 import { SuccessToast } from '@/lib/utils'
 import { Form, Formik } from 'formik'
 import { FormPasswordInput } from '@/components/ui/form/form-password-input'
@@ -43,7 +43,7 @@ export const ChangePasswordForm = () => {
       SuccessToast.fire({
         title: t('change_password_success'),
       })
-      dispatch(logout())
+      dispatch(signout())
       router.push('/signin')
     }
   }
