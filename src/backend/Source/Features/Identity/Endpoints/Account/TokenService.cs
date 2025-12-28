@@ -88,13 +88,10 @@ public class TokenService : RefreshTokenService<FastEndpoints.Security.TokenRequ
     {
         // If no UserId or RefreshToken (e.g. cookie missing/invalid), fail immediately
         if (string.IsNullOrEmpty(req.UserId) || string.IsNullOrEmpty(req.RefreshToken))
-        {
-            AddError(r => r.RefreshToken, "Refresh token is missing or invalid!");
-            return;
-        }
+            ThrowError(r => r.RefreshToken, "Refresh token is missing or invalid!", StatusCodes.Status401Unauthorized);
 
         if (!await _authTokenService.IsValidRefreshTokenAsync(req))
-            AddError(r => r.RefreshToken, "Refresh token is invalid!");
+            ThrowError(r => r.RefreshToken, "Refresh token is invalid!", StatusCodes.Status401Unauthorized);
     }
 
     /// <summary>
