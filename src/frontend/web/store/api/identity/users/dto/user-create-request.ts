@@ -1,6 +1,6 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type UserCreateRequest = RequestBase & {
+export interface UserCreateRequest extends RequestBase {
   username: string
   email: string
   password: string

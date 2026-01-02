@@ -1,6 +1,6 @@
 import { GenericAuditableDto } from '@/store/api/base/dto/auditable-dto'
 
-export type RoleGetResponse = GenericAuditableDto<string> & {
+export interface RoleGetResponse extends GenericAuditableDto<string> {
   name: string
   nameNormalized: string
   description: string

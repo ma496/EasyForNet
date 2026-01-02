@@ -1,12 +1,12 @@
 import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Tag, Box, Layers } from 'lucide-react'
 
 
-export type NavItemGroup = {
+export interface NavItemGroup {
   title: string
   items: NavItem[]
 }
 
-export type NavItem = {
+export interface NavItem {
   title: string
   url: string
   icon?: any

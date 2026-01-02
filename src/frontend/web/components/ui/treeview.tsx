@@ -5,7 +5,7 @@ import AnimateHeight from 'react-animate-height'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-export type TreeNode = {
+export interface TreeNode {
   id: string
   label: string
   children?: TreeNode[]

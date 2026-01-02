@@ -1,6 +1,6 @@
 import { SortDirection } from '@/store/api/base/sort-direction'
 
-export type ListRequestDto<TId> = {
+export interface ListRequestDto<TId> {
   page?: number
   pageSize?: number
   sortField?: string

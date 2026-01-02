@@ -1,6 +1,6 @@
 import { BaseDto } from '@/store/api/base/dto/base-dto'
 
-export type UserCreateResponse = BaseDto<string> & {
+export interface UserCreateResponse extends BaseDto<string> {
   username: string
   usernameNormalized: string
   email: string

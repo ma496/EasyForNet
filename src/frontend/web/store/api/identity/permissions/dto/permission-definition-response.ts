@@ -1,8 +1,8 @@
-export type PermissionDefinitionResponse = {
+export interface PermissionDefinitionResponse {
   permissions: PermissionDefinition[]
 }
 
-export type PermissionDefinition = {
+export interface PermissionDefinition {
   name: string
   displayName: string
   children: PermissionDefinition[]

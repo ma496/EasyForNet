@@ -1,5 +1,5 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type FileDeleteRequest = RequestBase & {
+export interface FileDeleteRequest extends RequestBase {
   fileName: string
 }

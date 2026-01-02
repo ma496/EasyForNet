@@ -1,8 +1,8 @@
-export type PermissionResponse = {
+export interface PermissionResponse {
   permissions: PermissionDto[]
 }
 
-export type PermissionDto = {
+export interface PermissionDto {
   id: string
   name: string
   displayName: string

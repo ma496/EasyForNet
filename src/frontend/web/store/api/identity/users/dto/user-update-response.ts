@@ -1,6 +1,6 @@
 import { BaseDto } from '@/store/api/base/dto/base-dto'
 
-export type UserUpdateResponse = BaseDto<string> & {
+export interface UserUpdateResponse extends BaseDto<string> {
   firstName?: string
   lastName?: string
   isActive: boolean

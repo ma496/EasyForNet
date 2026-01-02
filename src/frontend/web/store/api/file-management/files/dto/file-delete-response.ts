@@ -1,1 +1,1 @@
-export type FileDeleteResponse = {}
+export interface FileDeleteResponse { }

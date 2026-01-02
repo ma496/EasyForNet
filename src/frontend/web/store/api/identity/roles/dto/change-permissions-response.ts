@@ -1,5 +1,5 @@
 import { BaseDto } from '@/store/api/base/dto/base-dto'
 
-export type ChangePermissionsResponse = BaseDto<string> & {
+export interface ChangePermissionsResponse extends BaseDto<string> {
   permissions: string[]
 }

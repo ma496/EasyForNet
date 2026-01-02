@@ -1,4 +1,4 @@
 import { ListRequestDto } from '@/store/api/base/dto/list-request-dto'
 import { RequestBase } from '@/store/api/base/dto/request-base'
 
-export type UserListRequest = ListRequestDto<string> & RequestBase
+export interface UserListRequest extends ListRequestDto<string>, RequestBase { }

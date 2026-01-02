@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import themeConfig from '@/theme.config'
 
-type Language = {
+interface Language {
   code: string
   name: string
   isRTL: boolean
 }
 
-type ThemeConfigState = {
+interface ThemeConfigState {
   isDarkMode: boolean
   sidebar: boolean
   theme: string

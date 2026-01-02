@@ -1,3 +1,3 @@
-export type FileUploadResponse = {
+export interface FileUploadResponse {
   fileName: string
 }

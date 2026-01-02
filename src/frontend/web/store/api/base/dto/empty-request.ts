@@ -1,1 +1,1 @@
-export type EmptyRequest = {}
+export interface EmptyRequest { }

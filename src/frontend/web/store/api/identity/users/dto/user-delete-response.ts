@@ -1,6 +1,6 @@
 import { BaseDto } from '@/store/api/base/dto/base-dto'
 
-export type UserDeleteResponse = BaseDto<string> & {
+export interface UserDeleteResponse extends BaseDto<string> {
   success: boolean
   message: string
 }

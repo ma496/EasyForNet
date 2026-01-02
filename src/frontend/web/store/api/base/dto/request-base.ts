@@ -1,3 +1,3 @@
-export type RequestBase = {
+export interface RequestBase {
   ignoreStatuses?: number[]
 }

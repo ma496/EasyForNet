@@ -1,19 +1,19 @@
 import { BaseDto } from './base-dto'
 
-export type CreatableDto = {
+export interface CreatableDto {
   createdAt: string
   createdBy: string
 }
 
-export type UpdatableDto = {
+export interface UpdatableDto {
   updatedAt: string
   updatedBy: string
 }
 
-export type AuditableDto = CreatableDto & UpdatableDto
+export interface AuditableDto extends CreatableDto, UpdatableDto { }
 
-export type GenericCreatableDto<TId> = {} & CreatableDto & BaseDto<TId>
+export interface GenericCreatableDto<TId> extends CreatableDto, BaseDto<TId> { }
 
-export type GenericUpdatableDto<TId> = {} & UpdatableDto & BaseDto<TId>
+export interface GenericUpdatableDto<TId> extends UpdatableDto, BaseDto<TId> { }
 
-export type GenericAuditableDto<TId> = {} & AuditableDto & BaseDto<TId>
+export interface GenericAuditableDto<TId> extends AuditableDto, BaseDto<TId> { }

@@ -1,6 +1,6 @@
 import { Allow } from './allow'
 
-export type AuthUrl = {
+export interface AuthUrl {
   url: string
   permissions?: string[]
 }

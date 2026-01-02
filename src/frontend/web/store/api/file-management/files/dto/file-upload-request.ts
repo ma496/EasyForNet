@@ -1,5 +1,5 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type FileUploadRequest = RequestBase & {
+export interface FileUploadRequest extends RequestBase {
   file: File
 }

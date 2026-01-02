@@ -1,5 +1,5 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type ForgetPasswordRequest = RequestBase & {
+export interface ForgetPasswordRequest extends RequestBase {
   email: string
 }

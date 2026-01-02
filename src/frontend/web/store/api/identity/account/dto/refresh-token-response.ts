@@ -1,4 +1,4 @@
-export type RefreshTokenResponse = {
+export interface RefreshTokenResponse {
   userId: string
   accessToken: string
   refreshToken: string

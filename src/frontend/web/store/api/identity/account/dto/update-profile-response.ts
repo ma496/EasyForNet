@@ -1,4 +1,4 @@
-export type UpdateProfileResponse = {
+export interface UpdateProfileResponse {
   id: string
   email: string
   firstName: string

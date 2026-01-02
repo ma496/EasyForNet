@@ -1,5 +1,5 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type FileGetRequest = RequestBase & {
+export interface FileGetRequest extends RequestBase {
   fileName: string
 }

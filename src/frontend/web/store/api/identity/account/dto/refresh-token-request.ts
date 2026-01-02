@@ -1,6 +1,6 @@
 import { RequestBase } from "@/store/api/base/dto/request-base"
 
-export type RefreshTokenRequest = RequestBase & {
+export interface RefreshTokenRequest extends RequestBase {
   userId: string
   refreshToken: string
 }

@@ -1,7 +1,6 @@
-export type SearchableItem = {
+export interface SearchableItem {
   title: string
   url: string
-
 }
 
 export const searchableItems: SearchableItem[] = [

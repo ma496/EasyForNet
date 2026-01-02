@@ -1,6 +1,6 @@
 import { GenericAuditableDto } from '@/store/api/base/dto/auditable-dto'
 
-export type UserGetResponse = GenericAuditableDto<string> & {
+export interface UserGetResponse extends GenericAuditableDto<string> {
   username: string
   usernameNormalized: string
   email: string

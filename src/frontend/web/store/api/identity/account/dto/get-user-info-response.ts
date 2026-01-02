@@ -1,4 +1,4 @@
-export type GetUserInfoResponse = {
+export interface GetUserInfoResponse {
   id: string
   username: string
   email: string
@@ -8,13 +8,13 @@ export type GetUserInfoResponse = {
   roles: GetUserInfoRole[]
 }
 
-export type GetUserInfoRole = {
+export interface GetUserInfoRole {
   id: string
   name: string
   permissions: GetUserInfoPermission[]
 }
 
-export type GetUserInfoPermission = {
+export interface GetUserInfoPermission {
   id: string
   name: string
   displayName: string

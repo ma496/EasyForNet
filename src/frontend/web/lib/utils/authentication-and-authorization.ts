@@ -1,6 +1,6 @@
 import { GetUserInfoResponse } from "@/store/api/identity/account/dto/get-user-info-response"
 
-export type AuthState = {
+export interface AuthState {
   user: GetUserInfoResponse | undefined
   isAuthenticated: boolean
 }

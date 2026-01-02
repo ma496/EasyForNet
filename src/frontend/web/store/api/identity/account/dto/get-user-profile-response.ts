@@ -1,4 +1,4 @@
-export type GetUserProfileResponse = {
+export interface GetUserProfileResponse {
   id: string
   username: string
   email: string
