@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/identity/users/users-api'
 import { SortDirection } from '@/store/api/base/sort-direction'
-import { UserListDto } from '@/store/api/identity/users/dto/user-list-response'
+import { UserListDto } from '@/store/api/identity/users/users-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
 import { getTranslation } from '@/i18n'
 import { ExportFormat, SuccessToast, exportData, isAllowed } from '@/lib/utils'

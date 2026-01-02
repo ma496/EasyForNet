@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GetUserInfoResponse } from '../api/identity/account/dto/get-user-info-response'
+import { GetUserInfoResponse } from '../api/identity/account/account-dtos'
 import { AuthState } from '@/lib/utils'
 
 const initialState: AuthState = {

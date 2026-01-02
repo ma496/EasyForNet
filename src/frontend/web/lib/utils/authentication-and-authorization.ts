@@ -1,4 +1,4 @@
-import { GetUserInfoResponse } from "@/store/api/identity/account/dto/get-user-info-response"
+import { GetUserInfoResponse } from "@/store/api/identity/account/account-dtos"
 
 export interface AuthState {
   user: GetUserInfoResponse | undefined

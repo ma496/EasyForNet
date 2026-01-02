@@ -1,20 +1,21 @@
 import { appApi } from '@/store/api/_app-api'
-import { ChangePasswordRequest } from './dto/change-password-request'
-import { TokenRequest } from './dto/token-request'
-import { TokenResponse } from './dto/token-response'
-import { GetUserInfoResponse } from './dto/get-user-info-response'
-import { GetUserProfileResponse } from './dto/get-user-profile-response'
-import { RefreshTokenResponse } from './dto/refresh-token-response'
-import { RefreshTokenRequest } from './dto/refresh-token-request'
-import { UpdateProfileResponse } from './dto/update-profile-response'
-import { ForgetPasswordRequest } from './dto/forget-password-request'
-import { ResetPasswordRequest } from './dto/reset-password-request'
-import { UpdateProfileRequest } from './dto/update-profile-request'
-
-import { SignupRequest } from './dto/signup-request'
-import { VerifyEmailRequest } from './dto/verify-email-request'
-import { SignupResponse } from './dto/signup-response'
-import { ResendVerifyEmailRequest } from './dto/resend-verify-email-request'
+import {
+  ChangePasswordRequest,
+  TokenRequest,
+  TokenResponse,
+  GetUserInfoResponse,
+  GetUserProfileResponse,
+  RefreshTokenResponse,
+  RefreshTokenRequest,
+  UpdateProfileResponse,
+  ForgetPasswordRequest,
+  ResetPasswordRequest,
+  UpdateProfileRequest,
+  SignupRequest,
+  VerifyEmailRequest,
+  SignupResponse,
+  ResendVerifyEmailRequest
+} from './account-dtos'
 
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,

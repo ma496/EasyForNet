@@ -1,9 +1,5 @@
 import { appApi } from '@/store/api/_app-api'
-import { FileUploadRequest } from './dto/file-upload-request'
-import { FileUploadResponse } from './dto/file-upload-response'
-import { FileGetRequest } from './dto/file-get-request'
-import { FileDeleteRequest } from './dto/file-delete-request'
-import { FileDeleteResponse } from './dto/file-delete-response'
+import { FileDeleteRequest, FileDeleteResponse, FileGetRequest, FileUploadRequest, FileUploadResponse } from './files-dtos'
 
 export const filesApi = appApi.injectEndpoints({
   overrideExisting: false,

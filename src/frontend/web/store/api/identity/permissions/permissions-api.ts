@@ -1,6 +1,5 @@
 import { appApi } from '@/store/api/_app-api'
-import { PermissionDefinitionResponse } from './dto/permission-definition-response'
-import { PermissionResponse } from './dto/permission-response'
+import { PermissionDefinitionResponse, PermissionResponse } from './permissions-dtos'
 
 export const permissionsApi = appApi.injectEndpoints({
   overrideExisting: false,

@@ -7,3 +7,13 @@ export interface PermissionDefinition {
   displayName: string
   children: PermissionDefinition[]
 }
+
+export interface PermissionResponse {
+  permissions: PermissionDto[]
+}
+
+export interface PermissionDto {
+  id: string
+  name: string
+  displayName: string
+}

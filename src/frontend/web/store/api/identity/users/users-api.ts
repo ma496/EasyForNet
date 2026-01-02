@@ -1,14 +1,16 @@
 import { appApi } from '@/store/api/_app-api'
-import { UserCreateRequest } from './dto/user-create-request'
-import { UserCreateResponse } from './dto/user-create-response'
-import { UserDeleteRequest } from './dto/user-delete-request'
-import { UserDeleteResponse } from './dto/user-delete-response'
-import { UserGetRequest } from './dto/user-get-request'
-import { UserGetResponse } from './dto/user-get-response'
-import { UserListRequest } from './dto/user-list-request'
-import { UserListResponse } from './dto/user-list-response'
-import { UserUpdateRequest } from './dto/user-update-request'
-import { UserUpdateResponse } from './dto/user-update-response'
+import {
+  UserCreateRequest,
+  UserCreateResponse,
+  UserDeleteRequest,
+  UserDeleteResponse,
+  UserGetRequest,
+  UserGetResponse,
+  UserListRequest,
+  UserListResponse,
+  UserUpdateRequest,
+  UserUpdateResponse
+} from './users-dtos'
 
 export const usersApi = appApi
   .enhanceEndpoints({
