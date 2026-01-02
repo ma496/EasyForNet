@@ -49,7 +49,7 @@ public class ArgumentInfo
                 [
                     new ArgumentOption
                     {
-                        Name = "--featureName",
+                        Name = "--name",
                         ShortName = "-n",
                         Description = "Name of feature.",
                         Required = true,
