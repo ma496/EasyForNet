@@ -1,7 +1,7 @@
+namespace EasyForNetTool.Tests.Generator;
+
 using EasyForNetTool.Generator;
 using Microsoft.CodeAnalysis.CSharp;
-
-namespace EasyForNetTool.Tests.Generator;
 
 public class NamespaceRewriterTests
 {

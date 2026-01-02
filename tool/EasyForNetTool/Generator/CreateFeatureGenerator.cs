@@ -1,6 +1,6 @@
-using EasyForNetTool.Parsing;
-
 namespace EasyForNetTool.Generator;
+
+using EasyForNetTool.Parsing;
 
 public class CreateFeatureGenerator : CodeGeneratorBase<CreateFeatureArgument>
 {

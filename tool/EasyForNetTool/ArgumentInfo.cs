@@ -1,7 +1,6 @@
-using EasyForNetTool.Parsing;
-
 namespace EasyForNetTool;
 
+using EasyForNetTool.Parsing;
 
 public class ArgumentInfo
 {

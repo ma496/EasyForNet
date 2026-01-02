@@ -1,6 +1,6 @@
-using EasyForNetTool.Parsing;
-
 namespace EasyForNetTool.Tests.Parsing;
+
+using EasyForNetTool.Parsing;
 
 public class CreateProjectArgumentTests
 {

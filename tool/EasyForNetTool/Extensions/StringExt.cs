@@ -1,6 +1,6 @@
-using System.Text.Json;
-
 namespace EasyForNetTool.Extensions;
+
+using System.Text.Json;
 
 public static class StringExt
 {

@@ -1,19 +1,13 @@
+namespace EasyForNetTool.Generator;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace EasyForNetTool.Generator;
-
-public class NamespaceRewriter : CSharpSyntaxRewriter
+public class NamespaceRewriter(string oldRoot, string newRoot) : CSharpSyntaxRewriter
 {
-    private readonly string _old;
-    private readonly string _new;
-
-    public NamespaceRewriter(string oldRoot, string newRoot)
-    {
-        _old = oldRoot;
-        _new = newRoot;
-    }
+    private readonly string _old = oldRoot;
+    private readonly string _new = newRoot;
 
     private string ReplaceNs(string ns)
     {

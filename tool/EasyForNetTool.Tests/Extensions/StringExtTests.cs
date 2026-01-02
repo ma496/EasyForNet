@@ -1,6 +1,6 @@
-using EasyForNetTool.Extensions;
-
 namespace EasyForNetTool.Tests.Extensions;
+
+using EasyForNetTool.Extensions;
 
 public class StringExtTests
 {

@@ -1,6 +1,3 @@
-using EasyForNetTool;
-using Xunit;
-
 namespace EasyForNetTool.Tests;
 
 public class HelpersTests : IDisposable

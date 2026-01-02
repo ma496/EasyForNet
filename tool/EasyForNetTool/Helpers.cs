@@ -1,7 +1,7 @@
+namespace EasyForNetTool;
+
 using System.Reflection;
 using System.Text.RegularExpressions;
-
-namespace EasyForNetTool;
 
 public static class Helpers
 {

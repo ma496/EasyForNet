@@ -1,8 +1,5 @@
 namespace EasyForNetTool;
 
-public class UserFriendlyException : Exception
+public class UserFriendlyException(string message) : Exception(message)
 {
-    public UserFriendlyException(string message) : base(message)
-    {
-    }
 }

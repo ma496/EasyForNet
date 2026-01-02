@@ -1,3 +1,5 @@
+namespace EasyForNetTool.Generator;
+
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using EasyForNetTool.Extensions;
@@ -5,8 +7,6 @@ using EasyForNetTool.Parsing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Formatting;
-
-namespace EasyForNetTool.Generator;
 
 public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 {

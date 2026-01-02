@@ -1,6 +1,6 @@
-using EasyForNetTool.Extensions;
-
 namespace EasyForNetTool.Parsing;
+
+using EasyForNetTool.Extensions;
 
 public abstract class ParserBase
 {

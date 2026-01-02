@@ -1,6 +1,6 @@
-using System.Text.RegularExpressions;
-
 namespace EasyForNetTool.Parsing;
+
+using System.Text.RegularExpressions;
 
 public class CreateProjectArgument : Argument
 {
