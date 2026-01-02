@@ -3,6 +3,7 @@ namespace Backend.Features.Identity.Core;
 using System.Security.Claims;
 using Backend.Attributes;
 
+[AllowOutside]
 public interface ICurrentUserService
 {
     Guid? GetCurrentUserId();
