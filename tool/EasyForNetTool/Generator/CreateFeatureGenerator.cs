@@ -14,7 +14,7 @@ public class CreateFeatureGenerator : CodeGeneratorBase<CreateFeatureArgument>
             throw new UserFriendlyException($"Failed to get project info from '{projectPath}'. .csproj file is not found.");
         }
 
-        var featureName = argument.FeatureName;
+        var featureName = argument.Name;
 
         var featureDirectory = argument.Output != null
             ? Path.Combine(Directory.GetCurrentDirectory(), argument.Output, featureName)
