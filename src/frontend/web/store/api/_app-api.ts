@@ -3,7 +3,7 @@ import { environment } from '@/config/environment'
 import { Mutex } from 'async-mutex'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { signout } from '../slices/authSlice'
-import { isAuthUrl } from '@/auth-urls'
+import { isAuthRequired } from '@/auth-urls'
 
 const mutex = new Mutex()
 
@@ -50,8 +50,7 @@ const baseQueryWithReauth: BaseQueryFn<
         } else {
           api.dispatch(signout())
           const pathname = typeof window !== 'undefined' ? window.location.pathname : undefined
-          const isAuthRequired = pathname ? isAuthUrl(pathname) : false
-          if (isAuthRequired) {
+          if (pathname && isAuthRequired(pathname)) {
             window.location.href = '/signin'
           }
         }

@@ -69,7 +69,7 @@ export const getMatchedAuthUrl = (url: string): AuthUrl | undefined => {
   return matches[0]
 }
 
-export const isAuthUrl = (url: string) => {
+export const isAuthRequired = (url: string) => {
   return url.includes('/app/') || !!getMatchedAuthUrl(url)
 }
 
