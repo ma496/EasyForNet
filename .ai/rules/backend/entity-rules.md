@@ -1,4 +1,4 @@
-# Entities
+# Entity
 
 *   **Entities:** All database entities are located in the `Core/Entities` subdirectory of a feature.
     *   Entities should inherit from `BaseEntity` or `AuditableEntity`.
