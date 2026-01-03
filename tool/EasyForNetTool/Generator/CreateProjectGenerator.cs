@@ -124,11 +124,6 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "packages..name", kebabCaseProjectName);
-            // update .md and .txt files in .ai directory
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendProjectRootNamespace)}\.", $"{pascalCaseProjectName}.", ".md", ".txt");
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendTestProjectRootNamespace)}\.", $"{pascalCaseProjectName}.Tests.", ".md", ".txt");
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendProjectName)}\.csproj", $"{pascalCaseProjectName}.csproj", ".md", ".txt");
-            await ReplaceInFiles(Path.Combine(targetPath, ".ai"), $@"{Regex.Escape(backendTestProjectName)}\.csproj", $"{pascalCaseProjectName}.Tests.csproj", ".md", ".txt");
 
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");

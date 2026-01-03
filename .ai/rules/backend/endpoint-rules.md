@@ -33,8 +33,6 @@ Every related endpoints like `Users` must have a `Group` class to define the bas
 
 **Example Group Class (`UsersGroup.cs`):**
 ```csharp
-namespace EcommerceDemo.Features.Identity.Endpoints.Users;
-
 sealed class UsersGroup : Group
 {
     public UsersGroup()
@@ -115,8 +113,6 @@ Always ignore sensitive data (like `Password`) or properties handled manually (l
 
 ### Create Endpoint (POST)
 ```csharp
-namespace EcommerceDemo.Features.Identity.Endpoints.Users;
-
 sealed class UserCreateEndpoint(IUserService userService, AppDbContext dbContext) : Endpoint<UserCreateRequest, UserCreateResponse>
 {
     public override void Configure()
