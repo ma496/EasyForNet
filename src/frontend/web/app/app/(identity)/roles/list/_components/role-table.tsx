@@ -113,14 +113,17 @@ export const RoleTable = () => {
     }),
     columnHelper.accessor('userCount', {
       header: t('table_roles_userCount'),
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <div className='w-10 flex items-center justify-center'>
+          <span className='badge badge-primary'>{info.getValue()}</span>
+        </div>),
       enableSorting: false,
     }),
     columnHelper.display({
       id: 'actions',
       header: t('table_actions'),
       cell: (info) => (
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center gap-2">
           {canUpdate && (
             <Link href={`/app/roles/update/${info.row.original.id}`} className="btn btn-secondary btn-sm">
               <Pencil className="h-3 w-3" />
