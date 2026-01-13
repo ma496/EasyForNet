@@ -6,6 +6,18 @@ using Backend.Features.Identity.Core.Entities;
 
 public static class Helper
 {
+    public static void AddFeatures(IServiceCollection services, ConfigurationManager configuration)
+    {
+        var features = typeof(Helper).Assembly.GetTypes()
+            .Where(p => typeof(IFeature).IsAssignableFrom(p) && !p.IsAbstract)
+            .ToList();
+
+        foreach (var feature in features)
+        {
+            feature.GetMethod("AddServices")?.Invoke(null, [services, configuration]);
+        }
+    }
+    
     public static List<Claim> CreateClaims(User user, List<string> roles, List<string> permissions)
     {
         var claims = new List<Claim>

@@ -1,5 +1,7 @@
 {
   "[css]": {
     "editor.formatOnSave": false
-  }
+  },
+  "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.shellIntegration.enabled": true
 }

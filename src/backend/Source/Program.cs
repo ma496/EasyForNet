@@ -75,18 +75,17 @@ bld.Services.AddHangfire(config =>
 bld.Services.AddHangfireServer();
 
 // configure settings
-bld.Services.Configure<AuthSetting>(bld.Configuration.GetSection("Auth"));
-bld.Services.Configure<SigninSetting>(bld.Configuration.GetSection("Signin"));
 bld.Services.Configure<PayloadSetting>(bld.Configuration.GetSection("Payload"));
-bld.Services.Configure<FileSetting>(bld.Configuration.GetSection("File"));
 bld.Services.Configure<WebSetting>(bld.Configuration.GetSection("Web"));
 
 // rely on middleware and FormOptions to enforce limits to avoid abrupt connection resets
 bld.WebHost.ConfigureKestrel(o => o.Limits.MaxRequestBodySize = null);
 bld.Services.Configure<FormOptions>(o => o.MultipartBodyLengthLimit = 1073741824); // 1024 mb
 
+// configure features
+Helper.AddFeatures(bld.Services, bld.Configuration);
+
 // configure services 
-bld.Services.AddFeatures();
 bld.Services.AddScoped<DataSeeder>();
 bld.Services.AddSingleton<PermissionDefinitionContext>();
 bld.Services.AddScoped<PermissionDefinitionProvider>();

@@ -6,8 +6,13 @@ using Backend.Features.Identity.Core;
 [BypassNoDirectUse]
 public class IdentityFeature : IFeature
 {
-    public static void AddServices(IServiceCollection services)
+    public static void AddServices(IServiceCollection services, ConfigurationManager configuration)
     {
+        // configure settings
+        services.Configure<AuthSetting>(configuration.GetSection("Auth"));
+        services.Configure<SigninSetting>(configuration.GetSection("Signin"));
+        
+        // configure services
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IPermissionService, PermissionService>();
