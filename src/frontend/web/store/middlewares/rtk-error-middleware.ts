@@ -8,7 +8,7 @@ export const rtkErrorMiddleware: Middleware = (api) => (next) => (action: any) =
   if (isRejectedWithValue(action)) {
     if (ignoreEndpoints.includes(action.meta.arg.endpointName)) return next(action)
     const payload: any = action.payload ?? action.error
-    rtkErrorHandler(payload, action.meta.arg.originalArgs.ignoreStatuses)
+    rtkErrorHandler(payload, action.meta.arg.originalArgs?.ignoreStatuses)
   }
   return next(action)
 }
