@@ -167,11 +167,11 @@ export const MultiFileUpload = ({
           ghostClass="opacity-50"
         >
           {fileNames.map((fileName, index) => (
-            <div key={fileName} className="group relative aspect-square cursor-move overflow-hidden rounded-lg border border-white-light dark:border-[#17263c]">
+            <div key={fileName} className="group relative aspect-square cursor-move overflow-hidden rounded-lg border border-white-light dark:border-[#17263c] bg-gray-100 dark:bg-gray-800">
               {fileUrls[fileName] ? (
-                <img src={fileUrls[fileName]} alt="" className="h-full w-full object-cover" />
+                <img src={fileUrls[fileName]} alt="" className="h-full w-full object-contain" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+                <div className="flex h-full w-full items-center justify-center">
                   <Loader2 className="h-6 w-6 animate-spin text-primary" />
                 </div>
               )}
