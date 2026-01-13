@@ -13,8 +13,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.EmailNormalized)
             .IsUnique();
         builder.HasIndex(u => u.FirstName)
-            .IsUnique();
+            .IsUnique(false);
         builder.HasIndex(u => u.LastName)
-            .IsUnique();
+            .IsUnique(false);
     }
 }

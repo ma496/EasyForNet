@@ -16,7 +16,11 @@ public class FileUploadEndpoint(IFileStatusService fileStatusService, IFileServi
         await using var stream = req.File!.OpenReadStream();
         var fileName = await fileService.UploadAsync(stream, req.File.FileName, req.File.ContentType);
 
-        await fileStatusService.CreateAsync(fileName);
+        await fileStatusService.CreateAsync(
+            fileName,
+            req.File.Length,
+            req.File.ContentType,
+            Path.GetExtension(req.File.FileName));
 
         var response = new FileUploadResponse
         {

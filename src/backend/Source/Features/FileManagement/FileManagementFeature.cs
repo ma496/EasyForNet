@@ -14,6 +14,7 @@ public class FileManagementFeature : IFeature
         // configure services
         services.AddScoped<IFileStatusService, FileStatusService>();
         services.AddScoped<IDeleteUnactiveFilesService, DeleteUnactiveFilesService>();
-        services.AddScoped<IFileService, LocalFileService>();
+        services.AddScoped<IStorageProvider, LocalStorageProvider>();
+        services.AddScoped<IFileService, FileService>();
     }
 }

@@ -1,8 +1,10 @@
 namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
+using Backend.Features.FileManagement.Core;
 
-sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
+sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService,
+    IFileStatusService fileStatusService, IFileService fileService)
     : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
 {
     public override void Configure()
@@ -21,12 +23,28 @@ sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService c
             return;
         }
 
+        var oldImage = user.Image;
+
         user.Email = request.Email;
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;
         user.Image = request.Image;
 
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        if (oldImage != user.Image)
+        {
+            if (!user.Image.IsNullOrEmpty())
+            {
+                await fileStatusService.ActivateAsync(user.Image!);
+            }
+
+            if (!oldImage.IsNullOrEmpty())
+            {
+                await fileService.DeleteAsync(oldImage!);
+                await fileStatusService.DeleteAsync(oldImage!);
+            }
+        }
 
         await Send.ResponseAsync(new()
         {

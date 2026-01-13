@@ -4,7 +4,7 @@ import { Plus, Trash2, Loader2 } from 'lucide-react'
 import { cn, confirmDeleteAlert } from '@/lib/utils'
 import { getTranslation } from '@/i18n'
 import { IconButton } from '@/components/ui/icon-button'
-import { useFileUploadMutation, useLazyFileGetQuery } from '@/store/api/file-management/files/files-api'
+import { useFileUploadMutation, useLazyFileGetQuery, useFileDeleteMutation } from '@/store/api/file-management/files/files-api'
 import { ReactSortable } from 'react-sortablejs'
 
 interface MultiFileUploadProps {
@@ -27,6 +27,7 @@ export const MultiFileUpload = ({
   const { t } = getTranslation()
   const inputId = useId()
   const [uploadFile, { isLoading: isUploading }] = useFileUploadMutation()
+  const [deleteFile] = useFileDeleteMutation()
   const [getFileTrigger] = useLazyFileGetQuery()
   const [fileUrls, setFileUrls] = useState<{ [key: string]: string }>({})
 
@@ -84,15 +85,24 @@ export const MultiFileUpload = ({
   }
 
   const handleRemove = async (index: number) => {
+    const fileNameToRemove = fileNames[index]
     const result = await confirmDeleteAlert({
       title: t('delete_file'),
       text: t('delete_file_confirmation'),
     })
 
     if (result.isConfirmed) {
+      await deleteFile({ fileName: fileNameToRemove })
       const newFileNames = [...fileNames]
       newFileNames.splice(index, 1)
       onFilesChanged(newFileNames)
+
+      if (fileUrls[fileNameToRemove]) {
+        URL.revokeObjectURL(fileUrls[fileNameToRemove])
+        const newUrls = { ...fileUrls }
+        delete newUrls[fileNameToRemove]
+        setFileUrls(newUrls)
+      }
     }
   }
 

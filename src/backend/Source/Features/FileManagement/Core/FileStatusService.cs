@@ -6,7 +6,7 @@ using Backend.Features.FileManagement.Core.Entities;
 [AllowOutside]
 public interface IFileStatusService
 {
-    Task CreateAsync(string fileName);
+    Task CreateAsync(string fileName, long size, string contentType, string extension);
 
     Task DeleteAsync(string fileName);
     Task DeleteAsync(IReadOnlyCollection<string> fileNames);
@@ -19,11 +19,14 @@ public interface IFileStatusService
 [NoDirectUse]
 public class FileStatusService(AppDbContext dbContext) : IFileStatusService
 {
-    public async Task CreateAsync(string fileName)
+    public async Task CreateAsync(string fileName, long size, string contentType, string extension)
     {
         await dbContext.UploadFiles.AddAsync(new UploadFile
         {
             Name = fileName,
+            Size = size,
+            ContentType = contentType,
+            Extension = extension,
             Status = FileStatus.Inactive,
         });
         await dbContext.SaveChangesAsync();
