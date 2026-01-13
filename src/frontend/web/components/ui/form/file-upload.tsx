@@ -6,10 +6,8 @@ import { cn, confirmDeleteAlert, errorAlert } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import type { ButtonProps } from '@/components/ui/button'
 import { IconButton } from '@/components/ui/icon-button'
-import { useFileUploadMutation } from '@/store/api/file-management/files/files-api'
+import { useFileUploadMutation, useFileDeleteMutation, useLazyFileGetQuery } from '@/store/api/file-management/files/files-api'
 import { FileUploadResponse } from '@/store/api/file-management/files/files-dtos'
-import { useFileDeleteMutation } from '@/store/api/file-management/files/files-api'
-import { useLazyFileGetQuery } from '@/store/api/file-management/files/files-api'
 import { getTranslation } from '@/i18n'
 
 export interface FileUploadProps {
@@ -160,7 +158,7 @@ export const FileUpload = ({
   const getFileUrl = useCallback(async (): Promise<string | undefined> => {
     const current = fileName ?? response?.fileName
     if (!current) return undefined
-    const result = await getFileTrigger({ fileName: current })
+    const result = await getFileTrigger({ fileName: current, ignoreStatuses: [404] })
     if (result.data) {
       return URL.createObjectURL(result.data as Blob)
     }
@@ -185,7 +183,7 @@ export const FileUpload = ({
         setSelectedFileUrl(undefined)
         return
       }
-      const result = await getFileTrigger({ fileName: current })
+      const result = await getFileTrigger({ fileName: current, ignoreStatuses: [404] })
       if (!cancelled) {
         if (result.data) {
           const url = URL.createObjectURL(result.data as Blob)

@@ -37,7 +37,7 @@ const NavUser = () => {
     let objectUrl: string | undefined
     const loadAvatar = async () => {
       if (user?.image) {
-        const result = await fetchAvatar({ fileName: user.image })
+        const result = await fetchAvatar({ fileName: user.image, ignoreStatuses: [404] })
         if (result.data) {
           const blob = result.data as Blob
           objectUrl = URL.createObjectURL(blob)

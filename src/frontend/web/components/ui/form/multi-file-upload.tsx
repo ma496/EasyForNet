@@ -35,7 +35,7 @@ export const MultiFileUpload = ({
     const urls: { [key: string]: string } = {}
     for (const fileName of names) {
       if (!fileUrls[fileName]) {
-        const result = await getFileTrigger({ fileName })
+        const result = await getFileTrigger({ fileName, ignoreStatuses: [404] })
         if (result.data) {
           const blob = result.data as Blob
           const url = URL.createObjectURL(blob)
