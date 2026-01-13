@@ -8,8 +8,8 @@ Follow these explicit coding conventions when creating new API endpoints.
 
 ### File Structure
 Create the API file and a single DTO file in the relevant feature's `store/api` directory.
-- API file: `src/frontend/web/store/api/my-feature/my-entities/my-entities-api.ts`
-- DTO file: `src/frontend/web/store/api/my-feature/my-entities/my-entities-dtos.ts`
+- API file: `src/frontend/web/store/api/identity/users/users-api.ts`
+- DTO file: `src/frontend/web/store/api/identity/users/users-dtos.ts`
 
 ### Code Template
 Use the following structure as a standard template for your API definitions. Ensure you import `appApi` from `@/store/api/_app-api` and use `injectEndpoints`.
@@ -17,52 +17,54 @@ Use the following structure as a standard template for your API definitions. Ens
 ```typescript
 import { appApi } from '@/store/api/_app-api'
 import {
-  EntityCreateRequest,
-  EntityCreateResponse,
-  EntityGetRequest,
-  EntityGetResponse,
+  UserCreateRequest,
+  UserCreateResponse,
+  UserGetRequest,
+  UserGetResponse,
   // ... other DTOs
-} from './entity-dtos'
+} from './users-dtos'
 
-export const entitiesApi = appApi
+export const usersApi = appApi
   .enhanceEndpoints({
-    addTagTypes: ['Entities'], // Only include if CRUD operations require cache invalidation
+    addTagTypes: ['Users'], // Only include if CRUD operations require cache invalidation
   })
   .injectEndpoints({
     overrideExisting: false,
     endpoints: (builder) => ({
-      entityCreate: builder.mutation<EntityCreateResponse, EntityCreateRequest>({
+      userCreate: builder.mutation<UserCreateResponse, UserCreateRequest>({
         query: (input) => ({
-          url: '/entities',
+          url: '/users',
           method: 'POST',
           body: input,
         }),
-        invalidatesTags: ['Entities'],
+        invalidatesTags: ['Users'],
       }),
-      entityGet: builder.query<EntityGetResponse, EntityGetRequest>({
+      userGet: builder.query<UserGetResponse, UserGetRequest>({
         query: (input) => ({
-          url: `/entities/${input.id}`,
+          url: `/users/${input.id}`,
           method: 'GET',
         }),
-        providesTags: (result, error, arg) => [{ type: 'Entities', id: arg.id }],
+        providesTags: (result, error, arg) => [{ type: 'Users', id: arg.id }],
       }),
       // ... other endpoints
     }),
   })
 
 export const { 
-  useEntityCreateMutation, 
-  useEntityGetQuery,
+  useUserCreateMutation, 
+  useUserGetQuery,
   // ... export hooks 
-} = entitiesApi
-```
+} = usersApi
+## 4. Formatting
+
+*   **Indentation**: Use **2-space indentation** strictly for all TypeScript (`.ts` and `.tsx`) files.
 
 ### Tag Usage
 Use `providesTags` and `invalidatesTags` **only when you need them**, for example in CRUD endpoints where cache invalidation is critical to maintain data consistency. If an endpoint does not interact with the cache of other queries, omit the tags to reduce complexity.
 
 ## 2. DTO (Data Transfer Object) Creation
 
-Create all required DTOs for a specific entity in a single file named `{{entity}}-dtos.ts` in the same directory as the API file.
+Create all required DTOs for a specific group (e.g., users, roles, account) in a single file named `{{group}}-dtos.ts` in the same directory as the API file.
 
 ### DTO Guidelines
 
@@ -99,7 +101,7 @@ When processing API endpoints to create DTOs, implement the following comprehens
 If you discover an `Enums.cs` file in the backend `{{feature}}/Core` directory, you must create a corresponding `enum.ts` file in the frontend.
 
 ### Location
-Create the file in the `web/store/api/{{feature}}` directory (e.g., `src/frontend/web/store/api/my-feature/enum.ts`).
+Create the file in the `web/store/api/{{feature}}` directory (e.g., `src/frontend/web/store/api/identity/enum.ts`).
 
 ### Format
 Use **String Enums** strictly. Do not use numeric values, even if the backend uses them by default.

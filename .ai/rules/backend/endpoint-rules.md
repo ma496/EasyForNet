@@ -399,4 +399,61 @@ sealed class UserDeleteEndpoint(IUserService userService) : Endpoint<UserDeleteR
 }
 
 public sealed class UserDeleteRequest : BaseDto<Guid> { }
+
+## 9. DbContext Usage
+- Use the properties defined in `AppDbContext` (e.g., `dbContext.Users`) instead of calling `dbContext.Set<User>()` explicitly.
+
+## 10. Error Handling & Error Codes
+- When using `ThrowError`, always provide an error message AND an error code.
+- Error codes must be defined in the `ErrorCodes` class located at `src/backend/Source/ErrorHandling/ErrorCodes.cs`.
+- Follow the naming convention `ErrorDescription` (e.g., `ProductNotFound`).
+
+## 11. Service Class Rules
+
+To maintain a clean architecture and prevent unnecessary abstraction, follow these rules regarding service classes:
+
+### When to Create a Service
+- **AVOID** creating service classes for simple CRUD operations. You should use `AddDbContext` (inject `AppDbContext dbContext`) directly in your endpoints to perform basic operations.
+- **CREATE** a service class only when:
+  - The functionality is needed in more than one place (DRY principle).
+  - The functionality is needed outside of the feature it belongs to.
+  - If service is needed outside of the feature it belongs to, then use `[AllowOutside]` attribute on the service interface.
+
+### File Organization & Structure
+- **Interface and Class in One File**: The service class and its corresponding interface MUST be in the same file.
+- **Interface First**: The interface MUST be defined first in the file.
+- **NoDirectUse Attribute**: The service class MUST be decorated with the `[NoDirectUse]` attribute to ensure it is only accessed via its interface.
+- **File Naming**: The filename should match the name of the public class it contains.
+- **Namespaces**: Use file-scoped namespaces.
+
+**Example Service**
+```csharp
+public interface IExampleService
+{
+    // methods
+}
+
+[NoDirectUse]
+public class ExampleService(AppDbContext dbContext, ...) : IExampleService
+{
+    // methods
+}
+```
+
+### Service Registration
+- **Feature Class**: All services must be registered in a `Feature` class located in the feature's root directory (e.g., `src/backend/Source/Features/Identity/IdentityFeature.cs`).
+- **Creation**: If the `Feature` class does not exist for a feature, you must create it.
+- **Convention**: Follow the `IdentityFeature` class convention. It should implement `IFeature`, be decorated with `[BypassNoDirectUse]`, and contain a static `AddServices` method.
+
+**Example Feature Class:**
+```csharp
+[BypassNoDirectUse]
+public class ExampleFeature : IFeature
+{
+    public static void AddServices(IServiceCollection services)
+    {
+        services.AddScoped<IExampleService, ExampleService>();
+        // Other service registrations...
+    }
+}
 ```
