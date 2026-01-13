@@ -3,18 +3,18 @@
 ## Backend
 
 **Location:** `src/backend`
-**Solution File:** `Ecommerce.sln`
+**Solution File:** `EasyForNet.sln`
 
 ### Build
 Run from the root of the repository or `src/backend`:
 ```powershell
-dotnet build src/backend/Ecommerce.sln
+dotnet build src/backend/EasyForNet.sln
 ```
 
 ### Test
 Run from the root of the repository or `src/backend`:
 ```powershell
-dotnet test src/backend/Ecommerce.sln
+dotnet test src/backend/EasyForNet.sln
 ```
 
 ## Frontend
