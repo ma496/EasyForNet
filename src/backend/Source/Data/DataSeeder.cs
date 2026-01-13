@@ -2,6 +2,8 @@ namespace Backend.Data;
 
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
+using System.Reflection;
+using Backend.Permissions;
 
 public class DataSeeder(IUserService userService,
                         IRoleService roleService,
@@ -56,7 +58,12 @@ public class DataSeeder(IUserService userService,
         }
 
         // public user permissions
-        string[] publicPermissions = [];
+        var publicPermissions = typeof(Allow).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+            .Where(f => f.IsLiteral && !f.IsInitOnly && f.GetCustomAttribute<PublicAttribute>() != null)
+            .Select(f => f.GetRawConstantValue()?.ToString())
+            .Where(v => v != null)
+            .Cast<string>()
+            .ToList();
         var loadPublicPermissions = permissions
             .Where(p => publicPermissions.Contains(p.Name))
             .ToList();
