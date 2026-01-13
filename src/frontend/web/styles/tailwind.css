@@ -942,6 +942,34 @@
   @apply relative my-1 rounded-sm border border-transparent px-2 py-0.5 text-xs font-semibold text-white;
 }
 
+@utility badge-primary {
+  @apply bg-primary;
+}
+
+@utility badge-secondary {
+  @apply bg-secondary;
+}
+
+@utility badge-success {
+  @apply bg-success;
+}
+
+@utility badge-danger {
+  @apply bg-danger;
+}
+
+@utility badge-warning {
+  @apply bg-warning;
+}
+
+@utility badge-info {
+  @apply bg-info;
+}
+
+@utility badge-dark {
+  @apply bg-dark;
+}
+
 @utility badge-outline-primary {
   @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary-dark-light dark:hover:text-white-light;
 }
