@@ -14,15 +14,7 @@ public class ArgumentParser : ParserBase
             return argument;
         }
 
-        if (args[0] == "createfeature" || args[0] == "cf")
-        {
-            var argument = new CreateFeatureArgument { Type = ArgumentType.CreateFeature };
-            var options = ToKeyValue(GetOptions(args));
 
-            SetOptions(ArgumentType.CreateFeature, argument, options);
-
-            return argument;
-        }
 
         throw new UserFriendlyException($"{args[0]} is not a valid command.");
     }
