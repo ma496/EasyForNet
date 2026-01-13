@@ -161,7 +161,10 @@ export const FileUpload = ({
     const current = fileName ?? response?.fileName
     if (!current) return undefined
     const result = await getFileTrigger({ fileName: current })
-    return result.data as string | undefined
+    if (result.data) {
+      return URL.createObjectURL(result.data as Blob)
+    }
+    return undefined
   }, [fileName, response, getFileTrigger])
 
   useEffect(() => {
@@ -174,6 +177,8 @@ export const FileUpload = ({
 
   useEffect(() => {
     let cancelled = false
+    let currentObjectUrl: string | undefined
+
     const loadUrl = async () => {
       const current = fileName ?? response?.fileName
       if (!current) {
@@ -183,17 +188,27 @@ export const FileUpload = ({
       const result = await getFileTrigger({ fileName: current })
       if (!cancelled) {
         if (result.data) {
-          setSelectedFileUrl(result.data as string)
+          const url = URL.createObjectURL(result.data as Blob)
+          currentObjectUrl = url
+          setSelectedFileUrl(url)
         } else {
           setSelectedFileUrl(undefined)
         }
+      } else if (result.data) {
+        // If cancelled but we got data, revoke it immediately
+        URL.revokeObjectURL(URL.createObjectURL(result.data as Blob))
       }
     }
+
     if (!isBlobUrl(selectedFileUrl)) {
       loadUrl()
     }
+
     return () => {
       cancelled = true
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl)
+      }
     }
   }, [fileName, response, getFileTrigger, selectedFileUrl, isBlobUrl])
 

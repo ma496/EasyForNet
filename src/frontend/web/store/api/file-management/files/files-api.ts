@@ -15,20 +15,12 @@ export const filesApi = appApi.injectEndpoints({
         }
       },
     }),
-    fileGet: builder.query<string, FileGetRequest>({
+    fileGet: builder.query<Blob, FileGetRequest>({
       query: (input) => ({
         url: `/file-management/${input.fileName}`,
         method: 'GET',
         responseHandler: (response) => response.blob(),
       }),
-      transformResponse: (blob: Blob) => URL.createObjectURL(blob),
-      async onCacheEntryAdded(arg, { cacheEntryRemoved, getCacheEntry }) {
-        await cacheEntryRemoved
-        const url = getCacheEntry()?.data as string | undefined
-        if (url) {
-          URL.revokeObjectURL(url)
-        }
-      },
     }),
     fileDelete: builder.mutation<FileDeleteResponse, FileDeleteRequest>({
       query: (input) => ({

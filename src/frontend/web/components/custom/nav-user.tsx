@@ -34,17 +34,26 @@ const NavUser = () => {
   }
 
   useEffect(() => {
+    let objectUrl: string | undefined
     const loadAvatar = async () => {
       if (user?.image) {
         const result = await fetchAvatar({ fileName: user.image })
-        const url = result.data
-        setAvatarUrl(url)
+        if (result.data) {
+          const blob = result.data as Blob
+          objectUrl = URL.createObjectURL(blob)
+          setAvatarUrl(objectUrl)
+        }
       } else {
         setAvatarUrl(undefined)
       }
     }
     loadAvatar()
-  }, [user?.image])
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl)
+      }
+    }
+  }, [user?.image, fetchAvatar])
 
   return (
     <div className="dropdown w-9 h-9">
