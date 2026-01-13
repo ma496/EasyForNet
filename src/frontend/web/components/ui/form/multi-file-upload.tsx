@@ -1,6 +1,6 @@
 'use client'
 import React, { useId, useState, useCallback, useEffect } from 'react'
-import { Plus, Trash2, Loader2 } from 'lucide-react'
+import { Plus, Trash2, Loader2, Pencil } from 'lucide-react'
 import { cn, confirmDeleteAlert } from '@/lib/utils'
 import { getTranslation } from '@/i18n'
 import { IconButton } from '@/components/ui/icon-button'
@@ -14,6 +14,7 @@ interface MultiFileUploadProps {
   onFilesChanged: (fileNames: string[]) => void
   maxSizeBytes?: number
   accept?: string
+  forceDelete?: boolean
 }
 
 export const MultiFileUpload = ({
@@ -22,7 +23,8 @@ export const MultiFileUpload = ({
   fileNames = [],
   onFilesChanged,
   maxSizeBytes = 10 * 1024 * 1024,
-  accept = 'image/*'
+  accept = 'image/*',
+  forceDelete = true,
 }: MultiFileUploadProps) => {
   const { t } = getTranslation()
   const inputId = useId()
@@ -30,6 +32,9 @@ export const MultiFileUpload = ({
   const [deleteFile] = useFileDeleteMutation()
   const [getFileTrigger] = useLazyFileGetQuery()
   const [fileUrls, setFileUrls] = useState<{ [key: string]: string }>({})
+  const [replacingIndex, setReplacingIndex] = useState<number | null>(null)
+  const replaceInputRef = React.useRef<HTMLInputElement>(null)
+  const replaceInputId = useId()
 
   const loadFileUrls = useCallback(async (names: string[]) => {
     const urls: { [key: string]: string } = {}
@@ -45,23 +50,28 @@ export const MultiFileUpload = ({
         urls[fileName] = fileUrls[fileName]
       }
     }
-    setFileUrls(prev => ({ ...prev, ...urls }))
+    setFileUrls((prev: { [key: string]: string }) => ({ ...prev, ...urls }))
   }, [getFileTrigger, fileUrls])
 
   useEffect(() => {
     loadFileUrls(fileNames)
   }, [fileNames])
 
+  const fileUrlsRef = React.useRef(fileUrls)
+  useEffect(() => {
+    fileUrlsRef.current = fileUrls
+  }, [fileUrls])
+
   useEffect(() => {
     return () => {
       // Cleanup all object URLs on unmount
-      Object.values(fileUrls).forEach(url => {
-        if (url.startsWith('blob:')) {
+      Object.values(fileUrlsRef.current).forEach((url) => {
+        if (typeof url === 'string' && url.startsWith('blob:')) {
           URL.revokeObjectURL(url)
         }
       })
     }
-  }, [fileUrls])
+  }, [])
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -77,10 +87,46 @@ export const MultiFileUpload = ({
       if (res.data) {
         newFileNames.push(res.data.fileName)
         const url = URL.createObjectURL(file)
-        setFileUrls(prev => ({ ...prev, [res.data!.fileName]: url }))
+        setFileUrls((prev: { [key: string]: string }) => ({ ...prev, [res.data!.fileName]: url }))
       }
     }
     onFilesChanged(newFileNames)
+    e.target.value = ''
+  }
+
+  const handleReplaceClick = (index: number) => {
+    setReplacingIndex(index)
+    setTimeout(() => {
+      replaceInputRef.current?.click()
+    }, 0)
+  }
+
+  const handleReplaceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || replacingIndex === null) return
+
+    if (file.size > maxSizeBytes) {
+      return
+    }
+
+    const oldFileName = fileNames[replacingIndex]
+    const res = await uploadFile({ file })
+    if (res.data) {
+      if (forceDelete && oldFileName) {
+        await deleteFile({ fileName: oldFileName })
+      }
+      const newFileNames = [...fileNames]
+      newFileNames[replacingIndex] = res.data.fileName
+      onFilesChanged(newFileNames)
+
+      const url = URL.createObjectURL(file)
+      setFileUrls((prev: { [key: string]: string }) => ({ ...prev, [res.data!.fileName]: url }))
+
+      if (fileUrls[oldFileName]?.startsWith('blob:')) {
+        URL.revokeObjectURL(fileUrls[oldFileName])
+      }
+    }
+    setReplacingIndex(null)
     e.target.value = ''
   }
 
@@ -92,7 +138,9 @@ export const MultiFileUpload = ({
     })
 
     if (result.isConfirmed) {
-      await deleteFile({ fileName: fileNameToRemove })
+      if (forceDelete) {
+        await deleteFile({ fileName: fileNameToRemove })
+      }
       const newFileNames = [...fileNames]
       newFileNames.splice(index, 1)
       onFilesChanged(newFileNames)
@@ -127,7 +175,18 @@ export const MultiFileUpload = ({
                   <Loader2 className="h-6 w-6 animate-spin text-primary" />
                 </div>
               )}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                <IconButton
+                  variant="info"
+                  size="sm"
+                  rounded="full"
+                  icon={<Pencil className="h-4 w-4" />}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleReplaceClick(index)
+                  }}
+                  title={t('edit')}
+                />
                 <IconButton
                   variant="danger"
                   size="sm"
@@ -137,6 +196,7 @@ export const MultiFileUpload = ({
                     e.stopPropagation()
                     handleRemove(index)
                   }}
+                  title={t('delete')}
                 />
               </div>
             </div>
@@ -165,6 +225,15 @@ export const MultiFileUpload = ({
             accept={accept}
             className="hidden"
             onChange={handleFileChange}
+            disabled={isUploading}
+          />
+          <input
+            id={replaceInputId}
+            ref={replaceInputRef}
+            type="file"
+            accept={accept}
+            className="hidden"
+            onChange={handleReplaceChange}
             disabled={isUploading}
           />
         </label>

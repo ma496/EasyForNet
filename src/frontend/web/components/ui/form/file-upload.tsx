@@ -59,7 +59,7 @@ export const FileUpload = ({
   size,
   rounded,
   disabled,
-  forceDelete = false,
+  forceDelete = true,
   onUploaded,
   onError,
   fileName,
@@ -115,11 +115,16 @@ export const FileUpload = ({
         }
       }
 
+      const oldFileName = fileName ?? response?.fileName
+
       if (isBlobUrl(selectedFileUrl)) {
         URL.revokeObjectURL(selectedFileUrl!)
       }
       const res = await uploadFile({ file })
       if (res.data) {
+        if (forceDelete && oldFileName) {
+          await deleteFileTrigger({ fileName: oldFileName })
+        }
         setSelectedFileName(file.name)
         const url = URL.createObjectURL(file)
         setSelectedFileUrl(url)
@@ -131,7 +136,7 @@ export const FileUpload = ({
         inputRef.current.value = ''
       }
     },
-    [uploadFile, onUploaded, onError, selectedFileUrl, maxSizeBytes, validateFile],
+    [uploadFile, onUploaded, onError, selectedFileUrl, maxSizeBytes, validateFile, forceDelete, fileName, response, deleteFileTrigger, isBlobUrl, t, showError],
   )
 
   const deleteFile = useCallback(async () => {

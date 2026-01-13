@@ -6,9 +6,12 @@ import { Pencil, Trash2 } from 'lucide-react'
 import { IconButton } from '@/components/ui/icon-button'
 import { confirmDeleteAlert } from '@/lib/utils'
 import { getTranslation } from '@/i18n'
+import { MultiFileUpload } from '@/components/ui/form/multi-file-upload'
+import { useState } from 'react'
 
 export const FileUploadExample = () => {
   const { t } = getTranslation()
+  const [multiFiles, setMultiFiles] = useState<string[]>([])
   return (
     <div className="container mx-auto space-y-8 p-6">
       <div>
@@ -148,6 +151,29 @@ export const FileUploadExample = () => {
                 )}
               </FileUpload>
             </div>
+          </div>
+        }
+      />
+
+      <CodeShowcase
+        title="Multi-File Upload"
+        description="Upload multiple files with drag-and-drop reordering, specific file replacement (Edit), and automatic server-side deletion."
+        code={`const [files, setFiles] = useState<string[]>([])
+
+<MultiFileUpload
+  name="multi-upload"
+  label="Gallary"
+  fileNames={files}
+  onFilesChanged={setFiles}
+/>`}
+        preview={
+          <div className="panel w-full max-w-[600px]">
+            <MultiFileUpload
+              name="multi-upload"
+              label="Gallery"
+              fileNames={multiFiles}
+              onFilesChanged={setMultiFiles}
+            />
           </div>
         }
       />
