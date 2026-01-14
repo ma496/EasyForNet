@@ -2,6 +2,14 @@
 trigger: always_on
 ---
 
+# Frameworks
+
+-   **Backend:**
+    -   **Source Project:** .NET 10 using FastEndpoints and Entity Framework Core (PostgreSQL).
+    -   **Test Project:** xUnit v3 with FastEndpoints.Testing, FluentAssertions, and Bogus.
+-   **Frontend:**
+    -   **Web Project:** Next.js (App Router) with React 19, Redux Toolkit, and Tailwind CSS.
+
 # C# Coding Conventions
 
 *   **Naming Conventions:**

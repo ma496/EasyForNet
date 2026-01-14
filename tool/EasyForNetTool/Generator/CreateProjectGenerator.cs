@@ -124,6 +124,8 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "packages..name", kebabCaseProjectName);
+            // update common-rules.md
+            await ReplaceInFile(Path.Combine(targetPath, ".ai/rules/common-rules.md"), @"EasyForNet\.sln", $@"{pascalCaseProjectName}.sln");
 
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");

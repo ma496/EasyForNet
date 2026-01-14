@@ -137,7 +137,6 @@ dotnet test
 - **Automatic Token Cleanup Jobs**  
   - `delete-expired-auth-tokens` – A recurring job that runs once per day to remove expired authentication tokens. The schedule can be customized.  
   - `delete-expired-tokens` – A recurring job that runs once per day to remove expired tokens used for the "Forgot Password" functionality. The schedule can be customized.  
-  - `delete-unused-files` – A recurring job that runs once per day to remove unused files. The schedule can be customized.
 
 ## Custom Development
 
