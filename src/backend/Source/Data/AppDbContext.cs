@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using Backend.Data.Entities.Base;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using Backend.Features.FileManagement.Core.Entities;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options,
                           ICurrentUserService currentUserService)
@@ -20,7 +19,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
     public DbSet<Token> Tokens => Set<Token>();
 
     // FileManagement
-    public DbSet<UploadFile> UploadFiles => Set<UploadFile>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

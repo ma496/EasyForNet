@@ -153,7 +153,6 @@ using (app.Services.CreateScope())
 {
     RecurringJob.AddOrUpdate<IAuthTokenCleanService>("delete-expired-auth-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
     RecurringJob.AddOrUpdate<ITokenCleanService>("delete-expired-tokens", service => service.DeleteExpiredTokensAsync(), Cron.Daily);
-    RecurringJob.AddOrUpdate<IDeleteUnactiveFilesService>("delete-unactive-files", service => service.DeleteAsync(), Cron.Daily);
 }
 
 app.Run();

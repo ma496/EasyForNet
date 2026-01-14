@@ -4,7 +4,7 @@ using Backend.Features.Identity.Core;
 using Backend.Features.FileManagement.Core;
 
 sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService,
-    IFileStatusService fileStatusService, IFileService fileService)
+    IFileService fileService)
     : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
 {
     public override void Configure()
@@ -34,15 +34,9 @@ sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService c
 
         if (oldImage != user.Image)
         {
-            if (!user.Image.IsNullOrEmpty())
-            {
-                await fileStatusService.ActivateAsync(user.Image!);
-            }
-
             if (!oldImage.IsNullOrEmpty())
             {
                 await fileService.DeleteAsync(oldImage!);
-                await fileStatusService.DeleteAsync(oldImage!);
             }
         }
 
