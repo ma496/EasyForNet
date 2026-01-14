@@ -39,23 +39,23 @@ export const MultiFileUpload = ({
   const loadFileUrls = useCallback(async (names: string[]) => {
     const urls: { [key: string]: string } = {}
     for (const fileName of names) {
-      if (!fileUrls[fileName]) {
+      if (!fileUrlsRef.current[fileName]) {
         const result = await getFileTrigger({ fileName, ignoreStatuses: [404] })
         if (result.data) {
           const blob = result.data as Blob
           const url = URL.createObjectURL(blob)
           urls[fileName] = url
         }
-      } else {
-        urls[fileName] = fileUrls[fileName]
       }
     }
-    setFileUrls((prev: { [key: string]: string }) => ({ ...prev, ...urls }))
-  }, [getFileTrigger, fileUrls])
+    if (Object.keys(urls).length > 0) {
+      setFileUrls((prev: { [key: string]: string }) => ({ ...prev, ...urls }))
+    }
+  }, [getFileTrigger])
 
   useEffect(() => {
     loadFileUrls(fileNames)
-  }, [fileNames])
+  }, [fileNames, loadFileUrls])
 
   const fileUrlsRef = React.useRef(fileUrls)
   useEffect(() => {

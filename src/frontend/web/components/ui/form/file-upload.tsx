@@ -82,8 +82,6 @@ export const FileUpload = ({
   const resolvedIcon = useMemo(() => icon ?? <Upload className="h-4 w-4" />, [icon])
   const hasCurrent = useMemo(() => !!selectedFileName || (forceDelete && !!(fileName ?? response?.fileName)), [selectedFileName, forceDelete, fileName, response])
 
-  const isBlobUrl = useCallback((url?: string) => !!url && url.startsWith('blob:'), [])
-
   const handleClick = useCallback(() => {
     inputRef.current?.click()
   }, [])
@@ -117,8 +115,8 @@ export const FileUpload = ({
 
       const oldFileName = fileName ?? response?.fileName
 
-      if (isBlobUrl(selectedFileUrl)) {
-        URL.revokeObjectURL(selectedFileUrl!)
+      if (selectedFileUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(selectedFileUrl)
       }
       const res = await uploadFile({ file })
       if (res.data) {
@@ -136,7 +134,7 @@ export const FileUpload = ({
         inputRef.current.value = ''
       }
     },
-    [uploadFile, onUploaded, onError, selectedFileUrl, maxSizeBytes, validateFile, forceDelete, fileName, response, deleteFileTrigger, isBlobUrl, t, showError],
+    [uploadFile, onUploaded, onError, selectedFileUrl, maxSizeBytes, validateFile, forceDelete, fileName, response, deleteFileTrigger, t, showError],
   )
 
   const deleteFile = useCallback(async () => {
@@ -152,8 +150,8 @@ export const FileUpload = ({
       }
     } else {
       setSelectedFileName('')
-      if (isBlobUrl(selectedFileUrl)) {
-        URL.revokeObjectURL(selectedFileUrl!)
+      if (selectedFileUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(selectedFileUrl)
       }
       setSelectedFileUrl(undefined)
       onClear?.()
@@ -172,11 +170,11 @@ export const FileUpload = ({
 
   useEffect(() => {
     return () => {
-      if (isBlobUrl(selectedFileUrl)) {
-        URL.revokeObjectURL(selectedFileUrl!)
+      if (selectedFileUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(selectedFileUrl)
       }
     }
-  }, [selectedFileUrl, isBlobUrl])
+  }, [selectedFileUrl])
 
   useEffect(() => {
     let cancelled = false
@@ -188,6 +186,7 @@ export const FileUpload = ({
         setSelectedFileUrl(undefined)
         return
       }
+
       const result = await getFileTrigger({ fileName: current, ignoreStatuses: [404] })
       if (!cancelled) {
         if (result.data) {
@@ -203,17 +202,18 @@ export const FileUpload = ({
       }
     }
 
-    if (!isBlobUrl(selectedFileUrl)) {
+    if (!selectedFileUrl || !selectedFileUrl.startsWith('blob:')) {
       loadUrl()
     }
 
     return () => {
       cancelled = true
+      // Only revoke if it was created locally in this effect
       if (currentObjectUrl) {
         URL.revokeObjectURL(currentObjectUrl)
       }
     }
-  }, [fileName, response, getFileTrigger, selectedFileUrl, isBlobUrl])
+  }, [fileName, response, getFileTrigger])
 
   const handleDeleteClick = useCallback(async () => {
     const result = await confirmDeleteAlert({
@@ -226,14 +226,14 @@ export const FileUpload = ({
         await deleteFile()
       } else {
         setSelectedFileName('')
-        if (selectedFileUrl) {
+        if (selectedFileUrl?.startsWith('blob:')) {
           URL.revokeObjectURL(selectedFileUrl)
         }
         setSelectedFileUrl(undefined)
         onClear?.()
       }
     }
-  }, [forceDelete, deleteFile, selectedFileUrl, onClear])
+  }, [forceDelete, deleteFile, selectedFileUrl, onClear, t])
 
   const content = children ? (
     children({
