@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useRef, useEffect, useId } from 'react'
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Search, X } from 'lucide-react'
 import ScrollBar from 'react-perfect-scrollbar'
@@ -48,7 +48,9 @@ export const FormSelect = ({
   required = false,
 }: FormSelectProps) => {
   const [field, meta, helpers] = useField(name)
-  const hasError = meta.touched && meta.error
+  const { submitCount } = useFormikContext()
+  const isDirty = meta.initialValue !== meta.value
+  const hasError = (isDirty || submitCount > 0) && meta.error
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const containerRef = useRef<HTMLDivElement>(null)
@@ -97,7 +99,7 @@ export const FormSelect = ({
   }
 
   return (
-    <div className={cn(className, meta.touched && hasError && 'has-error')} ref={containerRef}>
+    <div className={cn(className, (isDirty || submitCount > 0) && hasError && 'has-error')} ref={containerRef}>
       {label && (
         <label htmlFor={controlId}>
           {label}
@@ -178,7 +180,7 @@ export const FormSelect = ({
           </div>
         )}
       </div>
-      {showValidation && meta.touched && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
     </div>
   )
 }

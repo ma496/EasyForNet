@@ -1,6 +1,6 @@
 'use client'
 
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { DatePicker, SingleDatePickerProps, MultipleDatePickerProps, RangeDatePickerProps } from './date-picker'
 
@@ -35,16 +35,18 @@ export const FormDatePicker = (props: FormDatePickerProps) => {
   const { name, id, label, showValidation = true, className, mode = 'single', required = false, ...restProps } = props
 
   const [field, meta, helpers] = useField(name)
-  const hasError = meta.touched && meta.error
+  const { submitCount } = useFormikContext()
+  const isDirty = meta.initialValue !== meta.value
+  const hasError = (isDirty || submitCount > 0) && meta.error
 
   const handleSelect = (value: any) => {
     helpers.setValue(value, true)
   }
 
   return (
-    <div className={cn(className, meta.touched && (hasError ? 'has-error' : ''))}>
+    <div className={cn(className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
       <DatePicker {...restProps} mode={mode} label={label} name={name} id={id} selected={field.value} onSelect={handleSelect} required={required} />
-      {showValidation && meta.touched && hasError && <div className="mt-1 text-danger">{typeof meta.error === 'string' ? meta.error : JSON.stringify(meta.error)}</div>}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{typeof meta.error === 'string' ? meta.error : JSON.stringify(meta.error)}</div>}
     </div>
   )
 }

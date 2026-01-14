@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useRef, useEffect, useCallback, useId } from 'react'
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { ChevronDown, Search, X } from 'lucide-react'
 import { TypedUseLazyQuery } from '@reduxjs/toolkit/query/react'
@@ -62,7 +62,9 @@ export const FormLazySelect = <TItem, TRequest>({
   required = false,
 }: FormLazySelectProps<TItem, TRequest>) => {
   const [field, meta, helpers] = useField(name)
-  const hasError = meta.touched && meta.error
+  const { submitCount } = useFormikContext()
+  const isDirty = meta.initialValue !== meta.value
+  const hasError = (isDirty || submitCount > 0) && meta.error
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 500)
@@ -252,7 +254,7 @@ export const FormLazySelect = <TItem, TRequest>({
   }
 
   return (
-    <div className={cn(className, meta.touched && hasError && 'has-error')} ref={containerRef}>
+    <div className={cn(className, (isDirty || submitCount > 0) && hasError && 'has-error')} ref={containerRef}>
       {label && (
         <label htmlFor={controlId}>
           {label}
@@ -352,7 +354,7 @@ export const FormLazySelect = <TItem, TRequest>({
           </ScrollBar>
         </div>
       </div>
-      {showValidation && meta.touched && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
     </div>
   )
 }

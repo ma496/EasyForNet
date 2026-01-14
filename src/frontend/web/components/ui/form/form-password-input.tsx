@@ -1,7 +1,7 @@
 'use client'
 
 import { useId, useState } from 'react'
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { Eye, EyeOff } from 'lucide-react'
 
@@ -16,8 +16,10 @@ interface FormPasswordInputProps extends React.InputHTMLAttributes<HTMLInputElem
 
 export const FormPasswordInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', required = false, ...props }: FormPasswordInputProps) => {
   const [field, meta] = useField(name)
+  const { submitCount } = useFormikContext()
+  const isDirty = meta.initialValue !== meta.value
   const [showPassword, setShowPassword] = useState(false)
-  const hasError = meta.touched && meta.error
+  const hasError = (isDirty || submitCount > 0) && meta.error
   const inputId = id ?? useId()
 
   const togglePasswordVisibility = () => {
@@ -25,7 +27,7 @@ export const FormPasswordInput = ({ label, name, id, showValidation = true, clas
   }
 
   return (
-    <div className={cn(className, meta.touched && (hasError ? 'has-error' : ''))}>
+    <div className={cn(className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
       {label && (
         <label htmlFor={inputId}>
           {label}
@@ -39,7 +41,7 @@ export const FormPasswordInput = ({ label, name, id, showValidation = true, clas
           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>
       </div>
-      {showValidation && meta.touched && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
     </div>
   )
 }

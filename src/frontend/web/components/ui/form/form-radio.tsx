@@ -1,6 +1,6 @@
 'use client'
 
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 import { useId } from 'react'
@@ -38,11 +38,13 @@ interface FormRadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
 
 export const FormRadio = ({ label, name, id, showValidation = true, className, variant, size, required = false, ...props }: FormRadioProps) => {
   const [field, meta] = useField({ name, type: 'radio', value: props.value })
-  const hasError = meta.touched && meta.error
+  const { submitCount } = useFormikContext()
+  const isDirty = meta.initialValue !== meta.value
+  const hasError = (isDirty || submitCount > 0) && meta.error
   const inputId = id ?? useId()
 
   return (
-    <div className={cn('inline-flex flex-wrap items-start gap-2', className, meta.touched && (hasError ? 'has-error' : ''))}>
+    <div className={cn('inline-flex flex-wrap items-start gap-2', className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
       <div className="flex min-h-[20px] items-center">
         <input {...field} {...props} type="radio" name={name} id={inputId} className={cn('mb-0', formRadioVariants({ variant, size }), hasError && 'border-danger focus:ring-danger')} />
         {label && (
@@ -55,7 +57,7 @@ export const FormRadio = ({ label, name, id, showValidation = true, className, v
           </label>
         )}
       </div>
-      {showValidation && meta.touched && hasError && <div className="text-sm text-danger">{meta.error}</div>}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="text-sm text-danger">{meta.error}</div>}
     </div>
   )
 }
