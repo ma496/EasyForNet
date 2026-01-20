@@ -85,6 +85,13 @@ dotnet test src/backend/EasyForNet.sln
 
 **Location:** `src/frontend/web`
 
+### Lint
+Run from `src/frontend/web`:
+```powershell
+cd src/frontend/web
+npm run lint
+```
+
 ### Build
 Run from `src/frontend/web`:
 ```powershell
