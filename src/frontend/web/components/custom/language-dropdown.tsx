@@ -80,6 +80,7 @@ const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdown
           }
         >
           <ul className="grid w-[280px] grid-cols-2 gap-2 px-2! font-semibold text-dark dark:text-white-light/90">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {themeConfig.languageList.map((item: any) => {
               return (
                 <li key={item.code}>

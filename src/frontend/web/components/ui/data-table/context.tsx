@@ -4,7 +4,7 @@ import { ColumnDef, SortingState, PaginationState, VisibilityState, RowSelection
 interface DataTableContextProps<TData> {
   data: TData[]
   rowCount?: number
-  columns: ColumnDef<TData, any>[]
+  columns: ColumnDef<TData, unknown>[]
   sorting: SortingState
   setSorting: React.Dispatch<React.SetStateAction<SortingState>>
   pagination: PaginationState
@@ -21,6 +21,7 @@ interface DataTableContextProps<TData> {
   isFetching?: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined)
 
 export function useDataTable<TData>() {
@@ -35,7 +36,7 @@ interface DataTableProviderProps<TData> {
   children: ReactNode
   data: TData[]
   rowCount?: number
-  columns: ColumnDef<TData, any>[]
+  columns: ColumnDef<TData, unknown>[]
   pageSizeOptions?: number[]
   enableRowSelection?: boolean
   sorting: SortingState
@@ -64,6 +65,7 @@ export function DataTableProvider<TData>({
 }: DataTableProviderProps<TData>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
@@ -91,7 +93,7 @@ export function DataTableProvider<TData>({
 
   useEffect(() => {
     table.firstPage()
-  }, [pagination.pageSize, globalFilter])
+  }, [pagination.pageSize, globalFilter, table])
 
   const value = useMemo(
     () => ({
@@ -113,7 +115,7 @@ export function DataTableProvider<TData>({
       table,
       isFetching,
     }),
-    [data, rowCount, columns, sorting, pagination, globalFilter, columnVisibility, pageSizeOptions, rowSelection, enableRowSelection, table, isFetching],
+    [data, rowCount, columns, sorting, pagination, globalFilter, columnVisibility, pageSizeOptions, rowSelection, enableRowSelection, table, isFetching, setSorting, setPagination, setGlobalFilter],
   )
 
   return <DataTableContext.Provider value={value}>{children}</DataTableContext.Provider>

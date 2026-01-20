@@ -27,7 +27,7 @@ import { DatePicker } from '@/components/ui/form/date-picker'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import CodeShowcase from '@/components/ui/code-showcase'
-import { FormInput as FormInputIcon, Type, Lock, ChevronDown, List, CheckSquare, Circle, Calendar, User, Mail, MapPin, Tag, Briefcase } from 'lucide-react'
+import { FormInput as FormInputIcon, Lock, User, Mail, MapPin, Tag, Briefcase } from 'lucide-react'
 
 const validationSchema = Yup.object({
   username: Yup.string().required('Username is required').min(3, 'Min 3 characters'),

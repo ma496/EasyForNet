@@ -37,7 +37,8 @@ interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
 }
 
 export const Radio = ({ label, name, id, className, variant, size, error, showError = true, required = false, ...props }: RadioProps) => {
-  const radioId = id ?? useId()
+  const generatedId = useId()
+  const radioId = id ?? generatedId
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, error && showError && 'has-error')}>

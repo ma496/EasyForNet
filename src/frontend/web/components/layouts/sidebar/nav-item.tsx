@@ -34,6 +34,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
               .filter((child) => child.show !== false)
               .map((child, index) => (
                 <li key={`${item.title}-child-${index}`}>
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   <Link href={child.url as any} className={`flex items-center ${pathname === child.url ? 'active' : ''}`}>
                     {child.icon ? <child.icon size={16} className="me-3" /> : <span className={`me-3`}>-</span>}
                     <span>{t(child.title.toLowerCase())}</span>
@@ -48,6 +49,7 @@ export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }:
 
   return (
     <div className="nav-item">
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <Link href={item.url as any} className={`group ${pathname === item.url ? 'active' : ''}`}>
         <div className="flex items-center">
           {item.icon && <item.icon size={20} className="group-hover:text-primary!" />}

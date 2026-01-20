@@ -18,8 +18,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
     public DbSet<AuthToken> AuthTokens => Set<AuthToken>();
     public DbSet<Token> Tokens => Set<Token>();
 
-    // FileManagement
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

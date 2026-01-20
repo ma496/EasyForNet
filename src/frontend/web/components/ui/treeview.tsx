@@ -9,7 +9,7 @@ export interface TreeNode {
   id: string
   label: string
   children?: TreeNode[]
-  data?: any
+  data?: unknown
   show?: boolean
 }
 
@@ -64,8 +64,6 @@ const TreeViewItem = ({
   expandAll,
   show = true,
 }: TreeViewItemProps) => {
-  if (!show) return null
-
   const [isOpen, setIsOpen] = React.useState(defaultExpanded)
   const [height, setHeight] = React.useState<'auto' | number>(defaultExpanded ? 'auto' : 0)
 
@@ -96,6 +94,8 @@ const TreeViewItem = ({
       setHeight('auto')
     }
   }, [expandAll, defaultExpanded])
+
+  if (!show) return null
 
   return (
     <div className="w-full">
@@ -204,6 +204,7 @@ export const TreeView = ({
     }
 
     setSelectedState(newState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(defaultSelectedIds)])
 
   // Simplified node mapping
@@ -339,12 +340,27 @@ export const TreeView = ({
     setIntermediateState(newIntermediateState)
   }, [data, selectedState])
 
+  // Use a ref to store the latest onSelectionChange to avoid dependency issues
+  const onSelectionChangeRef = React.useRef(onSelectionChange)
+  React.useEffect(() => {
+    onSelectionChangeRef.current = onSelectionChange
+  }, [onSelectionChange])
+
+  // Track last signalled IDs to prevent redundant calls
+  const lastSignaledIdsRef = React.useRef<string>('')
+
   // Notify parent of selection changes
   React.useEffect(() => {
     const selectedIds = Object.entries(selectedState)
       .filter(([, selected]) => selected)
       .map(([id]) => id)
-    onSelectionChange?.(selectedIds)
+      .sort()
+
+    const signaledIds = JSON.stringify(selectedIds)
+    if (signaledIds !== lastSignaledIdsRef.current) {
+      lastSignaledIdsRef.current = signaledIds
+      onSelectionChangeRef.current?.(selectedIds)
+    }
   }, [selectedState])
 
   return (

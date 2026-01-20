@@ -9,7 +9,7 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { Mail } from 'lucide-react'
 import { successAlert } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     email: Yup.string()
       .required(t('validation_required'))
@@ -47,7 +47,7 @@ export const ForgetPasswordForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+        {() => (
           <Form noValidate className="flex flex-col gap-4">
             <FormInput name="email" type="email" label={t('label_email')} placeholder={t('placeholder_email')} icon={<Mail size={16} />} autoFocus={true} required={true} />
             <div className="flex justify-end">

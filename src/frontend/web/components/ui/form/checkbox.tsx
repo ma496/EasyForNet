@@ -37,7 +37,8 @@ interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
 }
 
 export const Checkbox = ({ label, name, className, variant, size, error, showError = true, id, required = false, ...props }: CheckboxProps) => {
-  const checkboxId = id ?? useId()
+  const defaultId = useId()
+  const checkboxId = id ?? defaultId
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, error && showError && 'has-error')}>

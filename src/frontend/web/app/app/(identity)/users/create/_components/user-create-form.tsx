@@ -14,7 +14,7 @@ import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
 import { SuccessToast } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     username: Yup.string()
       .required(t('validation_required'))
@@ -81,7 +81,7 @@ export const UserCreateForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+        {() => (
           <Form noValidate className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormInput
               name="username"

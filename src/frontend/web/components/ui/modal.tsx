@@ -18,7 +18,7 @@ interface ModalHeaderProps extends BaseProps {
   showCloseButton?: boolean
 }
 
-interface ModalFooterProps extends BaseProps {}
+type ModalFooterProps = BaseProps
 
 // Create context for modal
 const ModalContext = createContext<{ onClose: () => void } | null>(null)

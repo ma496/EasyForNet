@@ -1,7 +1,7 @@
 'use client'
 import { useId, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { toggleAnimation, toggleNavbar, toggleRTL, toggleTheme } from '@/store/slices/themeConfigSlice'
+import { toggleAnimation, toggleNavbar, toggleTheme } from '@/store/slices/themeConfigSlice'
 import { Settings, X, Sun, Moon, Laptop } from 'lucide-react'
 
 const Setting = () => {
@@ -15,9 +15,8 @@ const Setting = () => {
       <div className={`${(showCustomizer && 'block!') || ''} fixed inset-0 z-51 hidden bg-[black]/60 px-4 transition-[display]`} onClick={() => setShowCustomizer(false)}></div>
 
       <nav
-        className={`${
-          (showCustomizer && 'ltr:right-0! rtl:left-0!') || ''
-        } fixed top-0 bottom-0 z-51 w-full max-w-[400px] bg-white p-4 shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-[right] duration-300 ltr:-right-[400px] rtl:-left-[400px] dark:bg-black`}
+        className={`${(showCustomizer && 'ltr:right-0! rtl:left-0!') || ''
+          } fixed top-0 bottom-0 z-51 w-full max-w-[400px] bg-white p-4 shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-[right] duration-300 ltr:-right-[400px] rtl:-left-[400px] dark:bg-black`}
       >
         <button
           type="button"

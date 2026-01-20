@@ -13,7 +13,8 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export const Textarea = ({ label, name, id, className, error, showError = true, autoComplete = 'off', required = false, ...props }: TextareaProps) => {
-  const textareaId = id ?? useId()
+  const generatedId = useId()
+  const textareaId = id ?? generatedId
 
   return (
     <div className={cn(className, error && showError && 'has-error')}>

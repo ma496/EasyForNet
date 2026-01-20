@@ -29,7 +29,7 @@ export const ErrorToast = Swal.mixin({
   showCloseButton: true,
 })
 
-export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   const result = await Swal.fire({
     ...params,
@@ -41,35 +41,35 @@ export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertR
   return result
 }
 
-export async function successAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function successAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('success')
   if (!params.icon) params.icon = 'success'
   return sweetAlert(params)
 }
 
-export async function errorAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function errorAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('error')
   if (!params.icon) params.icon = 'error'
   return sweetAlert(params)
 }
 
-export async function warningAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function warningAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('warning')
   if (!params.icon) params.icon = 'warning'
   return sweetAlert(params)
 }
 
-export async function infoAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function infoAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('info')
   if (!params.icon) params.icon = 'info'
   return sweetAlert(params)
 }
 
-export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.icon) params.icon = 'question'
   if (params.showCancelButton === undefined) params.showCancelButton = true
@@ -78,7 +78,7 @@ export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAler
   return sweetAlert(params)
 }
 
-export async function confirmDeleteAlert(params: SweetAlertOptions): Promise<SweetAlertResult<any>> {
+export async function confirmDeleteAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.confirmButtonColor) params.confirmButtonColor = '#d33'
   if (!params.cancelButtonColor) params.cancelButtonColor = '#4361ee'

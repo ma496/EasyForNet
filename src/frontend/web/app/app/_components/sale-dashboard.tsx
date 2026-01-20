@@ -2,6 +2,7 @@
 import Dropdown from '@/components/dropdown'
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
+import { ApexOptions } from 'apexcharts'
 import { useAppSelector } from '@/store/hooks'
 import { CreditCard, DollarSign, MoreHorizontal, Inbox, ShoppingCart, Tag } from 'lucide-react'
 
@@ -13,18 +14,20 @@ const SaleDashboard = () => {
   const [chartKey, setChartKey] = useState(0)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true)
   }, [])
 
   // Update charts when theme changes
   useEffect(() => {
     if (isMounted) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setChartKey((prev) => prev + 1)
     }
   }, [isDark, isMounted])
 
   //Revenue Chart
-  const revenueChart: any = {
+  const revenueChart: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
         name: 'Income',
@@ -46,6 +49,13 @@ const SaleDashboard = () => {
         toolbar: {
           show: false,
         },
+        dropShadow: {
+          enabled: true,
+          opacity: 0.2,
+          blur: 10,
+          left: -7,
+          top: 22,
+        },
       },
 
       dataLabels: {
@@ -57,13 +67,7 @@ const SaleDashboard = () => {
         width: 2,
         lineCap: 'square',
       },
-      dropShadow: {
-        enabled: true,
-        opacity: 0.2,
-        blur: 10,
-        left: -7,
-        top: 22,
-      },
+
       colors: isDark ? ['#2196F3', '#E7515A'] : ['#1B55E2', '#E7515A'],
       markers: {
         discrete: [
@@ -143,8 +147,6 @@ const SaleDashboard = () => {
         horizontalAlign: 'right',
         fontSize: '16px',
         markers: {
-          width: 10,
-          height: 10,
           offsetX: -2,
         },
         itemMargin: {
@@ -174,7 +176,7 @@ const SaleDashboard = () => {
   }
 
   //Sales By Category
-  const salesByCategory: any = {
+  const salesByCategory: { series: number[]; options: ApexOptions } = {
     series: [1250, 850, 420],
     options: {
       chart: {
@@ -188,7 +190,7 @@ const SaleDashboard = () => {
       stroke: {
         show: true,
         width: 25,
-        colors: isDark ? '#0e1726' : '#fff',
+        colors: isDark ? ['#0e1726'] : ['#fff'],
       },
       colors: isDark ? ['#5c1ac3', '#e2a03f', '#e7515a', '#e2a03f'] : ['#e2a03f', '#5c1ac3', '#e7515a'],
       legend: {
@@ -196,8 +198,6 @@ const SaleDashboard = () => {
         horizontalAlign: 'center',
         fontSize: '14px',
         markers: {
-          width: 10,
-          height: 10,
           offsetX: -2,
         },
         height: 50,
@@ -220,7 +220,7 @@ const SaleDashboard = () => {
                 fontSize: '26px',
                 color: isDark ? '#bfc9d4' : undefined,
                 offsetY: 16,
-                formatter: (val: any) => {
+                formatter: (val: string) => {
                   return val
                 },
               },
@@ -229,8 +229,9 @@ const SaleDashboard = () => {
                 label: 'Total',
                 color: '#888ea8',
                 fontSize: '29px',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 formatter: (w: any) => {
-                  return w.globals.seriesTotals.reduce(function (a: any, b: any) {
+                  return w.globals.seriesTotals.reduce(function (a: number, b: number) {
                     return a + b
                   }, 0)
                 },
@@ -245,20 +246,22 @@ const SaleDashboard = () => {
           filter: {
             type: 'none',
             value: 0.15,
-          },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
         },
         active: {
           filter: {
             type: 'none',
             value: 0.15,
-          },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
         },
       },
     },
   }
 
   //Daily Sales
-  const dailySales: any = {
+  const dailySales: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
         name: 'Sales',
@@ -339,7 +342,7 @@ const SaleDashboard = () => {
   }
 
   //Total Orders
-  const totalOrders: any = {
+  const totalOrders: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
         name: 'Sales',

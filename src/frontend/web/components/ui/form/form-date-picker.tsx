@@ -39,6 +39,7 @@ export const FormDatePicker = (props: FormDatePickerProps) => {
   const isDirty = meta.initialValue !== meta.value
   const hasError = (isDirty || submitCount > 0) && meta.error
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelect = (value: any) => {
     helpers.setValue(value, true)
   }
@@ -46,7 +47,8 @@ export const FormDatePicker = (props: FormDatePickerProps) => {
   return (
     <div className={cn(className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
       <DatePicker {...restProps} mode={mode} label={label} name={name} id={id} selected={field.value} onSelect={handleSelect} required={required} />
-      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{typeof meta.error === 'string' ? meta.error : JSON.stringify(meta.error)}</div>}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{typeof meta.error === 'string' ? meta.error : JSON.stringify(meta.error as any)}</div>}
     </div>
   )
 }

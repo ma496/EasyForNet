@@ -41,7 +41,8 @@ export const FormRadio = ({ label, name, id, showValidation = true, className, v
   const { submitCount } = useFormikContext()
   const isDirty = meta.initialValue !== meta.value
   const hasError = (isDirty || submitCount > 0) && meta.error
-  const inputId = id ?? useId()
+  const generatedId = useId()
+  const inputId = id ?? generatedId
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>

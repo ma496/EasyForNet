@@ -2,6 +2,7 @@ import * as XLSX from 'xlsx'
 
 export type ExportFormat = 'excel' | 'csv'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function exportData(format: ExportFormat, rows: Record<string, any>[], sheetName: string, fileBaseName: string) {
   const wb = XLSX.utils.book_new()
   const ws = XLSX.utils.json_to_sheet(rows)

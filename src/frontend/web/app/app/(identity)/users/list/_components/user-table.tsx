@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/identity/users/users-api'
 import { SortDirection } from '@/store/api/base/sort-direction'
-import { UserListDto } from '@/store/api/identity/users/users-dtos'
+import { UserListDto, UserRoleDto } from '@/store/api/identity/users/users-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
 import { getTranslation } from '@/i18n'
 import { ExportFormat, SuccessToast, exportData, isAllowed } from '@/lib/utils'
@@ -10,7 +10,7 @@ import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
 import { Allow } from '@/allow'
-import { createColumnHelper, SortingState, PaginationState } from '@tanstack/react-table'
+import { createColumnHelper, SortingState, PaginationState, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
@@ -104,7 +104,8 @@ export const UserTable = () => {
   }
 
   const columnHelper = createColumnHelper<UserListDto>()
-  const columns = [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const columns: ColumnDef<UserListDto, any>[] = [
     columnHelper.accessor('usernameNormalized', {
       header: t('table_users_userName'),
       cell: (info) => info.getValue(),
@@ -126,7 +127,7 @@ export const UserTable = () => {
       cell: (info) =>
         info
           .getValue()
-          .map((role) => role.name)
+          .map((role: UserRoleDto) => role.name)
           .join(', '),
       enableSorting: false,
     }),

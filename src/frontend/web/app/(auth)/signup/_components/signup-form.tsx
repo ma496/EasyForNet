@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
 import { getTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
@@ -15,7 +15,7 @@ import { CheckCircle } from 'lucide-react'
 import { SuccessToast } from '@/lib/utils/notification'
 
 const SignupForm = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const { t } = getTranslation()
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [registeredEmail, setRegisteredEmail] = useState<string>('')
@@ -83,7 +83,7 @@ const SignupForm = () => {
         title: t('msg_resend_email_success'),
       })
       setCountdown(15)
-    } catch (error) {
+    } catch {
       // Error is handled by api middleware/toast
     }
   }
@@ -118,7 +118,7 @@ const SignupForm = () => {
 
   return (
     <Formik initialValues={{ username: '', email: '', password: '', confirmPassword: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
-      {({ values, errors, touched, handleChange, handleBlur }) => (
+      {() => (
         <Form className="space-y-5 dark:text-white">
           <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
           <FormInput label={t('label_email')} name="email" placeholder={t('placeholder_email')} icon={<Mail size={16} />} required={true} />

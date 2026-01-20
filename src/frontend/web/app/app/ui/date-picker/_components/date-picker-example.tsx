@@ -279,7 +279,7 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
                   <tr>
                     <td className="p-2 font-mono">placeholder</td>
                     <td className="p-2">string</td>
-                    <td className="p-2">"Select date..."</td>
+                    <td className="p-2">&quot;Select date...&quot;</td>
                     <td className="p-2">Placeholder text</td>
                   </tr>
                   <tr>
@@ -296,8 +296,8 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
                   </tr>
                   <tr>
                     <td className="p-2 font-mono">mode</td>
-                    <td className="p-2">'single' | 'multiple' | 'range'</td>
-                    <td className="p-2">'single'</td>
+                    <td className="p-2">&#39;single&#39; | &#39;multiple&#39; | &#39;range&#39;</td>
+                    <td className="p-2">&#39;single&#39;</td>
                     <td className="p-2">Selection mode</td>
                   </tr>
                   <tr>
@@ -338,8 +338,8 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
                   </tr>
                   <tr>
                     <td className="p-2 font-mono">mode</td>
-                    <td className="p-2">'single' | 'multiple' | 'range'</td>
-                    <td className="p-2">'single'</td>
+                    <td className="p-2">&#39;single&#39; | &#39;multiple&#39; | &#39;range&#39;</td>
+                    <td className="p-2">&#39;single&#39;</td>
                     <td className="p-2">Selection mode</td>
                   </tr>
                   <tr>
@@ -368,13 +368,13 @@ const [range, setRange] = useState<{ from?: Date; to?: Date }>()
               <h4 className="mb-3 font-medium">Expected Field Value Types</h4>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="font-mono">mode="single"</span>: <code>Date | undefined</code>
+                  <span className="font-mono">mode=&quot;single&quot;</span>: <code>Date | undefined</code>
                 </div>
                 <div>
-                  <span className="font-mono">mode="multiple"</span>: <code>Date[] | undefined</code>
+                  <span className="font-mono">mode=&quot;multiple&quot;</span>: <code>Date[] | undefined</code>
                 </div>
                 <div>
-                  <span className="font-mono">mode="range"</span>: <code>{'{ from?: Date; to?: Date } | undefined'}</code>
+                  <span className="font-mono">mode=&quot;range&quot;</span>: <code>{'{ from?: Date; to?: Date } | undefined'}</code>
                 </div>
               </div>
             </div>

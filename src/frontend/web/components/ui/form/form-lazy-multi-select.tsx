@@ -22,6 +22,7 @@ interface FormLazyMultiSelectProps<TItem, TRequest> {
   label?: string
   name: string
   id?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useLazyQuery: TypedUseLazyQuery<ListDto<TItem>, TRequest, any>
   getLabel: (item: TItem) => string
   getValue: (item: TItem) => string
@@ -78,7 +79,7 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
   const isRTL = useAppSelector((s) => s.theme.rtlClass) === 'rtl'
   const generatedId = useId()
   const controlId = id ?? generatedId
-  const [trigger, { data, isFetching, error }] = useLazyQuery()
+  const [trigger, { data, isFetching }] = useLazyQuery()
 
   const [storedOptions, setStoredOptions] = useState<Option[]>([])
 
@@ -146,6 +147,7 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
       if (generateRequestRef.current) {
         request = generateRequestRef.current(debouncedSearch, page, pageSize)
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const internalRequest: any = {
           page,
           pageSize,
@@ -274,7 +276,7 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
         </div>
       )
     }
-    return <div className="flex flex-wrap items-center gap-1">&nbsp;</div>
+    return <div className="flex flex-wrap items-center gap-1">{placeholder}</div>
   }
 
   return (

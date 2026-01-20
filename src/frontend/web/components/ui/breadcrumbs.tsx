@@ -56,6 +56,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
           {index === activePathItems.length - 1 ? (
             <span>{t(item.title)}</span>
           ) : (
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
             <Link href={item.url as any} className="text-primary hover:underline">
               {t(item.title)}
             </Link>

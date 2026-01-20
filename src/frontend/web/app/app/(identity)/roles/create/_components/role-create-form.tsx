@@ -9,7 +9,7 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
 import { SuccessToast } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     name: Yup.string()
       .required(t('validation_required'))
@@ -51,7 +51,7 @@ export const RoleCreateForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {() => (
           <Form noValidate className="grid grid-cols-1 gap-4">
             <FormInput
               name="name"

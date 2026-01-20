@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const plugin = require('tailwindcss/plugin');
 const rotateX = plugin(function ({ addUtilities }) {
   addUtilities({

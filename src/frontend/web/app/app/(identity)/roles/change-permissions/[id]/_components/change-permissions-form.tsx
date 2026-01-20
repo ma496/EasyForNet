@@ -6,7 +6,7 @@ import { useGetDefinePermissionsQuery } from '@/store/api/identity/permissions/p
 import { useRoleGetQuery } from '@/store/api/identity/roles/roles-api'
 import { useGetPermissionsQuery } from '@/store/api/identity/permissions/permissions-api'
 import { useChangePermissionsMutation } from '@/store/api/identity/roles/roles-api'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { getTranslation } from '@/i18n'
 import { useRouter } from 'next/navigation'
@@ -57,9 +57,9 @@ interface ChangePermissionsFormProps {
 }
 
 export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) => {
-  const { data: role, isFetching: isFetchingRole, error: getRoleError } = useRoleGetQuery({ id: roleId }, { refetchOnMountOrArgChange: true })
-  const { data: definePermissionsRes, isLoading: isLoadingDefinePermissions, error: definePermissionsError } = useGetDefinePermissionsQuery()
-  const { data: permissionsRes, isLoading: isLoadingPermissions, error: permissionsError } = useGetPermissionsQuery()
+  const { data: role, isFetching: isFetchingRole } = useRoleGetQuery({ id: roleId }, { refetchOnMountOrArgChange: true })
+  const { data: definePermissionsRes, isLoading: isLoadingDefinePermissions } = useGetDefinePermissionsQuery()
+  const { data: permissionsRes, isLoading: isLoadingPermissions } = useGetPermissionsQuery()
   const [changePermissions, { isLoading: isChangingPermissions }] = useChangePermissionsMutation()
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([])
   const [changedPermissions, setChangedPermissions] = useState<string[]>([])
@@ -67,40 +67,37 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   const router = useRouter()
   const [search, setSearch] = useState('')
 
-  const permissionTreeNodes = definePermissionsRes && permissionsRes ? toTreeNodes(definePermissionsRes.permissions, permissionsRes.permissions) : []
+  const permissionTreeNodes = useMemo(() => definePermissionsRes && permissionsRes ? toTreeNodes(definePermissionsRes.permissions, permissionsRes.permissions) : [], [definePermissionsRes, permissionsRes])
 
-  const filterTreeNodes = (nodes: TreeNode[], query: string): void => {
-    if (!query) {
-      // Reset all nodes to visible when no query
-      nodes.forEach((n) => {
-        n.show = true
-        if (n.children && n.children.length > 0) {
-          filterTreeNodes(n.children, query)
-        }
-      })
-    } else {
-      const normalizedQuery = query.trim().toLowerCase()
-
-      nodes.forEach((n) => {
-        if (n.children && n.children.length > 0) {
-          // Process children first
-          filterTreeNodes(n.children, query)
-
-          // Parent node should be visible if it matches the query OR if any child is visible
-          const matchesQuery = n.label.toLowerCase().includes(normalizedQuery)
-          const hasVisibleChild = n.children.some((child) => child.show === true)
-
-          n.show = matchesQuery || hasVisibleChild
-        } else {
-          // Leaf nodes are visible only if they match the query
-          n.show = n.label.toLowerCase().includes(normalizedQuery)
-        }
-      })
+  const filterTreeNodes = useCallback((nodes: TreeNode[], query: string): void => {
+    const filterRecursive = (currentNodes: TreeNode[], currentQuery: string) => {
+      if (!currentQuery) {
+        currentNodes.forEach((n) => {
+          n.show = true
+          if (n.children && n.children.length > 0) {
+            filterRecursive(n.children, currentQuery)
+          }
+        })
+      } else {
+        const normalizedQuery = currentQuery.trim().toLowerCase()
+        currentNodes.forEach((n) => {
+          if (n.children && n.children.length > 0) {
+            filterRecursive(n.children, currentQuery)
+            const matchesQuery = n.label.toLowerCase().includes(normalizedQuery)
+            const hasVisibleChild = n.children.some((child) => child.show === true)
+            n.show = matchesQuery || hasVisibleChild
+          } else {
+            n.show = n.label.toLowerCase().includes(normalizedQuery)
+          }
+        })
+      }
     }
-  }
+    filterRecursive(nodes, query)
+  }, [])
 
   useEffect(() => {
     if (role) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedPermissions(role.permissions ?? [])
       setChangedPermissions(role.permissions ?? [])
     }
@@ -108,10 +105,10 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
 
   useEffect(() => {
     filterTreeNodes(permissionTreeNodes, search)
-  }, [search, permissionTreeNodes])
+  }, [search, permissionTreeNodes, filterTreeNodes])
 
   const handleSubmit = async () => {
-    var response = await changePermissions({
+    const response = await changePermissions({
       id: roleId,
       permissions: changedPermissions,
     })
@@ -122,6 +119,11 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
       router.push('/app/roles/list')
     }
   }
+
+  const handleSelectionChange = useCallback((selectedIds: string[]) => {
+    const permissions = selectedIds.filter((id) => !isHaveChild(id, permissionTreeNodes))
+    setChangedPermissions(permissions)
+  }, [permissionTreeNodes])
 
   return (
     <div className="w-min-[300px] panel h-full sm:w-[400px]">
@@ -140,10 +142,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
               defaultSelectedIds={selectedPermissions}
               expandAll={true}
               enableSelection={true}
-              onSelectionChange={(selectedIds) => {
-                const permissions = selectedIds.filter((id) => !isHaveChild(id, permissionTreeNodes))
-                setChangedPermissions(permissions)
-              }}
+              onSelectionChange={handleSelectionChange}
             />
           </div>
           <div className="flex justify-end">

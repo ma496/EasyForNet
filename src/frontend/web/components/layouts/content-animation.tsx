@@ -9,15 +9,17 @@ const ContentAnimation = ({ children }: { children: React.ReactNode }) => {
   const [animation, setAnimation] = useState(themeConfig.animation)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAnimation(themeConfig.animation)
   }, [themeConfig.animation])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAnimation(themeConfig.animation)
     setTimeout(() => {
       setAnimation('')
     }, 1100)
-  }, [pathname])
+  }, [pathname, themeConfig.animation])
   return (
     <>
       {/* BEGIN CONTENT AREA */}

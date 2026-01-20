@@ -17,7 +17,8 @@ export const FormTextarea = ({ label, name, id, showValidation = true, className
   const { submitCount } = useFormikContext()
   const isDirty = meta.initialValue !== meta.value
   const hasError = (isDirty || submitCount > 0) && meta.error
-  const inputId = id ?? useId()
+  const generatedId = useId()
+  const inputId = id ?? generatedId
 
   return (
     <div className={cn(className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>

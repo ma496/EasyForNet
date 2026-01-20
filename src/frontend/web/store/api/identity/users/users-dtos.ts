@@ -47,7 +47,7 @@ export interface UserGetResponse extends GenericAuditableDto<string> {
 
 export interface UserListRequest extends ListRequestDto<string>, RequestBase { }
 
-export interface UserListResponse extends ListDto<UserListDto> { }
+export type UserListResponse = ListDto<UserListDto>
 
 export interface UserListDto extends GenericAuditableDto<string> {
   username: string

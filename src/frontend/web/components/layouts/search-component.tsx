@@ -44,6 +44,7 @@ const SearchComponent = () => {
     } else if (event.key === 'ArrowUp') {
       setActiveIndex((prevIndex) => (prevIndex - 1 + searchResults.length) % searchResults.length)
     } else if (event.key === 'Enter' && activeIndex >= 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       router.push(searchResults[activeIndex].url as any)
       setSearchQuery('')
       setSearchResults([])
@@ -71,6 +72,7 @@ const SearchComponent = () => {
         e.preventDefault()
         setSearch(false)
         if (searchResults.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           router.push(searchResults[0].url as any)
           setSearchQuery('')
           setSearchResults([])
@@ -92,6 +94,7 @@ const SearchComponent = () => {
             {searchResults.map((item: SearchableItem, index) => (
               <li key={item.url} className={index === activeIndex ? 'bg-primary/10 text-primary hover:bg-primary/5' : 'hover:bg-primary/5 hover:text-primary'}>
                 <Link
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   href={item.url as any}
                   className="block px-4 py-2"
                   onClick={() => {

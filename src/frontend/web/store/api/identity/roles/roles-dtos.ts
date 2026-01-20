@@ -42,7 +42,7 @@ export interface RoleGetResponse extends GenericAuditableDto<string> {
 
 export interface RoleListRequest extends ListRequestDto<string>, RequestBase { }
 
-export interface RoleListResponse extends ListDto<RoleListDto> { }
+export type RoleListResponse = ListDto<RoleListDto>
 
 export interface RoleListDto extends GenericAuditableDto<string> {
   name: string

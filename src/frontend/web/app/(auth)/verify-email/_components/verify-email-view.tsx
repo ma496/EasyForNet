@@ -1,7 +1,7 @@
 'use client'
 
 import { useVerifyEmailMutation } from '@/store/api/identity/account/account-api'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState, useRef } from 'react'
 import { getTranslation } from '@/i18n'
 import Link from 'next/link'
@@ -11,9 +11,9 @@ const VerifyEmailView = () => {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const { t } = getTranslation()
-  const router = useRouter()
 
-  const [verifyEmail, { isLoading, isSuccess, isError, error }] = useVerifyEmailMutation()
+
+  const [verifyEmail] = useVerifyEmailMutation()
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying')
   const effectRan = useRef(false)
 
@@ -27,6 +27,7 @@ const VerifyEmailView = () => {
         .then(() => setStatus('success'))
         .catch(() => setStatus('error'))
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStatus('error')
     }
   }, [token, verifyEmail])

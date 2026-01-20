@@ -9,7 +9,7 @@ import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Lock } from 'lucide-react'
 import { errorAlert, successAlert } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     password: Yup.string()
       .required(t('validation_required'))
@@ -62,7 +62,7 @@ export const ResetPasswordForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+        {() => (
           <Form noValidate className="flex flex-col gap-4">
             <FormPasswordInput name="password" label={t('label_new_password')} placeholder={t('placeholder_new_password')} icon={<Lock size={16} />} autoFocus={true} required={true} />
             <FormPasswordInput name="confirmPassword" label={t('label_confirm_password')} placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} required={true} />

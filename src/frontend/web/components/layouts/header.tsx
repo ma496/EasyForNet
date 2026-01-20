@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { toggleSidebar } from '@/store/slices/themeConfigSlice'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import ThemeChanger from '../custom/theme-changer'
 import NavUser from '../custom/nav-user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -18,25 +18,24 @@ const Header = () => {
   useEffect(() => {
     const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]')
     if (selector) {
-      const all: any = document.querySelectorAll('ul.horizontal-menu .nav-link.active')
+      const all = document.querySelectorAll('ul.horizontal-menu .nav-link.active')
       for (let i = 0; i < all.length; i++) {
         all[0]?.classList.remove('active')
       }
 
-      let allLinks = document.querySelectorAll('ul.horizontal-menu a.active')
+      const allLinks = document.querySelectorAll('ul.horizontal-menu a.active')
       for (let i = 0; i < allLinks.length; i++) {
         const element = allLinks[i]
         element?.classList.remove('active')
       }
       selector?.classList.add('active')
 
-      const ul: any = selector.closest('ul.sub-menu')
+      const ul = selector.closest('ul.sub-menu')
       if (ul) {
-        let ele: any = ul.closest('li.menu').querySelectorAll('.nav-link')
-        if (ele) {
-          ele = ele[0]
+        const ele = ul.closest('li.menu')?.querySelectorAll('.nav-link')
+        if (ele && ele.length > 0) {
           setTimeout(() => {
-            ele?.classList.add('active')
+            ele[0]?.classList.add('active')
           })
         }
       }

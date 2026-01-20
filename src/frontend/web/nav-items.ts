@@ -1,4 +1,5 @@
-import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Tag, Box, Layers } from 'lucide-react'
+import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload } from 'lucide-react'
+import type { ElementType } from 'react'
 
 
 export interface NavItemGroup {
@@ -9,7 +10,7 @@ export interface NavItemGroup {
 export interface NavItem {
   title: string
   url: string
-  icon?: any
+  icon?: ElementType
   badge?: number
   group?: string
   show?: boolean

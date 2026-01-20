@@ -1,5 +1,5 @@
 'use client'
-import { createColumnHelper, SortingState, PaginationState } from '@tanstack/react-table'
+import { createColumnHelper, SortingState, PaginationState, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
@@ -102,7 +102,8 @@ export const RoleTable = () => {
   }
 
   const columnHelper = createColumnHelper<RoleListDto>()
-  const columns = [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const columns: ColumnDef<RoleListDto, any>[] = [
     columnHelper.accessor('name', {
       header: t('table_roles_name'),
       cell: (info) => info.getValue(),

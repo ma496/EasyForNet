@@ -13,6 +13,7 @@ export const isAllowed = (state: AuthState, permissions: string[]): boolean => {
   return state.user.roles.some((role) => role.permissions?.some((permission) => permissions.includes(permission.name)))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const cookieObj = typeof window === 'undefined' ? require('next/headers') : require('universal-cookie')
 
 // Check for server-side HttpOnly cookie

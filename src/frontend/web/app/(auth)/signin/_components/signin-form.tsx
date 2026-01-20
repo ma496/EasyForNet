@@ -55,7 +55,9 @@ const SigninForm = () => {
   const submitForm = async (values: SigninFormValues) => {
     const tokenRes = await tokenApi(values)
     if (tokenRes.error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorData = (tokenRes.error as any).data
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const verificationError = errorData?.errors?.find((err: any) => err.code === 'email_not_verified')
       if (verificationError) {
         setRegisteredEmail(values.username) // In this app username can be email or username
@@ -116,7 +118,7 @@ const SigninForm = () => {
 
   return (
     <Formik initialValues={{ username: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
-      {({ values, errors, touched, handleChange, handleBlur }) => (
+      {() => (
         <Form className="space-y-5 dark:text-white">
           <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
           <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} required={true} />

@@ -21,6 +21,7 @@ export interface FileUploadProps {
   icon?: React.ReactNode
   showFileName?: boolean
   onUploaded?: (response: FileUploadResponse) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onError?: (error: any) => void
   fileName?: string
   accept?: string
@@ -37,6 +38,7 @@ export interface FileUploadProps {
     selectedFileName: string
     selectedFileUrl?: string
     response?: FileUploadResponse
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error?: any
     deleteFile: () => Promise<void>
     isDeleting: boolean
@@ -69,12 +71,14 @@ export const FileUpload = ({
   showError = true,
   children,
 }: FileUploadProps) => {
-  const inputId = id ?? useId()
+  const defaultId = useId()
+  const inputId = id ?? defaultId
   const { t } = getTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const [selectedFileName, setSelectedFileName] = useState<string>('')
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | undefined>(undefined)
   const [response, setResponse] = useState<FileUploadResponse | undefined>(undefined)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [error, setError] = useState<any>(undefined)
   const [uploadFile, { isLoading }] = useFileUploadMutation()
   const [deleteFileTrigger, { isLoading: isDeleting }] = useFileDeleteMutation()
@@ -213,7 +217,7 @@ export const FileUpload = ({
         URL.revokeObjectURL(currentObjectUrl)
       }
     }
-  }, [fileName, response, getFileTrigger])
+  }, [fileName, response, getFileTrigger, selectedFileUrl])
 
   const handleDeleteClick = useCallback(async () => {
     const result = await confirmDeleteAlert({
@@ -236,6 +240,7 @@ export const FileUpload = ({
   }, [forceDelete, deleteFile, selectedFileUrl, onClear, t])
 
   const content = children ? (
+    // eslint-disable-next-line react-hooks/refs
     children({
       open: handleClick,
       isUploading: isLoading,

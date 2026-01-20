@@ -43,7 +43,8 @@ export const FormCheckbox = ({ label, name, id, showValidation = true, className
   const { submitCount } = useFormikContext()
   const isDirty = meta.initialValue !== meta.value
   const hasError = (isDirty || submitCount > 0) && meta.error
-  const inputId = id ?? useId()
+  const defaultId = useId()
+  const inputId = id ?? defaultId
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>

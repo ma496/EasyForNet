@@ -20,7 +20,8 @@ export const FormPasswordInput = ({ label, name, id, showValidation = true, clas
   const isDirty = meta.initialValue !== meta.value
   const [showPassword, setShowPassword] = useState(false)
   const hasError = (isDirty || submitCount > 0) && meta.error
-  const inputId = id ?? useId()
+  const generatedId = useId()
+  const inputId = id ?? generatedId
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)

@@ -28,7 +28,7 @@ function App({ children }: PropsWithChildren) {
       }
     }
     fetchUserInfo()
-  }, [])
+  }, [getUserInfo, dispatch])
 
   useEffect(() => {
     if (isLoadingUserInfo) return
@@ -37,9 +37,9 @@ function App({ children }: PropsWithChildren) {
 
     const matchedUrl = getMatchedAuthUrl(pathname)
     if (matchedUrl?.permissions && matchedUrl.permissions.length > 0 && !isAllowed(authState, matchedUrl.permissions)) {
-      router.push('/unauthorized' as any)
+      router.push('/unauthorized')
     }
-  }, [pathname, authState.user, isLoadingUserInfo])
+  }, [pathname, authState, isLoadingUserInfo, router])
 
   useEffect(() => {
     dispatch(toggleTheme(localStorage.getItem('theme') || themeConfig.theme))
@@ -52,6 +52,7 @@ function App({ children }: PropsWithChildren) {
     // locale
     initLocale(themeConfig.locale)
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(false)
   }, [dispatch, initLocale, themeConfig.theme, themeConfig.menu, themeConfig.layout, themeConfig.rtlClass, themeConfig.animation, themeConfig.navbar, themeConfig.locale, themeConfig.semidark])
 

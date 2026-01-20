@@ -44,6 +44,7 @@ export interface RangeDatePickerProps extends BaseDatePickerProps {
 export type DatePickerProps = SingleDatePickerProps | MultipleDatePickerProps | RangeDatePickerProps
 
 // Helper component to handle the DayPicker with proper typing
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DayPickerWrapper = ({ mode, selected, onSelect, classNames, components, ...props }: any) => {
   if (mode === 'multiple') {
     return <DayPicker mode="multiple" selected={selected as Date[]} onSelect={onSelect} classNames={classNames} components={components} showOutsideDays={true} {...props} />
@@ -123,7 +124,8 @@ export const DatePicker = (props: DatePickerProps) => {
     hidden: `invisible`,
   }
 
-  const controlId = id ?? useId()
+  const defaultId = useId()
+  const controlId = id ?? defaultId
 
   return (
     <div className={cn('relative', className)}>
@@ -154,8 +156,10 @@ export const DatePicker = (props: DatePickerProps) => {
             <DayPickerWrapper
               mode={mode}
               selected={selected}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onSelect={(date: any) => {
                 if (onSelect) {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   ; (onSelect as any)(date)
                 }
                 if (mode === 'single') {
@@ -167,7 +171,7 @@ export const DatePicker = (props: DatePickerProps) => {
                 root: `${customClassNames.root} rdp-mode-${mode}`,
               }}
               components={{
-                Chevron: ({ orientation }: any) => (orientation === 'left' ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />),
+                Chevron: ({ orientation }: { orientation?: string }) => (orientation === 'left' ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />),
               }}
               fixedWeeks
               fromYear={1900}

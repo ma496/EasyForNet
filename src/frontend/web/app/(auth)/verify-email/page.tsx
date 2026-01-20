@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 const BoxedVerifyEmail = async () => {
-  const { t } = await getTranslationAsync()
+  await getTranslationAsync()
 
   return (
     <div>

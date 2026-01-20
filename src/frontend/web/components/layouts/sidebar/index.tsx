@@ -32,7 +32,8 @@ const Sidebar = () => {
     })
   }
 
-  const getFilteredNavItems = () => {
+  // Replace the useState initialization with a useMemo that depends on auth state
+  const filteredNavItems = useMemo(() => {
     // Helper function to recursively filter children
     const filterNavItem = (item: NavItem): NavItem | undefined => {
       // Check if the item should be shown and if the user has permission
@@ -89,10 +90,7 @@ const Sidebar = () => {
 
       return filtered
     }, [])
-  }
-
-  // Replace the useState initialization with a useMemo that depends on auth state
-  const filteredNavItems = useMemo(() => getFilteredNavItems(), [authState])
+  }, [authState])
 
   useEffect(() => {
     // Find and set active parent menu based on current path
@@ -111,13 +109,13 @@ const Sidebar = () => {
     }
 
     findActiveParent()
-  }, [pathname, filteredNavItems])
+  }, [pathname, filteredNavItems, dispatch, themeConfig.sidebar])
 
   useEffect(() => {
     if (window.innerWidth < 1024 && themeConfig.sidebar) {
       dispatch(toggleSidebar())
     }
-  }, [pathname])
+  }, [pathname, dispatch, themeConfig.sidebar])
 
   return (
     <div className={semidark ? 'dark' : ''}>

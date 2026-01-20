@@ -15,7 +15,7 @@ import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select
 import { useEffect } from 'react'
 import { SuccessToast } from '@/lib/utils'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     username: Yup.string(),
     firstName: Yup.string()
@@ -52,7 +52,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
         includeIds: userData?.roles,
       })
     }
-  }, [userData])
+  }, [userData, fetchSelectedRoles])
 
   if (isLoadingUser || isLoadingSelectedRoles) {
     return <div>{t('loading')}</div>
@@ -63,7 +63,8 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   }
 
   const onSubmit = async (data: FormValues) => {
-    const { username, ...updateData } = data
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { username: _username, ...updateData } = data
     const result = await updateUser({
       ...updateData,
       id: userId,
@@ -91,7 +92,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+        {() => (
           <Form noValidate className="grid grid-cols-1 gap-4">
             <FormInput
               name="username"

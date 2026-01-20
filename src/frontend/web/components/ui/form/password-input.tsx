@@ -16,7 +16,8 @@ interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement>
 
 export const PasswordInput = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', required = false, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
-  const inputId = id ?? useId()
+  const generatedId = useId()
+  const inputId = id ?? generatedId
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)

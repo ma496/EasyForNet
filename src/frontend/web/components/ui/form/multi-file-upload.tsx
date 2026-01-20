@@ -19,7 +19,7 @@ interface MultiFileUploadProps {
 
 export const MultiFileUpload = ({
   label,
-  name,
+  // name,
   fileNames = [],
   onFilesChanged,
   maxSizeBytes = 10 * 1024 * 1024,

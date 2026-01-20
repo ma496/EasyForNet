@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const cookieObj = typeof window === 'undefined' ? require('next/headers') : require('universal-cookie')
 
 import en from './public/locales/en.json'
@@ -10,7 +11,8 @@ import fr from './public/locales/fr.json'
 import ru from './public/locales/ru.json'
 
 
-const langObj: any = { en, ur, zh, ar, hi, es, fr, ru }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const langObj: Record<string, any> = { en, ur, zh, ar, hi, es, fr, ru }
 
 const getLangAsync = async () => {
   let lang = undefined
@@ -38,13 +40,13 @@ const getLang = () => {
 
 export const getTranslation = () => {
   const lang = getLang()
-  const data: any = langObj[lang || 'en']
+  const data: Record<string, string> = langObj[lang || 'en']
 
-  const t = (key: string, variables?: Record<string, any>) => {
+  const t = (key: string, variables?: Record<string, string | number>) => {
     let text = data[key] ? data[key] : key
     if (variables) {
       Object.entries(variables).forEach(([key, value]) => {
-        text = text.replace(`\${${key}}`, value)
+        text = text.replace(`\${${key}}`, String(value))
       })
     }
     return text
@@ -68,13 +70,13 @@ export const getTranslation = () => {
 
 export const getTranslationAsync = async () => {
   const lang = await getLangAsync()
-  const data: any = langObj[lang || 'en']
+  const data: Record<string, string> = langObj[lang || 'en']
 
-  const t = (key: string, variables?: Record<string, any>) => {
+  const t = (key: string, variables?: Record<string, string | number>) => {
     let text = data[key] ? data[key] : key
     if (variables) {
       Object.entries(variables).forEach(([key, value]) => {
-        text = text.replace(`\${${key}}`, value)
+        text = text.replace(`\${${key}}`, String(value))
       })
     }
     return text

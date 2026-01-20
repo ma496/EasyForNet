@@ -37,6 +37,7 @@ const baseQueryWithReauth: BaseQueryFn<
               // We can include userId if available in the state, but let's try relying on the cookie + updated logic
               // However, the backend logic I wrote earlier checks `httpContext.User` which might be unauthenticated if 401.
               // So, ideally, we should pass the userId.
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               userId: (api.getState() as any).auth?.user?.id ?? ''
             },
           },

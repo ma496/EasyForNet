@@ -30,6 +30,7 @@ export const ImagePreview = ({
     let url: string | undefined
     if (isSuccess && blob) {
       url = URL.createObjectURL(blob as Blob)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setImageUrl(url)
     }
 

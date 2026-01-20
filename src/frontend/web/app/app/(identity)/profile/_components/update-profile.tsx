@@ -15,7 +15,7 @@ import { confirmDeleteAlert, SuccessToast } from '@/lib/utils'
 import { FileUpload } from '@/components/ui/form/file-upload'
 import { IconButton } from '@/components/ui/icon-button'
 
-const createValidationSchema = (t: (key: string, params?: any) => string) => {
+const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object({
     firstName: Yup.string().when('lastName', {
       is: (lastName: string) => lastName && lastName.length > 0,
