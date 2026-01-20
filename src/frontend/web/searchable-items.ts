@@ -54,6 +54,10 @@ export const searchableItems: SearchableItem[] = [
     url: '/app/ui/date-picker',
   },
   {
+    title: 'search_ui_date_view',
+    url: '/app/ui/date-view',
+  },
+  {
     title: 'search_ui_treeview',
     url: '/app/ui/treeview',
   },

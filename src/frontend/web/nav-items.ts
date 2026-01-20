@@ -1,4 +1,4 @@
-import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload } from 'lucide-react'
+import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Clock } from 'lucide-react'
 import type { ElementType } from 'react'
 
 
@@ -111,6 +111,11 @@ export const navItems: (NavItem | NavItemGroup)[] = [
         title: 'nav_ui_date_picker',
         url: '/app/ui/date-picker',
         icon: Calendar,
+      },
+      {
+        title: 'nav_ui_date_view',
+        url: '/app/ui/date-view',
+        icon: Clock,
       },
 
       {
