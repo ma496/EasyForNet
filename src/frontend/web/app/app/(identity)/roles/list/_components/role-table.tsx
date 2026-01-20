@@ -12,6 +12,7 @@ import { Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react'
 import { getTranslation } from '@/i18n'
 import { exportData, ExportFormat, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
+import Badge from '@/components/ui/badge'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
 import { Allow } from '@/allow'
@@ -116,7 +117,7 @@ export const RoleTable = () => {
       header: t('table_roles_userCount'),
       cell: (info) => (
         <div className='w-10 flex items-center justify-center'>
-          <span className='badge badge-primary'>{info.getValue()}</span>
+          <Badge variant='primary'>{info.getValue()}</Badge>
         </div>),
       enableSorting: false,
     }),
