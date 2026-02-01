@@ -31,6 +31,16 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
                 || EF.Functions.Like(x.LastName, $"%{search}%"));
         }
 
+        if (request.IsActive.HasValue)
+        {
+            query = query.Where(x => x.IsActive == request.IsActive.Value);
+        }
+
+        if (request.RoleId.HasValue)
+        {
+            query = query.Where(x => x.UserRoles.Any(ur => ur.RoleId == request.RoleId.Value));
+        }
+
         var total = await query.CountAsync(cancellationToken);
         var items = await query
             .Process(request)
@@ -49,6 +59,8 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
 
 sealed class UserListRequest : ListRequestDto<Guid>
 {
+    public bool? IsActive { get; set; }
+    public Guid? RoleId { get; set; }
 }
 
 sealed class UserListValidator : Validator<UserListRequest>

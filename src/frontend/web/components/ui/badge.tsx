@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 
-export type BadgeVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark';
-export type BadgeType = 'solid' | 'outline';
+export type BadgeVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark'
+export type BadgeType = 'solid' | 'outline'
 
 interface IBadgeProps {
-  children: React.ReactNode;
-  variant?: BadgeVariant;
-  type?: BadgeType;
-  className?: string;
+  children: React.ReactNode
+  variant?: BadgeVariant
+  type?: BadgeType
+  className?: string
 }
 
-const Badge: React.FC<IBadgeProps> = ({
+export const Badge: React.FC<IBadgeProps> = ({
   children,
   variant = 'primary',
   type = 'solid',
@@ -20,16 +20,14 @@ const Badge: React.FC<IBadgeProps> = ({
 }) => {
   const getVariantClass = () => {
     if (type === 'outline') {
-      return `badge-outline-${variant}`;
+      return `badge-outline-${variant}`
     }
-    return `badge-${variant}`;
-  };
+    return `badge-${variant}`
+  }
 
   return (
     <span className={`badge ${getVariantClass()} ${className}`}>
       {children}
     </span>
-  );
-};
-
-export default Badge;
+  )
+}

@@ -12,7 +12,7 @@ import { setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
 import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import Link from 'next/link'
-import { SuccessToast } from '@/lib/utils/notification'
+import { successToast } from '@/lib/utils/notification'
 
 const SigninForm = () => {
   const router = useRouter()
@@ -86,7 +86,7 @@ const SigninForm = () => {
     if (response.error) {
       return
     }
-    SuccessToast.fire({
+    successToast.fire({
       title: t('msg_resend_email_success'),
     })
     setCountdown(15)

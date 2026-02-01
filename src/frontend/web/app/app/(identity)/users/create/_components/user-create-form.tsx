@@ -12,7 +12,7 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
-import { SuccessToast } from '@/lib/utils'
+import { successToast } from '@/lib/utils'
 
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
@@ -58,7 +58,7 @@ export const UserCreateForm = () => {
     })
 
     if (!result.error) {
-      SuccessToast.fire({
+      successToast.fire({
         title: t('user_create_success'),
       })
       router.push('/app/users/list')

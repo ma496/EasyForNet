@@ -5,7 +5,7 @@ import { SortDirection } from '@/store/api/base/sort-direction'
 import { UserListDto, UserRoleDto } from '@/store/api/identity/users/users-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
 import { getTranslation } from '@/i18n'
-import { ExportFormat, SuccessToast, exportData, isAllowed } from '@/lib/utils'
+import { ExportFormat, successToast, exportData, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
@@ -16,6 +16,8 @@ import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
 import { DataTable } from '@/components/ui/data-table'
 import { confirmDeleteAlert, errorAlert } from '@/lib/utils'
+import { UserFilterPanel, UserFilters } from './user-filter-panel'
+import { UserFilterButton } from './user-filter-button'
 
 export const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -25,9 +27,26 @@ export const UserTable = () => {
   })
   const [globalFilter, setGlobalFilter] = useState('')
   const [isExporting, setIsExporting] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const [appliedFilters, setAppliedFilters] = useState<UserFilters>({
+    isActive: '',
+    roleId: '',
+  })
+  const [pendingFilters, setPendingFilters] = useState<UserFilters>({
+    isActive: '',
+    roleId: '',
+  })
   const { t } = getTranslation()
 
   const isRTL = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
+
+  const getIsActiveValue = (value: string): boolean | undefined => {
+    if (value === 'true') return true
+    if (value === 'false') return false
+    return undefined
+  }
+
+  const activeFiltersCount = [appliedFilters.isActive, appliedFilters.roleId].filter(Boolean).length
 
   const {
     data: userListResponse,
@@ -38,6 +57,8 @@ export const UserTable = () => {
     sortField: sorting[0]?.id,
     sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
     search: globalFilter,
+    isActive: getIsActiveValue(appliedFilters.isActive),
+    roleId: appliedFilters.roleId || undefined,
   })
 
   const [fetchUsers] = useLazyUserListQuery()
@@ -47,6 +68,25 @@ export const UserTable = () => {
   const canCreate = isAllowed(authState, [Allow.User_Create])
   const canUpdate = isAllowed(authState, [Allow.User_Update])
   const canDelete = isAllowed(authState, [Allow.User_Delete])
+
+  const handleSearch = () => {
+    setAppliedFilters(pendingFilters)
+    setPagination({ ...pagination, pageIndex: 0 })
+  }
+
+  const handleClear = () => {
+    const clearedFilters = {
+      isActive: '',
+      roleId: '',
+    }
+    setPendingFilters(clearedFilters)
+    setAppliedFilters(clearedFilters)
+    setPagination({ ...pagination, pageIndex: 0 })
+  }
+
+  const handleFilterChange = (newFilters: UserFilters) => {
+    setPendingFilters(newFilters)
+  }
 
   const handleExport = async (format: ExportFormat, all: boolean) => {
     setIsExporting(true)
@@ -60,6 +100,8 @@ export const UserTable = () => {
           sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
           search: globalFilter,
           all: true,
+          isActive: getIsActiveValue(appliedFilters.isActive),
+          roleId: appliedFilters.roleId || undefined,
         })
         if (response.data) {
           dataToExport = response.data?.items
@@ -92,7 +134,7 @@ export const UserTable = () => {
     if (result.isConfirmed) {
       const response = await deleteUser({ id: userId })
       if (response.data?.success) {
-        SuccessToast.fire({
+        successToast.fire({
           title: t('success_userDeleted'),
         })
       } else if (response.data?.message) {
@@ -172,10 +214,17 @@ export const UserTable = () => {
         isFetching={isGettingUsers}
       >
         <DataTableToolbar title={t('page_users_title')}>
+          {/* Filter Button in toolbar */}
+          <UserFilterButton
+            isOpen={filtersOpen}
+            onToggle={() => setFiltersOpen(!filtersOpen)}
+            activeFiltersCount={activeFiltersCount}
+          />
+
           {canCreate && (
             <Link href="/app/users/create" className="btn flex items-center gap-2 btn-primary">
               <Plus size={16} />
-              <span>{t('table_createLink')}</span>
+              <span className="hidden sm:inline">{t('table_createLink')}</span>
             </Link>
           )}
           <div className="dropdown">
@@ -186,7 +235,7 @@ export const UserTable = () => {
               button={
                 <div className="flex items-center gap-2">
                   {isExporting ? <Loader2 className="animate-spin" size={16} /> : <Download size={16} />}
-                  <span className="">{t('table_export')}</span>
+                  <span className="hidden sm:inline">{t('table_export')}</span>
                 </div>
               }
             >
@@ -217,6 +266,16 @@ export const UserTable = () => {
             </Dropdown>
           </div>
         </DataTableToolbar>
+
+        {/* Filter Panel - positioned between toolbar and table */}
+        {filtersOpen && (
+          <UserFilterPanel
+            filters={pendingFilters}
+            onChange={handleFilterChange}
+            onSearch={handleSearch}
+            onClear={handleClear}
+          />
+        )}
 
         <DataTable />
 

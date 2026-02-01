@@ -1,0 +1,102 @@
+'use client'
+
+import { getTranslation } from '@/i18n'
+import { Select } from '@/components/ui/form/select'
+import { useRoleListQuery } from '@/store/api/identity/roles/roles-api'
+import { Search, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+export interface UserFilters {
+  isActive: string
+  roleId: string
+}
+
+interface UserFilterPanelProps {
+  filters: UserFilters
+  onChange: (filters: UserFilters) => void
+  onSearch: () => void
+  onClear: () => void
+}
+
+export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFilterPanelProps) => {
+  const { t } = getTranslation()
+
+  const { data: rolesData } = useRoleListQuery({ all: true })
+
+  const activeFilterOptions = [
+    { label: t('filter_option_all') || 'All', value: '' },
+    { label: t('filter_option_active') || 'Active', value: 'true' },
+    { label: t('filter_option_inactive') || 'Inactive', value: 'false' },
+  ]
+
+  const roleOptions = [
+    { label: t('filter_option_all_roles') || 'All Roles', value: '' },
+    ...(rolesData?.items.map((role) => ({
+      label: role.name,
+      value: role.id,
+    })) || []),
+  ]
+
+  const activeFiltersCount = [filters.isActive, filters.roleId].filter(Boolean).length
+
+  return (
+    <div className="mb-4 panel-2">
+      {/* Filters Row */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Active Status Filter */}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+            {t('filter_active_status') || 'Active Status'}
+          </label>
+          <Select
+            name="isActive"
+            options={activeFilterOptions}
+            value={filters.isActive}
+            onChange={(_, value) => onChange({ ...filters, isActive: value })}
+            placeholder={t('filter_option_all') || 'All'}
+            searchable={false}
+            clearable={false}
+            size="sm"
+          />
+        </div>
+
+        {/* Role Filter */}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+            {t('filter_role') || 'Role'}
+          </label>
+          <Select
+            name="roleId"
+            options={roleOptions}
+            value={filters.roleId}
+            onChange={(_, value) => onChange({ ...filters, roleId: value })}
+            placeholder={t('filter_select_role') || 'Select Role'}
+            searchable={true}
+            clearable={true}
+            size="sm"
+          />
+        </div>
+      </div>
+
+      {/* Action Buttons Row */}
+      <div className="mt-4 flex justify-end gap-2">
+        <Button
+          onClick={onSearch}
+          icon={<Search className="h-4 w-4" />}
+          size="sm"
+        >
+          {t('filter_search') || 'Search'}
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={onClear}
+          disabled={activeFiltersCount === 0}
+          icon={<X className="h-4 w-4" />}
+          size="sm"
+        >
+          {t('filter_clear') || 'Clear'}
+        </Button>
+      </div>
+    </div>
+  )
+}

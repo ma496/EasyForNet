@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { Mail, Lock } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
-import { SuccessToast } from '@/lib/utils/notification'
+import { successToast } from '@/lib/utils/notification'
 
 const SignupForm = () => {
   // const router = useRouter()
@@ -79,7 +79,7 @@ const SignupForm = () => {
       if (response.error) {
         return
       }
-      SuccessToast.fire({
+      successToast.fire({
         title: t('msg_resend_email_success'),
       })
       setCountdown(15)

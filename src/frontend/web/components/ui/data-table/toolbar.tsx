@@ -4,16 +4,15 @@ import { cn } from '@/lib/utils'
 import { getTranslation } from '@/i18n'
 import { useDataTable } from './context'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface DataTableToolbarProps<_TData> {
+interface DataTableToolbarProps {
   searchPlaceholder?: string
   title?: string | ReactNode
   children?: React.ReactNode
 }
 
-export function DataTableToolbar<_TData>({ title, children }: DataTableToolbarProps<_TData>) {
+export function DataTableToolbar<TData>({ title, children }: DataTableToolbarProps) {
   const { t } = getTranslation()
-  const { table } = useDataTable<_TData>()
+  const { table } = useDataTable<TData>()
 
   return (
     <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

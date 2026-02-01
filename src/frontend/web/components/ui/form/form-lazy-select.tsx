@@ -27,7 +27,7 @@ interface FormLazySelectProps<TItem, TRequest> {
   getLabel: (item: TItem) => string
   getValue: (item: TItem) => string
   isDisabled?: (item: TItem) => boolean
-  selectedItem?: TItem
+  selectedItemId?: string
   showValidation?: boolean
   className?: string
   icon?: React.ReactNode
@@ -49,7 +49,7 @@ export const FormLazySelect = <TItem, TRequest>({
   getLabel,
   getValue,
   isDisabled = () => false,
-  selectedItem,
+  selectedItemId,
   showValidation = true,
   className,
   icon,
@@ -78,6 +78,7 @@ export const FormLazySelect = <TItem, TRequest>({
   const generatedId = useId()
   const controlId = id ?? generatedId
   const [trigger, { data, isFetching }] = useLazyQuery()
+  const [triggerSelected, { data: selectedData }] = useLazyQuery()
 
   const [storedOptions, setStoredOptions] = useState<Option[]>([])
 
@@ -93,43 +94,53 @@ export const FormLazySelect = <TItem, TRequest>({
     generateRequestRef.current = generateRequest
   }, [getLabel, getValue, isDisabled, generateRequest])
 
-  const prevSelectedItemRef = useRef<TItem | undefined>(undefined)
-  const memoizedSelectedItem = useMemo(() => {
-    const currentSelectedItem = selectedItem
-    const prevSelectedItem = prevSelectedItemRef.current
-
-    if (currentSelectedItem !== prevSelectedItem) { // Basic reference check, could enhanced if needed
-      // Simpler check for single item compared to array
-      if (
-        currentSelectedItem &&
-        prevSelectedItem &&
-        getValueRef.current(currentSelectedItem) === getValueRef.current(prevSelectedItem) &&
-        JSON.stringify(currentSelectedItem) === JSON.stringify(prevSelectedItem)
-      ) {
-        return prevSelectedItemRef.current
-      }
-      prevSelectedItemRef.current = currentSelectedItem
-    }
-    return prevSelectedItemRef.current
-  }, [selectedItem])
-
+  const allOptions = useMemo(() => {
+    const optionsMap = new Map<string, Option>()
+    storedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
+    fetchedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
+    return Array.from(optionsMap.values())
+  }, [storedOptions, fetchedOptions])
 
   useEffect(() => {
-    if (memoizedSelectedItem) {
-      setStoredOptions([
-        {
-          label: getLabelRef.current(memoizedSelectedItem),
-          value: getValueRef.current(memoizedSelectedItem),
-          disabled: isDisabledRef.current(memoizedSelectedItem),
+    if (selectedItemId && !allOptions.some(opt => opt.value === selectedItemId)) {
+      let request: TRequest
+
+      if (generateRequestRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        request = generateRequestRef.current('', 1, pageSize) as any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (request as any).includeIds = [selectedItemId]
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const internalRequest: any = {
+          page: 1,
+          pageSize: 1,
+          includeIds: [selectedItemId],
         }
-      ])
-    } else {
-      // If undefined/null, we technically don't need to force clear storedOptions
-      // because we accumulate valid options there, but for single select
-      // usually we just care about the selected one being available.
-      // Let's keep existing behavior of just ensuring current selection is in storedOptions.
+        request = internalRequest as TRequest
+      }
+      triggerSelected(request)
     }
-  }, [memoizedSelectedItem])
+  }, [selectedItemId, triggerSelected, pageSize, allOptions])
+
+  useEffect(() => {
+    if (selectedData?.items && selectedItemId) {
+      const selectedItemDetail = selectedData.items.find((item) => getValueRef.current(item) === selectedItemId)
+      if (selectedItemDetail) {
+        setStoredOptions((prev) => {
+          if (prev.some((opt) => opt.value === selectedItemId)) return prev
+          return [
+            ...prev,
+            {
+              label: getLabelRef.current(selectedItemDetail),
+              value: getValueRef.current(selectedItemDetail),
+              disabled: isDisabledRef.current(selectedItemDetail),
+            },
+          ]
+        })
+      }
+    }
+  }, [selectedData, selectedItemId])
 
   useEffect(() => {
     setPage(1)
@@ -189,12 +200,6 @@ export const FormLazySelect = <TItem, TRequest>({
     }
   }, [isFetching])
 
-  const allOptions = useMemo(() => {
-    const optionsMap = new Map<string, Option>()
-    storedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
-    fetchedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
-    return Array.from(optionsMap.values())
-  }, [storedOptions, fetchedOptions])
 
   useEffect(() => {
     if (!open) return

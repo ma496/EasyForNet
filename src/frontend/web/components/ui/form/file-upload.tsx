@@ -83,6 +83,7 @@ export const FileUpload = ({
   const [uploadFile, { isLoading }] = useFileUploadMutation()
   const [deleteFileTrigger, { isLoading: isDeleting }] = useFileDeleteMutation()
   const [getFileTrigger] = useLazyFileGetQuery()
+  const lastFileNameRef = useRef<string | undefined>(undefined)
   const resolvedIcon = useMemo(() => icon ?? <Upload className="h-4 w-4" />, [icon])
   const hasCurrent = useMemo(() => !!selectedFileName || (forceDelete && !!(fileName ?? response?.fileName)), [selectedFileName, forceDelete, fileName, response])
 
@@ -129,6 +130,7 @@ export const FileUpload = ({
         }
         setSelectedFileName(file.name)
         const url = URL.createObjectURL(file)
+        lastFileNameRef.current = res.data.fileName
         setSelectedFileUrl(url)
         setResponse(res.data)
         setError(undefined)
@@ -149,6 +151,7 @@ export const FileUpload = ({
       const res = await deleteFileTrigger({ fileName: current })
       if (!res.error) {
         setSelectedFileName('')
+        lastFileNameRef.current = undefined
         setSelectedFileUrl(undefined)
         setResponse(undefined)
       }
@@ -187,7 +190,14 @@ export const FileUpload = ({
     const loadUrl = async () => {
       const current = fileName ?? response?.fileName
       if (!current) {
-        setSelectedFileUrl(undefined)
+        if (lastFileNameRef.current !== undefined) {
+          lastFileNameRef.current = undefined
+          setSelectedFileUrl(undefined)
+        }
+        return
+      }
+
+      if (lastFileNameRef.current === current) {
         return
       }
 
@@ -196,8 +206,10 @@ export const FileUpload = ({
         if (result.data) {
           const url = URL.createObjectURL(result.data as Blob)
           currentObjectUrl = url
+          lastFileNameRef.current = current
           setSelectedFileUrl(url)
         } else {
+          lastFileNameRef.current = current
           setSelectedFileUrl(undefined)
         }
       } else if (result.data) {
@@ -206,9 +218,7 @@ export const FileUpload = ({
       }
     }
 
-    if (!selectedFileUrl || !selectedFileUrl.startsWith('blob:')) {
-      loadUrl()
-    }
+    loadUrl()
 
     return () => {
       cancelled = true
@@ -217,7 +227,7 @@ export const FileUpload = ({
         URL.revokeObjectURL(currentObjectUrl)
       }
     }
-  }, [fileName, response, getFileTrigger, selectedFileUrl])
+  }, [fileName, response, getFileTrigger])
 
   const handleDeleteClick = useCallback(async () => {
     const result = await confirmDeleteAlert({

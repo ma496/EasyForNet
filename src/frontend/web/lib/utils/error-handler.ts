@@ -1,5 +1,5 @@
 import { getTranslation } from '@/i18n'
-import { errorAlert, ErrorToast, isTranslationKeyExist } from '@/lib/utils'
+import { errorAlert, errorToast, isTranslationKeyExist } from '@/lib/utils'
 
 interface ValidationError {
   name: string
@@ -44,20 +44,20 @@ const isError = (payload: ApiErrorPayload, errorStatus: number, ignoreStatuses?:
 export const rtkErrorHandler = (payload: ApiErrorPayload, ignoreStatuses?: number[]) => {
   const { t } = getTranslation()
   if (payload?.status === 'FETCH_ERROR') {
-    ErrorToast.fire({ title: t('connection_error_title'), text: t('connection_error_message') })
+    errorToast.fire({ title: t('connection_error_title'), text: t('connection_error_message') })
   } else if (isError(payload, 400, ignoreStatuses) && payload.data?.errors) {
     errorAlert({ title: t('400_error_title'), text: getValidationMessage(payload.data?.errors || []) })
   } else if (isError(payload, 401, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('401_error_title'), text: t('401_error_message') })
+    errorToast.fire({ title: t('401_error_title'), text: t('401_error_message') })
   } else if (isError(payload, 403, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('403_error_title'), text: t('403_error_message') })
+    errorToast.fire({ title: t('403_error_title'), text: t('403_error_message') })
   } else if (isError(payload, 404, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('404_error_title'), text: t('404_error_message') })
+    errorToast.fire({ title: t('404_error_title'), text: t('404_error_message') })
   } else if (isError(payload, 413, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('413_error_title'), text: t('413_error_message') })
+    errorToast.fire({ title: t('413_error_title'), text: t('413_error_message') })
   } else if (isError(payload, 415, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('415_error_title'), text: t('415_error_message') })
+    errorToast.fire({ title: t('415_error_title'), text: t('415_error_message') })
   } else if (isError(payload, 500, ignoreStatuses)) {
-    ErrorToast.fire({ title: t('500_error_title'), text: t('500_error_message') })
+    errorToast.fire({ title: t('500_error_title'), text: t('500_error_message') })
   }
 }

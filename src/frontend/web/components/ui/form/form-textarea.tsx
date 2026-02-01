@@ -23,13 +23,13 @@ export const FormTextarea = ({ label, name, id, showValidation = true, className
   return (
     <div className={cn(className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
       {label && (
-        <label htmlFor={inputId}>
+        <label htmlFor={inputId} className="label form-label">
           {label}
           {required && <span className="ms-1 text-danger">*</span>}
         </label>
       )}
       <div className="relative text-white-dark">
-        <textarea {...field} {...props} name={name} id={inputId} autoComplete={autoComplete} className="form-textarea" />
+        <textarea {...field} {...props} name={name} id={inputId} autoComplete={autoComplete} className="form-input" />
       </div>
       {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
     </div>

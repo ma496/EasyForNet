@@ -85,6 +85,13 @@ dotnet test src/backend/EasyForNet.sln
 
 **Location:** `src/frontend/web`
 
+### Catch Typescript Errors
+Run from `src/frontend/web`:
+```powershell
+cd src/frontend/web
+npx tsc --noEmit
+```
+
 ### Lint
 Run from `src/frontend/web`:
 ```powershell

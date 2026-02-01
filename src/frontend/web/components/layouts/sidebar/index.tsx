@@ -120,11 +120,11 @@ const Sidebar = () => {
   return (
     <div className={semidark ? 'dark' : ''}>
       <nav className={`fixed top-0 sidebar bottom-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300 ${semidark ? 'text-white-dark' : ''}`}>
-        <div className="h-full bg-white dark:bg-black">
+        <div className="flex h-full flex-col bg-white dark:bg-black">
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/app" className="flex shrink-0 items-center main-logo">
               <img className="ms-[5px] w-8 flex-none" src="/assets/images/icon.png" alt="logo" />
-              <span className="align-middle text-[18px] font-semibold lg:inline ms-1.5 dark:text-white-light">Easy For Net</span>
+              <span className="align-middle text-[18px] font-semibold lg:inline ms-1.5 dark:text-white-light">Easy Biz</span>
             </Link>
 
             <button
@@ -135,8 +135,8 @@ const Sidebar = () => {
               <ChevronsDown size={16} className="m-auto rotate-90" />
             </button>
           </div>
-          <PerfectScrollbar className="relative h-[calc(100vh-80px)]">
-            <div className="relative space-y-0.5 p-4 py-0 font-semibold">
+          <PerfectScrollbar className="relative flex-1" options={{ suppressScrollX: true }}>
+            <div className="relative space-y-0.5 px-4 pt-0 pb-3 font-semibold">
               {filteredNavItems.map((group, index) => (
                 <SidebarNavGroup key={`nav-group-${index}`} group={group} currentMenu={currentMenu} pathname={pathname} t={t} onToggleMenu={toggleMenu} />
               ))}

@@ -5,15 +5,14 @@ import { Loading } from '../loading'
 import { getTranslation } from '@/i18n'
 import ScrollBar from 'react-perfect-scrollbar'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface DataTableProps<_TData> {
+interface DataTableProps {
   className?: string
   suppressScrollX?: boolean
   suppressScrollY?: boolean
 }
 
-export function DataTable<_TData>({ className = '', suppressScrollX = false, suppressScrollY = true }: DataTableProps<_TData>) {
-  const { columns, table, isFetching } = useDataTable<_TData>()
+export function DataTable<TData>({ className = '', suppressScrollX = false, suppressScrollY = true }: DataTableProps) {
+  const { columns, table, isFetching } = useDataTable<TData>()
   const { t } = getTranslation()
 
   return (

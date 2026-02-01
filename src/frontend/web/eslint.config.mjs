@@ -26,6 +26,15 @@ const eslintConfig = tseslint.config(
     rules: {
       "react/react-in-jsx-scope": "off", // Not needed in Next.js/React 17+
       "react/prop-types": "off", // TypeScript handles this
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ],
+      "@typescript-eslint/no-empty-object-type": "off",
     },
   },
 );

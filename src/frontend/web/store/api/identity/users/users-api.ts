@@ -50,7 +50,7 @@ export const usersApi = appApi
         providesTags: (result, error, arg) => [{ type: 'Users', id: arg.id }],
       }),
       userList: builder.query<UserListResponse, UserListRequest>({
-        query: ({ page, pageSize, sortField, sortDirection, search, all, includeIds }) => ({
+        query: ({ page, pageSize, sortField, sortDirection, search, all, includeIds, isActive, roleId }) => ({
           url: '/users',
           params: {
             page,
@@ -60,6 +60,8 @@ export const usersApi = appApi
             search,
             all,
             includeIds,
+            isActive,
+            roleId,
           },
           method: 'GET',
         }),

@@ -12,11 +12,11 @@ import { Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react'
 import { getTranslation } from '@/i18n'
 import { exportData, ExportFormat, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
-import Badge from '@/components/ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
 import { Allow } from '@/allow'
-import { confirmDeleteAlert, errorAlert, SuccessToast } from '@/lib/utils'
+import { confirmDeleteAlert, errorAlert, successToast } from '@/lib/utils'
 
 export const RoleTable = () => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -91,7 +91,7 @@ export const RoleTable = () => {
     if (result.isConfirmed) {
       const response = await deleteRole({ id: roleId })
       if (response.data?.success) {
-        SuccessToast.fire({
+        successToast.fire({
           title: t('success_roleDeleted'),
         })
       } else if (response.data?.message) {

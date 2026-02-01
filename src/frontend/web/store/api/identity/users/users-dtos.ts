@@ -45,9 +45,12 @@ export interface UserGetResponse extends GenericAuditableDto<string> {
   roles: string[]
 }
 
-export interface UserListRequest extends ListRequestDto<string>, RequestBase { }
+export interface UserListRequest extends ListRequestDto<string>, RequestBase {
+  isActive?: boolean
+  roleId?: string
+}
 
-export type UserListResponse = ListDto<UserListDto>
+export interface UserListResponse extends ListDto<UserListDto> { }
 
 export interface UserListDto extends GenericAuditableDto<string> {
   username: string

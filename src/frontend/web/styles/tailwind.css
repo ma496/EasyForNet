@@ -85,6 +85,11 @@
   @apply relative rounded-md bg-white p-5 shadow-sm dark:bg-black;
 }
 
+@utility panel-2 {
+  /* Secondary Panel - for use under main panel */
+  @apply relative rounded-md border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-[#1a2941];
+}
+
 @utility navbar-sticky {
   /* Navbar */
   & header {

@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
-import { SuccessToast } from '@/lib/utils'
+import { successToast } from '@/lib/utils'
 
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
@@ -34,7 +34,7 @@ export const RoleCreateForm = () => {
       ...data,
     })
     if (result.data) {
-      SuccessToast.fire({
+      successToast.fire({
         title: t('role_create_success'),
       })
       router.push('/app/roles/list')

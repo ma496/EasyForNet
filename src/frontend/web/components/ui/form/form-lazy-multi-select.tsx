@@ -27,7 +27,7 @@ interface FormLazyMultiSelectProps<TItem, TRequest> {
   getLabel: (item: TItem) => string
   getValue: (item: TItem) => string
   isDisabled?: (item: TItem) => boolean
-  selectedItems?: TItem[]
+  selectedItemIds?: string[]
   showValidation?: boolean
   className?: string
   icon?: React.ReactNode
@@ -49,7 +49,7 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
   getLabel,
   getValue,
   isDisabled = () => false,
-  selectedItems = [],
+  selectedItemIds = [],
   showValidation = true,
   className,
   icon,
@@ -80,6 +80,7 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
   const generatedId = useId()
   const controlId = id ?? generatedId
   const [trigger, { data, isFetching }] = useLazyQuery()
+  const [triggerSelected, { data: selectedData }] = useLazyQuery()
 
   const [storedOptions, setStoredOptions] = useState<Option[]>([])
 
@@ -95,44 +96,55 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
     generateRequestRef.current = generateRequest
   }, [getLabel, getValue, isDisabled, generateRequest])
 
-  const prevSelectedItemsRef = useRef<TItem[]>([])
-  const memoizedSelectedItems = useMemo(() => {
-    const currentSelectedItems = selectedItems || []
-    const prevSelectedItems = prevSelectedItemsRef.current
-
-    const areItemsEqual = (item1: TItem, item2: TItem): boolean => {
-      return getValueRef.current(item1) === getValueRef.current(item2) && JSON.stringify(item1) === JSON.stringify(item2)
-    }
-
-    const areArraysOfObjectsEqual = (arr1: TItem[], arr2: TItem[]): boolean => {
-      if (arr1.length !== arr2.length) return false
-      const map1 = new Map(arr1.map((item) => [getValueRef.current(item), item]))
-      const map2 = new Map(arr2.map((item) => [getValueRef.current(item), item]))
-      if (map1.size !== map2.size) return false
-      for (const [key, value1] of map1) {
-        const value2 = map2.get(key)
-        if (!value2 || !areItemsEqual(value1, value2)) {
-          return false
-        }
-      }
-      return true
-    }
-
-    if (!areArraysOfObjectsEqual(currentSelectedItems, prevSelectedItems)) {
-      prevSelectedItemsRef.current = currentSelectedItems
-    }
-    return prevSelectedItemsRef.current
-  }, [selectedItems])
+  const allOptions = useMemo(() => {
+    const optionsMap = new Map<string, Option>()
+    storedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
+    fetchedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
+    return Array.from(optionsMap.values())
+  }, [storedOptions, fetchedOptions])
 
   useEffect(() => {
-    setStoredOptions(
-      memoizedSelectedItems.map((item) => ({
-        label: getLabelRef.current(item),
-        value: getValueRef.current(item),
-        disabled: isDisabledRef.current(item),
-      })),
-    )
-  }, [memoizedSelectedItems])
+    const missingIds = selectedItemIds.filter(id => !allOptions.some(opt => opt.value === id))
+    if (missingIds.length > 0) {
+      let request: TRequest
+
+      if (generateRequestRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        request = generateRequestRef.current('', 1, Math.max(pageSize, missingIds.length)) as any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ; (request as any).includeIds = missingIds
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const internalRequest: any = {
+          page: 1,
+          pageSize: Math.max(pageSize, missingIds.length),
+          includeIds: missingIds,
+        }
+        request = internalRequest as TRequest
+      }
+      triggerSelected(request)
+    }
+  }, [selectedItemIds, triggerSelected, pageSize, allOptions])
+
+  useEffect(() => {
+    if (selectedData?.items && selectedItemIds.length > 0) {
+      const selectedItemsDetails = selectedData.items.filter((item) => selectedItemIds.includes(getValueRef.current(item)))
+      if (selectedItemsDetails.length > 0) {
+        setStoredOptions((prev) => {
+          const newOptions = selectedItemsDetails
+            .map((item) => ({
+              label: getLabelRef.current(item),
+              value: getValueRef.current(item),
+              disabled: isDisabledRef.current(item),
+            }))
+            .filter((newOpt) => !prev.some((opt) => opt.value === newOpt.value))
+
+          if (newOptions.length === 0) return prev
+          return [...prev, ...newOptions]
+        })
+      }
+    }
+  }, [selectedData, selectedItemIds])
 
   useEffect(() => {
     setPage(1)
@@ -191,13 +203,6 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
       setIsLoadingMore(false)
     }
   }, [isFetching])
-
-  const allOptions = useMemo(() => {
-    const optionsMap = new Map<string, Option>()
-    storedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
-    fetchedOptions.forEach((opt) => optionsMap.set(opt.value, opt))
-    return Array.from(optionsMap.values())
-  }, [storedOptions, fetchedOptions])
 
   useEffect(() => {
     if (!open) return
