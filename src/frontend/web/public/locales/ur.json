@@ -250,5 +250,15 @@
   "msg_resend_email_success": "تصدیقی ای میل دوبارہ بھیجا گیا ہے۔",
   "text_resend_email_wait": "براہ کرم انتظار کریں ${seconds}s",
   "title_email_not_verified": "ای میل کی تصدیق ضروری ہے",
-  "msg_email_not_verified": "آپ کے ای میل ایڈریس کی تصدیق نہیں ہوئی ہے۔ براہ کرم تصدیقی لنک کے لیے اپنا ان باکس چیک کریں یا دوبارہ بھیجنے کے لیے نیچے والے بٹن پر کلک کریں۔"
+  "msg_email_not_verified": "آپ کے ای میل ایڈریس کی تصدیق نہیں ہوئی ہے۔ براہ کرم تصدیقی لنک کے لیے اپنا ان باکس چیک کریں یا دوبارہ بھیجنے کے لیے نیچے والے بٹن پر کلک کریں۔",
+  "filter_option_all": "تمام",
+  "filter_option_active": "فعال",
+  "filter_option_inactive": "غیر فعال",
+  "filter_option_all_roles": "تمام کردار",
+  "filter_active_status": "فعال حالت",
+  "filter_role": "کردار",
+  "filter_select_role": "کردار منتخب کریں",
+  "filter_search": "تلاش",
+  "filter_clear": "صاف",
+  "filter_button_label": "فلٹرز"
 }

@@ -60,6 +60,7 @@
   "nav_ui_buttons": "Boutons",
   "nav_ui_cards": "Cartes",
   "nav_ui_date_picker": "Sélecteur de date",
+  "nav_ui_date_view": "Vue de date",
   "nav_ui_treeview": "Arborescence",
   "nav_change_password": "Changer le mot de passe",
   "nav_profile": "Profil",
@@ -249,5 +250,15 @@
   "msg_resend_email_success": "L'e-mail de vérification a été renvoyé.",
   "text_resend_email_wait": "Veuillez patienter ${seconds}s",
   "title_email_not_verified": "Vérification de l'e-mail requise",
-  "msg_email_not_verified": "Votre adresse e-mail n'est pas vérifée. Veuillez consulter votre boîte de réception pour le lien de vérification ou cliquez sur le bouton ci-dessous pour le renvoyer."
+  "msg_email_not_verified": "Votre adresse e-mail n'est pas vérifée. Veuillez consulter votre boîte de réception pour le lien de vérification ou cliquez sur le bouton ci-dessous pour le renvoyer.",
+  "filter_option_all": "Tous",
+  "filter_option_active": "Actif",
+  "filter_option_inactive": "Inactif",
+  "filter_option_all_roles": "Tous les Rôles",
+  "filter_active_status": "Statut Actif",
+  "filter_role": "Rôle",
+  "filter_select_role": "Sélectionner un Rôle",
+  "filter_search": "Rechercher",
+  "filter_clear": "Effacer",
+  "filter_button_label": "Filtres"
 }

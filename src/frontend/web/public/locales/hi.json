@@ -250,5 +250,15 @@
   "msg_resend_email_success": "सत्यापन ईमेल दोबारा भेजा गया है।",
   "text_resend_email_wait": "कृपया ${seconds} सेकंड प्रतीक्षा करें",
   "title_email_not_verified": "ईमेल सत्यापन आवश्यक है",
-  "msg_email_not_verified": "आपका ईमेल पता अभी तक सत्यापित नहीं हुआ है। कृपया सत्यापन लिंक के लिए अपना इनबॉक्स जाँचें या पुन: भेजने के लिए नीचे दिए गए बटन पर क्लिक करें।"
+  "msg_email_not_verified": "आपका ईमेल पता अभी तक सत्यापित नहीं हुआ है। कृपया सत्यापन लिंक के लिए अपना इनबॉक्स जाँचें या पुन: भेजने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+  "filter_option_all": "सभी",
+  "filter_option_active": "सक्रिय",
+  "filter_option_inactive": "निष्क्रिय",
+  "filter_option_all_roles": "सभी भूमिकाएं",
+  "filter_active_status": "सक्रिय स्थिति",
+  "filter_role": "भूमिका",
+  "filter_select_role": "भूमिका चुनें",
+  "filter_search": "खोजें",
+  "filter_clear": "साफ करें",
+  "filter_button_label": "फिल्टर"
 }

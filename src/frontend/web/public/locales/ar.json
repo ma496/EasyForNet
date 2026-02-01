@@ -250,5 +250,15 @@
   "msg_resend_email_success": "تمت إعادة إرسال بريد التحقق.",
   "text_resend_email_wait": "تم الانتظار ${seconds}s",
   "title_email_not_verified": "تحقق من البريد الإلكتروني مطلوب",
-  "msg_email_not_verified": "عنوان بريدك الإلكتروني غير مفعل. يرجى التحقق من بريدك الإلكتروني للحصول على رابط التفعيل أو انقر فوق الزر أدناه لإعادة إرساله."
+  "msg_email_not_verified": "عنوان بريدك الإلكتروني غير مفعل. يرجى التحقق من بريدك الإلكتروني للحصول على رابط التفعيل أو انقر فوق الزر أدناه لإعادة إرساله.",
+  "filter_option_all": "الكل",
+  "filter_option_active": "نشط",
+  "filter_option_inactive": "غير نشط",
+  "filter_option_all_roles": "جميع الأدوار",
+  "filter_active_status": "حالة النشاط",
+  "filter_role": "الدور",
+  "filter_select_role": "اختر الدور",
+  "filter_search": "بحث",
+  "filter_clear": "مسح",
+  "filter_button_label": "عوامل التصفية"
 }

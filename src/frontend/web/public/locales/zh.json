@@ -250,5 +250,15 @@
   "msg_resend_email_success": "验证邮件已重新发送。",
   "text_resend_email_wait": "请稍候 ${seconds}s",
   "title_email_not_verified": "需要电子邮件验证",
-  "msg_email_not_verified": "您的电子邮件地址尚未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。"
+  "msg_email_not_verified": "您的电子邮件地址尚未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。",
+  "filter_option_all": "全部",
+  "filter_option_active": "激活",
+  "filter_option_inactive": "未激活",
+  "filter_option_all_roles": "所有角色",
+  "filter_active_status": "激活状态",
+  "filter_role": "角色",
+  "filter_select_role": "选择角色",
+  "filter_search": "搜索",
+  "filter_clear": "清除",
+  "filter_button_label": "筛选"
 }

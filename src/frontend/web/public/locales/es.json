@@ -250,5 +250,15 @@
   "msg_resend_email_success": "El correo de verificación ha sido reenviado.",
   "text_resend_email_wait": "Por favor espere ${seconds}s",
   "title_email_not_verified": "Verificación de correo electrónico requerida",
-  "msg_email_not_verified": "Su dirección de correo electrónico no está verificada. Por favor, revise su bandeja de entrada para el enlace de verificación o haga clic en el botón de abajo para reenviarlo."
+  "msg_email_not_verified": "Su dirección de correo electrónico no está verificada. Por favor, revise su bandeja de entrada para el enlace de verificación o haga clic en el botón de abajo para reenviarlo.",
+  "filter_option_all": "Todos",
+  "filter_option_active": "Activo",
+  "filter_option_inactive": "Inactivo",
+  "filter_option_all_roles": "Todos los Roles",
+  "filter_active_status": "Estado Activo",
+  "filter_role": "Rol",
+  "filter_select_role": "Seleccionar Rol",
+  "filter_search": "Buscar",
+  "filter_clear": "Limpiar",
+  "filter_button_label": "Filtros"
 }

@@ -250,5 +250,15 @@
   "msg_resend_email_success": "Verification email has been resent.",
   "text_resend_email_wait": "Please wait ${seconds}s",
   "title_email_not_verified": "Email Verification Required",
-  "msg_email_not_verified": "Your email address is not verified. Please check your inbox for the verification link or click the button below to resend it."
+  "msg_email_not_verified": "Your email address is not verified. Please check your inbox for the verification link or click the button below to resend it.",
+  "filter_option_all": "All",
+  "filter_option_active": "Active",
+  "filter_option_inactive": "Inactive",
+  "filter_option_all_roles": "All Roles",
+  "filter_active_status": "Active Status",
+  "filter_role": "Role",
+  "filter_select_role": "Select Role",
+  "filter_search": "Search",
+  "filter_clear": "Clear",
+  "filter_button_label": "Filters"
 }
