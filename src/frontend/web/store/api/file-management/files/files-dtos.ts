@@ -4,7 +4,7 @@ export interface FileDeleteRequest extends RequestBase {
   fileName: string
 }
 
-export type FileDeleteResponse = object
+export interface FileDeleteResponse { }
 
 export interface FileGetRequest extends RequestBase {
   fileName: string
