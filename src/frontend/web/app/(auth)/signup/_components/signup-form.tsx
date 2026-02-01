@@ -39,16 +39,16 @@ const SignupForm = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required(t('validation_required'))
-      .min(3, t('validation_minLength', { count: 3 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(3, t('validation_minLength', { min: 3 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
     email: Yup.string()
       .required(t('validation_required'))
       .email(t('validation_email'))
-      .max(100, t('validation_maxLength', { count: 100 })),
+      .max(100, t('validation_maxLength', { max: 100 })),
     password: Yup.string()
       .required(t('validation_required'))
-      .min(8, t('validation_minLength', { count: 8 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(8, t('validation_minLength', { min: 8 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
     confirmPassword: Yup.string()
       .required(t('validation_required'))
       .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_password') })),

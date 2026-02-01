@@ -13,11 +13,11 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   return Yup.object().shape({
     name: Yup.string()
       .required(t('validation_required'))
-      .min(2, t('validation_minLength', { count: 2 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(2, t('validation_minLength', { min: 2 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
     description: Yup.string()
-      .min(10, t('validation_minLength', { count: 10 }))
-      .max(255, t('validation_maxLength', { count: 255 })),
+      .min(10, t('validation_minLength', { min: 10 }))
+      .max(255, t('validation_maxLength', { max: 255 })),
   })
 }
 

@@ -17,8 +17,8 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
       .required(t('validation_required')),
     newPassword: Yup.string()
       .required(t('validation_required'))
-      .min(8, t('validation_minLength', { count: 8 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(8, t('validation_minLength', { min: 8 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
     confirmPassword: Yup.string()
       .required(t('validation_required'))
       .oneOf([Yup.ref('newPassword')], t('validation_mustMatch', { otherField: t('label_newPassword') })),

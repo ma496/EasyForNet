@@ -21,12 +21,12 @@ const SigninForm = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required(t('validation_required'))
-      .min(3, t('validation_minLength', { count: 3 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(3, t('validation_minLength', { min: 3 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
     password: Yup.string()
       .required(t('validation_required'))
-      .min(8, t('validation_minLength', { count: 8 }))
-      .max(50, t('validation_maxLength', { count: 50 })),
+      .min(8, t('validation_minLength', { min: 8 }))
+      .max(50, t('validation_maxLength', { max: 50 })),
   })
 
   type SigninFormValues = Yup.InferType<typeof validationSchema>
