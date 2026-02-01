@@ -45,11 +45,14 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {/* Active Status Filter */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <label
+            htmlFor="isActive"
+            className="text-xs font-medium text-gray-500 dark:text-gray-400">
             {t('filter_active_status') || 'Active Status'}
           </label>
           <Select
             name="isActive"
+            id="isActive"
             options={activeFilterOptions}
             value={filters.isActive}
             onChange={(_, value) => onChange({ ...filters, isActive: value })}
@@ -62,11 +65,14 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
 
         {/* Role Filter */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <label
+            htmlFor="roleId"
+            className="text-xs font-medium text-gray-500 dark:text-gray-400">
             {t('filter_role') || 'Role'}
           </label>
           <Select
             name="roleId"
+            id="roleId"
             options={roleOptions}
             value={filters.roleId}
             onChange={(_, value) => onChange({ ...filters, roleId: value })}
