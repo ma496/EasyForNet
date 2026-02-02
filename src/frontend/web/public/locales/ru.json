@@ -128,6 +128,8 @@
   "success_userDeleted": "Пользователь успешно удален",
   "table_actions": "Действия",
   "label_isActive": "Активен",
+  "status_active": "Активный",
+  "status_inactive": "Неактивный",
   "nav_users_list": "Список",
   "nav_users_create": "Создать",
   "user_create_success": "Пользователь успешно создан",

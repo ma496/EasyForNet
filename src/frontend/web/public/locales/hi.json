@@ -128,6 +128,8 @@
   "success_userDeleted": "उपयोगकर्ता सफलतापूर्वक हटाया गया",
   "table_actions": "क्रियाएं",
   "label_isActive": "सक्रिय",
+  "status_active": "सक्रिय",
+  "status_inactive": "निष्क्रिय",
   "nav_users_list": "सूची",
   "nav_users_create": "बनाएं",
   "user_create_success": "उपयोगकर्ता सफलतापूर्वक बनाया गया",

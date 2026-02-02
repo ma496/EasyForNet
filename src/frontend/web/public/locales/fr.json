@@ -128,6 +128,8 @@
   "success_userDeleted": "Utilisateur supprimé avec succès",
   "table_actions": "Actions",
   "label_isActive": "Actif",
+  "status_active": "Actif",
+  "status_inactive": "Inactif",
   "nav_users_list": "Liste",
   "nav_users_create": "Créer",
   "user_create_success": "Utilisateur créé avec succès",

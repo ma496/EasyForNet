@@ -18,6 +18,7 @@ import { DataTable } from '@/components/ui/data-table'
 import { confirmDeleteAlert, errorAlert } from '@/lib/utils'
 import { UserFilterPanel, UserFilters } from './user-filter-panel'
 import { UserFilterButton } from './user-filter-button'
+import { Badge } from '@/components/ui/badge'
 
 export const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -176,7 +177,15 @@ export const UserTable = () => {
     columnHelper.accessor('isActive', {
       header: t('table_users_isActive'),
       cell: (info) =>
-        info.getValue() ? <span className="rounded-md bg-green-500 px-2 py-1 text-xs text-white">Yes</span> : <span className="rounded-md bg-red-500 px-2 py-1 text-xs text-white">No</span>,
+        info.getValue() ? (
+          <Badge variant="success">
+            {t('status_active')}
+          </Badge>
+        ) : (
+          <Badge variant="danger">
+            {t('status_inactive')}
+          </Badge>
+        ),
     }),
     columnHelper.display({
       id: 'actions',
@@ -276,7 +285,6 @@ export const UserTable = () => {
             onClear={handleClear}
           />
         )}
-
         <DataTable />
 
         <DataTablePagination siblingCount={1} />

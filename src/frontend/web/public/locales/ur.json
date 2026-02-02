@@ -128,6 +128,8 @@
   "success_userDeleted": "صارف کامیابی سے حذف کر دیا گیا",
   "table_actions": "اقدامات",
   "label_isActive": "فعال",
+  "status_active": "فعال",
+  "status_inactive": "غیر فعال",
   "nav_users_list": "فہرست",
   "nav_users_create": "بنائیں",
   "user_create_success": "صارف کامیابی سے بنایا گیا",

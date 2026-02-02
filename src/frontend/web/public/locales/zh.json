@@ -128,6 +128,8 @@
   "success_userDeleted": "用户删除成功",
   "table_actions": "操作",
   "label_isActive": "激活",
+  "status_active": "启用",
+  "status_inactive": "禁用",
   "nav_users_list": "列表",
   "nav_users_create": "创建",
   "user_create_success": "用户创建成功",

@@ -128,6 +128,8 @@
   "success_userDeleted": "تم حذف المستخدم بنجاح",
   "table_actions": "إجراءات",
   "label_isActive": "نشط",
+  "status_active": "نشط",
+  "status_inactive": "غير نشط",
   "nav_users_list": "قائمة",
   "nav_users_create": "إنشاء",
   "user_create_success": "تم إنشاء المستخدم بنجاح",
