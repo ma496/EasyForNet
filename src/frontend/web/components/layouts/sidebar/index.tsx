@@ -115,7 +115,8 @@ const Sidebar = () => {
     if (window.innerWidth < 1024 && themeConfig.sidebar) {
       dispatch(toggleSidebar())
     }
-  }, [pathname, dispatch, themeConfig.sidebar])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   return (
     <div className={semidark ? 'dark' : ''}>
