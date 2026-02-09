@@ -1,7 +1,7 @@
 'use client'
 import Dropdown, { DropdownRef } from '@/components/dropdown'
 import { ChevronDown } from 'lucide-react'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleRTL } from '@/store/slices/themeConfigSlice'
 import { useRouter } from 'next/navigation'
@@ -29,7 +29,7 @@ interface LanguageDropdownProps {
 const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdownProps) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { i18n } = getTranslation()
+  const { i18n } = useTranslation()
   const dropdownRef = useRef<DropdownRef>(null)
 
   const handleLinkClick = () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { NavItem, NavItemGroup, navItems } from '@/nav-items'
-import Link from 'next/link'
+import { LocalizedLink as Link } from '@/components/localized-link'
 import { usePathname } from 'next/navigation'
 import { getTranslation } from '@/i18n'
 
@@ -41,7 +41,9 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ className }: BreadcrumbsProps) {
   const pathname = usePathname()
-  const activePathItems = findActivePathItems(navItems, pathname)
+  // Remove locale prefix if present (e.g. /en/app -> /app)
+  const normalizedPathname = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/')
+  const activePathItems = findActivePathItems(navItems, normalizedPathname)
   const { t } = getTranslation()
 
   return (

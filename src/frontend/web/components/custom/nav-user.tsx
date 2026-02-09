@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { LocalizedLink } from '@/components/localized-link'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { signout } from '@/store/slices/authSlice'
 import { useRouter } from 'next/navigation'
@@ -77,16 +77,16 @@ const NavUser = () => {
             </div>
           </li>
           <li>
-            <Link href="/app/profile" className="dark:hover:text-white" onClick={handleLinkClick}>
+            <LocalizedLink href="/app/profile" className="dark:hover:text-white" onClick={handleLinkClick}>
               <User className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
               {t('profile')}
-            </Link>
+            </LocalizedLink>
           </li>
           <li>
-            <Link href="/app/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
+            <LocalizedLink href="/app/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
               <Lock className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
               {t('change_password')}
-            </Link>
+            </LocalizedLink>
           </li>
           <li className="cursor-pointer border-t border-white-light dark:border-white-light/10">
             <a className="py-3! text-danger" onClick={logoutAction}>

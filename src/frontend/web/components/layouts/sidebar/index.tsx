@@ -1,7 +1,7 @@
 'use client'
 
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Link from 'next/link'
+import { LocalizedLink as Link } from '@/components/localized-link'
 import { toggleSidebar } from '@/store/slices/themeConfigSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useState, useEffect, useMemo } from 'react'

@@ -1,99 +1,67 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const cookieObj = typeof window === 'undefined' ? require('next/headers') : require('universal-cookie')
+'use client'
 
-import en from './public/locales/en.json'
-import ur from './public/locales/ur.json'
-import zh from './public/locales/zh.json'
-import ar from './public/locales/ar.json'
-import hi from './public/locales/hi.json'
-import es from './public/locales/es.json'
-import fr from './public/locales/fr.json'
-import ru from './public/locales/ru.json'
+import { useTranslation as useTranslationProvider, globalDictionary } from '@/components/layouts/translation-provider'
+import { i18n as i18nConfig } from './i18n-config'
 
+// Re-export the hook for components to use
+export const useTranslation = useTranslationProvider
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const langObj: Record<string, any> = { en, ur, zh, ar, hi, es, fr, ru }
-
-const getLangAsync = async () => {
-  let lang = undefined
-  if (typeof window !== 'undefined') {
-    const cookies = new cookieObj(undefined, { path: '/' })
-    lang = cookies.get('i18nextLng')
-  } else {
-    const cookies = await cookieObj.cookies()
-    lang = cookies.get('i18nextLng')?.value
-  }
-  return lang
-}
-
-const getLang = () => {
-  let lang = undefined
-  if (typeof window !== 'undefined') {
-    const cookies = new cookieObj(undefined, { path: '/' })
-    lang = cookies.get('i18nextLng')
-  } else {
-    // For server-side, return default language when sync access is needed
-    lang = 'en'
-  }
-  return lang
-}
-
+/**
+ * Legacy support for non-component files.
+ * WARNING: This functions relies on the TranslationProvider being mounted to populate globalDictionary.
+ * It does NOT support reactive updates for language changes (requires full page reload or manual re-call).
+ */
 export const getTranslation = () => {
-  const lang = getLang()
-  const data: Record<string, string> = langObj[lang || 'en']
+  const dictionary = globalDictionary
 
   const t = (key: string, variables?: Record<string, string | number>) => {
-    let text = data[key] ? data[key] : key
+    let text = dictionary[key] || key
     if (variables) {
-      Object.entries(variables).forEach(([key, value]) => {
-        text = text.replace(`\${${key}}`, String(value))
+      Object.entries(variables).forEach(([k, v]) => {
+        text = text.replace(`\${${k}}`, String(v))
       })
     }
     return text
   }
 
-  const initLocale = (themeLocale: string) => {
-    const lang = getLang()
-    i18n.changeLanguage(lang || themeLocale)
+  const changeLanguage = (locale: string) => {
+    const pathname = window.location.pathname
+    const segments = pathname.split('/')
+
+    // handle case where pathname starts with a locale
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (segments.length > 1 && i18nConfig.locales.includes(segments[1] as any)) {
+      segments[1] = locale
+    } else {
+      segments.splice(1, 0, locale)
+    }
+
+    // If setting to default locale, remove the locale segment
+    if (locale === i18nConfig.defaultLocale) {
+      // Find if we have a locale segment and remove it
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (segments.length > 1 && i18nConfig.locales.includes(segments[1] as any)) {
+        segments.splice(1, 1);
+      }
+    }
+
+    const newPath = segments.join('/') || '/'
+    window.location.href = newPath
   }
 
   const i18n = {
-    language: lang,
-    changeLanguage: (lang: string) => {
-      const cookies = new cookieObj(undefined, { path: '/' })
-      cookies.set('i18nextLng', lang)
-    },
+    language: 'en', // Best effort guess or need to parse URL manually if needed
+    changeLanguage,
+  }
+
+  const initLocale = (_themeLocale: string) => {
+    // No-op
   }
 
   return { t, i18n, initLocale }
 }
 
+// Async version compatibility (just wraps sync)
 export const getTranslationAsync = async () => {
-  const lang = await getLangAsync()
-  const data: Record<string, string> = langObj[lang || 'en']
-
-  const t = (key: string, variables?: Record<string, string | number>) => {
-    let text = data[key] ? data[key] : key
-    if (variables) {
-      Object.entries(variables).forEach(([key, value]) => {
-        text = text.replace(`\${${key}}`, String(value))
-      })
-    }
-    return text
-  }
-
-  const initLocale = async (themeLocale: string) => {
-    const lang = await getLangAsync()
-    i18n.changeLanguage(lang || themeLocale)
-  }
-
-  const i18n = {
-    language: lang,
-    changeLanguage: (lang: string) => {
-      const cookies = new cookieObj(undefined, { path: '/' })
-      cookies.set('i18nextLng', lang)
-    },
-  }
-
-  return { t, i18n, initLocale }
+  return getTranslation()
 }
