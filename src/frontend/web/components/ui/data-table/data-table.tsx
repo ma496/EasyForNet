@@ -63,7 +63,7 @@ export function DataTable<TData>({ className = '', suppressScrollX = false, supp
             ) : (
               <tr>
                 <td colSpan={columns.length} className="py-6 text-center">
-                  {t('table_no_records_found')}
+                  {t('table.no_records')}
                 </td>
               </tr>
             )}

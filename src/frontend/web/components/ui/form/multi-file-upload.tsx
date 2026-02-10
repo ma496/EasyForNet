@@ -133,8 +133,8 @@ export const MultiFileUpload = ({
   const handleRemove = async (index: number) => {
     const fileNameToRemove = fileNames[index]
     const result = await confirmDeleteAlert({
-      title: t('delete_file'),
-      text: t('delete_file_confirmation'),
+      title: t('file.delete_title'),
+      text: t('file.delete_confirm'),
     })
 
     if (result.isConfirmed) {
@@ -185,7 +185,7 @@ export const MultiFileUpload = ({
                     e.stopPropagation()
                     handleReplaceClick(index)
                   }}
-                  title={t('edit')}
+                  title={t('common.edit')}
                 />
                 <IconButton
                   variant="danger"
@@ -196,7 +196,7 @@ export const MultiFileUpload = ({
                     e.stopPropagation()
                     handleRemove(index)
                   }}
-                  title={t('delete')}
+                  title={t('common.delete')}
                 />
               </div>
             </div>
@@ -215,7 +215,7 @@ export const MultiFileUpload = ({
           ) : (
             <>
               <Plus className="mb-2 h-8 w-8 text-gray-400" />
-              <span className="text-xs text-gray-400">{t('upload')}</span>
+              <span className="text-xs text-gray-400">{t('file.upload')}</span>
             </>
           )}
           <input

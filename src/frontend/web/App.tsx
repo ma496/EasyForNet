@@ -3,7 +3,7 @@ import { PropsWithChildren, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '@/store/slices/themeConfigSlice'
 import AppLoading from '@/components/layouts/app-loading'
-import { i18n } from '@/i18n-config'
+import { i18n, Locale } from '@/i18n-config'
 import { getTranslation } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
@@ -52,7 +52,7 @@ function App({ children }: PropsWithChildren) {
 
     // Calculate direction based on URL language
     const pathSegment = pathname.split('/')[1]
-    const lang = i18n.locales.includes(pathSegment as any) ? pathSegment : i18n.defaultLocale
+    const lang = i18n.locales.includes(pathSegment as Locale) ? pathSegment : i18n.defaultLocale
     const currentLang = themeConfig.languageList.find(l => l.code === lang)
     const direction = currentLang ? (currentLang.isRTL ? 'rtl' : 'ltr') : 'ltr'
 

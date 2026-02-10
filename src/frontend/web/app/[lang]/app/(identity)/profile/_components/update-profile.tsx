@@ -19,13 +19,13 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   return Yup.object({
     firstName: Yup.string().when('lastName', {
       is: (lastName: string) => lastName && lastName.length > 0,
-      then: (schema) => schema.required(t('validation_required')),
+      then: (schema) => schema.required(t('validation.required')),
       otherwise: (schema) => schema.optional(),
     }),
     lastName: Yup.string().optional(),
     email: Yup.string()
-      .required(t('validation_required'))
-      .email(t('validation_invalidEmail')),
+      .required(t('validation.required'))
+      .email(t('validation.invalidEmail')),
     image: Yup.string().optional(),
   })
 }
@@ -43,7 +43,7 @@ export const UpdateProfile = () => {
   useEffect(() => { }, [])
 
   if (isLoadingUserProfile) {
-    return <div>{t('loading')}</div>
+    return <div>{t('common.loading')}</div>
   }
 
   const handleSubmit = async (values: UpdateProfileFormValues) => {
@@ -53,7 +53,7 @@ export const UpdateProfile = () => {
     if (userInfo.data) {
       dispatch(setUserInfo(userInfo.data))
       successToast.fire({
-        title: t('success_profileUpdated'),
+        title: t('page.profile.update_success'),
       })
     }
   }
@@ -90,7 +90,7 @@ export const UpdateProfile = () => {
                     <div className="h-24 w-24 overflow-hidden rounded-full">
                       <img
                         src={selectedFileUrl || '/assets/images/default-avatar.svg'}
-                        alt={t('alt_profileImage')}
+                        alt={t('page.profile.alt_image')}
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -110,8 +110,8 @@ export const UpdateProfile = () => {
                         rounded="full"
                         onClick={async () => {
                           const result = await confirmDeleteAlert({
-                            title: t('delete_avatar_title'),
-                            text: t('delete_avatar_confirmation'),
+                            title: t('page.profile.delete_avatar_title'),
+                            text: t('page.profile.delete_avatar_confirm'),
                           })
                           if (result.isConfirmed) {
                             await deleteFile()
@@ -131,20 +131,20 @@ export const UpdateProfile = () => {
             </div>
 
             <div>
-              <FormInput label={t('label_firstName')} name="firstName" type="text" placeholder={t('placeholder_firstName')} autoFocus={true} icon={<User size={18} />} />
+              <FormInput label={t('form.label.firstName')} name="firstName" type="text" placeholder={t('form.placeholder.firstName')} autoFocus={true} icon={<User size={18} />} />
             </div>
 
             <div>
-              <FormInput label={t('label_lastName')} name="lastName" type="text" placeholder={t('placeholder_lastName')} icon={<User size={18} />} />
+              <FormInput label={t('form.label.lastName')} name="lastName" type="text" placeholder={t('form.placeholder.lastName')} icon={<User size={18} />} />
             </div>
 
             <div>
-              <FormInput label={t('label_email')} name="email" type="email" placeholder={t('placeholder_email')} icon={<Mail size={18} />} required={true} />
+              <FormInput label={t('form.label.email')} name="email" type="email" placeholder={t('form.placeholder.email')} icon={<Mail size={18} />} required={true} />
             </div>
 
             <div className="flex justify-end">
               <Button type="submit" isLoading={isUpdatingProfile || isLoadingUserProfile}>
-                {t('form_submit')}
+                {t('common.submit')}
               </Button>
             </div>
           </Form>

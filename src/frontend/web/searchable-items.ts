@@ -5,64 +5,64 @@ export interface SearchableItem {
 
 export const searchableItems: SearchableItem[] = [
   {
-    title: 'search_dashboard',
+    title: 'search.dashboard',
     url: '/app',
   },
   {
-    title: 'search_users',
+    title: 'search.users',
     url: '/app/users/list',
 
   },
   {
-    title: 'search_users_create',
+    title: 'search.users_create',
     url: '/app/users/create',
 
   },
   {
-    title: 'search_roles',
+    title: 'search.roles',
     url: '/app/roles/list',
 
   },
   {
-    title: 'search_roles_create',
+    title: 'search.roles_create',
     url: '/app/roles/create',
 
   },
   {
-    title: 'search_profile',
+    title: 'search.profile',
     url: '/app/profile',
   },
   {
-    title: 'search_change_password',
+    title: 'search.change_password',
     url: '/app/change-password',
   },
 
   {
-    title: 'search_ui_form_elements',
+    title: 'search.ui_form_elements',
     url: '/app/ui/form-elements',
   },
   {
-    title: 'search_ui_buttons',
+    title: 'search.ui_buttons',
     url: '/app/ui/buttons',
   },
   {
-    title: 'search_ui_cards',
+    title: 'search.ui_cards',
     url: '/app/ui/cards',
   },
   {
-    title: 'search_ui_date_picker',
+    title: 'search.ui_date_picker',
     url: '/app/ui/date-picker',
   },
   {
-    title: 'search_ui_date_view',
+    title: 'search.ui_date_view',
     url: '/app/ui/date-view',
   },
   {
-    title: 'search_ui_treeview',
+    title: 'search.ui_treeview',
     url: '/app/ui/treeview',
   },
   {
-    title: 'search_ui_file_upload',
+    title: 'search.ui_file_upload',
     url: '/app/ui/file-upload',
   },
 ]

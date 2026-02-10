@@ -15,14 +15,14 @@ import { Lock } from 'lucide-react'
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     currentPassword: Yup.string()
-      .required(t('validation_required')),
+      .required(t('validation.required')),
     newPassword: Yup.string()
-      .required(t('validation_required'))
-      .min(8, t('validation_minLength', { min: 8 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(8, t('validation.minLength', { min: 8 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     confirmPassword: Yup.string()
-      .required(t('validation_required'))
-      .oneOf([Yup.ref('newPassword')], t('validation_mustMatch', { otherField: t('label_newPassword') })),
+      .required(t('validation.required'))
+      .oneOf([Yup.ref('newPassword')], t('validation.mustMatch', { otherField: t('form.label.newPassword') })),
   })
 }
 
@@ -42,7 +42,7 @@ export const ChangePasswordForm = () => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('change_password_success'),
+        title: t('page.change_password.success'),
       })
       dispatch(signout())
       router.push('/signin')
@@ -62,12 +62,12 @@ export const ChangePasswordForm = () => {
       >
         {() => (
           <Form noValidate className="flex flex-col gap-4">
-            <FormPasswordInput name="currentPassword" label={t('label_currentPassword')} placeholder={t('placeholder_currentPassword')} icon={<Lock size={18} />} autoFocus={true} required={true} />
-            <FormPasswordInput name="newPassword" label={t('label_newPassword')} placeholder={t('placeholder_newPassword')} icon={<Lock size={18} />} required={true} />
-            <FormPasswordInput name="confirmPassword" label={t('label_confirmPassword')} placeholder={t('placeholder_confirmPassword')} icon={<Lock size={18} />} required={true} />
+            <FormPasswordInput name="currentPassword" label={t('form.label.currentPassword')} placeholder={t('form.placeholder.currentPassword')} icon={<Lock size={18} />} autoFocus={true} required={true} />
+            <FormPasswordInput name="newPassword" label={t('form.label.newPassword')} placeholder={t('form.placeholder.newPassword')} icon={<Lock size={18} />} required={true} />
+            <FormPasswordInput name="confirmPassword" label={t('form.label.confirmPassword')} placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={18} />} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isChangingPassword}>
-                {t('form_submit')}
+                {t('common.submit')}
               </Button>
             </div>
           </Form>

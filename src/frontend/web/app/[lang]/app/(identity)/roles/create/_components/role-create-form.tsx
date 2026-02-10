@@ -13,12 +13,12 @@ import { successToast } from '@/lib/utils'
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     name: Yup.string()
-      .required(t('validation_required'))
-      .min(2, t('validation_minLength', { min: 2 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(2, t('validation.minLength', { min: 2 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     description: Yup.string()
-      .min(10, t('validation_minLength', { min: 10 }))
-      .max(255, t('validation_maxLength', { max: 255 })),
+      .min(10, t('validation.minLength', { min: 10 }))
+      .max(255, t('validation.maxLength', { max: 255 })),
   })
 }
 
@@ -36,7 +36,7 @@ export const RoleCreateForm = () => {
     })
     if (result.data) {
       successToast.fire({
-        title: t('role_create_success'),
+        title: t('page.roles.create_success'),
       })
       router.push('/app/roles/list')
     }
@@ -56,15 +56,15 @@ export const RoleCreateForm = () => {
           <Form noValidate className="grid grid-cols-1 gap-4">
             <FormInput
               name="name"
-              label={t('label_roleName')}
-              placeholder={t('placeholder_roleName')}
+              label={t('form.label.roleName')}
+              placeholder={t('form.placeholder.roleName')}
               autoFocus={true}
               required={true}
             />
             <FormTextarea
               name="description"
-              label={t('label_roleDescription')}
-              placeholder={t('placeholder_roleDescription')}
+              label={t('form.label.roleDescription')}
+              placeholder={t('form.placeholder.roleDescription')}
               rows={4}
             />
             <div className="flex justify-end gap-4">
@@ -73,13 +73,13 @@ export const RoleCreateForm = () => {
                 variant="outline"
                 onClick={() => router.push('/app/roles/list')}
               >
-                {t('form_cancel')}
+                {t('common.cancel')}
               </Button>
               <Button
                 type="submit"
                 isLoading={isSavingRole}
               >
-                {t('form_submit')}
+                {t('common.submit')}
               </Button>
             </div>
           </Form>

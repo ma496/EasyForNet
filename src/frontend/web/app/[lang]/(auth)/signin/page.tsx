@@ -22,8 +22,8 @@ const BoxedSignIn = async ({ params }: { params: Promise<{ lang: string }> }) =>
             </div>
             <div className="mx-auto w-full max-w-[440px]">
               <div className="mb-10">
-                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.page_signin_title}</h1>
-                <p className="text-base leading-normal font-bold text-white-dark">{dict.page_signin_description}</p>
+                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.auth.login.title}</h1>
+                <p className="text-base leading-normal font-bold text-white-dark">{dict.auth.login.description}</p>
               </div>
               <SigninForm />
             </div>

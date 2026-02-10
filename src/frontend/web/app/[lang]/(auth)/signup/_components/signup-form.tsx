@@ -38,20 +38,20 @@ const SignupForm = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-      .required(t('validation_required'))
-      .min(3, t('validation_minLength', { min: 3 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(3, t('validation.minLength', { min: 3 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     email: Yup.string()
-      .required(t('validation_required'))
-      .email(t('validation_email'))
-      .max(100, t('validation_maxLength', { max: 100 })),
+      .required(t('validation.required'))
+      .email(t('validation.email'))
+      .max(100, t('validation.maxLength', { max: 100 })),
     password: Yup.string()
-      .required(t('validation_required'))
-      .min(8, t('validation_minLength', { min: 8 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(8, t('validation.minLength', { min: 8 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     confirmPassword: Yup.string()
-      .required(t('validation_required'))
-      .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_password') })),
+      .required(t('validation.required'))
+      .oneOf([Yup.ref('password')], t('validation.mustMatch', { otherField: t('form.label.password') })),
   })
 
   type SignupFormValues = Yup.InferType<typeof validationSchema>
@@ -64,10 +64,10 @@ const SignupForm = () => {
 
     setRegisteredEmail(values.email)
     if (response.data?.isEmailVerificationRequired) {
-      setSuccessMessage(t('msg_signup_success_verify_email'))
+      setSuccessMessage(t('auth.signup.success_verify_email'))
       setCountdown(15)
     } else {
-      setSuccessMessage(t('msg_signup_success'))
+      setSuccessMessage(t('auth.signup.success_message'))
     }
   }
 
@@ -80,7 +80,7 @@ const SignupForm = () => {
         return
       }
       successToast.fire({
-        title: t('msg_resend_email_success'),
+        title: t('page.verify_email.resend_success'),
       })
       setCountdown(15)
     } catch {
@@ -89,12 +89,12 @@ const SignupForm = () => {
   }
 
   if (successMessage) {
-    const isVerificationRequired = successMessage === t('msg_signup_success_verify_email')
+    const isVerificationRequired = successMessage === t('auth.signup.success_verify_email')
 
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <CheckCircle size={48} className="text-green-500" />
-        <h2 className="text-2xl font-bold">{t('title_signup_success')}</h2>
+        <h2 className="text-2xl font-bold">{t('auth.signup.success_title')}</h2>
         <p>{successMessage}</p>
 
         {isVerificationRequired && (
@@ -105,12 +105,12 @@ const SignupForm = () => {
             disabled={countdown > 0 || isResending}
             isLoading={isResending}
           >
-            {countdown > 0 ? t('text_resend_email_wait', { seconds: countdown }) : t('button_resend_email')}
+            {countdown > 0 ? t('page.verify_email.resend_wait', { seconds: countdown }) : t('page.verify_email.resend_button')}
           </Button>
         )}
 
         <LocalizedLink href="/signin" className="btn btn-primary w-full mt-2">
-          {t('button_back_to_signin')}
+          {t('auth.login.back_to_signin')}
         </LocalizedLink>
       </div>
     )
@@ -120,20 +120,20 @@ const SignupForm = () => {
     <Formik initialValues={{ username: '', email: '', password: '', confirmPassword: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {() => (
         <Form className="space-y-5 dark:text-white">
-          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
-          <FormInput label={t('label_email')} name="email" placeholder={t('placeholder_email')} icon={<Mail size={16} />} required={true} />
-          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} required={true} />
-          <FormPasswordInput label={t('label_confirm_password')} name="confirmPassword" placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} required={true} />
+          <FormInput label={t('form.label.username')} name="username" placeholder={t('form.placeholder.username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
+          <FormInput label={t('form.label.email')} name="email" placeholder={t('form.placeholder.email')} icon={<Mail size={16} />} required={true} />
+          <FormPasswordInput label={t('form.label.password')} name="password" placeholder={t('form.placeholder.password')} icon={<Lock size={16} />} required={true} />
+          <FormPasswordInput label={t('form.label.confirmPassword')} name="confirmPassword" placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-end gap-2">
-            <span className="text-sm">{t('text_already_have_account')}</span>
+            <span className="text-sm">{t('auth.signup.already_have_account')}</span>
             <LocalizedLink href="/signin" className="text-sm text-primary hover:underline dark:text-white">
-              {t('link_signin')}
+              {t('auth.signup.signin_link')}
             </LocalizedLink>
           </div>
 
           <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLoading}>
-            {t('button_signup')}
+            {t('auth.signup.button')}
           </Button>
         </Form>
       )}

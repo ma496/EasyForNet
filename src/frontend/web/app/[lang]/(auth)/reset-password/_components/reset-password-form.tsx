@@ -13,12 +13,12 @@ import { errorAlert, successAlert } from '@/lib/utils'
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     password: Yup.string()
-      .required(t('validation_required'))
-      .min(8, t('validation_minLength', { min: 8 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(8, t('validation.minLength', { min: 8 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     confirmPassword: Yup.string()
-      .required(t('validation_required'))
-      .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_new_password') })),
+      .required(t('validation.required'))
+      .oneOf([Yup.ref('password')], t('validation.mustMatch', { otherField: t('form.label.newPassword') })),
   })
 }
 
@@ -34,7 +34,7 @@ export const ResetPasswordForm = () => {
   const onSubmit = async (data: ResetPasswordFormValues) => {
     if (!token) {
       errorAlert({
-        text: t('invalid_or_expired_token'),
+        text: t('error.server.invalid_token'),
       })
       return
     }
@@ -46,8 +46,8 @@ export const ResetPasswordForm = () => {
 
     if (!result.error) {
       successAlert({
-        title: t('reset_password_success'),
-        text: t('password_has_been_reset'),
+        title: t('auth.reset_password.success'),
+        text: t('auth.reset_password.has_been_reset'),
       })
       router.push('/signin')
     }
@@ -65,11 +65,11 @@ export const ResetPasswordForm = () => {
       >
         {() => (
           <Form noValidate className="flex flex-col gap-4">
-            <FormPasswordInput name="password" label={t('label_new_password')} placeholder={t('placeholder_new_password')} icon={<Lock size={16} />} autoFocus={true} required={true} />
-            <FormPasswordInput name="confirmPassword" label={t('label_confirm_password')} placeholder={t('placeholder_confirm_password')} icon={<Lock size={16} />} required={true} />
+            <FormPasswordInput name="password" label={t('form.label.newPassword')} placeholder={t('form.placeholder.newPassword')} icon={<Lock size={16} />} autoFocus={true} required={true} />
+            <FormPasswordInput name="confirmPassword" label={t('form.label.confirmPassword')} placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isResettingPassword}>
-                {t('reset_password')}
+                {t('auth.reset_password.button')}
               </Button>
             </div>
           </Form>

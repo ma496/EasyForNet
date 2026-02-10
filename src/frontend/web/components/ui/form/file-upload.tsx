@@ -99,7 +99,7 @@ export const FileUpload = ({
       if (maxSizeBytes && file.size > maxSizeBytes) {
         const err = new Error('File exceeds size limit')
         if (showError) {
-          errorAlert({ text: t('to_large_file') })
+          errorAlert({ text: t('file.too_large') })
         }
         setError(err)
         onError?.(err)
@@ -231,8 +231,8 @@ export const FileUpload = ({
 
   const handleDeleteClick = useCallback(async () => {
     const result = await confirmDeleteAlert({
-      title: t('delete_file'),
-      text: t('delete_file_confirmation'),
+      title: t('file.delete_title'),
+      text: t('file.delete_confirm'),
     })
 
     if (result.isConfirmed) {

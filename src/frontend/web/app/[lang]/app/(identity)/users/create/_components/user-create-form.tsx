@@ -18,29 +18,29 @@ import { successToast } from '@/lib/utils'
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     username: Yup.string()
-      .required(t('validation_required'))
-      .min(3, t('validation_minLength', { min: 3 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(3, t('validation.minLength', { min: 3 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     email: Yup.string()
-      .required(t('validation_required'))
-      .email(t('validation_invalidEmail')),
+      .required(t('validation.required'))
+      .email(t('validation.invalidEmail')),
     firstName: Yup.string()
-      .min(3, t('validation_minLength', { min: 3 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .min(3, t('validation.minLength', { min: 3 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     lastName: Yup.string()
-      .min(3, t('validation_minLength', { min: 3 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .min(3, t('validation.minLength', { min: 3 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     password: Yup.string()
-      .required(t('validation_required'))
-      .min(8, t('validation_minLength', { min: 8 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(8, t('validation.minLength', { min: 8 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     confirmPassword: Yup.string()
-      .required(t('validation_required'))
-      .oneOf([Yup.ref('password')], t('validation_mustMatch', { otherField: t('label_password') })),
+      .required(t('validation.required'))
+      .oneOf([Yup.ref('password')], t('validation.mustMatch', { otherField: t('form.label.password') })),
     isActive: Yup.boolean().required(),
     roles: Yup.array().of(Yup.string())
-      .required(t('validation_required'))
-      .min(1, t('validation_atLeastOneSelected')),
+      .required(t('validation.required'))
+      .min(1, t('validation.atLeastOneSelected')),
   })
 }
 
@@ -60,7 +60,7 @@ export const UserCreateForm = () => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('user_create_success'),
+        title: t('page.users.create_success'),
       })
       router.push('/app/users/list')
     }
@@ -86,45 +86,45 @@ export const UserCreateForm = () => {
           <Form noValidate className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormInput
               name="username"
-              label={t('label_username')}
-              placeholder={t('placeholder_username')}
+              label={t('form.label.username')}
+              placeholder={t('form.placeholder.username')}
               autoFocus={true}
               required={true}
             />
             <FormInput
               name="email"
               type="email"
-              label={t('label_email')}
-              placeholder={t('placeholder_email')}
+              label={t('form.label.email')}
+              placeholder={t('form.placeholder.email')}
               required={true}
             />
             <FormInput
               name="firstName"
-              label={t('label_firstName')}
-              placeholder={t('placeholder_firstName')}
+              label={t('form.label.firstName')}
+              placeholder={t('form.placeholder.firstName')}
             />
             <FormInput
               name="lastName"
-              label={t('label_lastName')}
-              placeholder={t('placeholder_lastName')}
+              label={t('form.label.lastName')}
+              placeholder={t('form.placeholder.lastName')}
             />
             <FormPasswordInput
               name="password"
-              label={t('label_password')}
-              placeholder={t('placeholder_password')}
+              label={t('form.label.password')}
+              placeholder={t('form.placeholder.password')}
               required={true}
             />
             <FormPasswordInput
               name="confirmPassword"
-              label={t('label_confirmPassword')}
-              placeholder={t('placeholder_confirmPassword')}
+              label={t('form.label.confirmPassword')}
+              placeholder={t('form.placeholder.confirmPassword')}
               required={true}
             />
             <div className="sm:col-span-2">
               <FormLazyMultiSelect<RoleListDto, RoleListRequest>
                 name="roles"
-                label={t('label_roles')}
-                placeholder={t('placeholder_roles')}
+                label={t('form.label.roles')}
+                placeholder={t('form.placeholder.roles')}
                 useLazyQuery={useLazyRoleListQuery}
                 getLabel={(role) => role.name}
                 getValue={(role) => role.id}
@@ -136,7 +136,7 @@ export const UserCreateForm = () => {
             <div className="sm:col-span-2">
               <FormCheckbox
                 name="isActive"
-                label={t('label_isActive')}
+                label={t('form.label.isActive')}
               />
             </div>
             <div className="flex justify-end gap-4 sm:col-span-2">
@@ -146,13 +146,13 @@ export const UserCreateForm = () => {
                 onClick={() => router.push('/app/users/list')}
                 isLoading={isCreatingUser}
               >
-                {t('form_cancel')}
+                {t('common.cancel')}
               </Button>
               <Button
                 type="submit"
                 isLoading={isCreatingUser}
               >
-                {t('form_submit')}
+                {t('common.submit')}
               </Button>
             </div>
           </Form>

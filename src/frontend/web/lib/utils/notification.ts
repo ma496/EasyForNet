@@ -33,8 +33,8 @@ export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertR
   const { t } = getTranslation()
   const result = await Swal.fire({
     ...params,
-    confirmButtonText: params.confirmButtonText ? params.confirmButtonText : t('ok'),
-    cancelButtonText: params.cancelButtonText ? params.cancelButtonText : t('cancel'),
+    confirmButtonText: params.confirmButtonText ? params.confirmButtonText : t('common.ok'),
+    cancelButtonText: params.cancelButtonText ? params.cancelButtonText : t('common.cancel'),
     confirmButtonColor: params.confirmButtonColor ? params.confirmButtonColor : '#4361ee',
     cancelButtonColor: params.cancelButtonColor ? params.cancelButtonColor : '#805dca',
   })
@@ -43,28 +43,28 @@ export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertR
 
 export async function successAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
-  if (!params.title) params.title = t('success')
+  if (!params.title) params.title = t('common.success')
   if (!params.icon) params.icon = 'success'
   return sweetAlert(params)
 }
 
 export async function errorAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
-  if (!params.title) params.title = t('error')
+  if (!params.title) params.title = t('common.error')
   if (!params.icon) params.icon = 'error'
   return sweetAlert(params)
 }
 
 export async function warningAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
-  if (!params.title) params.title = t('warning')
+  if (!params.title) params.title = t('common.warning')
   if (!params.icon) params.icon = 'warning'
   return sweetAlert(params)
 }
 
 export async function infoAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
-  if (!params.title) params.title = t('info')
+  if (!params.title) params.title = t('common.info')
   if (!params.icon) params.icon = 'info'
   return sweetAlert(params)
 }
@@ -73,8 +73,8 @@ export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAler
   const { t } = getTranslation()
   if (!params.icon) params.icon = 'question'
   if (params.showCancelButton === undefined) params.showCancelButton = true
-  if (!params.confirmButtonText) params.confirmButtonText = t('confirm')
-  if (!params.cancelButtonText) params.cancelButtonText = t('cancel')
+  if (!params.confirmButtonText) params.confirmButtonText = t('common.confirm')
+  if (!params.cancelButtonText) params.cancelButtonText = t('common.cancel')
   return sweetAlert(params)
 }
 
@@ -84,8 +84,8 @@ export async function confirmDeleteAlert(params: SweetAlertOptions): Promise<Swe
   if (!params.cancelButtonColor) params.cancelButtonColor = '#4361ee'
   if (!params.icon) params.icon = 'warning'
   if (params.showCancelButton === undefined) params.showCancelButton = true
-  if (!params.confirmButtonText) params.confirmButtonText = t('delete_confirm')
-  if (!params.cancelButtonText) params.cancelButtonText = t('delete_cancel')
+  if (!params.confirmButtonText) params.confirmButtonText = t('common.delete_confirm')
+  if (!params.cancelButtonText) params.cancelButtonText = t('common.cancel')
 
   return sweetAlert(params)
 }

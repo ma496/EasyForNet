@@ -79,19 +79,19 @@ const NavUser = () => {
           <li>
             <LocalizedLink href="/app/profile" className="dark:hover:text-white" onClick={handleLinkClick}>
               <User className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-              {t('profile')}
+              {t('navigation.profile')}
             </LocalizedLink>
           </li>
           <li>
             <LocalizedLink href="/app/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
               <Lock className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-              {t('change_password')}
+              {t('navigation.change_password')}
             </LocalizedLink>
           </li>
           <li className="cursor-pointer border-t border-white-light dark:border-white-light/10">
             <a className="py-3! text-danger" onClick={logoutAction}>
               <LogOut className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
-              {t('sign_out')}
+              {t('auth.logout')}
             </a>
           </li>
         </ul>

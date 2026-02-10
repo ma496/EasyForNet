@@ -40,10 +40,10 @@ const NotFound = () => {
           {/* Text Content */}
           <div className="max-w-md mx-auto space-y-6">
             <h1 className="text-5xl md:text-6xl font-black dark:text-white tracking-tighter uppercase">
-              {t('404_error_title')}
+              {t('error.404.title')}
             </h1>
             <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-              {t('404_error_message')}
+              {t('error.404.message')}
             </p>
           </div>
 
@@ -53,7 +53,7 @@ const NotFound = () => {
             className="btn mx-auto mt-7! w-max border-0 btn-gradient uppercase shadow-none flex items-center gap-2 group"
           >
             <ArrowLeft className="w-6 h-6 transition-transform group-hover:-translate-x-2" />
-            {t('back')}
+            {t('common.back')}
           </Button>
         </div>
       </div>

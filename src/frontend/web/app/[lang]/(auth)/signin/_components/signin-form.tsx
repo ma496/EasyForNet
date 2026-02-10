@@ -21,13 +21,13 @@ const SigninForm = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-      .required(t('validation_required'))
-      .min(3, t('validation_minLength', { min: 3 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(3, t('validation.minLength', { min: 3 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
     password: Yup.string()
-      .required(t('validation_required'))
-      .min(8, t('validation_minLength', { min: 8 }))
-      .max(50, t('validation_maxLength', { max: 50 })),
+      .required(t('validation.required'))
+      .min(8, t('validation.minLength', { min: 8 }))
+      .max(50, t('validation.maxLength', { max: 50 })),
   })
 
   type SigninFormValues = Yup.InferType<typeof validationSchema>
@@ -88,7 +88,7 @@ const SigninForm = () => {
       return
     }
     successToast.fire({
-      title: t('msg_resend_email_success'),
+      title: t('page.verify_email.resend_success'),
     })
     setCountdown(15)
   }
@@ -97,8 +97,8 @@ const SigninForm = () => {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <Info size={48} className="text-primary" />
-        <h2 className="text-2xl font-bold">{t('title_email_not_verified')}</h2>
-        <p>{t('msg_email_not_verified')}</p>
+        <h2 className="text-2xl font-bold">{t('page.verify_email.not_verified_title')}</h2>
+        <p>{t('page.verify_email.not_verified_message')}</p>
 
         <Button
           type="button"
@@ -107,11 +107,11 @@ const SigninForm = () => {
           disabled={countdown > 0 || isResending}
           isLoading={isResending}
         >
-          {countdown > 0 ? t('text_resend_email_wait', { seconds: countdown }) : t('button_resend_email')}
+          {countdown > 0 ? t('page.verify_email.resend_wait', { seconds: countdown }) : t('page.verify_email.resend_button')}
         </Button>
 
         <Button type="button" className="btn btn-primary w-full mt-2" onClick={() => setShowVerificationMessage(false)}>
-          {t('button_back_to_signin')}
+          {t('auth.login.back_to_signin')}
         </Button>
       </div>
     )
@@ -121,23 +121,23 @@ const SigninForm = () => {
     <Formik initialValues={{ username: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {() => (
         <Form className="space-y-5 dark:text-white">
-          <FormInput label={t('label_username')} name="username" placeholder={t('placeholder_username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
-          <FormPasswordInput label={t('label_password')} name="password" placeholder={t('placeholder_password')} icon={<Lock size={16} />} required={true} />
+          <FormInput label={t('form.label.username')} name="username" placeholder={t('form.placeholder.username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
+          <FormPasswordInput label={t('form.label.password')} name="password" placeholder={t('form.placeholder.password')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-between items-center">
             <div className="flex gap-2">
-              <span className="text-sm dark:text-gray-400">{t('text_dont_have_account')}</span>
+              <span className="text-sm dark:text-gray-400">{t('auth.login.no_account')}</span>
               <LocalizedLink href="/signup" className="text-sm text-primary hover:underline dark:text-white">
-                {t('link_signup')}
+                {t('auth.login.signup_link')}
               </LocalizedLink>
             </div>
             <LocalizedLink href="/forget-password" className="text-sm text-primary hover:underline dark:text-white">
-              {t('link_forgotPassword')}
+              {t('auth.login.forgot_password')}
             </LocalizedLink>
           </div>
 
           <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isTokenLoading || isLoadingUserInfo}>
-            {t('button_signin')}
+            {t('auth.login.button')}
           </Button>
         </Form>
       )}

@@ -129,15 +129,15 @@ export const UserTable = () => {
 
   const handleDelete = async (userId: string) => {
     const result = await confirmDeleteAlert({
-      title: t('delete_user_title'),
-      text: t('delete_user_confirmation'),
+      title: t('page.users.delete_title'),
+      text: t('page.users.delete_confirm'),
     })
 
     if (result.isConfirmed) {
       const response = await deleteUser({ id: userId })
       if (response.data?.success) {
         successToast.fire({
-          title: t('success_userDeleted'),
+          title: t('page.users.delete_success'),
         })
       } else if (response.data?.message) {
         await errorAlert({
@@ -151,23 +151,23 @@ export const UserTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns: ColumnDef<UserListDto, any>[] = [
     columnHelper.accessor('usernameNormalized', {
-      header: t('table_users_userName'),
+      header: t('table.columns.userName'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('emailNormalized', {
-      header: t('table_users_email'),
+      header: t('table.columns.email'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('firstName', {
-      header: t('table_users_firstName'),
+      header: t('table.columns.firstName'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('lastName', {
-      header: t('table_users_lastName'),
+      header: t('table.columns.lastName'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('roles', {
-      header: t('table_users_roles'),
+      header: t('table.columns.roles'),
       cell: (info) =>
         info
           .getValue()
@@ -176,21 +176,21 @@ export const UserTable = () => {
       enableSorting: false,
     }),
     columnHelper.accessor('isActive', {
-      header: t('table_users_isActive'),
+      header: t('table.columns.isActive'),
       cell: (info) =>
         info.getValue() ? (
           <Badge variant="success">
-            {t('status_active')}
+            {t('filter.active')}
           </Badge>
         ) : (
           <Badge variant="danger">
-            {t('status_inactive')}
+            {t('filter.inactive')}
           </Badge>
         ),
     }),
     columnHelper.display({
       id: 'actions',
-      header: t('table_actions'),
+      header: t('table.actions'),
       cell: (info) => (
         <div className="flex items-center gap-2">
           {canUpdate && (
@@ -223,7 +223,7 @@ export const UserTable = () => {
         setGlobalFilter={setGlobalFilter}
         isFetching={isGettingUsers}
       >
-        <DataTableToolbar title={t('page_users_title')}>
+        <DataTableToolbar title={t('page.users.title')}>
           {/* Filter Button in toolbar */}
           <UserFilterButton
             isOpen={filtersOpen}
@@ -234,7 +234,7 @@ export const UserTable = () => {
           {canCreate && (
             <LocalizedLink href="/app/users/create" className="btn flex items-center gap-2 btn-primary">
               <Plus size={16} />
-              <span className="hidden sm:inline">{t('table_createLink')}</span>
+              <span className="hidden sm:inline">{t('table.create_link')}</span>
             </LocalizedLink>
           )}
           <div className="dropdown">
@@ -245,31 +245,31 @@ export const UserTable = () => {
               button={
                 <div className="flex items-center gap-2">
                   {isExporting ? <Loader2 className="animate-spin" size={16} /> : <Download size={16} />}
-                  <span className="hidden sm:inline">{t('table_export')}</span>
+                  <span className="hidden sm:inline">{t('table.export.button')}</span>
                 </div>
               }
             >
               <ul className="mt-10">
-                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table_export_excel')}</li>
+                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.excel')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', false)}>
-                    {t('table_export_current_page')}
+                    {t('table.export.current_page')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', true)}>
-                    {t('table_export_all_records')}
+                    {t('table.export.all_records')}
                   </div>
                 </li>
-                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table_export_csv')}</li>
+                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.csv')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', false)}>
-                    {t('table_export_current_page')}
+                    {t('table.export.current_page')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', true)}>
-                    {t('table_export_all_records')}
+                    {t('table.export.all_records')}
                   </div>
                 </li>
               </ul>

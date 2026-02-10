@@ -115,7 +115,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
     })
     if (!response.error) {
       successToast.fire({
-        title: t('permissions_updated_successfully'),
+        title: t('page.roles.permissions_update_success'),
       })
       router.push('/app/roles/list')
     }
@@ -132,10 +132,10 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <span className="text-lg font-semibold">
-              {role?.name} - {t('permissions')}
+              {role?.name} - {t('page.roles.permissions')}
             </span>
             <div className="relative">
-              <input type="text" className="form-input w-auto ltr:pl-9 rtl:pr-9" placeholder={t('search...')} value={search} onChange={(e) => setSearch(e.target.value)} />
+              <input type="text" className="form-input w-auto ltr:pl-9 rtl:pr-9" placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} />
               <Search className="absolute top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300 ltr:left-2 rtl:right-2 dark:text-gray-600" />
             </div>
             <TreeView
@@ -148,7 +148,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
           </div>
           <div className="flex justify-end">
             <Button variant="default" onClick={handleSubmit} isLoading={isChangingPermissions}>
-              {t('save')}
+              {t('common.save')}
             </Button>
           </div>
         </div>

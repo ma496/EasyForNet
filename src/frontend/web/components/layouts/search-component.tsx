@@ -84,7 +84,7 @@ const SearchComponent = () => {
           type="text"
           id={useId()}
           className="peer form-input w-full bg-gray-100 pr-9 pl-9 placeholder:tracking-widest sm:bg-transparent sm:ltr:pr-4 sm:rtl:pl-4"
-          placeholder={t('search...')}
+          placeholder={t('common.search')}
           value={searchQuery}
           onChange={handleSearchChange}
           onKeyDown={handleKeyDown}

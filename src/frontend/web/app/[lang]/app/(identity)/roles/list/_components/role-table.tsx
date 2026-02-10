@@ -85,15 +85,15 @@ export const RoleTable = () => {
 
   const handleDelete = async (roleId: string) => {
     const result = await confirmDeleteAlert({
-      title: t('delete_role_title'),
-      text: t('delete_role_confirmation'),
+      title: t('page.roles.delete_title'),
+      text: t('page.roles.delete_confirm'),
     })
 
     if (result.isConfirmed) {
       const response = await deleteRole({ id: roleId })
       if (response.data?.success) {
         successToast.fire({
-          title: t('success_roleDeleted'),
+          title: t('page.roles.delete_success'),
         })
       } else if (response.data?.message) {
         await errorAlert({
@@ -107,15 +107,15 @@ export const RoleTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns: ColumnDef<RoleListDto, any>[] = [
     columnHelper.accessor('name', {
-      header: t('table_roles_name'),
+      header: t('table.columns.name'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('description', {
-      header: t('table_roles_description'),
+      header: t('table.columns.description'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('userCount', {
-      header: t('table_roles_userCount'),
+      header: t('table.columns.userCount'),
       cell: (info) => (
         <div className='w-10 flex items-center justify-center'>
           <Badge variant='primary'>{info.getValue()}</Badge>
@@ -124,7 +124,7 @@ export const RoleTable = () => {
     }),
     columnHelper.display({
       id: 'actions',
-      header: t('table_actions'),
+      header: t('table.actions'),
       cell: (info) => (
         <div className="flex items-center gap-2">
           {canUpdate && (
@@ -162,11 +162,11 @@ export const RoleTable = () => {
         setGlobalFilter={setGlobalFilter}
         isFetching={isGettingRoles}
       >
-        <DataTableToolbar title={t('page_roles_title')}>
+        <DataTableToolbar title={t('page.roles.title')}>
           {canCreate && (
             <LocalizedLink href="/app/roles/create" className="btn flex items-center gap-2 btn-primary">
               <Plus size={16} />
-              <span>{t('table_createLink')}</span>
+              <span>{t('table.create_link')}</span>
             </LocalizedLink>
           )}
           <div className="dropdown">
@@ -177,31 +177,31 @@ export const RoleTable = () => {
               button={
                 <div className="flex items-center gap-2">
                   {isExporting ? <Loader2 className="animate-spin" size={16} /> : <Download size={16} />}
-                  <span className="">{t('table_export')}</span>
+                  <span className="">{t('table.export.button')}</span>
                 </div>
               }
             >
               <ul className="mt-10">
-                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table_export_excel')}</li>
+                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.excel')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', false)}>
-                    {t('table_export_current_page')}
+                    {t('table.export.current_page')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', true)}>
-                    {t('table_export_all_records')}
+                    {t('table.export.all_records')}
                   </div>
                 </li>
-                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table_export_csv')}</li>
+                <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.csv')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', false)}>
-                    {t('table_export_current_page')}
+                    {t('table.export.current_page')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', true)}>
-                    {t('table_export_all_records')}
+                    {t('table.export.all_records')}
                   </div>
                 </li>
               </ul>
@@ -211,6 +211,6 @@ export const RoleTable = () => {
         <DataTable />
         <DataTablePagination siblingCount={1} />
       </DataTableProvider>
-    </div>
+    </div >
   )
 }

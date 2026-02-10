@@ -15,7 +15,25 @@ export const getTranslation = () => {
   const dictionary = globalDictionary
 
   const t = (key: string, variables?: Record<string, string | number>) => {
-    let text = dictionary[key] || key
+    const keys = key.split('.');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let text: any = dictionary;
+
+    if (!text) return key;
+
+    for (const k of keys) {
+      if (text && typeof text === 'object' && k in text) {
+        text = text[k];
+      } else {
+        text = key;
+        break;
+      }
+    }
+
+    if (typeof text !== 'string') {
+      text = key;
+    }
+
     if (variables) {
       Object.entries(variables).forEach(([k, v]) => {
         text = text.replace(`\${${k}}`, String(v))

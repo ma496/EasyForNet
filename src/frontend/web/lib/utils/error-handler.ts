@@ -22,7 +22,7 @@ const getValidationMessage = (errors: ValidationError[]) => {
     // Remove the word 'Normalized' from the end of the error name, regardless of its casing.
     const name = error.name.replace(/normalized$/i, '')
     const localizeName = t(name)
-    message += isTranslationKeyExist(`server_error_${error.code}`) ? `${t(`server_error_${error.code}`, { propertyName: localizeName })}\n` : `${error.reason}\n`
+    message += isTranslationKeyExist(`error.server.${error.code}`) ? `${t(`error.server.${error.code}`, { propertyName: localizeName })}\n` : `${error.reason}\n`
   })
   return message
 }
@@ -44,20 +44,20 @@ const isError = (payload: ApiErrorPayload, errorStatus: number, ignoreStatuses?:
 export const rtkErrorHandler = (payload: ApiErrorPayload, ignoreStatuses?: number[]) => {
   const { t } = getTranslation()
   if (payload?.status === 'FETCH_ERROR') {
-    errorToast.fire({ title: t('connection_error_title'), text: t('connection_error_message') })
+    errorToast.fire({ title: t('error.connection.title'), text: t('error.connection.message') })
   } else if (isError(payload, 400, ignoreStatuses) && payload.data?.errors) {
-    errorAlert({ title: t('400_error_title'), text: getValidationMessage(payload.data?.errors || []) })
+    errorAlert({ title: t('error.400.title'), text: getValidationMessage(payload.data?.errors || []) })
   } else if (isError(payload, 401, ignoreStatuses)) {
-    errorToast.fire({ title: t('401_error_title'), text: t('401_error_message') })
+    errorToast.fire({ title: t('error.401.title'), text: t('error.401.message') })
   } else if (isError(payload, 403, ignoreStatuses)) {
-    errorToast.fire({ title: t('403_error_title'), text: t('403_error_message') })
+    errorToast.fire({ title: t('error.403.title'), text: t('error.403.message') })
   } else if (isError(payload, 404, ignoreStatuses)) {
-    errorToast.fire({ title: t('404_error_title'), text: t('404_error_message') })
+    errorToast.fire({ title: t('error.404.title'), text: t('error.404.message') })
   } else if (isError(payload, 413, ignoreStatuses)) {
-    errorToast.fire({ title: t('413_error_title'), text: t('413_error_message') })
+    errorToast.fire({ title: t('error.413.title'), text: t('error.413.message') })
   } else if (isError(payload, 415, ignoreStatuses)) {
-    errorToast.fire({ title: t('415_error_title'), text: t('415_error_message') })
+    errorToast.fire({ title: t('error.415.title'), text: t('error.415.message') })
   } else if (isError(payload, 500, ignoreStatuses)) {
-    errorToast.fire({ title: t('500_error_title'), text: t('500_error_message') })
+    errorToast.fire({ title: t('error.500.title'), text: t('error.500.message') })
   }
 }

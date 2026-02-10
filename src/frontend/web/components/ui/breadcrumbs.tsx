@@ -50,7 +50,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
     <ul className={`flex gap-2 ${className || ''}`}>
       <li>
         <Link href="/app" className="text-primary hover:underline">
-          {t('nav_home')}
+          {t('navigation.home')}
         </Link>
       </li>
       {activePathItems.map((item, index) => (
