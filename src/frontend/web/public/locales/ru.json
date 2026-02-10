@@ -178,6 +178,7 @@
       "usernameAlreadyExists": "Имя пользователя уже существует",
       "emailNotVerified": "Email не подтвержден",
       "roleNameAlreadyExists": "Название роли уже существует",
+      "roleNotFound": "Роль не найдена",
       "defaultRolePermissionsCannotBeChanged": "Права роли по умолчанию нельзя изменить",
       "defaultRoleCannotBeDeleted": "Роль по умолчанию нельзя удалить",
       "defaultRoleCannotBeUpdated": "Роль по умолчанию нельзя обновить",

@@ -178,6 +178,7 @@
       "usernameAlreadyExists": "اسم المستخدم موجود بالفعل",
       "emailNotVerified": "البريد الإلكتروني غير تم التحقق منه",
       "roleNameAlreadyExists": "اسم الدور موجود بالفعل",
+      "roleNotFound": "الدور غير موجود",
       "defaultRolePermissionsCannotBeChanged": "لا يمكن تغيير أذونات الدور الافتراضي",
       "defaultRoleCannotBeDeleted": "لا يمكن حذف الدور الافتراضي",
       "defaultRoleCannotBeUpdated": "لا يمكن تحديث الدور الافتراضي",

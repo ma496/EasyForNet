@@ -178,6 +178,7 @@
       "usernameAlreadyExists": "Username already exists",
       "emailNotVerified": "Email is not verified",
       "roleNameAlreadyExists": "Role name already exists",
+      "roleNotFound": "Role not found",
       "defaultRolePermissionsCannotBeChanged": "Default role permissions cannot be changed",
       "defaultRoleCannotBeDeleted": "Default role cannot be deleted",
       "defaultRoleCannotBeUpdated": "Default role cannot be updated",

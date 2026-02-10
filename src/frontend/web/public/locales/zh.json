@@ -178,6 +178,7 @@
       "usernameAlreadyExists": "用户名已存在",
       "emailNotVerified": "电子邮件未验证",
       "roleNameAlreadyExists": "角色名称已存在",
+      "roleNotFound": "角色未找到",
       "defaultRolePermissionsCannotBeChanged": "无法更改默认角色权限",
       "defaultRoleCannotBeDeleted": "无法删除默认角色",
       "defaultRoleCannotBeUpdated": "无法更新默认角色",
