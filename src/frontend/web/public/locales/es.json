@@ -257,19 +257,19 @@
       "allRecords": "Todos los Registros"
     },
     "actions": "Acciones",
-    "createLink": "Crear"
-  },
-  "filter": {
-    "button": "Filtros",
-    "all": "Todos",
-    "active": "Activo",
-    "inactive": "Inactivo",
-    "allRoles": "Todos los Roles",
-    "activeStatus": "Estado Activo",
-    "role": "Rol",
-    "selectRole": "Seleccionar Rol",
-    "search": "Buscar",
-    "clear": "Limpiar"
+    "createLink": "Crear",
+    "filter": {
+      "button": "Filtros",
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "allRoles": "Todos los Roles",
+      "activeStatus": "Estado Activo",
+      "role": "Rol",
+      "selectRole": "Seleccionar Rol",
+      "search": "Buscar",
+      "clear": "Limpiar"
+    }
   },
   "file": {
     "upload": "Subir Archivo",

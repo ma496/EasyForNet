@@ -257,19 +257,19 @@
       "allRecords": "सभी रिकॉर्ड"
     },
     "actions": "क्रियाएं",
-    "createLink": "बनाएं"
-  },
-  "filter": {
-    "button": "फिल्टर",
-    "all": "सभी",
-    "active": "सक्रिय",
-    "inactive": "निष्क्रिय",
-    "allRoles": "सभी भूमिकाएं",
-    "activeStatus": "सक्रिय स्थिति",
-    "role": "भूमिका",
-    "selectRole": "भूमिका चुनें",
-    "search": "खोजें",
-    "clear": "साफ़ करें"
+    "createLink": "बनाएं",
+    "filter": {
+      "button": "फिल्टर",
+      "all": "सभी",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "allRoles": "सभी भूमिकाएं",
+      "activeStatus": "सक्रिय स्थिति",
+      "role": "भूमिका",
+      "selectRole": "भूमिका चुनें",
+      "search": "खोजें",
+      "clear": "साफ़ करें"
+    }
   },
   "file": {
     "upload": "फ़ाइल अपलोड",

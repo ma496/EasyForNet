@@ -257,19 +257,19 @@
       "allRecords": "تمام ریکارڈ"
     },
     "actions": "کارروائیاں",
-    "createLink": "بنائیں"
-  },
-  "filter": {
-    "button": "فلٹرز",
-    "all": "سب",
-    "active": "فعال",
-    "inactive": "غیر فعال",
-    "allRoles": "تمام کردار",
-    "activeStatus": "فعال حیثیت",
-    "role": "کردار",
-    "selectRole": "کردار منتخب کریں",
-    "search": "تلاش",
-    "clear": "صاف کریں"
+    "createLink": "بنائیں",
+    "filter": {
+      "button": "فلٹرز",
+      "all": "سب",
+      "active": "فعال",
+      "inactive": "غیر فعال",
+      "allRoles": "تمام کردار",
+      "activeStatus": "فعال حیثیت",
+      "role": "کردار",
+      "selectRole": "کردار منتخب کریں",
+      "search": "تلاش",
+      "clear": "صاف کریں"
+    }
   },
   "file": {
     "upload": "فائل اپ لوڈ",

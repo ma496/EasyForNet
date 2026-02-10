@@ -257,19 +257,19 @@
       "allRecords": "كل السجلات"
     },
     "actions": "إجراءات",
-    "createLink": "إنشاء"
-  },
-  "filter": {
-    "button": "تصفية",
-    "all": "الكل",
-    "active": "نشط",
-    "inactive": "غير نشط",
-    "allRoles": "كل الأدوار",
-    "activeStatus": "حالة النشاط",
-    "role": "الدور",
-    "selectRole": "اختر دوراً",
-    "search": "بحث",
-    "clear": "مسح"
+    "createLink": "إنشاء",
+    "filter": {
+      "button": "تصفية",
+      "all": "الكل",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "allRoles": "كل الأدوار",
+      "activeStatus": "حالة النشاط",
+      "role": "الدور",
+      "selectRole": "اختر دوراً",
+      "search": "بحث",
+      "clear": "مسح"
+    }
   },
   "file": {
     "upload": "رفع الملف",

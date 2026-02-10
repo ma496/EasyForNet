@@ -257,19 +257,19 @@
       "allRecords": "Все записи"
     },
     "actions": "Действия",
-    "createLink": "Создать"
-  },
-  "filter": {
-    "button": "Фильтры",
-    "all": "Все",
-    "active": "Активные",
-    "inactive": "Неактивные",
-    "allRoles": "Все роли",
-    "activeStatus": "Статус активности",
-    "role": "Роль",
-    "selectRole": "Выберите роль",
-    "search": "Поиск",
-    "clear": "Очистить"
+    "createLink": "Создать",
+    "filter": {
+      "button": "Фильтры",
+      "all": "Все",
+      "active": "Активные",
+      "inactive": "Неактивные",
+      "allRoles": "Все роли",
+      "activeStatus": "Статус активности",
+      "role": "Роль",
+      "selectRole": "Выберите роль",
+      "search": "Поиск",
+      "clear": "Очистить"
+    }
   },
   "file": {
     "upload": "Загрузка файла",

@@ -180,11 +180,11 @@ export const UserTable = () => {
       cell: (info) =>
         info.getValue() ? (
           <Badge variant="success">
-            {t('filter.active')}
+            {t('table.filter.active')}
           </Badge>
         ) : (
           <Badge variant="danger">
-            {t('filter.inactive')}
+            {t('table.filter.inactive')}
           </Badge>
         ),
     }),

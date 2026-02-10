@@ -257,19 +257,19 @@
       "allRecords": "Tous les enregistrements"
     },
     "actions": "Actions",
-    "createLink": "Créer"
-  },
-  "filter": {
-    "button": "Filtres",
-    "all": "Tous",
-    "active": "Actif",
-    "inactive": "Inactif",
-    "allRoles": "Tous les rôles",
-    "activeStatus": "Statut actif",
-    "role": "Rôle",
-    "selectRole": "Sélectionner un rôle",
-    "search": "Rechercher",
-    "clear": "Effacer"
+    "createLink": "Créer",
+    "filter": {
+      "button": "Filtres",
+      "all": "Tous",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "allRoles": "Tous les rôles",
+      "activeStatus": "Statut actif",
+      "role": "Rôle",
+      "selectRole": "Sélectionner un rôle",
+      "search": "Rechercher",
+      "clear": "Effacer"
+    }
   },
   "file": {
     "upload": "Téléchargement de fichier",

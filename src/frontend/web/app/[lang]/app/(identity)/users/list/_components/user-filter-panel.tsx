@@ -24,13 +24,13 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
   const { data: rolesData } = useRoleListQuery({ all: true })
 
   const activeFilterOptions = [
-    { label: t('filter.all') || 'All', value: '' },
-    { label: t('filter.active') || 'Active', value: 'true' },
-    { label: t('filter.inactive') || 'Inactive', value: 'false' },
+    { label: t('table.filter.all') || 'All', value: '' },
+    { label: t('table.filter.active') || 'Active', value: 'true' },
+    { label: t('table.filter.inactive') || 'Inactive', value: 'false' },
   ]
 
   const roleOptions = [
-    { label: t('filter.allRoles') || 'All Roles', value: '' },
+    { label: t('table.filter.allRoles') || 'All Roles', value: '' },
     ...(rolesData?.items.map((role) => ({
       label: role.name,
       value: role.id,
@@ -48,7 +48,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
           <label
             htmlFor="isActive"
             className="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {t('filter.activeStatus') || 'Active Status'}
+            {t('table.filter.activeStatus') || 'Active Status'}
           </label>
           <Select
             name="isActive"
@@ -56,7 +56,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
             options={activeFilterOptions}
             value={filters.isActive}
             onChange={(_, value) => onChange({ ...filters, isActive: value })}
-            placeholder={t('filter.all') || 'All'}
+            placeholder={t('table.filter.all') || 'All'}
             searchable={false}
             clearable={false}
             size="sm"
@@ -68,7 +68,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
           <label
             htmlFor="roleId"
             className="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {t('filter.role') || 'Role'}
+            {t('table.filter.role') || 'Role'}
           </label>
           <Select
             name="roleId"
@@ -76,7 +76,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
             options={roleOptions}
             value={filters.roleId}
             onChange={(_, value) => onChange({ ...filters, roleId: value })}
-            placeholder={t('filter.selectRole') || 'Select Role'}
+            placeholder={t('table.filter.selectRole') || 'Select Role'}
             searchable={true}
             clearable={true}
             size="sm"
@@ -91,7 +91,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
           icon={<Search className="h-4 w-4" />}
           size="sm"
         >
-          {t('filter.search') || 'Search'}
+          {t('table.filter.search') || 'Search'}
         </Button>
         <Button
           variant="secondary"
@@ -100,7 +100,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
           icon={<X className="h-4 w-4" />}
           size="sm"
         >
-          {t('filter.clear') || 'Clear'}
+          {t('table.filter.clear') || 'Clear'}
         </Button>
       </div>
     </div>

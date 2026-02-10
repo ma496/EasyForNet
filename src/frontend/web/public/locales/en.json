@@ -257,19 +257,19 @@
       "allRecords": "All Records"
     },
     "actions": "Actions",
-    "createLink": "Create"
-  },
-  "filter": {
-    "button": "Filters",
-    "all": "All",
-    "active": "Active",
-    "inactive": "Inactive",
-    "allRoles": "All Roles",
-    "activeStatus": "Active Status",
-    "role": "Role",
-    "selectRole": "Select Role",
-    "search": "Search",
-    "clear": "Clear"
+    "createLink": "Create",
+    "filter": {
+      "button": "Filters",
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive",
+      "allRoles": "All Roles",
+      "activeStatus": "Active Status",
+      "role": "Role",
+      "selectRole": "Select Role",
+      "search": "Search",
+      "clear": "Clear"
+    }
   },
   "file": {
     "upload": "File Upload",

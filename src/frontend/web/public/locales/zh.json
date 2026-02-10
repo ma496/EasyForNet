@@ -257,19 +257,19 @@
       "allRecords": "所有记录"
     },
     "actions": "操作",
-    "createLink": "创建"
-  },
-  "filter": {
-    "button": "筛选",
-    "all": "全部",
-    "active": "启用",
-    "inactive": "停用",
-    "allRoles": "所有角色",
-    "activeStatus": "启用状态",
-    "role": "角色",
-    "selectRole": "选择角色",
-    "search": "搜索",
-    "clear": "清除"
+    "createLink": "创建",
+    "filter": {
+      "button": "筛选",
+      "all": "全部",
+      "active": "启用",
+      "inactive": "停用",
+      "allRoles": "所有角色",
+      "activeStatus": "启用状态",
+      "role": "角色",
+      "selectRole": "选择角色",
+      "search": "搜索",
+      "clear": "清除"
+    }
   },
   "file": {
     "upload": "文件上传",

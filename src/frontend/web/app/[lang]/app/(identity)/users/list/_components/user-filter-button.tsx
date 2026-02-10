@@ -23,7 +23,7 @@ export const UserFilterButton = ({ isOpen, onToggle, activeFiltersCount = 0 }: U
       )}
     >
       <Filter size={16} />
-      <span className="hidden sm:inline">{t('filter.button') || 'Filters'}</span>
+      <span className="hidden sm:inline">{t('table.filter.button') || 'Filters'}</span>
       {activeFiltersCount > 0 && (
         <span className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
           {activeFiltersCount}
