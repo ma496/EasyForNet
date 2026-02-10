@@ -42,7 +42,7 @@ export const ChangePasswordForm = () => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('page.change_password.success'),
+        title: t('page.profile.changePasswordSuccess'),
       })
       dispatch(signout())
       router.push('/signin')

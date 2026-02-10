@@ -133,8 +133,8 @@ export const MultiFileUpload = ({
   const handleRemove = async (index: number) => {
     const fileNameToRemove = fileNames[index]
     const result = await confirmDeleteAlert({
-      title: t('file.delete_title'),
-      text: t('file.delete_confirm'),
+      title: t('file.deleteTitle'),
+      text: t('file.deleteConfirm'),
     })
 
     if (result.isConfirmed) {

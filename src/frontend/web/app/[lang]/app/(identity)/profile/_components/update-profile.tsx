@@ -53,7 +53,7 @@ export const UpdateProfile = () => {
     if (userInfo.data) {
       dispatch(setUserInfo(userInfo.data))
       successToast.fire({
-        title: t('page.profile.update_success'),
+        title: t('page.profile.updateSuccess'),
       })
     }
   }
@@ -90,7 +90,7 @@ export const UpdateProfile = () => {
                     <div className="h-24 w-24 overflow-hidden rounded-full">
                       <img
                         src={selectedFileUrl || '/assets/images/default-avatar.svg'}
-                        alt={t('page.profile.alt_image')}
+                        alt={t('page.profile.altImage')}
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -110,8 +110,8 @@ export const UpdateProfile = () => {
                         rounded="full"
                         onClick={async () => {
                           const result = await confirmDeleteAlert({
-                            title: t('page.profile.delete_avatar_title'),
-                            text: t('page.profile.delete_avatar_confirm'),
+                            title: t('page.profile.deleteAvatarTitle'),
+                            text: t('page.profile.deleteAvatarConfirm'),
                           })
                           if (result.isConfirmed) {
                             await deleteFile()

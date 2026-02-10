@@ -48,7 +48,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   }
 
   if (!userData) {
-    return <div>{t('error.server.user_not_found')}</div>
+    return <div>{t('error.server.userNotFound')}</div>
   }
 
   const onSubmit = async (data: FormValues) => {
@@ -61,7 +61,7 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('page.users.update_success'),
+        title: t('page.users.updateSuccess'),
       })
       router.push('/app/users/list')
     }

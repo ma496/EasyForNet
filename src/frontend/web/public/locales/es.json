@@ -22,67 +22,67 @@
     "ok": "OK",
     "submit": "Enviar",
     "actions": "Acciones",
-    "all_rights_reserved": "Todos los derechos reservados.",
-    "delete_confirm": "Sí, eliminarlo"
+    "allRightsReserved": "Todos los derechos reservados.",
+    "deleteConfirm": "Sí, eliminarlo"
   },
   "navigation": {
     "home": "Inicio",
     "dashboard": "Tablero",
-    "dashboard_sales": "Ventas",
+    "dashboardSales": "Ventas",
     "administration": "Administración",
     "users": "Usuarios",
     "roles": "Roles",
-    "roles_list": "Lista",
-    "roles_create": "Crear",
-    "roles_update": "Actualizar",
-    "roles_change_permissions": "Cambiar Permisos",
+    "rolesList": "Lista",
+    "rolesCreate": "Crear",
+    "rolesUpdate": "Actualizar",
+    "rolesChangePermissions": "Cambiar Permisos",
     "components": "Componentes",
-    "ui_form_elements": "Elementos de Formulario",
-    "ui_buttons": "Botones",
-    "ui_cards": "Tarjetas",
-    "ui_date_picker": "Selector de Fecha",
-    "ui_date_view": "Vista de Fecha",
-    "ui_treeview": "Vista de Árbol",
-    "change_password": "Cambiar Contraseña",
+    "uiFormElements": "Elementos de Formulario",
+    "uiButtons": "Botones",
+    "uiCards": "Tarjetas",
+    "uiDatePicker": "Selector de Fecha",
+    "uiDateView": "Vista de Fecha",
+    "uiTreeview": "Vista de Árbol",
+    "changePassword": "Cambiar Contraseña",
     "profile": "Perfil",
-    "ui_file_upload": "Subir Archivo",
-    "users_list": "Lista",
-    "users_create": "Crear",
-    "users_update": "Actualizar"
+    "uiFileUpload": "Subir Archivo",
+    "usersList": "Lista",
+    "usersCreate": "Crear",
+    "usersUpdate": "Actualizar"
   },
   "auth": {
     "login": {
       "title": "Iniciar Sesión",
       "description": "Ingrese sus credenciales para iniciar sesión",
       "button": "Iniciar Sesión",
-      "forgot_password": "¿Olvidó su contraseña?",
-      "signup_link": "Registrarse",
-      "no_account": "¿No tiene una cuenta?",
-      "back_to_signin": "Volver a Iniciar Sesión"
+      "forgotPassword": "¿Olvidó su contraseña?",
+      "signupLink": "Registrarse",
+      "noAccount": "¿No tiene una cuenta?",
+      "backToSignin": "Volver a Iniciar Sesión"
     },
     "signup": {
       "title": "Registrarse",
       "description": "Ingrese su correo electrónico y contraseña para registrarse",
       "button": "Registrarse",
-      "signin_link": "Iniciar Sesión",
-      "already_have_account": "¿Ya tiene una cuenta?",
-      "success_title": "¡Éxito!",
-      "success_verify_email": "¡Registro exitoso! Por favor verifique su correo electrónico.",
-      "success_message": "¡Registro exitoso! Vaya a la página de inicio de sesión."
+      "signinLink": "Iniciar Sesión",
+      "alreadyHaveAccount": "¿Ya tiene una cuenta?",
+      "successTitle": "¡Éxito!",
+      "successVerifyEmail": "¡Registro exitoso! Por favor verifique su correo electrónico.",
+      "successMessage": "¡Registro exitoso! Vaya a la página de inicio de sesión."
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "Olvidé mi Contraseña",
       "description": "Ingrese su correo electrónico para restablecer su contraseña",
       "button": "Enviar Enlace de Restablecimiento",
       "success": "Enlace de restablecimiento enviado",
-      "check_email": "Revise su correo electrónico para ver las instrucciones"
+      "checkEmail": "Revise su correo electrónico para ver las instrucciones"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "Restablecer Contraseña",
       "description": "Ingrese su nueva contraseña para restablecer su cuenta",
       "button": "Restablecer Contraseña",
       "success": "Contraseña restablecida exitosamente",
-      "has_been_reset": "Su contraseña ha sido restablecida exitosamente"
+      "hasBeenReset": "Su contraseña ha sido restablecida exitosamente"
     },
     "logout": "Cerrar Sesión"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "Debe seleccionar al menos un elemento"
   },
   "error": {
-    "404": {
-      "title": "No Encontrado",
-      "message": "No se encontró el recurso solicitado."
-    },
-    "500": {
-      "title": "Error Interno del Servidor",
-      "message": "Ocurrió un error al procesar la solicitud."
-    },
     "400": {
       "title": "Solicitud Incorrecta"
     },
@@ -145,6 +137,10 @@
       "title": "Prohibido",
       "message": "No tiene permiso para acceder a este recurso."
     },
+    "404": {
+      "title": "No Encontrado",
+      "message": "No se encontró el recurso solicitado."
+    },
     "413": {
       "title": "Carga Útil Demasiado Grande",
       "message": "La carga útil de la solicitud es demasiado grande."
@@ -153,36 +149,40 @@
       "title": "Tipo de Medio No Soportado",
       "message": "El tipo de medio de la solicitud no es soportado."
     },
+    "500": {
+      "title": "Error Interno del Servidor",
+      "message": "Ocurrió un error al procesar la solicitud."
+    },
     "connection": {
       "title": "Error de Conexión",
       "message": "No se puede conectar al servidor. Verifique su conexión o intente más tarde."
     },
     "server": {
-      "internal_server_error": "Error interno del servidor",
-      "duplicate_value": "Valor duplicado",
-      "duplicate_property_value": "Valor de propiedad duplicado",
-      "required_field_missing": "Falta campo obligatorio",
-      "required_property_field_missing": "Falta campo de propiedad obligatorio",
-      "referenced_record_not_found": "Registro referenciado no encontrado",
-      "invalid_value_provided": "Valor proporcionado inválido",
-      "database_error": "Error de base de datos",
-      "invalid_current_password": "Contraseña actual inválida",
-      "invalid_token": "Token inválido",
-      "token_expired": "Token expirado",
-      "payload_too_large": "Carga útil demasiado grande",
-      "invalid_username_password": "Usuario o contraseña inválidos",
-      "invalid_email_password": "Correo o contraseña inválidos",
-      "user_not_active": "Usuario no activo",
-      "user_not_found": "Usuario no encontrado",
-      "email_already_exists": "El correo ya existe",
-      "username_already_exists": "El nombre de usuario ya existe",
-      "email_not_verified": "Correo no verificado",
-      "role_name_already_exists": "El nombre del rol ya existe",
-      "default_role_permissions_cannot_be_changed": "Los permisos del rol predeterminado no se pueden cambiar",
-      "default_role_cannot_be_deleted": "El rol predeterminado no se puede eliminar",
-      "default_role_cannot_be_updated": "El rol predeterminado no se puede actualizar",
-      "default_user_cannot_be_deleted": "El usuario predeterminado no se puede eliminar",
-      "default_user_cannot_be_updated": "El usuario predeterminado no se puede actualizar"
+      "internalServerError": "Error interno del servidor",
+      "duplicateValue": "Valor duplicado",
+      "duplicatePropertyValue": "Valor de propiedad duplicado",
+      "requiredFieldMissing": "Falta campo obligatorio",
+      "requiredPropertyFieldMissing": "Falta campo de propiedad obligatorio",
+      "referencedRecordNotFound": "Registro referenciado no encontrado",
+      "invalidValueProvided": "Valor proporcionado inválido",
+      "databaseError": "Error de base de datos",
+      "invalidCurrentPassword": "Contraseña actual inválida",
+      "invalidToken": "Token inválido",
+      "tokenExpired": "Token expirado",
+      "payloadTooLarge": "Carga útil demasiado grande",
+      "invalidUsernamePassword": "Usuario o contraseña inválidos",
+      "invalidEmailPassword": "Correo o contraseña inválidos",
+      "userNotActive": "Usuario no activo",
+      "userNotFound": "Usuario no encontrado",
+      "emailAlreadyExists": "El correo ya existe",
+      "usernameAlreadyExists": "El nombre de usuario ya existe",
+      "emailNotVerified": "Correo no verificado",
+      "roleNameAlreadyExists": "El nombre del rol ya existe",
+      "defaultRolePermissionsCannotBeChanged": "Los permisos del rol predeterminado no se pueden cambiar",
+      "defaultRoleCannotBeDeleted": "El rol predeterminado no se puede eliminar",
+      "defaultRoleCannotBeUpdated": "El rol predeterminado no se puede actualizar",
+      "defaultUserCannotBeDeleted": "El usuario predeterminado no se puede eliminar",
+      "defaultUserCannotBeUpdated": "El usuario predeterminado no se puede actualizar"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "Usuarios",
-      "create_success": "Usuario creado exitosamente",
-      "update_success": "Usuario actualizado exitosamente",
-      "delete_title": "Eliminar Usuario",
-      "delete_confirm": "¿Está seguro de que desea eliminar este usuario?",
-      "delete_success": "Usuario eliminado exitosamente"
+      "createSuccess": "Usuario creado exitosamente",
+      "updateSuccess": "Usuario actualizado exitosamente",
+      "deleteTitle": "Eliminar Usuario",
+      "deleteConfirm": "¿Está seguro de que desea eliminar este usuario?",
+      "deleteSuccess": "Usuario eliminado exitosamente"
     },
     "roles": {
       "title": "Roles",
-      "create_success": "Rol creado exitosamente",
-      "update_success": "Rol actualizado exitosamente",
-      "delete_title": "Eliminar Rol",
-      "delete_confirm": "¿Está seguro de que desea eliminar este rol?",
-      "delete_success": "Rol eliminado exitosamente",
-      "not_found": "Rol no encontrado",
+      "createSuccess": "Rol creado exitosamente",
+      "updateSuccess": "Rol actualizado exitosamente",
+      "deleteTitle": "Eliminar Rol",
+      "deleteConfirm": "¿Está seguro de que desea eliminar este rol?",
+      "deleteSuccess": "Rol eliminado exitosamente",
+      "notFound": "Rol no encontrado",
       "permissions": "Permisos",
-      "permissions_update_success": "Permisos actualizados exitosamente"
+      "permissionsUpdateSuccess": "Permisos actualizados exitosamente"
     },
     "profile": {
       "title": "Perfil",
-      "update_success": "Perfil actualizado exitosamente",
-      "delete_avatar_title": "Eliminar Foto de Perfil",
-      "delete_avatar_confirm": "¿Está seguro de que desea eliminar su foto de perfil?",
-      "alt_image": "Imagen de Perfil",
-      "change_password_success": "Contraseña cambiada exitosamente"
+      "updateSuccess": "Perfil actualizado exitosamente",
+      "deleteAvatarTitle": "Eliminar Foto de Perfil",
+      "deleteAvatarConfirm": "¿Está seguro de que desea eliminar su foto de perfil?",
+      "altImage": "Imagen de Perfil",
+      "changePasswordSuccess": "Contraseña cambiada exitosamente"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "Verificando su correo...",
-      "verified_title": "¡Correo Verificado!",
-      "verified_message": "Su correo ha sido verificado exitosamente. Ahora puede iniciar sesión.",
-      "button_signin": "Iniciar Sesión Ahora",
-      "resend_button": "Reenviar Correo de Verificación",
-      "resend_success": "El correo de verificación ha sido reenviado.",
-      "resend_wait": "Por favor espere ${seconds}s",
-      "not_verified_title": "Verificación de Correo Requerida",
-      "not_verified_message": "Su dirección de correo no está verificada. Por favor revise su bandeja de entrada o haga clic abajo para reenviar.",
-      "failed_title": "Verificación Fallida",
-      "failed_message": "El enlace de verificación es inválido o ha expirado."
+      "verifiedTitle": "¡Correo Verificado!",
+      "verifiedMessage": "Su correo ha sido verificado exitosamente. Ahora puede iniciar sesión.",
+      "buttonSignin": "Iniciar Sesión Ahora",
+      "resendButton": "Reenviar Correo de Verificación",
+      "resendSuccess": "El correo de verificación ha sido reenviado.",
+      "resendWait": "Por favor espere ${seconds}s",
+      "notVerifiedTitle": "Verificación de Correo Requerida",
+      "notVerifiedMessage": "Su dirección de correo no está verificada. Por favor revise su bandeja de entrada o haga clic abajo para reenviar.",
+      "failedTitle": "Verificación Fallida",
+      "failedMessage": "El enlace de verificación es inválido o ha expirado."
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "Usuarios"
     },
     "pagination": {
-      "showing_entries": "Mostrando ${from} a ${to} de ${totalRecords} entradas"
+      "showingEntries": "Mostrando ${from} a ${to} de ${totalRecords} entradas"
     },
-    "no_records": "No se encontraron registros",
-    "search_placeholder": "Buscar...",
+    "noRecords": "No se encontraron registros",
+    "searchPlaceholder": "Buscar...",
     "export": {
       "button": "Exportar",
       "excel": "Excel",
       "csv": "CSV",
-      "current_page": "Página Actual",
-      "all_records": "Todos los Registros"
+      "currentPage": "Página Actual",
+      "allRecords": "Todos los Registros"
     },
     "actions": "Acciones",
-    "create_link": "Crear"
+    "createLink": "Crear"
   },
   "filter": {
     "button": "Filtros",
     "all": "Todos",
     "active": "Activo",
     "inactive": "Inactivo",
-    "all_roles": "Todos los Roles",
-    "active_status": "Estado Activo",
+    "allRoles": "Todos los Roles",
+    "activeStatus": "Estado Activo",
     "role": "Rol",
-    "select_role": "Seleccionar Rol",
+    "selectRole": "Seleccionar Rol",
     "search": "Buscar",
     "clear": "Limpiar"
   },
   "file": {
     "upload": "Subir Archivo",
-    "delete_title": "Eliminar Archivo",
-    "delete_confirm": "¿Está seguro de que desea eliminar este archivo?",
-    "too_large": "El archivo es demasiado grande"
+    "deleteTitle": "Eliminar Archivo",
+    "deleteConfirm": "¿Está seguro de que desea eliminar este archivo?",
+    "tooLarge": "El archivo es demasiado grande"
   },
   "search": {
     "dashboard": "Tablero",
     "users": "Usuarios",
-    "users_create": "Crear Usuario",
+    "usersCreate": "Crear Usuario",
     "roles": "Roles",
-    "roles_create": "Crear Rol",
-    "ui_buttons": "Botones UI",
-    "ui_cards": "Tarjetas UI",
-    "ui_date_picker": "Selector de Fecha UI",
-    "ui_date_view": "Vista de Fecha UI",
-    "ui_treeview": "Vista de Árbol UI",
-    "change_password": "Cambiar Contraseña",
+    "rolesCreate": "Crear Rol",
+    "uiButtons": "Botones UI",
+    "uiCards": "Tarjetas UI",
+    "uiDatePicker": "Selector de Fecha UI",
+    "uiDateView": "Vista de Fecha UI",
+    "uiTreeview": "Vista de Árbol UI",
+    "changePassword": "Cambiar Contraseña",
     "profile": "Perfil",
-    "ui_form_elements": "Elementos de Formulario UI",
-    "ui_file_upload": "Subida de Archivos UI"
+    "uiFormElements": "Elementos de Formulario UI",
+    "uiFileUpload": "Subida de Archivos UI"
   },
   "footer": {
     "copyright": "Easy For Net Todos los derechos reservados."

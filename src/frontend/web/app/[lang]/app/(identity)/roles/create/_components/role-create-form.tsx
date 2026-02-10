@@ -36,7 +36,7 @@ export const RoleCreateForm = () => {
     })
     if (result.data) {
       successToast.fire({
-        title: t('page.roles.create_success'),
+        title: t('page.roles.createSuccess'),
       })
       router.push('/app/roles/list')
     }

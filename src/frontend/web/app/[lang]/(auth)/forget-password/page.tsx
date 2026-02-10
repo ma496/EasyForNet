@@ -22,8 +22,8 @@ const ForgetPassword = async ({ params }: { params: Promise<{ lang: string }> })
             </div>
             <div className="mx-auto w-full max-w-[440px]">
               <div className="mb-10">
-                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.auth.forgot_password.title}</h1>
-                <p className="text-base leading-normal font-bold text-white-dark">{dict.auth.forgot_password.description}</p>
+                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.auth.forgotPassword.title}</h1>
+                <p className="text-base leading-normal font-bold text-white-dark">{dict.auth.forgotPassword.description}</p>
               </div>
               <ForgetPasswordForm />
             </div>

@@ -34,7 +34,7 @@ export const ResetPasswordForm = () => {
   const onSubmit = async (data: ResetPasswordFormValues) => {
     if (!token) {
       errorAlert({
-        text: t('error.server.invalid_token'),
+        text: t('error.server.invalidToken'),
       })
       return
     }
@@ -46,8 +46,8 @@ export const ResetPasswordForm = () => {
 
     if (!result.error) {
       successAlert({
-        title: t('auth.reset_password.success'),
-        text: t('auth.reset_password.has_been_reset'),
+        title: t('auth.resetPassword.success'),
+        text: t('auth.resetPassword.hasBeenReset'),
       })
       router.push('/signin')
     }
@@ -69,7 +69,7 @@ export const ResetPasswordForm = () => {
             <FormPasswordInput name="confirmPassword" label={t('form.label.confirmPassword')} placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isResettingPassword}>
-                {t('auth.reset_password.button')}
+                {t('auth.resetPassword.button')}
               </Button>
             </div>
           </Form>

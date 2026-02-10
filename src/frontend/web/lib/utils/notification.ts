@@ -84,7 +84,7 @@ export async function confirmDeleteAlert(params: SweetAlertOptions): Promise<Swe
   if (!params.cancelButtonColor) params.cancelButtonColor = '#4361ee'
   if (!params.icon) params.icon = 'warning'
   if (params.showCancelButton === undefined) params.showCancelButton = true
-  if (!params.confirmButtonText) params.confirmButtonText = t('common.delete_confirm')
+  if (!params.confirmButtonText) params.confirmButtonText = t('common.deleteConfirm')
   if (!params.cancelButtonText) params.cancelButtonText = t('common.cancel')
 
   return sweetAlert(params)

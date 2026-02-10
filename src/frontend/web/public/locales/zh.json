@@ -22,67 +22,67 @@
     "ok": "确定",
     "submit": "提交",
     "actions": "操作",
-    "all_rights_reserved": "版权所有。",
-    "delete_confirm": "是的，删除它"
+    "allRightsReserved": "版权所有。",
+    "deleteConfirm": "是的，删除它"
   },
   "navigation": {
     "home": "首页",
     "dashboard": "仪表板",
-    "dashboard_sales": "销售",
+    "dashboardSales": "销售",
     "administration": "管理",
     "users": "用户",
     "roles": "角色",
-    "roles_list": "列表",
-    "roles_create": "创建",
-    "roles_update": "更新",
-    "roles_change_permissions": "更改权限",
+    "rolesList": "列表",
+    "rolesCreate": "创建",
+    "rolesUpdate": "更新",
+    "rolesChangePermissions": "更改权限",
     "components": "组件",
-    "ui_form_elements": "表单元素",
-    "ui_buttons": "按钮",
-    "ui_cards": "卡片",
-    "ui_date_picker": "日期选择器",
-    "ui_date_view": "日期视图",
-    "ui_treeview": "树形视图",
-    "change_password": "更改密码",
+    "uiFormElements": "表单元素",
+    "uiButtons": "按钮",
+    "uiCards": "卡片",
+    "uiDatePicker": "日期选择器",
+    "uiDateView": "日期视图",
+    "uiTreeview": "树形视图",
+    "changePassword": "更改密码",
     "profile": "个人资料",
-    "ui_file_upload": "文件上传",
-    "users_list": "列表",
-    "users_create": "创建",
-    "users_update": "更新"
+    "uiFileUpload": "文件上传",
+    "usersList": "列表",
+    "usersCreate": "创建",
+    "usersUpdate": "更新"
   },
   "auth": {
     "login": {
       "title": "登录",
       "description": "输入您的凭据以登录",
       "button": "登录",
-      "forgot_password": "忘记密码？",
-      "signup_link": "注册",
-      "no_account": "没有账户？",
-      "back_to_signin": "返回登录"
+      "forgotPassword": "忘记密码？",
+      "signupLink": "注册",
+      "noAccount": "没有账户？",
+      "backToSignin": "返回登录"
     },
     "signup": {
       "title": "注册",
       "description": "输入您的电子邮件和密码进行注册",
       "button": "注册",
-      "signin_link": "登录",
-      "already_have_account": "已有账户？",
-      "success_title": "成功！",
-      "success_verify_email": "注册成功！请检查您的电子邮件以验证您的账户。",
-      "success_message": "注册成功！前往登录页面。"
+      "signinLink": "登录",
+      "alreadyHaveAccount": "已有账户？",
+      "successTitle": "成功！",
+      "successVerifyEmail": "注册成功！请检查您的电子邮件以验证您的账户。",
+      "successMessage": "注册成功！前往登录页面。"
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "忘记密码",
       "description": "输入您的电子邮件以重置密码",
       "button": "发送重置链接",
       "success": "密码重置链接已发送",
-      "check_email": "请检查您的电子邮件以获取密码重置说明"
+      "checkEmail": "请检查您的电子邮件以获取密码重置说明"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "重置密码",
       "description": "输入您的新密码以重置您的账户",
       "button": "重置密码",
       "success": "密码重置成功",
-      "has_been_reset": "您的密码已成功重置"
+      "hasBeenReset": "您的密码已成功重置"
     },
     "logout": "退出登录"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "必须至少选择一项"
   },
   "error": {
-    "404": {
-      "title": "未找到",
-      "message": "未找到请求的资源。"
-    },
-    "500": {
-      "title": "服务器内部错误",
-      "message": "处理请求时发生错误。"
-    },
     "400": {
       "title": "错误请求"
     },
@@ -145,6 +137,10 @@
       "title": "禁止访问",
       "message": "您不被允许访问此资源。"
     },
+    "404": {
+      "title": "未找到",
+      "message": "未找到请求的资源。"
+    },
     "413": {
       "title": "负载过大",
       "message": "请求负载过大。"
@@ -153,36 +149,40 @@
       "title": "不支持的媒体类型",
       "message": "不支持请求的媒体类型。"
     },
+    "500": {
+      "title": "服务器内部错误",
+      "message": "处理请求时发生错误。"
+    },
     "connection": {
       "title": "连接错误",
       "message": "无法连接到服务器。请检查您的网络连接或稍后重试。"
     },
     "server": {
-      "internal_server_error": "服务器内部错误",
-      "duplicate_value": "重复值",
-      "duplicate_property_value": "重复属性值",
-      "required_field_missing": "缺少必填字段",
-      "required_property_field_missing": "缺少必填属性字段",
-      "referenced_record_not_found": "未找到引用的记录",
-      "invalid_value_provided": "提供的值无效",
-      "database_error": "数据库错误",
-      "invalid_current_password": "当前密码无效",
-      "invalid_token": "无效的令牌",
-      "token_expired": "令牌已过期",
-      "payload_too_large": "负载过大",
-      "invalid_username_password": "用户名或密码无效",
-      "invalid_email_password": "电子邮件或密码无效",
-      "user_not_active": "用户未激活",
-      "user_not_found": "用户未找到",
-      "email_already_exists": "电子邮件已存在",
-      "username_already_exists": "用户名已存在",
-      "email_not_verified": "电子邮件未验证",
-      "role_name_already_exists": "角色名称已存在",
-      "default_role_permissions_cannot_be_changed": "无法更改默认角色权限",
-      "default_role_cannot_be_deleted": "无法删除默认角色",
-      "default_role_cannot_be_updated": "无法更新默认角色",
-      "default_user_cannot_be_deleted": "无法删除默认用户",
-      "default_user_cannot_be_updated": "无法更新默认用户"
+      "internalServerError": "服务器内部错误",
+      "duplicateValue": "重复值",
+      "duplicatePropertyValue": "重复属性值",
+      "requiredFieldMissing": "缺少必填字段",
+      "requiredPropertyFieldMissing": "缺少必填属性字段",
+      "referencedRecordNotFound": "未找到引用的记录",
+      "invalidValueProvided": "提供的值无效",
+      "databaseError": "数据库错误",
+      "invalidCurrentPassword": "当前密码无效",
+      "invalidToken": "无效的令牌",
+      "tokenExpired": "令牌已过期",
+      "payloadTooLarge": "负载过大",
+      "invalidUsernamePassword": "用户名或密码无效",
+      "invalidEmailPassword": "电子邮件或密码无效",
+      "userNotActive": "用户未激活",
+      "userNotFound": "用户未找到",
+      "emailAlreadyExists": "电子邮件已存在",
+      "usernameAlreadyExists": "用户名已存在",
+      "emailNotVerified": "电子邮件未验证",
+      "roleNameAlreadyExists": "角色名称已存在",
+      "defaultRolePermissionsCannotBeChanged": "无法更改默认角色权限",
+      "defaultRoleCannotBeDeleted": "无法删除默认角色",
+      "defaultRoleCannotBeUpdated": "无法更新默认角色",
+      "defaultUserCannotBeDeleted": "无法删除默认用户",
+      "defaultUserCannotBeUpdated": "无法更新默认用户"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "用户",
-      "create_success": "用户创建成功",
-      "update_success": "用户更新成功",
-      "delete_title": "删除用户",
-      "delete_confirm": "您确定要删除此用户吗？",
-      "delete_success": "用户删除成功"
+      "createSuccess": "用户创建成功",
+      "updateSuccess": "用户更新成功",
+      "deleteTitle": "删除用户",
+      "deleteConfirm": "您确定要删除此用户吗？",
+      "deleteSuccess": "用户删除成功"
     },
     "roles": {
       "title": "角色",
-      "create_success": "角色创建成功",
-      "update_success": "角色更新成功",
-      "delete_title": "删除角色",
-      "delete_confirm": "您确定要删除此角色吗？",
-      "delete_success": "角色删除成功",
-      "not_found": "角色未找到",
+      "createSuccess": "角色创建成功",
+      "updateSuccess": "角色更新成功",
+      "deleteTitle": "删除角色",
+      "deleteConfirm": "您确定要删除此角色吗？",
+      "deleteSuccess": "角色删除成功",
+      "notFound": "角色未找到",
       "permissions": "权限",
-      "permissions_update_success": "权限更新成功"
+      "permissionsUpdateSuccess": "权限更新成功"
     },
     "profile": {
       "title": "个人资料",
-      "update_success": "个人资料更新成功",
-      "delete_avatar_title": "删除头像",
-      "delete_avatar_confirm": "您确定要删除您的个人资料图片吗？",
-      "alt_image": "个人资料图片",
-      "change_password_success": "密码更改成功"
+      "updateSuccess": "个人资料更新成功",
+      "deleteAvatarTitle": "删除头像",
+      "deleteAvatarConfirm": "您确定要删除您的个人资料图片吗？",
+      "altImage": "个人资料图片",
+      "changePasswordSuccess": "密码更改成功"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "正在验证您的电子邮件...",
-      "verified_title": "电子邮件已验证！",
-      "verified_message": "您的电子邮件已成功验证。您现在可以登录。",
-      "button_signin": "立即登录",
-      "resend_button": "重新发送验证邮件",
-      "resend_success": "验证邮件已重新发送。",
-      "resend_wait": "请等待 ${seconds} 秒",
-      "not_verified_title": "需要验证电子邮件",
-      "not_verified_message": "您的电子邮件地址未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。",
-      "failed_title": "验证失败",
-      "failed_message": "验证链接无效或已过期。"
+      "verifiedTitle": "电子邮件已验证！",
+      "verifiedMessage": "您的电子邮件已成功验证。您现在可以登录。",
+      "buttonSignin": "立即登录",
+      "resendButton": "重新发送验证邮件",
+      "resendSuccess": "验证邮件已重新发送。",
+      "resendWait": "请等待 ${seconds} 秒",
+      "notVerifiedTitle": "需要验证电子邮件",
+      "notVerifiedMessage": "您的电子邮件地址未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。",
+      "failedTitle": "验证失败",
+      "failedMessage": "验证链接无效或已过期。"
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "用户"
     },
     "pagination": {
-      "showing_entries": "显示 ${from} 到 ${to} 条，共 ${totalRecords} 条记录"
+      "showingEntries": "显示 ${from} 到 ${to} 条，共 ${totalRecords} 条记录"
     },
-    "no_records": "未找到记录",
-    "search_placeholder": "搜索...",
+    "noRecords": "未找到记录",
+    "searchPlaceholder": "搜索...",
     "export": {
       "button": "导出",
       "excel": "Excel",
       "csv": "CSV",
-      "current_page": "当前页",
-      "all_records": "所有记录"
+      "currentPage": "当前页",
+      "allRecords": "所有记录"
     },
     "actions": "操作",
-    "create_link": "创建"
+    "createLink": "创建"
   },
   "filter": {
     "button": "筛选",
     "all": "全部",
     "active": "启用",
     "inactive": "停用",
-    "all_roles": "所有角色",
-    "active_status": "启用状态",
+    "allRoles": "所有角色",
+    "activeStatus": "启用状态",
     "role": "角色",
-    "select_role": "选择角色",
+    "selectRole": "选择角色",
     "search": "搜索",
     "clear": "清除"
   },
   "file": {
     "upload": "文件上传",
-    "delete_title": "删除文件",
-    "delete_confirm": "您确定要删除此文件吗？",
-    "too_large": "文件过大"
+    "deleteTitle": "删除文件",
+    "deleteConfirm": "您确定要删除此文件吗？",
+    "tooLarge": "文件过大"
   },
   "search": {
     "dashboard": "仪表板",
     "users": "用户",
-    "users_create": "创建用户",
+    "usersCreate": "创建用户",
     "roles": "角色",
-    "roles_create": "创建角色",
-    "ui_buttons": "UI 按钮",
-    "ui_cards": "UI 卡片",
-    "ui_date_picker": "UI 日期选择器",
-    "ui_date_view": "UI 日期视图",
-    "ui_treeview": "UI 树形视图",
-    "change_password": "更改密码",
+    "rolesCreate": "创建角色",
+    "uiButtons": "UI 按钮",
+    "uiCards": "UI 卡片",
+    "uiDatePicker": "UI 日期选择器",
+    "uiDateView": "UI 日期视图",
+    "uiTreeview": "UI 树形视图",
+    "changePassword": "更改密码",
     "profile": "个人资料",
-    "ui_form_elements": "UI 表单元素",
-    "ui_file_upload": "UI 文件上传"
+    "uiFormElements": "UI 表单元素",
+    "uiFileUpload": "UI 文件上传"
   },
   "footer": {
     "copyright": "Easy For Net 版权所有。"

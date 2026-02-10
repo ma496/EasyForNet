@@ -129,15 +129,15 @@ export const UserTable = () => {
 
   const handleDelete = async (userId: string) => {
     const result = await confirmDeleteAlert({
-      title: t('page.users.delete_title'),
-      text: t('page.users.delete_confirm'),
+      title: t('page.users.deleteTitle'),
+      text: t('page.users.deleteConfirm'),
     })
 
     if (result.isConfirmed) {
       const response = await deleteUser({ id: userId })
       if (response.data?.success) {
         successToast.fire({
-          title: t('page.users.delete_success'),
+          title: t('page.users.deleteSuccess'),
         })
       } else if (response.data?.message) {
         await errorAlert({
@@ -234,7 +234,7 @@ export const UserTable = () => {
           {canCreate && (
             <LocalizedLink href="/app/users/create" className="btn flex items-center gap-2 btn-primary">
               <Plus size={16} />
-              <span className="hidden sm:inline">{t('table.create_link')}</span>
+              <span className="hidden sm:inline">{t('table.createLink')}</span>
             </LocalizedLink>
           )}
           <div className="dropdown">
@@ -253,23 +253,23 @@ export const UserTable = () => {
                 <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.excel')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', false)}>
-                    {t('table.export.current_page')}
+                    {t('table.export.currentPage')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('excel', true)}>
-                    {t('table.export.all_records')}
+                    {t('table.export.allRecords')}
                   </div>
                 </li>
                 <li className="px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-600">{t('table.export.csv')}</li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', false)}>
-                    {t('table.export.current_page')}
+                    {t('table.export.currentPage')}
                   </div>
                 </li>
                 <li>
                   <div role="menuitem" className="w-full cursor-pointer px-4 py-2 hover:bg-white-light dark:hover:bg-[#131E30]" onClick={() => handleExport('csv', true)}>
-                    {t('table.export.all_records')}
+                    {t('table.export.allRecords')}
                   </div>
                 </li>
               </ul>

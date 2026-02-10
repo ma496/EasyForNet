@@ -22,67 +22,67 @@
     "ok": "ОК",
     "submit": "Отправить",
     "actions": "Действия",
-    "all_rights_reserved": "Все права защищены.",
-    "delete_confirm": "Да, удалить"
+    "allRightsReserved": "Все права защищены.",
+    "deleteConfirm": "Да, удалить"
   },
   "navigation": {
     "home": "Главная",
     "dashboard": "Панель управления",
-    "dashboard_sales": "Продажи",
+    "dashboardSales": "Продажи",
     "administration": "Администрирование",
     "users": "Пользователи",
     "roles": "Роли",
-    "roles_list": "Список",
-    "roles_create": "Создать",
-    "roles_update": "Обновить",
-    "roles_change_permissions": "Изменить права",
+    "rolesList": "Список",
+    "rolesCreate": "Создать",
+    "rolesUpdate": "Обновить",
+    "rolesChangePermissions": "Изменить права",
     "components": "Компоненты",
-    "ui_form_elements": "Элементы формы",
-    "ui_buttons": "Кнопки",
-    "ui_cards": "Карточки",
-    "ui_date_picker": "Выбор даты",
-    "ui_date_view": "Просмотр даты",
-    "ui_treeview": "Древовидное представление",
-    "change_password": "Сменить пароль",
+    "uiFormElements": "Элементы формы",
+    "uiButtons": "Кнопки",
+    "uiCards": "Карточки",
+    "uiDatePicker": "Выбор даты",
+    "uiDateView": "Просмотр даты",
+    "uiTreeview": "Древовидное представление",
+    "changePassword": "Сменить пароль",
     "profile": "Профиль",
-    "ui_file_upload": "Загрузка файлов",
-    "users_list": "Список",
-    "users_create": "Создать",
-    "users_update": "Обновить"
+    "uiFileUpload": "Загрузка файлов",
+    "usersList": "Список",
+    "usersCreate": "Создать",
+    "usersUpdate": "Обновить"
   },
   "auth": {
     "login": {
       "title": "Войти",
       "description": "Введите свои учетные данные для входа",
       "button": "Войти",
-      "forgot_password": "Забыли пароль?",
-      "signup_link": "Регистрация",
-      "no_account": "Нет аккаунта?",
-      "back_to_signin": "Вернуться к входу"
+      "forgotPassword": "Забыли пароль?",
+      "signupLink": "Регистрация",
+      "noAccount": "Нет аккаунта?",
+      "backToSignin": "Вернуться к входу"
     },
     "signup": {
       "title": "Регистрация",
       "description": "Введите email и пароль для регистрации",
       "button": "Зарегистрироваться",
-      "signin_link": "Войти",
-      "already_have_account": "Уже есть аккаунт?",
-      "success_title": "Успех!",
-      "success_verify_email": "Регистрация успешна! Пожалуйста, проверьте email для подтверждения аккаунта.",
-      "success_message": "Регистрация успешна! Перейдите на страницу входа."
+      "signinLink": "Войти",
+      "alreadyHaveAccount": "Уже есть аккаунт?",
+      "successTitle": "Успех!",
+      "successVerifyEmail": "Регистрация успешна! Пожалуйста, проверьте email для подтверждения аккаунта.",
+      "successMessage": "Регистрация успешна! Перейдите на страницу входа."
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "Забыли пароль",
       "description": "Введите email для сброса пароля",
       "button": "Отправить ссылку",
       "success": "Ссылка для сброса отправлена",
-      "check_email": "Проверьте email для получения инструкций"
+      "checkEmail": "Проверьте email для получения инструкций"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "Сброс пароля",
       "description": "Введите новый пароль для восстановления доступа",
       "button": "Сбросить пароль",
       "success": "Пароль успешно сброшен",
-      "has_been_reset": "Ваш пароль был успешно сброшен"
+      "hasBeenReset": "Ваш пароль был успешно сброшен"
     },
     "logout": "Выйти"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "Необходимо выбрать хотя бы один элемент"
   },
   "error": {
-    "404": {
-      "title": "Не найдено",
-      "message": "Запрашиваемый ресурс не найден."
-    },
-    "500": {
-      "title": "Внутренняя ошибка сервера",
-      "message": "Произошла ошибка при обработке запроса."
-    },
     "400": {
       "title": "Неверный запрос"
     },
@@ -145,6 +137,10 @@
       "title": "Запрещено",
       "message": "Вам запрещен доступ к этому ресурсу."
     },
+    "404": {
+      "title": "Не найдено",
+      "message": "Запрашиваемый ресурс не найден."
+    },
     "413": {
       "title": "Слишком большая нагрузка",
       "message": "Размер запроса слишком велик."
@@ -153,36 +149,40 @@
       "title": "Неподдерживаемый тип данных",
       "message": "Тип данных запроса не поддерживается."
     },
+    "500": {
+      "title": "Внутренняя ошибка сервера",
+      "message": "Произошла ошибка при обработке запроса."
+    },
     "connection": {
       "title": "Ошибка соединения",
       "message": "Не удалось подключиться к серверу. Проверьте соединение или попробуйте позже."
     },
     "server": {
-      "internal_server_error": "Внутренняя ошибка сервера",
-      "duplicate_value": "Дублирующееся значение",
-      "duplicate_property_value": "Дублирующееся значение свойства",
-      "required_field_missing": "Отсутствует обязательное поле",
-      "required_property_field_missing": "Отсутствует обязательное поле свойства",
-      "referenced_record_not_found": "Ссылочная запись не найдена",
-      "invalid_value_provided": "Предоставлено неверное значение",
-      "database_error": "Ошибка базы данных",
-      "invalid_current_password": "Неверный текущий пароль",
-      "invalid_token": "Неверный токен",
-      "token_expired": "Токен истек",
-      "payload_too_large": "Запрос слишком велик",
-      "invalid_username_password": "Неверное имя пользователя или пароль",
-      "invalid_email_password": "Неверный email или пароль",
-      "user_not_active": "Пользователь не активен",
-      "user_not_found": "Пользователь не найден",
-      "email_already_exists": "Email уже существует",
-      "username_already_exists": "Имя пользователя уже существует",
-      "email_not_verified": "Email не подтвержден",
-      "role_name_already_exists": "Название роли уже существует",
-      "default_role_permissions_cannot_be_changed": "Права роли по умолчанию нельзя изменить",
-      "default_role_cannot_be_deleted": "Роль по умолчанию нельзя удалить",
-      "default_role_cannot_be_updated": "Роль по умолчанию нельзя обновить",
-      "default_user_cannot_be_deleted": "Пользователя по умолчанию нельзя удалить",
-      "default_user_cannot_be_updated": "Пользователя по умолчанию нельзя обновить"
+      "internalServerError": "Внутренняя ошибка сервера",
+      "duplicateValue": "Дублирующееся значение",
+      "duplicatePropertyValue": "Дублирующееся значение свойства",
+      "requiredFieldMissing": "Отсутствует обязательное поле",
+      "requiredPropertyFieldMissing": "Отсутствует обязательное поле свойства",
+      "referencedRecordNotFound": "Ссылочная запись не найдена",
+      "invalidValueProvided": "Предоставлено неверное значение",
+      "databaseError": "Ошибка базы данных",
+      "invalidCurrentPassword": "Неверный текущий пароль",
+      "invalidToken": "Неверный токен",
+      "tokenExpired": "Токен истек",
+      "payloadTooLarge": "Запрос слишком велик",
+      "invalidUsernamePassword": "Неверное имя пользователя или пароль",
+      "invalidEmailPassword": "Неверный email или пароль",
+      "userNotActive": "Пользователь не активен",
+      "userNotFound": "Пользователь не найден",
+      "emailAlreadyExists": "Email уже существует",
+      "usernameAlreadyExists": "Имя пользователя уже существует",
+      "emailNotVerified": "Email не подтвержден",
+      "roleNameAlreadyExists": "Название роли уже существует",
+      "defaultRolePermissionsCannotBeChanged": "Права роли по умолчанию нельзя изменить",
+      "defaultRoleCannotBeDeleted": "Роль по умолчанию нельзя удалить",
+      "defaultRoleCannotBeUpdated": "Роль по умолчанию нельзя обновить",
+      "defaultUserCannotBeDeleted": "Пользователя по умолчанию нельзя удалить",
+      "defaultUserCannotBeUpdated": "Пользователя по умолчанию нельзя обновить"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "Пользователи",
-      "create_success": "Пользователь успешно создан",
-      "update_success": "Пользователь успешно обновлен",
-      "delete_title": "Удалить пользователя",
-      "delete_confirm": "Вы уверены, что хотите удалить этого пользователя?",
-      "delete_success": "Пользователь успешно удален"
+      "createSuccess": "Пользователь успешно создан",
+      "updateSuccess": "Пользователь успешно обновлен",
+      "deleteTitle": "Удалить пользователя",
+      "deleteConfirm": "Вы уверены, что хотите удалить этого пользователя?",
+      "deleteSuccess": "Пользователь успешно удален"
     },
     "roles": {
       "title": "Роли",
-      "create_success": "Роль успешно создана",
-      "update_success": "Роль успешно обновлена",
-      "delete_title": "Удалить роль",
-      "delete_confirm": "Вы уверены, что хотите удалить эту роль?",
-      "delete_success": "Роль успешно удалена",
-      "not_found": "Роль не найдена",
+      "createSuccess": "Роль успешно создана",
+      "updateSuccess": "Роль успешно обновлена",
+      "deleteTitle": "Удалить роль",
+      "deleteConfirm": "Вы уверены, что хотите удалить эту роль?",
+      "deleteSuccess": "Роль успешно удалена",
+      "notFound": "Роль не найдена",
       "permissions": "Права доступа",
-      "permissions_update_success": "Права успешно обновлены"
+      "permissionsUpdateSuccess": "Права успешно обновлены"
     },
     "profile": {
       "title": "Профиль",
-      "update_success": "Профиль успешно обновлен",
-      "delete_avatar_title": "Удалить фото профиля",
-      "delete_avatar_confirm": "Вы уверены, что хотите удалить фото профиля?",
-      "alt_image": "Фото профиля",
-      "change_password_success": "Пароль успешно изменен"
+      "updateSuccess": "Профиль успешно обновлен",
+      "deleteAvatarTitle": "Удалить фото профиля",
+      "deleteAvatarConfirm": "Вы уверены, что хотите удалить фото профиля?",
+      "altImage": "Фото профиля",
+      "changePasswordSuccess": "Пароль успешно изменен"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "Проверка вашего email...",
-      "verified_title": "Email подтвержден!",
-      "verified_message": "Ваш email успешно подтвержден. Теперь вы можете войти.",
-      "button_signin": "Войти сейчас",
-      "resend_button": "Отправить письмо повторно",
-      "resend_success": "Письмо с подтверждением отправлено повторно.",
-      "resend_wait": "Пожалуйста, подождите ${seconds} сек.",
-      "not_verified_title": "Требуется подтверждение email",
-      "not_verified_message": "Ваш email адрес не подтвержден. Проверьте почту для получения ссылки или нажмите кнопку ниже.",
-      "failed_title": "Ошибка подтверждения",
-      "failed_message": "Ссылка подтверждения недействительна или истекла."
+      "verifiedTitle": "Email подтвержден!",
+      "verifiedMessage": "Ваш email успешно подтвержден. Теперь вы можете войти.",
+      "buttonSignin": "Войти сейчас",
+      "resendButton": "Отправить письмо повторно",
+      "resendSuccess": "Письмо с подтверждением отправлено повторно.",
+      "resendWait": "Пожалуйста, подождите ${seconds} сек.",
+      "notVerifiedTitle": "Требуется подтверждение email",
+      "notVerifiedMessage": "Ваш email адрес не подтвержден. Проверьте почту для получения ссылки или нажмите кнопку ниже.",
+      "failedTitle": "Ошибка подтверждения",
+      "failedMessage": "Ссылка подтверждения недействительна или истекла."
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "Пользователи"
     },
     "pagination": {
-      "showing_entries": "Показано с ${from} по ${to} из ${totalRecords} записей"
+      "showingEntries": "Показано с ${from} по ${to} из ${totalRecords} записей"
     },
-    "no_records": "Записи не найдены",
-    "search_placeholder": "Поиск...",
+    "noRecords": "Записи не найдены",
+    "searchPlaceholder": "Поиск...",
     "export": {
       "button": "Экспорт",
       "excel": "Excel",
       "csv": "CSV",
-      "current_page": "Текущая страница",
-      "all_records": "Все записи"
+      "currentPage": "Текущая страница",
+      "allRecords": "Все записи"
     },
     "actions": "Действия",
-    "create_link": "Создать"
+    "createLink": "Создать"
   },
   "filter": {
     "button": "Фильтры",
     "all": "Все",
     "active": "Активные",
     "inactive": "Неактивные",
-    "all_roles": "Все роли",
-    "active_status": "Статус активности",
+    "allRoles": "Все роли",
+    "activeStatus": "Статус активности",
     "role": "Роль",
-    "select_role": "Выберите роль",
+    "selectRole": "Выберите роль",
     "search": "Поиск",
     "clear": "Очистить"
   },
   "file": {
     "upload": "Загрузка файла",
-    "delete_title": "Удалить файл",
-    "delete_confirm": "Вы уверены, что хотите удалить этот файл?",
-    "too_large": "Файл слишком большой"
+    "deleteTitle": "Удалить файл",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот файл?",
+    "tooLarge": "Файл слишком большой"
   },
   "search": {
     "dashboard": "Панель управления",
     "users": "Пользователи",
-    "users_create": "Создать пользователя",
+    "usersCreate": "Создать пользователя",
     "roles": "Роли",
-    "roles_create": "Создать роль",
-    "ui_buttons": "Кнопки UI",
-    "ui_cards": "Карточки UI",
-    "ui_date_picker": "Выбор даты UI",
-    "ui_date_view": "Просмотр даты UI",
-    "ui_treeview": "Древовидное меню UI",
-    "change_password": "Сменить пароль",
+    "rolesCreate": "Создать роль",
+    "uiButtons": "Кнопки UI",
+    "uiCards": "Карточки UI",
+    "uiDatePicker": "Выбор даты UI",
+    "uiDateView": "Просмотр даты UI",
+    "uiTreeview": "Древовидное меню UI",
+    "changePassword": "Сменить пароль",
     "profile": "Профиль",
-    "ui_form_elements": "Элементы формы UI",
-    "ui_file_upload": "Загрузка файлов UI"
+    "uiFormElements": "Элементы формы UI",
+    "uiFileUpload": "Загрузка файлов UI"
   },
   "footer": {
     "copyright": "Easy For Net Все права защищены."

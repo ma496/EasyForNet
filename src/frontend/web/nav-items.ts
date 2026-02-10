@@ -25,7 +25,7 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     icon: Home,
     children: [
       {
-        title: 'navigation.dashboard_sales',
+        title: 'navigation.dashboardSales',
         url: '/app',
       },
     ],
@@ -40,17 +40,17 @@ export const navItems: (NavItem | NavItemGroup)[] = [
 
         children: [
           {
-            title: 'navigation.users_list',
+            title: 'navigation.usersList',
             url: '/app/users/list',
 
           },
           {
-            title: 'navigation.users_create',
+            title: 'navigation.usersCreate',
             url: '/app/users/create',
 
           },
           {
-            title: 'navigation.users_update',
+            title: 'navigation.usersUpdate',
             url: '/app/users/update/{id}',
 
             show: false,
@@ -64,23 +64,23 @@ export const navItems: (NavItem | NavItemGroup)[] = [
 
         children: [
           {
-            title: 'navigation.roles_list',
+            title: 'navigation.rolesList',
             url: '/app/roles/list',
 
           },
           {
-            title: 'navigation.roles_create',
+            title: 'navigation.rolesCreate',
             url: '/app/roles/create',
 
           },
           {
-            title: 'navigation.roles_update',
+            title: 'navigation.rolesUpdate',
             url: '/app/roles/update/{id}',
 
             show: false,
           },
           {
-            title: 'navigation.roles_change_permissions',
+            title: 'navigation.rolesChangePermissions',
             url: '/app/roles/change-permissions/{id}',
 
             show: false,
@@ -93,45 +93,45 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     title: 'navigation.components',
     items: [
       {
-        title: 'navigation.ui_form_elements',
+        title: 'navigation.uiFormElements',
         url: '/app/ui/form-elements',
         icon: FormInput,
       },
       {
-        title: 'navigation.ui_buttons',
+        title: 'navigation.uiButtons',
         url: '/app/ui/buttons',
         icon: Zap,
       },
       {
-        title: 'navigation.ui_cards',
+        title: 'navigation.uiCards',
         url: '/app/ui/cards',
         icon: Palette,
       },
       {
-        title: 'navigation.ui_date_picker',
+        title: 'navigation.uiDatePicker',
         url: '/app/ui/date-picker',
         icon: Calendar,
       },
       {
-        title: 'navigation.ui_date_view',
+        title: 'navigation.uiDateView',
         url: '/app/ui/date-view',
         icon: Clock,
       },
 
       {
-        title: 'navigation.ui_treeview',
+        title: 'navigation.uiTreeview',
         url: '/app/ui/treeview',
         icon: TreePine,
       },
       {
-        title: 'navigation.ui_file_upload',
+        title: 'navigation.uiFileUpload',
         url: '/app/ui/file-upload',
         icon: Upload,
       },
     ],
   },
   {
-    title: 'navigation.change_password',
+    title: 'navigation.changePassword',
     url: '/app/change-password',
     icon: Lock,
     show: false,

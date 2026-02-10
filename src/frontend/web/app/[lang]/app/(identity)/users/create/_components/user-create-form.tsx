@@ -60,7 +60,7 @@ export const UserCreateForm = () => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('page.users.create_success'),
+        title: t('page.users.createSuccess'),
       })
       router.push('/app/users/list')
     }

@@ -88,7 +88,7 @@ const SigninForm = () => {
       return
     }
     successToast.fire({
-      title: t('page.verify_email.resend_success'),
+      title: t('page.verifyEmail.resendSuccess'),
     })
     setCountdown(15)
   }
@@ -97,8 +97,8 @@ const SigninForm = () => {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <Info size={48} className="text-primary" />
-        <h2 className="text-2xl font-bold">{t('page.verify_email.not_verified_title')}</h2>
-        <p>{t('page.verify_email.not_verified_message')}</p>
+        <h2 className="text-2xl font-bold">{t('page.verifyEmail.notVerifiedTitle')}</h2>
+        <p>{t('page.verifyEmail.notVerifiedMessage')}</p>
 
         <Button
           type="button"
@@ -107,11 +107,11 @@ const SigninForm = () => {
           disabled={countdown > 0 || isResending}
           isLoading={isResending}
         >
-          {countdown > 0 ? t('page.verify_email.resend_wait', { seconds: countdown }) : t('page.verify_email.resend_button')}
+          {countdown > 0 ? t('page.verifyEmail.resendWait', { seconds: countdown }) : t('page.verifyEmail.resendButton')}
         </Button>
 
         <Button type="button" className="btn btn-primary w-full mt-2" onClick={() => setShowVerificationMessage(false)}>
-          {t('auth.login.back_to_signin')}
+          {t('auth.login.backToSignin')}
         </Button>
       </div>
     )
@@ -126,13 +126,13 @@ const SigninForm = () => {
 
           <div className="flex justify-between items-center">
             <div className="flex gap-2">
-              <span className="text-sm dark:text-gray-400">{t('auth.login.no_account')}</span>
+              <span className="text-sm dark:text-gray-400">{t('auth.login.noAccount')}</span>
               <LocalizedLink href="/signup" className="text-sm text-primary hover:underline dark:text-white">
-                {t('auth.login.signup_link')}
+                {t('auth.login.signupLink')}
               </LocalizedLink>
             </div>
             <LocalizedLink href="/forget-password" className="text-sm text-primary hover:underline dark:text-white">
-              {t('auth.login.forgot_password')}
+              {t('auth.login.forgotPassword')}
             </LocalizedLink>
           </div>
 

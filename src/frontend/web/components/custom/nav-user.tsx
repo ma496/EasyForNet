@@ -85,7 +85,7 @@ const NavUser = () => {
           <li>
             <LocalizedLink href="/app/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
               <Lock className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
-              {t('navigation.change_password')}
+              {t('navigation.changePassword')}
             </LocalizedLink>
           </li>
           <li className="cursor-pointer border-t border-white-light dark:border-white-light/10">

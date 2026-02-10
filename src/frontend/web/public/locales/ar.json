@@ -22,67 +22,67 @@
     "ok": "موافق",
     "submit": "إرسال",
     "actions": "إجراءات",
-    "all_rights_reserved": "جميع الحقوق محفوظة.",
-    "delete_confirm": "نعم، احذفه"
+    "allRightsReserved": "جميع الحقوق محفوظة.",
+    "deleteConfirm": "نعم، احذفه"
   },
   "navigation": {
     "home": "الرئيسية",
     "dashboard": "لوحة القيادة",
-    "dashboard_sales": "المبيعات",
+    "dashboardSales": "المبيعات",
     "administration": "الإدارة",
     "users": "المستخدمين",
     "roles": "الأدوار",
-    "roles_list": "قائمة",
-    "roles_create": "إنشاء",
-    "roles_update": "تحديث",
-    "roles_change_permissions": "تغيير الأذونات",
+    "rolesList": "قائمة",
+    "rolesCreate": "إنشاء",
+    "rolesUpdate": "تحديث",
+    "rolesChangePermissions": "تغيير الأذونات",
     "components": "المكونات",
-    "ui_form_elements": "عناصر النموذج",
-    "ui_buttons": "أزرار",
-    "ui_cards": "بطاقات",
-    "ui_date_picker": "منتقي التاريخ",
-    "ui_date_view": "عرض التاريخ",
-    "ui_treeview": "عرض شجري",
-    "change_password": "تغيير كلمة المرور",
+    "uiFormElements": "عناصر النموذج",
+    "uiButtons": "أزرار",
+    "uiCards": "بطاقات",
+    "uiDatePicker": "منتقي التاريخ",
+    "uiDateView": "عرض التاريخ",
+    "uiTreeview": "عرض شجري",
+    "changePassword": "تغيير كلمة المرور",
     "profile": "الملف الشخصي",
-    "ui_file_upload": "رفع الملفات",
-    "users_list": "قائمة",
-    "users_create": "إنشاء",
-    "users_update": "تحديث"
+    "uiFileUpload": "رفع الملفات",
+    "usersList": "قائمة",
+    "usersCreate": "إنشاء",
+    "usersUpdate": "تحديث"
   },
   "auth": {
     "login": {
       "title": "تسجيل الدخول",
       "description": "أدخل بيانات اعتمادك لتسجيل الدخول",
       "button": "تسجيل الدخول",
-      "forgot_password": "هل نسيت كلمة المرور؟",
-      "signup_link": "اشتراك",
-      "no_account": "ليس لديك حساب؟",
-      "back_to_signin": "العودة لتسجيل الدخول"
+      "forgotPassword": "هل نسيت كلمة المرور؟",
+      "signupLink": "اشتراك",
+      "noAccount": "ليس لديك حساب؟",
+      "backToSignin": "العودة لتسجيل الدخول"
     },
     "signup": {
       "title": "اشتراك",
       "description": "أدخل بريدك الإلكتروني وكلمة المرور للتسجيل",
       "button": "اشتراك",
-      "signin_link": "تسجيل الدخول",
-      "already_have_account": "لديك حساب بالفعل؟",
-      "success_title": "نجاح!",
-      "success_verify_email": "تم التسجيل بنجاح! يرجى التحقق من بريدك الإلكتروني لتفعيل حسابك.",
-      "success_message": "تم التسجيل بنجاح! اذهب لصفحة تسجيل الدخول."
+      "signinLink": "تسجيل الدخول",
+      "alreadyHaveAccount": "لديك حساب بالفعل؟",
+      "successTitle": "نجاح!",
+      "successVerifyEmail": "تم التسجيل بنجاح! يرجى التحقق من بريدك الإلكتروني لتفعيل حسابك.",
+      "successMessage": "تم التسجيل بنجاح! اذهب لصفحة تسجيل الدخول."
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "نسيت كلمة المرور",
       "description": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
       "button": "إرسال رابط إعادة التعيين",
       "success": "تم إرسال رابط إعادة تعيين كلمة المرور",
-      "check_email": "يرجى التحقق من بريدك الإلكتروني للحصول على تعليمات إعادة تعيين كلمة المرور"
+      "checkEmail": "يرجى التحقق من بريدك الإلكتروني للحصول على تعليمات إعادة تعيين كلمة المرور"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "إعادة تعيين كلمة المرور",
       "description": "أدخل كلمة المرور الجديدة لإعادة تعيين حسابك",
       "button": "إعادة تعيين كلمة المرور",
       "success": "تم إعادة تعيين كلمة المرور بنجاح",
-      "has_been_reset": "تم إعادة تعيين كلمة مرورك بنجاح"
+      "hasBeenReset": "تم إعادة تعيين كلمة مرورك بنجاح"
     },
     "logout": "تسجيل الخروج"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "يجب اختيار عنصر واحد على الأقل"
   },
   "error": {
-    "404": {
-      "title": "غير موجود",
-      "message": "لم يتم العثور على المورد المطلوب."
-    },
-    "500": {
-      "title": "خطأ داخلي في الخادم",
-      "message": "حدث خطأ أثناء معالجة الطلب."
-    },
     "400": {
       "title": "طلب غير صالح"
     },
@@ -145,6 +137,10 @@
       "title": "ممنوع",
       "message": "غير مسموح لك بالوصول لهذا المورد."
     },
+    "404": {
+      "title": "غير موجود",
+      "message": "لم يتم العثور على المورد المطلوب."
+    },
     "413": {
       "title": "الحمولة كبيرة جداً",
       "message": "حمولة الطلب كبيرة جداً."
@@ -153,36 +149,40 @@
       "title": "نوع الوسائط غير مدعوم",
       "message": "نوع وسائط الطلب غير مدعوم."
     },
+    "500": {
+      "title": "خطأ داخلي في الخادم",
+      "message": "حدث خطأ أثناء معالجة الطلب."
+    },
     "connection": {
       "title": "خطأ في الاتصال",
       "message": "تعذر الاتصال بالخادم. يرجى التحقق من اتصالك أو المحاولة لاحقاً."
     },
     "server": {
-      "internal_server_error": "خطأ داخلي في الخادم",
-      "duplicate_value": "قيمة مكررة",
-      "duplicate_property_value": "قيمة خاصية مكررة",
-      "required_field_missing": "حقل مطلوب مفقود",
-      "required_property_field_missing": "حقل خاصية مطلوب مفقود",
-      "referenced_record_not_found": "السجل المشار إليه غير موجود",
-      "invalid_value_provided": "تم تقديم قيمة غير صالحة",
-      "database_error": "خطأ في قاعدة البيانات",
-      "invalid_current_password": "كلمة المرور الحالية غير صالحة",
-      "invalid_token": "رمز غير صالح",
-      "token_expired": "انتهت صلاحية الرمز",
-      "payload_too_large": "الحمولة كبيرة جداً",
-      "invalid_username_password": "اسم المستخدم أو كلمة المرور غير صالحة",
-      "invalid_email_password": "البريد الإلكتروني أو كلمة المرور غير صالحة",
-      "user_not_active": "المستخدم غير نشط",
-      "user_not_found": "المستخدم غير موجود",
-      "email_already_exists": "البريد الإلكتروني موجود بالفعل",
-      "username_already_exists": "اسم المستخدم موجود بالفعل",
-      "email_not_verified": "البريد الإلكتروني غير تم التحقق منه",
-      "role_name_already_exists": "اسم الدور موجود بالفعل",
-      "default_role_permissions_cannot_be_changed": "لا يمكن تغيير أذونات الدور الافتراضي",
-      "default_role_cannot_be_deleted": "لا يمكن حذف الدور الافتراضي",
-      "default_role_cannot_be_updated": "لا يمكن تحديث الدور الافتراضي",
-      "default_user_cannot_be_deleted": "لا يمكن حذف المستخدم الافتراضي",
-      "default_user_cannot_be_updated": "لا يمكن تحديث المستخدم الافتراضي"
+      "internalServerError": "خطأ داخلي في الخادم",
+      "duplicateValue": "قيمة مكررة",
+      "duplicatePropertyValue": "قيمة خاصية مكررة",
+      "requiredFieldMissing": "حقل مطلوب مفقود",
+      "requiredPropertyFieldMissing": "حقل خاصية مطلوب مفقود",
+      "referencedRecordNotFound": "السجل المشار إليه غير موجود",
+      "invalidValueProvided": "تم تقديم قيمة غير صالحة",
+      "databaseError": "خطأ في قاعدة البيانات",
+      "invalidCurrentPassword": "كلمة المرور الحالية غير صالحة",
+      "invalidToken": "رمز غير صالح",
+      "tokenExpired": "انتهت صلاحية الرمز",
+      "payloadTooLarge": "الحمولة كبيرة جداً",
+      "invalidUsernamePassword": "اسم المستخدم أو كلمة المرور غير صالحة",
+      "invalidEmailPassword": "البريد الإلكتروني أو كلمة المرور غير صالحة",
+      "userNotActive": "المستخدم غير نشط",
+      "userNotFound": "المستخدم غير موجود",
+      "emailAlreadyExists": "البريد الإلكتروني موجود بالفعل",
+      "usernameAlreadyExists": "اسم المستخدم موجود بالفعل",
+      "emailNotVerified": "البريد الإلكتروني غير تم التحقق منه",
+      "roleNameAlreadyExists": "اسم الدور موجود بالفعل",
+      "defaultRolePermissionsCannotBeChanged": "لا يمكن تغيير أذونات الدور الافتراضي",
+      "defaultRoleCannotBeDeleted": "لا يمكن حذف الدور الافتراضي",
+      "defaultRoleCannotBeUpdated": "لا يمكن تحديث الدور الافتراضي",
+      "defaultUserCannotBeDeleted": "لا يمكن حذف المستخدم الافتراضي",
+      "defaultUserCannotBeUpdated": "لا يمكن تحديث المستخدم الافتراضي"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "المستخدمين",
-      "create_success": "تم إنشاء المستخدم بنجاح",
-      "update_success": "تم تحديث المستخدم بنجاح",
-      "delete_title": "حذف المستخدم",
-      "delete_confirm": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
-      "delete_success": "تم حذف المستخدم بنجاح"
+      "createSuccess": "تم إنشاء المستخدم بنجاح",
+      "updateSuccess": "تم تحديث المستخدم بنجاح",
+      "deleteTitle": "حذف المستخدم",
+      "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
+      "deleteSuccess": "تم حذف المستخدم بنجاح"
     },
     "roles": {
       "title": "الأدوار",
-      "create_success": "تم إنشاء الدور بنجاح",
-      "update_success": "تم تحديث الدور بنجاح",
-      "delete_title": "حذف الدور",
-      "delete_confirm": "هل أنت متأكد أنك تريد حذف هذا الدور؟",
-      "delete_success": "تم حذف الدور بنجاح",
-      "not_found": "الدور غير موجود",
+      "createSuccess": "تم إنشاء الدور بنجاح",
+      "updateSuccess": "تم تحديث الدور بنجاح",
+      "deleteTitle": "حذف الدور",
+      "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا الدور؟",
+      "deleteSuccess": "تم حذف الدور بنجاح",
+      "notFound": "الدور غير موجود",
       "permissions": "الأذونات",
-      "permissions_update_success": "تم تحديث الأذونات بنجاح"
+      "permissionsUpdateSuccess": "تم تحديث الأذونات بنجاح"
     },
     "profile": {
       "title": "الملف الشخصي",
-      "update_success": "تم تحديث الملف الشخصي بنجاح",
-      "delete_avatar_title": "حذف الصورة الشخصية",
-      "delete_avatar_confirm": "هل أنت متأكد أنك تريد حذف صورتك الشخصية؟",
-      "alt_image": "الصورة الشخصية",
-      "change_password_success": "تم تغيير كلمة المرور بنجاح"
+      "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+      "deleteAvatarTitle": "حذف الصورة الشخصية",
+      "deleteAvatarConfirm": "هل أنت متأكد أنك تريد حذف صورتك الشخصية؟",
+      "altImage": "الصورة الشخصية",
+      "changePasswordSuccess": "تم تغيير كلمة المرور بنجاح"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "جاري التحقق من بريدك الإلكتروني...",
-      "verified_title": "تم التحقق من البريد الإلكتروني!",
-      "verified_message": "تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول.",
-      "button_signin": "تسجيل الدخول الآن",
-      "resend_button": "إعادة إرسال بريد التحقق",
-      "resend_success": "تم إعادة إرسال بريد التحقق.",
-      "resend_wait": "يرجى الانتظار ${seconds} ثانية",
-      "not_verified_title": "التحقق من البريد الإلكتروني مطلوب",
-      "not_verified_message": "عنوان بريدك الإلكتروني لم يتم التحقق منه. يرجى التحقق من صندوق الوارد للحصول على رابط التحقق أو النقر على الزر أدناه لإعادة إرساله.",
-      "failed_title": "فشل التحقق",
-      "failed_message": "رابط التحقق غير صالح أو انتهت صلاحيته."
+      "verifiedTitle": "تم التحقق من البريد الإلكتروني!",
+      "verifiedMessage": "تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول.",
+      "buttonSignin": "تسجيل الدخول الآن",
+      "resendButton": "إعادة إرسال بريد التحقق",
+      "resendSuccess": "تم إعادة إرسال بريد التحقق.",
+      "resendWait": "يرجى الانتظار ${seconds} ثانية",
+      "notVerifiedTitle": "التحقق من البريد الإلكتروني مطلوب",
+      "notVerifiedMessage": "عنوان بريدك الإلكتروني لم يتم التحقق منه. يرجى التحقق من صندوق الوارد للحصول على رابط التحقق أو النقر على الزر أدناه لإعادة إرساله.",
+      "failedTitle": "فشل التحقق",
+      "failedMessage": "رابط التحقق غير صالح أو انتهت صلاحيته."
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "المستخدمين"
     },
     "pagination": {
-      "showing_entries": "عرض ${from} إلى ${to} من ${totalRecords} مُدخل"
+      "showingEntries": "عرض ${from} إلى ${to} من ${totalRecords} مُدخل"
     },
-    "no_records": "لم يتم العثور على سجلات",
-    "search_placeholder": "بحث...",
+    "noRecords": "لم يتم العثور على سجلات",
+    "searchPlaceholder": "بحث...",
     "export": {
       "button": "تصدير",
       "excel": "إكسل",
       "csv": "CSV",
-      "current_page": "الصفحة الحالية",
-      "all_records": "كل السجلات"
+      "currentPage": "الصفحة الحالية",
+      "allRecords": "كل السجلات"
     },
     "actions": "إجراءات",
-    "create_link": "إنشاء"
+    "createLink": "إنشاء"
   },
   "filter": {
     "button": "تصفية",
     "all": "الكل",
     "active": "نشط",
     "inactive": "غير نشط",
-    "all_roles": "كل الأدوار",
-    "active_status": "حالة النشاط",
+    "allRoles": "كل الأدوار",
+    "activeStatus": "حالة النشاط",
     "role": "الدور",
-    "select_role": "اختر دوراً",
+    "selectRole": "اختر دوراً",
     "search": "بحث",
     "clear": "مسح"
   },
   "file": {
     "upload": "رفع الملف",
-    "delete_title": "حذف الملف",
-    "delete_confirm": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
-    "too_large": "الملف كبير جداً"
+    "deleteTitle": "حذف الملف",
+    "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
+    "tooLarge": "الملف كبير جداً"
   },
   "search": {
     "dashboard": "لوحة القيادة",
     "users": "المستخدمين",
-    "users_create": "إنشاء مستخدم",
+    "usersCreate": "إنشاء مستخدم",
     "roles": "الأدوار",
-    "roles_create": "إنشاء دور",
-    "ui_buttons": "أزرار واجهة المستخدم",
-    "ui_cards": "بطاقات واجهة المستخدم",
-    "ui_date_picker": "منتقي التاريخ",
-    "ui_date_view": "عرض التاريخ",
-    "ui_treeview": "عرض شجري",
-    "change_password": "تغيير كلمة المرور",
+    "rolesCreate": "إنشاء دور",
+    "uiButtons": "أزرار واجهة المستخدم",
+    "uiCards": "بطاقات واجهة المستخدم",
+    "uiDatePicker": "منتقي التاريخ",
+    "uiDateView": "عرض التاريخ",
+    "uiTreeview": "عرض شجري",
+    "changePassword": "تغيير كلمة المرور",
     "profile": "الملف الشخصي",
-    "ui_form_elements": "عناصر النموذج",
-    "ui_file_upload": "رفع الملفات"
+    "uiFormElements": "عناصر النموذج",
+    "uiFileUpload": "رفع الملفات"
   },
   "footer": {
     "copyright": "إيزي فور نت، جميع الحقوق محفوظة."

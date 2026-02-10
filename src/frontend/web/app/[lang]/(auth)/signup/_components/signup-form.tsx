@@ -64,10 +64,10 @@ const SignupForm = () => {
 
     setRegisteredEmail(values.email)
     if (response.data?.isEmailVerificationRequired) {
-      setSuccessMessage(t('auth.signup.success_verify_email'))
+      setSuccessMessage(t('auth.signup.successVerifyEmail'))
       setCountdown(15)
     } else {
-      setSuccessMessage(t('auth.signup.success_message'))
+      setSuccessMessage(t('auth.signup.successMessage'))
     }
   }
 
@@ -80,7 +80,7 @@ const SignupForm = () => {
         return
       }
       successToast.fire({
-        title: t('page.verify_email.resend_success'),
+        title: t('page.verifyEmail.resendSuccess'),
       })
       setCountdown(15)
     } catch {
@@ -89,12 +89,12 @@ const SignupForm = () => {
   }
 
   if (successMessage) {
-    const isVerificationRequired = successMessage === t('auth.signup.success_verify_email')
+    const isVerificationRequired = successMessage === t('auth.signup.successVerifyEmail')
 
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <CheckCircle size={48} className="text-green-500" />
-        <h2 className="text-2xl font-bold">{t('auth.signup.success_title')}</h2>
+        <h2 className="text-2xl font-bold">{t('auth.signup.successTitle')}</h2>
         <p>{successMessage}</p>
 
         {isVerificationRequired && (
@@ -105,12 +105,12 @@ const SignupForm = () => {
             disabled={countdown > 0 || isResending}
             isLoading={isResending}
           >
-            {countdown > 0 ? t('page.verify_email.resend_wait', { seconds: countdown }) : t('page.verify_email.resend_button')}
+            {countdown > 0 ? t('page.verifyEmail.resendWait', { seconds: countdown }) : t('page.verifyEmail.resendButton')}
           </Button>
         )}
 
         <LocalizedLink href="/signin" className="btn btn-primary w-full mt-2">
-          {t('auth.login.back_to_signin')}
+          {t('auth.login.backToSignin')}
         </LocalizedLink>
       </div>
     )
@@ -126,9 +126,9 @@ const SignupForm = () => {
           <FormPasswordInput label={t('form.label.confirmPassword')} name="confirmPassword" placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-end gap-2">
-            <span className="text-sm">{t('auth.signup.already_have_account')}</span>
+            <span className="text-sm">{t('auth.signup.alreadyHaveAccount')}</span>
             <LocalizedLink href="/signin" className="text-sm text-primary hover:underline dark:text-white">
-              {t('auth.signup.signin_link')}
+              {t('auth.signup.signinLink')}
             </LocalizedLink>
           </div>
 

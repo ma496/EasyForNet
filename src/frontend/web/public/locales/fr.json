@@ -22,67 +22,67 @@
     "ok": "OK",
     "submit": "Soumettre",
     "actions": "Actions",
-    "all_rights_reserved": "Tous droits réservés.",
-    "delete_confirm": "Oui, supprimer"
+    "allRightsReserved": "Tous droits réservés.",
+    "deleteConfirm": "Oui, supprimer"
   },
   "navigation": {
     "home": "Accueil",
     "dashboard": "Tableau de bord",
-    "dashboard_sales": "Ventes",
+    "dashboardSales": "Ventes",
     "administration": "Administration",
     "users": "Utilisateurs",
     "roles": "Rôles",
-    "roles_list": "Liste",
-    "roles_create": "Créer",
-    "roles_update": "Mettre à jour",
-    "roles_change_permissions": "Modifier les permissions",
+    "rolesList": "Liste",
+    "rolesCreate": "Créer",
+    "rolesUpdate": "Mettre à jour",
+    "rolesChangePermissions": "Modifier les permissions",
     "components": "Composants",
-    "ui_form_elements": "Éléments de formulaire",
-    "ui_buttons": "Boutons",
-    "ui_cards": "Cartes",
-    "ui_date_picker": "Sélecteur de date",
-    "ui_date_view": "Vue date",
-    "ui_treeview": "Vue arborescente",
-    "change_password": "Changer le mot de passe",
+    "uiFormElements": "Éléments de formulaire",
+    "uiButtons": "Boutons",
+    "uiCards": "Cartes",
+    "uiDatePicker": "Sélecteur de date",
+    "uiDateView": "Vue date",
+    "uiTreeview": "Vue arborescente",
+    "changePassword": "Changer le mot de passe",
     "profile": "Profil",
-    "ui_file_upload": "Téléchargement de fichiers",
-    "users_list": "Liste",
-    "users_create": "Créer",
-    "users_update": "Mettre à jour"
+    "uiFileUpload": "Téléchargement de fichiers",
+    "usersList": "Liste",
+    "usersCreate": "Créer",
+    "usersUpdate": "Mettre à jour"
   },
   "auth": {
     "login": {
       "title": "Se connecter",
       "description": "Entrez vos identifiants pour vous connecter",
       "button": "Se connecter",
-      "forgot_password": "Mot de passe oublié ?",
-      "signup_link": "S'inscrire",
-      "no_account": "Pas de compte ?",
-      "back_to_signin": "Retour à la connexion"
+      "forgotPassword": "Mot de passe oublié ?",
+      "signupLink": "S'inscrire",
+      "noAccount": "Pas de compte ?",
+      "backToSignin": "Retour à la connexion"
     },
     "signup": {
       "title": "S'inscrire",
       "description": "Entrez votre email et mot de passe pour vous inscrire",
       "button": "S'inscrire",
-      "signin_link": "Se connecter",
-      "already_have_account": "Vous avez déjà un compte ?",
-      "success_title": "Succès !",
-      "success_verify_email": "Inscription réussie ! Veuillez vérifier votre email.",
-      "success_message": "Inscription réussie ! Allez à la page de connexion."
+      "signinLink": "Se connecter",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "successTitle": "Succès !",
+      "successVerifyEmail": "Inscription réussie ! Veuillez vérifier votre email.",
+      "successMessage": "Inscription réussie ! Allez à la page de connexion."
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "Mot de passe oublié",
       "description": "Entrez votre email pour réinitialiser votre mot de passe",
       "button": "Envoyer le lien",
       "success": "Lien de réinitialisation envoyé",
-      "check_email": "Veuillez vérifier votre email pour les instructions"
+      "checkEmail": "Veuillez vérifier votre email pour les instructions"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "Réinitialiser le mot de passe",
       "description": "Entrez votre nouveau mot de passe",
       "button": "Réinitialiser le mot de passe",
       "success": "Mot de passe réinitialisé avec succès",
-      "has_been_reset": "Votre mot de passe a été réinitialisé avec succès"
+      "hasBeenReset": "Votre mot de passe a été réinitialisé avec succès"
     },
     "logout": "Se déconnecter"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "Au moins un élément doit être sélectionné"
   },
   "error": {
-    "404": {
-      "title": "Non trouvé",
-      "message": "La ressource demandée est introuvable."
-    },
-    "500": {
-      "title": "Erreur interne du serveur",
-      "message": "Une erreur est survenue lors du traitement de la requête."
-    },
     "400": {
       "title": "Mauvaise requête"
     },
@@ -145,6 +137,10 @@
       "title": "Interdit",
       "message": "Vous n'avez pas la permission d'accéder à cette ressource."
     },
+    "404": {
+      "title": "Non trouvé",
+      "message": "La ressource demandée est introuvable."
+    },
     "413": {
       "title": "Charge utile trop volumineuse",
       "message": "La charge utile de la requête est trop volumineuse."
@@ -153,36 +149,40 @@
       "title": "Type de média non supporté",
       "message": "Le type de média de la requête n'est pas supporté."
     },
+    "500": {
+      "title": "Erreur interne du serveur",
+      "message": "Une erreur est survenue lors du traitement de la requête."
+    },
     "connection": {
       "title": "Erreur de connexion",
       "message": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion ou réessayer plus tard."
     },
     "server": {
-      "internal_server_error": "Erreur interne du serveur",
-      "duplicate_value": "Valeur en double",
-      "duplicate_property_value": "Valeur de propriété en double",
-      "required_field_missing": "Champ requis manquant",
-      "required_property_field_missing": "Champ de propriété requis manquant",
-      "referenced_record_not_found": "Enregistrement référencé non trouvé",
-      "invalid_value_provided": "Valeur fournie invalide",
-      "database_error": "Erreur de base de données",
-      "invalid_current_password": "Mot de passe actuel invalide",
-      "invalid_token": "Jeton invalide",
-      "token_expired": "Jeton expiré",
-      "payload_too_large": "Charge utile trop volumineuse",
-      "invalid_username_password": "Nom d'utilisateur ou mot de passe invalide",
-      "invalid_email_password": "Email ou mot de passe invalide",
-      "user_not_active": "Utilisateur non actif",
-      "user_not_found": "Utilisateur non trouvé",
-      "email_already_exists": "L'email existe déjà",
-      "username_already_exists": "Le nom d'utilisateur existe déjà",
-      "email_not_verified": "Email non vérifié",
-      "role_name_already_exists": "Le nom du rôle existe déjà",
-      "default_role_permissions_cannot_be_changed": "Les permissions du rôle par défaut ne peuvent pas être modifiées",
-      "default_role_cannot_be_deleted": "Le rôle par défaut ne peut pas être supprimé",
-      "default_role_cannot_be_updated": "Le rôle par défaut ne peut pas être mis à jour",
-      "default_user_cannot_be_deleted": "L'utilisateur par défaut ne peut pas être supprimé",
-      "default_user_cannot_be_updated": "L'utilisateur par défaut ne peut pas être mis à jour"
+      "internalServerError": "Erreur interne du serveur",
+      "duplicateValue": "Valeur en double",
+      "duplicatePropertyValue": "Valeur de propriété en double",
+      "requiredFieldMissing": "Champ requis manquant",
+      "requiredPropertyFieldMissing": "Champ de propriété requis manquant",
+      "referencedRecordNotFound": "Enregistrement référencé non trouvé",
+      "invalidValueProvided": "Valeur fournie invalide",
+      "databaseError": "Erreur de base de données",
+      "invalidCurrentPassword": "Mot de passe actuel invalide",
+      "invalidToken": "Jeton invalide",
+      "tokenExpired": "Jeton expiré",
+      "payloadTooLarge": "Charge utile trop volumineuse",
+      "invalidUsernamePassword": "Nom d'utilisateur ou mot de passe invalide",
+      "invalidEmailPassword": "Email ou mot de passe invalide",
+      "userNotActive": "Utilisateur non actif",
+      "userNotFound": "Utilisateur non trouvé",
+      "emailAlreadyExists": "L'email existe déjà",
+      "usernameAlreadyExists": "Le nom d'utilisateur existe déjà",
+      "emailNotVerified": "Email non vérifié",
+      "roleNameAlreadyExists": "Le nom du rôle existe déjà",
+      "defaultRolePermissionsCannotBeChanged": "Les permissions du rôle par défaut ne peuvent pas être modifiées",
+      "defaultRoleCannotBeDeleted": "Le rôle par défaut ne peut pas être supprimé",
+      "defaultRoleCannotBeUpdated": "Le rôle par défaut ne peut pas être mis à jour",
+      "defaultUserCannotBeDeleted": "L'utilisateur par défaut ne peut pas être supprimé",
+      "defaultUserCannotBeUpdated": "L'utilisateur par défaut ne peut pas être mis à jour"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "Utilisateurs",
-      "create_success": "Utilisateur créé avec succès",
-      "update_success": "Utilisateur mis à jour avec succès",
-      "delete_title": "Supprimer l'utilisateur",
-      "delete_confirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
-      "delete_success": "Utilisateur supprimé avec succès"
+      "createSuccess": "Utilisateur créé avec succès",
+      "updateSuccess": "Utilisateur mis à jour avec succès",
+      "deleteTitle": "Supprimer l'utilisateur",
+      "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+      "deleteSuccess": "Utilisateur supprimé avec succès"
     },
     "roles": {
       "title": "Rôles",
-      "create_success": "Rôle créé avec succès",
-      "update_success": "Rôle mis à jour avec succès",
-      "delete_title": "Supprimer le rôle",
-      "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce rôle ?",
-      "delete_success": "Rôle supprimé avec succès",
-      "not_found": "Rôle non trouvé",
+      "createSuccess": "Rôle créé avec succès",
+      "updateSuccess": "Rôle mis à jour avec succès",
+      "deleteTitle": "Supprimer le rôle",
+      "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce rôle ?",
+      "deleteSuccess": "Rôle supprimé avec succès",
+      "notFound": "Rôle non trouvé",
       "permissions": "Permissions",
-      "permissions_update_success": "Permissions mises à jour avec succès"
+      "permissionsUpdateSuccess": "Permissions mises à jour avec succès"
     },
     "profile": {
       "title": "Profil",
-      "update_success": "Profil mis à jour avec succès",
-      "delete_avatar_title": "Supprimer la photo de profil",
-      "delete_avatar_confirm": "Êtes-vous sûr de vouloir supprimer votre photo de profil ?",
-      "alt_image": "Image de profil",
-      "change_password_success": "Mot de passe changé avec succès"
+      "updateSuccess": "Profil mis à jour avec succès",
+      "deleteAvatarTitle": "Supprimer la photo de profil",
+      "deleteAvatarConfirm": "Êtes-vous sûr de vouloir supprimer votre photo de profil ?",
+      "altImage": "Image de profil",
+      "changePasswordSuccess": "Mot de passe changé avec succès"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "Vérification de votre email...",
-      "verified_title": "Email vérifié !",
-      "verified_message": "Votre email a été vérifié avec succès. Vous pouvez maintenant vous connecter.",
-      "button_signin": "Se connecter maintenant",
-      "resend_button": "Renvoyer l'email de vérification",
-      "resend_success": "L'email de vérification a été renvoyé.",
-      "resend_wait": "Veuillez patienter ${seconds}s",
-      "not_verified_title": "Vérification de l'email requise",
-      "not_verified_message": "Votre adresse email n'est pas vérifiée. Veuillez vérifier votre boîte de réception ou cliquez ci-dessous pour renvoyer.",
-      "failed_title": "Échec de la vérification",
-      "failed_message": "Le lien de vérification est invalide ou a expiré."
+      "verifiedTitle": "Email vérifié !",
+      "verifiedMessage": "Votre email a été vérifié avec succès. Vous pouvez maintenant vous connecter.",
+      "buttonSignin": "Se connecter maintenant",
+      "resendButton": "Renvoyer l'email de vérification",
+      "resendSuccess": "L'email de vérification a été renvoyé.",
+      "resendWait": "Veuillez patienter ${seconds}s",
+      "notVerifiedTitle": "Vérification de l'email requise",
+      "notVerifiedMessage": "Votre adresse email n'est pas vérifiée. Veuillez vérifier votre boîte de réception ou cliquez ci-dessous pour renvoyer.",
+      "failedTitle": "Échec de la vérification",
+      "failedMessage": "Le lien de vérification est invalide ou a expiré."
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "Utilisateurs"
     },
     "pagination": {
-      "showing_entries": "Affichage de ${from} à ${to} sur ${totalRecords} entrées"
+      "showingEntries": "Affichage de ${from} à ${to} sur ${totalRecords} entrées"
     },
-    "no_records": "Aucun enregistrement trouvé",
-    "search_placeholder": "Rechercher...",
+    "noRecords": "Aucun enregistrement trouvé",
+    "searchPlaceholder": "Rechercher...",
     "export": {
       "button": "Exporter",
       "excel": "Excel",
       "csv": "CSV",
-      "current_page": "Page actuelle",
-      "all_records": "Tous les enregistrements"
+      "currentPage": "Page actuelle",
+      "allRecords": "Tous les enregistrements"
     },
     "actions": "Actions",
-    "create_link": "Créer"
+    "createLink": "Créer"
   },
   "filter": {
     "button": "Filtres",
     "all": "Tous",
     "active": "Actif",
     "inactive": "Inactif",
-    "all_roles": "Tous les rôles",
-    "active_status": "Statut actif",
+    "allRoles": "Tous les rôles",
+    "activeStatus": "Statut actif",
     "role": "Rôle",
-    "select_role": "Sélectionner un rôle",
+    "selectRole": "Sélectionner un rôle",
     "search": "Rechercher",
     "clear": "Effacer"
   },
   "file": {
     "upload": "Téléchargement de fichier",
-    "delete_title": "Supprimer le fichier",
-    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
-    "too_large": "Fichier trop volumineux"
+    "deleteTitle": "Supprimer le fichier",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
+    "tooLarge": "Fichier trop volumineux"
   },
   "search": {
     "dashboard": "Tableau de bord",
     "users": "Utilisateurs",
-    "users_create": "Créer un utilisateur",
+    "usersCreate": "Créer un utilisateur",
     "roles": "Rôles",
-    "roles_create": "Créer un rôle",
-    "ui_buttons": "Boutons UI",
-    "ui_cards": "Cartes UI",
-    "ui_date_picker": "Sélecteur de date UI",
-    "ui_date_view": "Vue date UI",
-    "ui_treeview": "Vue arborescente UI",
-    "change_password": "Changer le mot de passe",
+    "rolesCreate": "Créer un rôle",
+    "uiButtons": "Boutons UI",
+    "uiCards": "Cartes UI",
+    "uiDatePicker": "Sélecteur de date UI",
+    "uiDateView": "Vue date UI",
+    "uiTreeview": "Vue arborescente UI",
+    "changePassword": "Changer le mot de passe",
     "profile": "Profil",
-    "ui_form_elements": "Éléments de formulaire UI",
-    "ui_file_upload": "Téléchargement de fichiers UI"
+    "uiFormElements": "Éléments de formulaire UI",
+    "uiFileUpload": "Téléchargement de fichiers UI"
   },
   "footer": {
     "copyright": "Easy For Net Tous droits réservés."

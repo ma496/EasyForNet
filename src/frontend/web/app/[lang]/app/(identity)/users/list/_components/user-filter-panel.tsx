@@ -30,7 +30,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
   ]
 
   const roleOptions = [
-    { label: t('filter.all_roles') || 'All Roles', value: '' },
+    { label: t('filter.allRoles') || 'All Roles', value: '' },
     ...(rolesData?.items.map((role) => ({
       label: role.name,
       value: role.id,
@@ -48,7 +48,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
           <label
             htmlFor="isActive"
             className="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {t('filter.active_status') || 'Active Status'}
+            {t('filter.activeStatus') || 'Active Status'}
           </label>
           <Select
             name="isActive"
@@ -76,7 +76,7 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
             options={roleOptions}
             value={filters.roleId}
             onChange={(_, value) => onChange({ ...filters, roleId: value })}
-            placeholder={t('filter.select_role') || 'Select Role'}
+            placeholder={t('filter.selectRole') || 'Select Role'}
             searchable={true}
             clearable={true}
             size="sm"

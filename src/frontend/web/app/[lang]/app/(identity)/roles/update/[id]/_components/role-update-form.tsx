@@ -40,7 +40,7 @@ export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
   }
 
   if (!roleData) {
-    return <div>{t('page.roles.not_found')}</div>
+    return <div>{t('page.roles.notFound')}</div>
   }
 
   const onSubmit = async (data: FormValues) => {
@@ -51,7 +51,7 @@ export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
 
     if (!result.error) {
       successToast.fire({
-        title: t('page.roles.update_success'),
+        title: t('page.roles.updateSuccess'),
       })
       router.push('/app/roles/list')
     }

@@ -14,7 +14,7 @@ export const searchableItems: SearchableItem[] = [
 
   },
   {
-    title: 'search.users_create',
+    title: 'search.usersCreate',
     url: '/app/users/create',
 
   },
@@ -24,7 +24,7 @@ export const searchableItems: SearchableItem[] = [
 
   },
   {
-    title: 'search.roles_create',
+    title: 'search.rolesCreate',
     url: '/app/roles/create',
 
   },
@@ -33,36 +33,36 @@ export const searchableItems: SearchableItem[] = [
     url: '/app/profile',
   },
   {
-    title: 'search.change_password',
+    title: 'search.changePassword',
     url: '/app/change-password',
   },
 
   {
-    title: 'search.ui_form_elements',
+    title: 'search.uiFormElements',
     url: '/app/ui/form-elements',
   },
   {
-    title: 'search.ui_buttons',
+    title: 'search.uiButtons',
     url: '/app/ui/buttons',
   },
   {
-    title: 'search.ui_cards',
+    title: 'search.uiCards',
     url: '/app/ui/cards',
   },
   {
-    title: 'search.ui_date_picker',
+    title: 'search.uiDatePicker',
     url: '/app/ui/date-picker',
   },
   {
-    title: 'search.ui_date_view',
+    title: 'search.uiDateView',
     url: '/app/ui/date-view',
   },
   {
-    title: 'search.ui_treeview',
+    title: 'search.uiTreeview',
     url: '/app/ui/treeview',
   },
   {
-    title: 'search.ui_file_upload',
+    title: 'search.uiFileUpload',
     url: '/app/ui/file-upload',
   },
 ]

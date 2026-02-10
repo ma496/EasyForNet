@@ -20,7 +20,7 @@ export const SidebarNavGroup = ({ group, currentMenu, pathname, t, onToggleMenu 
     return (
       <div className="nav-group">
         <h2 className="dark:bg-opacity-[0.08] -mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark">
-          <span>{t(group.title.toLowerCase())}</span>
+          <span>{t(group.title)}</span>
         </h2>
         <ul className="space-y-1">
           {group.items.map((item, index) => (

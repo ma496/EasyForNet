@@ -22,67 +22,67 @@
     "ok": "ठीक है",
     "submit": "जमा करें",
     "actions": "क्रियाएं",
-    "all_rights_reserved": "सर्वाधिकार सुरक्षित।",
-    "delete_confirm": "हाँ, इसे हटा दें"
+    "allRightsReserved": "सर्वाधिकार सुरक्षित।",
+    "deleteConfirm": "हाँ, इसे हटा दें"
   },
   "navigation": {
     "home": "होम",
     "dashboard": "डैशबोर्ड",
-    "dashboard_sales": "बिक्री",
+    "dashboardSales": "बिक्री",
     "administration": "प्रशासन",
     "users": "उपयोगकर्ता",
     "roles": "भूमिकाएं",
-    "roles_list": "सूची",
-    "roles_create": "बनाएं",
-    "roles_update": "अपडेट करें",
-    "roles_change_permissions": "अनुमतियां बदलें",
+    "rolesList": "सूची",
+    "rolesCreate": "बनाएं",
+    "rolesUpdate": "अपडेट करें",
+    "rolesChangePermissions": "अनुमतियां बदलें",
     "components": "घटक",
-    "ui_form_elements": "फॉर्म तत्व",
-    "ui_buttons": "बटन",
-    "ui_cards": "कार्ड",
-    "ui_date_picker": "दिनांक चयनकर्ता",
-    "ui_date_view": "दिनांक दृश्य",
-    "ui_treeview": "ट्री व्यू",
-    "change_password": "पासवर्ड बदलें",
+    "uiFormElements": "फॉर्म तत्व",
+    "uiButtons": "बटन",
+    "uiCards": "कार्ड",
+    "uiDatePicker": "दिनांक चयनकर्ता",
+    "uiDateView": "दिनांक दृश्य",
+    "uiTreeview": "ट्री व्यू",
+    "changePassword": "पासवर्ड बदलें",
     "profile": "प्रोफ़ाइल",
-    "ui_file_upload": "फ़ाइल अपलोड",
-    "users_list": "सूची",
-    "users_create": "बनाएं",
-    "users_update": "अपडेट करें"
+    "uiFileUpload": "फ़ाइल अपलोड",
+    "usersList": "सूची",
+    "usersCreate": "बनाएं",
+    "usersUpdate": "अपडेट करें"
   },
   "auth": {
     "login": {
       "title": "साइन इन",
       "description": "साइन इन करने के लिए अपनी साख दर्ज करें",
       "button": "साइन इन",
-      "forgot_password": "पासवर्ड भूल गए?",
-      "signup_link": "साइन अप",
-      "no_account": "खाता नहीं है?",
-      "back_to_signin": "साइन इन पर वापस जाएं"
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "signupLink": "साइन अप",
+      "noAccount": "खाता नहीं है?",
+      "backToSignin": "साइन इन पर वापस जाएं"
     },
     "signup": {
       "title": "साइन अप",
       "description": "रजिस्टर करने के लिए अपना ईमेल और पासवर्ड दर्ज करें",
       "button": "साइन अप",
-      "signin_link": "साइन इन",
-      "already_have_account": "पहले से खाता है?",
-      "success_title": "सफलता!",
-      "success_verify_email": "पंजीकरण सफल! कृपया अपने खाते को सत्यापित करने के लिए अपना ईमेल देखें।",
-      "success_message": "पंजीकरण सफल! साइन इन पेज पर जाएं।"
+      "signinLink": "साइन इन",
+      "alreadyHaveAccount": "पहले से खाता है?",
+      "successTitle": "सफलता!",
+      "successVerifyEmail": "पंजीकरण सफल! कृपया अपने खाते को सत्यापित करने के लिए अपना ईमेल देखें।",
+      "successMessage": "पंजीकरण सफल! साइन इन पेज पर जाएं।"
     },
-    "forgot_password": {
+    "forgotPassword": {
       "title": "पासवर्ड भूल गए",
       "description": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल दर्ज करें",
       "button": "रीसेट लिंक भेजें",
       "success": "पासवर्ड रीसेट लिंक भेजा गया",
-      "check_email": "कृपया पासवर्ड रीसेट निर्देशों के लिए अपना ईमेल देखें"
+      "checkEmail": "कृपया पासवर्ड रीसेट निर्देशों के लिए अपना ईमेल देखें"
     },
-    "reset_password": {
+    "resetPassword": {
       "title": "पासवर्ड रीसेट करें",
       "description": "अपना खाता रीसेट करने के लिए अपना नया पासवर्ड दर्ज करें",
       "button": "पासवर्ड रीसेट करें",
       "success": "पासवर्ड सफलतापूर्वक रीसेट किया गया",
-      "has_been_reset": "आपका पासवर्ड सफलतापूर्वक रीसेट कर दिया गया है"
+      "hasBeenReset": "आपका पासवर्ड सफलतापूर्वक रीसेट कर दिया गया है"
     },
     "logout": "साइन आउट"
   },
@@ -126,14 +126,6 @@
     "atLeastOneSelected": "कम से कम एक आइटम का चयन किया जाना चाहिए"
   },
   "error": {
-    "404": {
-      "title": "नहीं मिला",
-      "message": "अनुरोधित संसाधन नहीं मिला।"
-    },
-    "500": {
-      "title": "आंतरिक सर्वर त्रुटि",
-      "message": "अनुरोध को संसाधित करते समय एक त्रुटि हुई।"
-    },
     "400": {
       "title": "खराब अनुरोध"
     },
@@ -145,6 +137,10 @@
       "title": "वर्जित",
       "message": "आपको इस संसाधन तक पहुँचने की अनुमति नहीं है।"
     },
+    "404": {
+      "title": "नहीं मिला",
+      "message": "अनुरोधित संसाधन नहीं मिला।"
+    },
     "413": {
       "title": "पेलोड बहुत बड़ा है",
       "message": "अनुरोध पेलोड बहुत बड़ा है।"
@@ -153,36 +149,40 @@
       "title": "असमर्थित मीडिया प्रकार",
       "message": "अनुरोध मीडिया प्रकार समर्थित नहीं है।"
     },
+    "500": {
+      "title": "आंतरिक सर्वर त्रुटि",
+      "message": "अनुरोध को संसाधित करते समय एक त्रुटि हुई।"
+    },
     "connection": {
       "title": "कनेक्शन त्रुटि",
       "message": "सर्वर से कनेक्ट करने में असमर्थ। कृपया अपना कनेक्शन जांचें या बाद में पुनः प्रयास करें।"
     },
     "server": {
-      "internal_server_error": "आंतरिक सर्वर त्रुटि",
-      "duplicate_value": "डुप्लिकेट मान",
-      "duplicate_property_value": "डुप्लिकेट संपत्ति मान",
-      "required_field_missing": "आवश्यक फ़ील्ड गायब है",
-      "required_property_field_missing": "आवश्यक संपत्ति फ़ील्ड गायब है",
-      "referenced_record_not_found": "संदर्भित रिकॉर्ड नहीं मिला",
-      "invalid_value_provided": "अमान्य मान प्रदान किया गया",
-      "database_error": "डेटाबेस त्रुटि",
-      "invalid_current_password": "अमान्य वर्तमान पासवर्ड",
-      "invalid_token": "अमान्य टोकन",
-      "token_expired": "टोकन समाप्त हो गया",
-      "payload_too_large": "पेलोड बहुत बड़ा है",
-      "invalid_username_password": "अमान्य उपयोगकर्ता नाम या पासवर्ड",
-      "invalid_email_password": "अमान्य ईमेल या पासवर्ड",
-      "user_not_active": "उपयोगकर्ता सक्रिय नहीं है",
-      "user_not_found": "उपयोगकर्ता नहीं मिला",
-      "email_already_exists": "ईमेल पहले से मौजूद है",
-      "username_already_exists": "उपयोगकर्ता नाम पहले से मौजूद है",
-      "email_not_verified": "ईमेल सत्यापित नहीं है",
-      "role_name_already_exists": "भूमिका नाम पहले से मौजूद है",
-      "default_role_permissions_cannot_be_changed": "डिफ़ॉल्ट भूमिका अनुमतियां बदली नहीं जा सकतीं",
-      "default_role_cannot_be_deleted": "डिफ़ॉल्ट भूमिका हटाई नहीं जा सकती",
-      "default_role_cannot_be_updated": "डिफ़ॉल्ट भूमिका अपडेट नहीं की जा सकती",
-      "default_user_cannot_be_deleted": "डिफ़ॉल्ट उपयोगकर्ता हटाया नहीं जा सकता",
-      "default_user_cannot_be_updated": "डिफ़ॉल्ट उपयोगकर्ता अपडेट नहीं किया जा सकता"
+      "internalServerError": "आंतरिक सर्वर त्रुटि",
+      "duplicateValue": "डुप्लिकेट मान",
+      "duplicatePropertyValue": "डुप्लिकेट संपत्ति मान",
+      "requiredFieldMissing": "आवश्यक फ़ील्ड गायब है",
+      "requiredPropertyFieldMissing": "आवश्यक संपत्ति फ़ील्ड गायब है",
+      "referencedRecordNotFound": "संदर्भित रिकॉर्ड नहीं मिला",
+      "invalidValueProvided": "अमान्य मान प्रदान किया गया",
+      "databaseError": "डेटाबेस त्रुटि",
+      "invalidCurrentPassword": "अमान्य वर्तमान पासवर्ड",
+      "invalidToken": "अमान्य टोकन",
+      "tokenExpired": "टोकन समाप्त हो गया",
+      "payloadTooLarge": "पेलोड बहुत बड़ा है",
+      "invalidUsernamePassword": "अमान्य उपयोगकर्ता नाम या पासवर्ड",
+      "invalidEmailPassword": "अमान्य ईमेल या पासवर्ड",
+      "userNotActive": "उपयोगकर्ता सक्रिय नहीं है",
+      "userNotFound": "उपयोगकर्ता नहीं मिला",
+      "emailAlreadyExists": "ईमेल पहले से मौजूद है",
+      "usernameAlreadyExists": "उपयोगकर्ता नाम पहले से मौजूद है",
+      "emailNotVerified": "ईमेल सत्यापित नहीं है",
+      "roleNameAlreadyExists": "भूमिका नाम पहले से मौजूद है",
+      "defaultRolePermissionsCannotBeChanged": "डिफ़ॉल्ट भूमिका अनुमतियां बदली नहीं जा सकतीं",
+      "defaultRoleCannotBeDeleted": "डिफ़ॉल्ट भूमिका हटाई नहीं जा सकती",
+      "defaultRoleCannotBeUpdated": "डिफ़ॉल्ट भूमिका अपडेट नहीं की जा सकती",
+      "defaultUserCannotBeDeleted": "डिफ़ॉल्ट उपयोगकर्ता हटाया नहीं जा सकता",
+      "defaultUserCannotBeUpdated": "डिफ़ॉल्ट उपयोगकर्ता अपडेट नहीं किया जा सकता"
     }
   },
   "page": {
@@ -192,43 +192,43 @@
     },
     "users": {
       "title": "उपयोगकर्ता",
-      "create_success": "उपयोगकर्ता सफलतापूर्वक बनाया गया",
-      "update_success": "उपयोगकर्ता सफलतापूर्वक अपडेट किया गया",
-      "delete_title": "उपयोगकर्ता हटाएं",
-      "delete_confirm": "क्या आप वाकई इस उपयोगकर्ता को हटाना चाहते हैं?",
-      "delete_success": "उपयोगकर्ता सफलतापूर्वक हटाया गया"
+      "createSuccess": "उपयोगकर्ता सफलतापूर्वक बनाया गया",
+      "updateSuccess": "उपयोगकर्ता सफलतापूर्वक अपडेट किया गया",
+      "deleteTitle": "उपयोगकर्ता हटाएं",
+      "deleteConfirm": "क्या आप वाकई इस उपयोगकर्ता को हटाना चाहते हैं?",
+      "deleteSuccess": "उपयोगकर्ता सफलतापूर्वक हटाया गया"
     },
     "roles": {
       "title": "भूमिकाएं",
-      "create_success": "भूमिका सफलतापूर्वक बनाई गई",
-      "update_success": "भूमिका सफलतापूर्वक अपडेट की गई",
-      "delete_title": "भूमिका हटाएं",
-      "delete_confirm": "क्या आप वाकई इस भूमिका को हटाना चाहते हैं?",
-      "delete_success": "भूमिका सफलतापूर्वक हटाई गई",
-      "not_found": "भूमिका नहीं मिली",
+      "createSuccess": "भूमिका सफलतापूर्वक बनाई गई",
+      "updateSuccess": "भूमिका सफलतापूर्वक अपडेट की गई",
+      "deleteTitle": "भूमिका हटाएं",
+      "deleteConfirm": "क्या आप वाकई इस भूमिका को हटाना चाहते हैं?",
+      "deleteSuccess": "भूमिका सफलतापूर्वक हटाई गई",
+      "notFound": "भूमिका नहीं मिली",
       "permissions": "अनुमतियां",
-      "permissions_update_success": "अनुमतियां सफलतापूर्वक अपडेट की गईं"
+      "permissionsUpdateSuccess": "अनुमतियां सफलतापूर्वक अपडेट की गईं"
     },
     "profile": {
       "title": "प्रोफ़ाइल",
-      "update_success": "प्रोफ़ाइल सफलतापूर्वक अपडेट की गई",
-      "delete_avatar_title": "प्रोफ़ाइल चित्र हटाएं",
-      "delete_avatar_confirm": "क्या आप वाकई अपना प्रोफ़ाइल चित्र हटाना चाहते हैं?",
-      "alt_image": "प्रोफ़ाइल छवि",
-      "change_password_success": "पासवर्ड सफलतापूर्वक बदला गया"
+      "updateSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट की गई",
+      "deleteAvatarTitle": "प्रोफ़ाइल चित्र हटाएं",
+      "deleteAvatarConfirm": "क्या आप वाकई अपना प्रोफ़ाइल चित्र हटाना चाहते हैं?",
+      "altImage": "प्रोफ़ाइल छवि",
+      "changePasswordSuccess": "पासवर्ड सफलतापूर्वक बदला गया"
     },
-    "verify_email": {
+    "verifyEmail": {
       "verifying": "आपके ईमेल का सत्यापन हो रहा है...",
-      "verified_title": "ईमेल सत्यापित!",
-      "verified_message": "आपका ईमेल सफलतापूर्वक सत्यापित हो गया है। अब आप साइन इन कर सकते हैं।",
-      "button_signin": "अभी साइन इन करें",
-      "resend_button": "सत्यापन ईमेल पुनः भेजें",
-      "resend_success": "सत्यापन ईमेल पुनः भेज दिया गया है।",
-      "resend_wait": "कृपया ${seconds} सेकंड प्रतीक्षा करें",
-      "not_verified_title": "ईमेल सत्यापन आवश्यक",
-      "not_verified_message": "आपका ईमेल पता सत्यापित नहीं है। कृपया सत्यापन लिंक के लिए अपना इनबॉक्स देखें या इसे पुनः भेजने के लिए नीचे क्लिक करें।",
-      "failed_title": "सत्यापन विफल",
-      "failed_message": "सत्यापन लिंक अमान्य है या समाप्त हो गया है।"
+      "verifiedTitle": "ईमेल सत्यापित!",
+      "verifiedMessage": "आपका ईमेल सफलतापूर्वक सत्यापित हो गया है। अब आप साइन इन कर सकते हैं।",
+      "buttonSignin": "अभी साइन इन करें",
+      "resendButton": "सत्यापन ईमेल पुनः भेजें",
+      "resendSuccess": "सत्यापन ईमेल पुनः भेज दिया गया है।",
+      "resendWait": "कृपया ${seconds} सेकंड प्रतीक्षा करें",
+      "notVerifiedTitle": "ईमेल सत्यापन आवश्यक",
+      "notVerifiedMessage": "आपका ईमेल पता सत्यापित नहीं है। कृपया सत्यापन लिंक के लिए अपना इनबॉक्स देखें या इसे पुनः भेजने के लिए नीचे क्लिक करें।",
+      "failedTitle": "सत्यापन विफल",
+      "failedMessage": "सत्यापन लिंक अमान्य है या समाप्त हो गया है।"
     }
   },
   "table": {
@@ -244,53 +244,53 @@
       "userCount": "उपयोगकर्ता"
     },
     "pagination": {
-      "showing_entries": "${totalRecords} प्रविष्टियों में से ${from} से ${to} दिखा रहा है"
+      "showingEntries": "${totalRecords} प्रविष्टियों में से ${from} से ${to} दिखा रहा है"
     },
-    "no_records": "कोई रिकॉर्ड नहीं मिला",
-    "search_placeholder": "खोजें...",
+    "noRecords": "कोई रिकॉर्ड नहीं मिला",
+    "searchPlaceholder": "खोजें...",
     "export": {
       "button": "निर्यात",
       "excel": "एक्सेल",
       "csv": "सीएसवी",
-      "current_page": "वर्तमान पृष्ठ",
-      "all_records": "सभी रिकॉर्ड"
+      "currentPage": "वर्तमान पृष्ठ",
+      "allRecords": "सभी रिकॉर्ड"
     },
     "actions": "क्रियाएं",
-    "create_link": "बनाएं"
+    "createLink": "बनाएं"
   },
   "filter": {
     "button": "फिल्टर",
     "all": "सभी",
     "active": "सक्रिय",
     "inactive": "निष्क्रिय",
-    "all_roles": "सभी भूमिकाएं",
-    "active_status": "सक्रिय स्थिति",
+    "allRoles": "सभी भूमिकाएं",
+    "activeStatus": "सक्रिय स्थिति",
     "role": "भूमिका",
-    "select_role": "भूमिका चुनें",
+    "selectRole": "भूमिका चुनें",
     "search": "खोजें",
     "clear": "साफ़ करें"
   },
   "file": {
     "upload": "फ़ाइल अपलोड",
-    "delete_title": "फ़ाइल हटाएं",
-    "delete_confirm": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
-    "too_large": "फ़ाइल बहुत बड़ी है"
+    "deleteTitle": "फ़ाइल हटाएं",
+    "deleteConfirm": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
+    "tooLarge": "फ़ाइल बहुत बड़ी है"
   },
   "search": {
     "dashboard": "डैशबोर्ड",
     "users": "उपयोगकर्ता",
-    "users_create": "उपयोगकर्ता बनाएं",
+    "usersCreate": "उपयोगकर्ता बनाएं",
     "roles": "भूमिकाएं",
-    "roles_create": "भूमिका बनाएं",
-    "ui_buttons": "UI बटन",
-    "ui_cards": "UI कार्ड",
-    "ui_date_picker": "UI दिनांक चयनकर्ता",
-    "ui_date_view": "UI दिनांक दृश्य",
-    "ui_treeview": "UI ट्री व्यू",
-    "change_password": "पासवर्ड बदलें",
+    "rolesCreate": "भूमिका बनाएं",
+    "uiButtons": "UI बटन",
+    "uiCards": "UI कार्ड",
+    "uiDatePicker": "UI दिनांक चयनकर्ता",
+    "uiDateView": "UI दिनांक दृश्य",
+    "uiTreeview": "UI ट्री व्यू",
+    "changePassword": "पासवर्ड बदलें",
     "profile": "प्रोफ़ाइल",
-    "ui_form_elements": "UI फॉर्म तत्व",
-    "ui_file_upload": "UI फ़ाइल अपलोड"
+    "uiFormElements": "UI फॉर्म तत्व",
+    "uiFileUpload": "UI फ़ाइल अपलोड"
   },
   "footer": {
     "copyright": "Easy For Net सर्वाधिकार सुरक्षित।"
