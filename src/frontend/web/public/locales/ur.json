@@ -50,6 +50,22 @@
     "usersCreate": "بنائیں",
     "usersUpdate": "اپ ڈیٹ"
   },
+  "search": {
+    "dashboard": "ڈیش بورڈ",
+    "users": "صارفین",
+    "usersCreate": "صارف بنائیں",
+    "roles": "کردار",
+    "rolesCreate": "کردار بنائیں",
+    "uiButtons": "UI بٹن",
+    "uiCards": "UI کارڈز",
+    "uiDatePicker": "UI تاریخ چنندہ",
+    "uiDateView": "UI تاریخ منظر",
+    "uiTreeview": "UI ٹری ویو",
+    "changePassword": "پاس ورڈ تبدیل کریں",
+    "profile": "پروفائل",
+    "uiFormElements": "UI فارم عناصر",
+    "uiFileUpload": "UI فائل اپ لوڈ"
+  },
   "form": {
     "label": {
       "username": "صارف کا نام",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "پہلے سے طے شدہ صارف کو اپ ڈیٹ نہیں کیا جا سکتا"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "پہلا نام",
+      "lastName": "آخری نام",
+      "email": "ای میل",
+      "roles": "کردار",
+      "userName": "صارف کا نام",
+      "isActive": "فعال",
+      "name": "نام",
+      "description": "تفصیل",
+      "userCount": "صارفین"
+    },
+    "pagination": {
+      "showingEntries": "${totalRecords} اندراجات میں سے ${from} سے ${to} دکھائے جا رہے ہیں"
+    },
+    "noRecords": "کوئی ریکارڈ نہیں ملا",
+    "searchPlaceholder": "تلاش...",
+    "export": {
+      "button": "برآمد",
+      "excel": "ایکسل",
+      "csv": "سی ایس وی",
+      "currentPage": "موجودہ صفحہ",
+      "allRecords": "تمام ریکارڈ"
+    },
+    "actions": "کارروائیاں",
+    "createLink": "بنائیں",
+    "filter": {
+      "button": "فلٹرز",
+      "all": "سب",
+      "active": "فعال",
+      "inactive": "غیر فعال",
+      "allRoles": "تمام کردار",
+      "activeStatus": "فعال حیثیت",
+      "role": "کردار",
+      "selectRole": "کردار منتخب کریں",
+      "search": "تلاش",
+      "clear": "صاف کریں"
+    }
+  },
+  "file": {
+    "upload": "فائل اپ لوڈ",
+    "deleteTitle": "فائل حذف کریں",
+    "deleteConfirm": "کیا آپ واقعی اس فائل کو حذف کرنا چاہتے ہیں؟",
+    "tooLarge": "فائل بہت بڑی ہے"
+  },
+  "footer": {
+    "copyright": "ایزی فار نیٹ، تمام حقوق محفوظ ہیں۔"
+  },
   "page": {
     "dashboard": {
       "title": "ڈیش بورڈ",
@@ -231,69 +295,5 @@
       },
       "logout": "سائن آؤٹ"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "پہلا نام",
-      "lastName": "آخری نام",
-      "email": "ای میل",
-      "roles": "کردار",
-      "userName": "صارف کا نام",
-      "isActive": "فعال",
-      "name": "نام",
-      "description": "تفصیل",
-      "userCount": "صارفین"
-    },
-    "pagination": {
-      "showingEntries": "${totalRecords} اندراجات میں سے ${from} سے ${to} دکھائے جا رہے ہیں"
-    },
-    "noRecords": "کوئی ریکارڈ نہیں ملا",
-    "searchPlaceholder": "تلاش...",
-    "export": {
-      "button": "برآمد",
-      "excel": "ایکسل",
-      "csv": "سی ایس وی",
-      "currentPage": "موجودہ صفحہ",
-      "allRecords": "تمام ریکارڈ"
-    },
-    "actions": "کارروائیاں",
-    "createLink": "بنائیں",
-    "filter": {
-      "button": "فلٹرز",
-      "all": "سب",
-      "active": "فعال",
-      "inactive": "غیر فعال",
-      "allRoles": "تمام کردار",
-      "activeStatus": "فعال حیثیت",
-      "role": "کردار",
-      "selectRole": "کردار منتخب کریں",
-      "search": "تلاش",
-      "clear": "صاف کریں"
-    }
-  },
-  "file": {
-    "upload": "فائل اپ لوڈ",
-    "deleteTitle": "فائل حذف کریں",
-    "deleteConfirm": "کیا آپ واقعی اس فائل کو حذف کرنا چاہتے ہیں؟",
-    "tooLarge": "فائل بہت بڑی ہے"
-  },
-  "search": {
-    "dashboard": "ڈیش بورڈ",
-    "users": "صارفین",
-    "usersCreate": "صارف بنائیں",
-    "roles": "کردار",
-    "rolesCreate": "کردار بنائیں",
-    "uiButtons": "UI بٹن",
-    "uiCards": "UI کارڈز",
-    "uiDatePicker": "UI تاریخ چنندہ",
-    "uiDateView": "UI تاریخ منظر",
-    "uiTreeview": "UI ٹری ویو",
-    "changePassword": "پاس ورڈ تبدیل کریں",
-    "profile": "پروفائل",
-    "uiFormElements": "UI فارم عناصر",
-    "uiFileUpload": "UI فائل اپ لوڈ"
-  },
-  "footer": {
-    "copyright": "ایزی فار نیٹ، تمام حقوق محفوظ ہیں۔"
   }
 }

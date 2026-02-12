@@ -50,6 +50,22 @@
     "usersCreate": "Create",
     "usersUpdate": "Update"
   },
+  "search": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "usersCreate": "Create User",
+    "roles": "Roles",
+    "rolesCreate": "Create Role",
+    "uiButtons": "UI Buttons",
+    "uiCards": "UI Cards",
+    "uiDatePicker": "UI Date Picker",
+    "uiDateView": "UI Date View",
+    "uiTreeview": "UI Tree View",
+    "changePassword": "Change Password",
+    "profile": "Profile",
+    "uiFormElements": "UI Form Elements",
+    "uiFileUpload": "UI File Upload"
+  },
   "form": {
     "label": {
       "username": "Username",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "Default user cannot be updated"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "roles": "Roles",
+      "userName": "User Name",
+      "isActive": "Active",
+      "name": "Name",
+      "description": "Description",
+      "userCount": "Users"
+    },
+    "pagination": {
+      "showingEntries": "Showing ${from} to ${to} of ${totalRecords} entries"
+    },
+    "noRecords": "No records found",
+    "searchPlaceholder": "Search...",
+    "export": {
+      "button": "Export",
+      "excel": "Excel",
+      "csv": "CSV",
+      "currentPage": "Current Page",
+      "allRecords": "All Records"
+    },
+    "actions": "Actions",
+    "createLink": "Create",
+    "filter": {
+      "button": "Filters",
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive",
+      "allRoles": "All Roles",
+      "activeStatus": "Active Status",
+      "role": "Role",
+      "selectRole": "Select Role",
+      "search": "Search",
+      "clear": "Clear"
+    }
+  },
+  "file": {
+    "upload": "File Upload",
+    "deleteTitle": "Delete File",
+    "deleteConfirm": "Are you sure you want to delete this file?",
+    "tooLarge": "File is too large"
+  },
+  "footer": {
+    "copyright": "Easy For Net All rights reserved."
+  },
   "page": {
     "dashboard": {
       "title": "Dashboard",
@@ -231,69 +295,5 @@
       },
       "logout": "Sign Out"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "email": "Email",
-      "roles": "Roles",
-      "userName": "User Name",
-      "isActive": "Active",
-      "name": "Name",
-      "description": "Description",
-      "userCount": "Users"
-    },
-    "pagination": {
-      "showingEntries": "Showing ${from} to ${to} of ${totalRecords} entries"
-    },
-    "noRecords": "No records found",
-    "searchPlaceholder": "Search...",
-    "export": {
-      "button": "Export",
-      "excel": "Excel",
-      "csv": "CSV",
-      "currentPage": "Current Page",
-      "allRecords": "All Records"
-    },
-    "actions": "Actions",
-    "createLink": "Create",
-    "filter": {
-      "button": "Filters",
-      "all": "All",
-      "active": "Active",
-      "inactive": "Inactive",
-      "allRoles": "All Roles",
-      "activeStatus": "Active Status",
-      "role": "Role",
-      "selectRole": "Select Role",
-      "search": "Search",
-      "clear": "Clear"
-    }
-  },
-  "file": {
-    "upload": "File Upload",
-    "deleteTitle": "Delete File",
-    "deleteConfirm": "Are you sure you want to delete this file?",
-    "tooLarge": "File is too large"
-  },
-  "search": {
-    "dashboard": "Dashboard",
-    "users": "Users",
-    "usersCreate": "Create User",
-    "roles": "Roles",
-    "rolesCreate": "Create Role",
-    "uiButtons": "UI Buttons",
-    "uiCards": "UI Cards",
-    "uiDatePicker": "UI Date Picker",
-    "uiDateView": "UI Date View",
-    "uiTreeview": "UI Tree View",
-    "changePassword": "Change Password",
-    "profile": "Profile",
-    "uiFormElements": "UI Form Elements",
-    "uiFileUpload": "UI File Upload"
-  },
-  "footer": {
-    "copyright": "Easy For Net All rights reserved."
   }
 }

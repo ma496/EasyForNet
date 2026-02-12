@@ -50,6 +50,22 @@
     "usersCreate": "Créer",
     "usersUpdate": "Mettre à jour"
   },
+  "search": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "usersCreate": "Créer un utilisateur",
+    "roles": "Rôles",
+    "rolesCreate": "Créer un rôle",
+    "uiButtons": "Boutons UI",
+    "uiCards": "Cartes UI",
+    "uiDatePicker": "Sélecteur de date UI",
+    "uiDateView": "Vue date UI",
+    "uiTreeview": "Vue arborescente UI",
+    "changePassword": "Changer le mot de passe",
+    "profile": "Profil",
+    "uiFormElements": "Éléments de formulaire UI",
+    "uiFileUpload": "Téléchargement de fichiers UI"
+  },
   "form": {
     "label": {
       "username": "Nom d'utilisateur",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "L'utilisateur par défaut ne peut pas être mis à jour"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "roles": "Rôles",
+      "userName": "Nom d'utilisateur",
+      "isActive": "Actif",
+      "name": "Nom",
+      "description": "Description",
+      "userCount": "Utilisateurs"
+    },
+    "pagination": {
+      "showingEntries": "Affichage de ${from} à ${to} sur ${totalRecords} entrées"
+    },
+    "noRecords": "Aucun enregistrement trouvé",
+    "searchPlaceholder": "Rechercher...",
+    "export": {
+      "button": "Exporter",
+      "excel": "Excel",
+      "csv": "CSV",
+      "currentPage": "Page actuelle",
+      "allRecords": "Tous les enregistrements"
+    },
+    "actions": "Actions",
+    "createLink": "Créer",
+    "filter": {
+      "button": "Filtres",
+      "all": "Tous",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "allRoles": "Tous les rôles",
+      "activeStatus": "Statut actif",
+      "role": "Rôle",
+      "selectRole": "Sélectionner un rôle",
+      "search": "Rechercher",
+      "clear": "Effacer"
+    }
+  },
+  "file": {
+    "upload": "Téléchargement de fichier",
+    "deleteTitle": "Supprimer le fichier",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
+    "tooLarge": "Fichier trop volumineux"
+  },
+  "footer": {
+    "copyright": "Easy For Net Tous droits réservés."
+  },
   "page": {
     "dashboard": {
       "title": "Tableau de bord",
@@ -231,69 +295,5 @@
       },
       "logout": "Se déconnecter"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "Prénom",
-      "lastName": "Nom",
-      "email": "Email",
-      "roles": "Rôles",
-      "userName": "Nom d'utilisateur",
-      "isActive": "Actif",
-      "name": "Nom",
-      "description": "Description",
-      "userCount": "Utilisateurs"
-    },
-    "pagination": {
-      "showingEntries": "Affichage de ${from} à ${to} sur ${totalRecords} entrées"
-    },
-    "noRecords": "Aucun enregistrement trouvé",
-    "searchPlaceholder": "Rechercher...",
-    "export": {
-      "button": "Exporter",
-      "excel": "Excel",
-      "csv": "CSV",
-      "currentPage": "Page actuelle",
-      "allRecords": "Tous les enregistrements"
-    },
-    "actions": "Actions",
-    "createLink": "Créer",
-    "filter": {
-      "button": "Filtres",
-      "all": "Tous",
-      "active": "Actif",
-      "inactive": "Inactif",
-      "allRoles": "Tous les rôles",
-      "activeStatus": "Statut actif",
-      "role": "Rôle",
-      "selectRole": "Sélectionner un rôle",
-      "search": "Rechercher",
-      "clear": "Effacer"
-    }
-  },
-  "file": {
-    "upload": "Téléchargement de fichier",
-    "deleteTitle": "Supprimer le fichier",
-    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
-    "tooLarge": "Fichier trop volumineux"
-  },
-  "search": {
-    "dashboard": "Tableau de bord",
-    "users": "Utilisateurs",
-    "usersCreate": "Créer un utilisateur",
-    "roles": "Rôles",
-    "rolesCreate": "Créer un rôle",
-    "uiButtons": "Boutons UI",
-    "uiCards": "Cartes UI",
-    "uiDatePicker": "Sélecteur de date UI",
-    "uiDateView": "Vue date UI",
-    "uiTreeview": "Vue arborescente UI",
-    "changePassword": "Changer le mot de passe",
-    "profile": "Profil",
-    "uiFormElements": "Éléments de formulaire UI",
-    "uiFileUpload": "Téléchargement de fichiers UI"
-  },
-  "footer": {
-    "copyright": "Easy For Net Tous droits réservés."
   }
 }

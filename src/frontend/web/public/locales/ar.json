@@ -50,6 +50,22 @@
     "usersCreate": "إنشاء",
     "usersUpdate": "تحديث"
   },
+  "search": {
+    "dashboard": "لوحة القيادة",
+    "users": "المستخدمين",
+    "usersCreate": "إنشاء مستخدم",
+    "roles": "الأدوار",
+    "rolesCreate": "إنشاء دور",
+    "uiButtons": "أزرار واجهة المستخدم",
+    "uiCards": "بطاقات واجهة المستخدم",
+    "uiDatePicker": "منتقي التاريخ",
+    "uiDateView": "عرض التاريخ",
+    "uiTreeview": "عرض شجري",
+    "changePassword": "تغيير كلمة المرور",
+    "profile": "الملف الشخصي",
+    "uiFormElements": "عناصر النموذج",
+    "uiFileUpload": "رفع الملفات"
+  },
   "form": {
     "label": {
       "username": "اسم المستخدم",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "لا يمكن تحديث المستخدم الافتراضي"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "roles": "الأدوار",
+      "userName": "اسم المستخدم",
+      "isActive": "نشط",
+      "name": "الاسم",
+      "description": "الوصف",
+      "userCount": "المستخدمين"
+    },
+    "pagination": {
+      "showingEntries": "عرض ${from} إلى ${to} من ${totalRecords} مُدخل"
+    },
+    "noRecords": "لم يتم العثور على سجلات",
+    "searchPlaceholder": "بحث...",
+    "export": {
+      "button": "تصدير",
+      "excel": "إكسل",
+      "csv": "CSV",
+      "currentPage": "الصفحة الحالية",
+      "allRecords": "كل السجلات"
+    },
+    "actions": "إجراءات",
+    "createLink": "إنشاء",
+    "filter": {
+      "button": "تصفية",
+      "all": "الكل",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "allRoles": "كل الأدوار",
+      "activeStatus": "حالة النشاط",
+      "role": "الدور",
+      "selectRole": "اختر دوراً",
+      "search": "بحث",
+      "clear": "مسح"
+    }
+  },
+  "file": {
+    "upload": "رفع الملف",
+    "deleteTitle": "حذف الملف",
+    "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
+    "tooLarge": "الملف كبير جداً"
+  },
+  "footer": {
+    "copyright": "إيزي فور نت، جميع الحقوق محفوظة."
+  },
   "page": {
     "dashboard": {
       "title": "لوحة القيادة",
@@ -231,69 +295,5 @@
       },
       "logout": "تسجيل الخروج"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "الاسم الأول",
-      "lastName": "اسم العائلة",
-      "email": "البريد الإلكتروني",
-      "roles": "الأدوار",
-      "userName": "اسم المستخدم",
-      "isActive": "نشط",
-      "name": "الاسم",
-      "description": "الوصف",
-      "userCount": "المستخدمين"
-    },
-    "pagination": {
-      "showingEntries": "عرض ${from} إلى ${to} من ${totalRecords} مُدخل"
-    },
-    "noRecords": "لم يتم العثور على سجلات",
-    "searchPlaceholder": "بحث...",
-    "export": {
-      "button": "تصدير",
-      "excel": "إكسل",
-      "csv": "CSV",
-      "currentPage": "الصفحة الحالية",
-      "allRecords": "كل السجلات"
-    },
-    "actions": "إجراءات",
-    "createLink": "إنشاء",
-    "filter": {
-      "button": "تصفية",
-      "all": "الكل",
-      "active": "نشط",
-      "inactive": "غير نشط",
-      "allRoles": "كل الأدوار",
-      "activeStatus": "حالة النشاط",
-      "role": "الدور",
-      "selectRole": "اختر دوراً",
-      "search": "بحث",
-      "clear": "مسح"
-    }
-  },
-  "file": {
-    "upload": "رفع الملف",
-    "deleteTitle": "حذف الملف",
-    "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
-    "tooLarge": "الملف كبير جداً"
-  },
-  "search": {
-    "dashboard": "لوحة القيادة",
-    "users": "المستخدمين",
-    "usersCreate": "إنشاء مستخدم",
-    "roles": "الأدوار",
-    "rolesCreate": "إنشاء دور",
-    "uiButtons": "أزرار واجهة المستخدم",
-    "uiCards": "بطاقات واجهة المستخدم",
-    "uiDatePicker": "منتقي التاريخ",
-    "uiDateView": "عرض التاريخ",
-    "uiTreeview": "عرض شجري",
-    "changePassword": "تغيير كلمة المرور",
-    "profile": "الملف الشخصي",
-    "uiFormElements": "عناصر النموذج",
-    "uiFileUpload": "رفع الملفات"
-  },
-  "footer": {
-    "copyright": "إيزي فور نت، جميع الحقوق محفوظة."
   }
 }

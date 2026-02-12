@@ -50,6 +50,22 @@
     "usersCreate": "Создать",
     "usersUpdate": "Обновить"
   },
+  "search": {
+    "dashboard": "Панель управления",
+    "users": "Пользователи",
+    "usersCreate": "Создать пользователя",
+    "roles": "Роли",
+    "rolesCreate": "Создать роль",
+    "uiButtons": "Кнопки UI",
+    "uiCards": "Карточки UI",
+    "uiDatePicker": "Выбор даты UI",
+    "uiDateView": "Просмотр даты UI",
+    "uiTreeview": "Древовидное меню UI",
+    "changePassword": "Сменить пароль",
+    "profile": "Профиль",
+    "uiFormElements": "Элементы формы UI",
+    "uiFileUpload": "Загрузка файлов UI"
+  },
   "form": {
     "label": {
       "username": "Имя пользователя",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "Пользователя по умолчанию нельзя обновить"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "email": "Email",
+      "roles": "Роли",
+      "userName": "Имя пользователя",
+      "isActive": "Активен",
+      "name": "Название",
+      "description": "Описание",
+      "userCount": "Пользователи"
+    },
+    "pagination": {
+      "showingEntries": "Показано с ${from} по ${to} из ${totalRecords} записей"
+    },
+    "noRecords": "Записи не найдены",
+    "searchPlaceholder": "Поиск...",
+    "export": {
+      "button": "Экспорт",
+      "excel": "Excel",
+      "csv": "CSV",
+      "currentPage": "Текущая страница",
+      "allRecords": "Все записи"
+    },
+    "actions": "Действия",
+    "createLink": "Создать",
+    "filter": {
+      "button": "Фильтры",
+      "all": "Все",
+      "active": "Активные",
+      "inactive": "Неактивные",
+      "allRoles": "Все роли",
+      "activeStatus": "Статус активности",
+      "role": "Роль",
+      "selectRole": "Выберите роль",
+      "search": "Поиск",
+      "clear": "Очистить"
+    }
+  },
+  "file": {
+    "upload": "Загрузка файла",
+    "deleteTitle": "Удалить файл",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот файл?",
+    "tooLarge": "Файл слишком большой"
+  },
+  "footer": {
+    "copyright": "Easy For Net Все права защищены."
+  },
   "page": {
     "dashboard": {
       "title": "Панель управления",
@@ -231,69 +295,5 @@
       },
       "logout": "Выйти"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "Имя",
-      "lastName": "Фамилия",
-      "email": "Email",
-      "roles": "Роли",
-      "userName": "Имя пользователя",
-      "isActive": "Активен",
-      "name": "Название",
-      "description": "Описание",
-      "userCount": "Пользователи"
-    },
-    "pagination": {
-      "showingEntries": "Показано с ${from} по ${to} из ${totalRecords} записей"
-    },
-    "noRecords": "Записи не найдены",
-    "searchPlaceholder": "Поиск...",
-    "export": {
-      "button": "Экспорт",
-      "excel": "Excel",
-      "csv": "CSV",
-      "currentPage": "Текущая страница",
-      "allRecords": "Все записи"
-    },
-    "actions": "Действия",
-    "createLink": "Создать",
-    "filter": {
-      "button": "Фильтры",
-      "all": "Все",
-      "active": "Активные",
-      "inactive": "Неактивные",
-      "allRoles": "Все роли",
-      "activeStatus": "Статус активности",
-      "role": "Роль",
-      "selectRole": "Выберите роль",
-      "search": "Поиск",
-      "clear": "Очистить"
-    }
-  },
-  "file": {
-    "upload": "Загрузка файла",
-    "deleteTitle": "Удалить файл",
-    "deleteConfirm": "Вы уверены, что хотите удалить этот файл?",
-    "tooLarge": "Файл слишком большой"
-  },
-  "search": {
-    "dashboard": "Панель управления",
-    "users": "Пользователи",
-    "usersCreate": "Создать пользователя",
-    "roles": "Роли",
-    "rolesCreate": "Создать роль",
-    "uiButtons": "Кнопки UI",
-    "uiCards": "Карточки UI",
-    "uiDatePicker": "Выбор даты UI",
-    "uiDateView": "Просмотр даты UI",
-    "uiTreeview": "Древовидное меню UI",
-    "changePassword": "Сменить пароль",
-    "profile": "Профиль",
-    "uiFormElements": "Элементы формы UI",
-    "uiFileUpload": "Загрузка файлов UI"
-  },
-  "footer": {
-    "copyright": "Easy For Net Все права защищены."
   }
 }

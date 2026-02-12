@@ -50,6 +50,22 @@
     "usersCreate": "बनाएं",
     "usersUpdate": "अपडेट करें"
   },
+  "search": {
+    "dashboard": "डैशबोर्ड",
+    "users": "उपयोगकर्ता",
+    "usersCreate": "उपयोगकर्ता बनाएं",
+    "roles": "भूमिकाएं",
+    "rolesCreate": "भूमिका बनाएं",
+    "uiButtons": "UI बटन",
+    "uiCards": "UI कार्ड",
+    "uiDatePicker": "UI दिनांक चयनकर्ता",
+    "uiDateView": "UI दिनांक दृश्य",
+    "uiTreeview": "UI ट्री व्यू",
+    "changePassword": "पासवर्ड बदलें",
+    "profile": "प्रोफ़ाइल",
+    "uiFormElements": "UI फॉर्म तत्व",
+    "uiFileUpload": "UI फ़ाइल अपलोड"
+  },
   "form": {
     "label": {
       "username": "उपयोगकर्ता नाम",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "डिफ़ॉल्ट उपयोगकर्ता अपडेट नहीं किया जा सकता"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "पहला नाम",
+      "lastName": "अंतिम नाम",
+      "email": "ईमेल",
+      "roles": "भूमिकाएं",
+      "userName": "उपयोगकर्ता नाम",
+      "isActive": "सक्रिय",
+      "name": "नाम",
+      "description": "विवरण",
+      "userCount": "उपयोगकर्ता"
+    },
+    "pagination": {
+      "showingEntries": "${totalRecords} प्रविष्टियों में से ${from} से ${to} दिखा रहा है"
+    },
+    "noRecords": "कोई रिकॉर्ड नहीं मिला",
+    "searchPlaceholder": "खोजें...",
+    "export": {
+      "button": "निर्यात",
+      "excel": "एक्सेल",
+      "csv": "सीएसवी",
+      "currentPage": "वर्तमान पृष्ठ",
+      "allRecords": "सभी रिकॉर्ड"
+    },
+    "actions": "क्रियाएं",
+    "createLink": "बनाएं",
+    "filter": {
+      "button": "फिल्टर",
+      "all": "सभी",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "allRoles": "सभी भूमिकाएं",
+      "activeStatus": "सक्रिय स्थिति",
+      "role": "भूमिका",
+      "selectRole": "भूमिका चुनें",
+      "search": "खोजें",
+      "clear": "साफ़ करें"
+    }
+  },
+  "file": {
+    "upload": "फ़ाइल अपलोड",
+    "deleteTitle": "फ़ाइल हटाएं",
+    "deleteConfirm": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
+    "tooLarge": "फ़ाइल बहुत बड़ी है"
+  },
+  "footer": {
+    "copyright": "Easy For Net सर्वाधिकार सुरक्षित।"
+  },
   "page": {
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -231,69 +295,5 @@
       },
       "logout": "साइन आउट"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "पहला नाम",
-      "lastName": "अंतिम नाम",
-      "email": "ईमेल",
-      "roles": "भूमिकाएं",
-      "userName": "उपयोगकर्ता नाम",
-      "isActive": "सक्रिय",
-      "name": "नाम",
-      "description": "विवरण",
-      "userCount": "उपयोगकर्ता"
-    },
-    "pagination": {
-      "showingEntries": "${totalRecords} प्रविष्टियों में से ${from} से ${to} दिखा रहा है"
-    },
-    "noRecords": "कोई रिकॉर्ड नहीं मिला",
-    "searchPlaceholder": "खोजें...",
-    "export": {
-      "button": "निर्यात",
-      "excel": "एक्सेल",
-      "csv": "सीएसवी",
-      "currentPage": "वर्तमान पृष्ठ",
-      "allRecords": "सभी रिकॉर्ड"
-    },
-    "actions": "क्रियाएं",
-    "createLink": "बनाएं",
-    "filter": {
-      "button": "फिल्टर",
-      "all": "सभी",
-      "active": "सक्रिय",
-      "inactive": "निष्क्रिय",
-      "allRoles": "सभी भूमिकाएं",
-      "activeStatus": "सक्रिय स्थिति",
-      "role": "भूमिका",
-      "selectRole": "भूमिका चुनें",
-      "search": "खोजें",
-      "clear": "साफ़ करें"
-    }
-  },
-  "file": {
-    "upload": "फ़ाइल अपलोड",
-    "deleteTitle": "फ़ाइल हटाएं",
-    "deleteConfirm": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
-    "tooLarge": "फ़ाइल बहुत बड़ी है"
-  },
-  "search": {
-    "dashboard": "डैशबोर्ड",
-    "users": "उपयोगकर्ता",
-    "usersCreate": "उपयोगकर्ता बनाएं",
-    "roles": "भूमिकाएं",
-    "rolesCreate": "भूमिका बनाएं",
-    "uiButtons": "UI बटन",
-    "uiCards": "UI कार्ड",
-    "uiDatePicker": "UI दिनांक चयनकर्ता",
-    "uiDateView": "UI दिनांक दृश्य",
-    "uiTreeview": "UI ट्री व्यू",
-    "changePassword": "पासवर्ड बदलें",
-    "profile": "प्रोफ़ाइल",
-    "uiFormElements": "UI फॉर्म तत्व",
-    "uiFileUpload": "UI फ़ाइल अपलोड"
-  },
-  "footer": {
-    "copyright": "Easy For Net सर्वाधिकार सुरक्षित।"
   }
 }

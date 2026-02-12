@@ -50,6 +50,22 @@
     "usersCreate": "创建",
     "usersUpdate": "更新"
   },
+  "search": {
+    "dashboard": "仪表板",
+    "users": "用户",
+    "usersCreate": "创建用户",
+    "roles": "角色",
+    "rolesCreate": "创建角色",
+    "uiButtons": "UI 按钮",
+    "uiCards": "UI 卡片",
+    "uiDatePicker": "UI 日期选择器",
+    "uiDateView": "UI 日期视图",
+    "uiTreeview": "UI 树形视图",
+    "changePassword": "更改密码",
+    "profile": "个人资料",
+    "uiFormElements": "UI 表单元素",
+    "uiFileUpload": "UI 文件上传"
+  },
   "form": {
     "label": {
       "username": "用户名",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "无法更新默认用户"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "电子邮件",
+      "roles": "角色",
+      "userName": "用户名",
+      "isActive": "启用",
+      "name": "名称",
+      "description": "描述",
+      "userCount": "用户"
+    },
+    "pagination": {
+      "showingEntries": "显示 ${from} 到 ${to} 条，共 ${totalRecords} 条记录"
+    },
+    "noRecords": "未找到记录",
+    "searchPlaceholder": "搜索...",
+    "export": {
+      "button": "导出",
+      "excel": "Excel",
+      "csv": "CSV",
+      "currentPage": "当前页",
+      "allRecords": "所有记录"
+    },
+    "actions": "操作",
+    "createLink": "创建",
+    "filter": {
+      "button": "筛选",
+      "all": "全部",
+      "active": "启用",
+      "inactive": "停用",
+      "allRoles": "所有角色",
+      "activeStatus": "启用状态",
+      "role": "角色",
+      "selectRole": "选择角色",
+      "search": "搜索",
+      "clear": "清除"
+    }
+  },
+  "file": {
+    "upload": "文件上传",
+    "deleteTitle": "删除文件",
+    "deleteConfirm": "您确定要删除此文件吗？",
+    "tooLarge": "文件过大"
+  },
+  "footer": {
+    "copyright": "Easy For Net 版权所有。"
+  },
   "page": {
     "dashboard": {
       "title": "仪表板",
@@ -231,69 +295,5 @@
       },
       "logout": "退出登录"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "名",
-      "lastName": "姓",
-      "email": "电子邮件",
-      "roles": "角色",
-      "userName": "用户名",
-      "isActive": "启用",
-      "name": "名称",
-      "description": "描述",
-      "userCount": "用户"
-    },
-    "pagination": {
-      "showingEntries": "显示 ${from} 到 ${to} 条，共 ${totalRecords} 条记录"
-    },
-    "noRecords": "未找到记录",
-    "searchPlaceholder": "搜索...",
-    "export": {
-      "button": "导出",
-      "excel": "Excel",
-      "csv": "CSV",
-      "currentPage": "当前页",
-      "allRecords": "所有记录"
-    },
-    "actions": "操作",
-    "createLink": "创建",
-    "filter": {
-      "button": "筛选",
-      "all": "全部",
-      "active": "启用",
-      "inactive": "停用",
-      "allRoles": "所有角色",
-      "activeStatus": "启用状态",
-      "role": "角色",
-      "selectRole": "选择角色",
-      "search": "搜索",
-      "clear": "清除"
-    }
-  },
-  "file": {
-    "upload": "文件上传",
-    "deleteTitle": "删除文件",
-    "deleteConfirm": "您确定要删除此文件吗？",
-    "tooLarge": "文件过大"
-  },
-  "search": {
-    "dashboard": "仪表板",
-    "users": "用户",
-    "usersCreate": "创建用户",
-    "roles": "角色",
-    "rolesCreate": "创建角色",
-    "uiButtons": "UI 按钮",
-    "uiCards": "UI 卡片",
-    "uiDatePicker": "UI 日期选择器",
-    "uiDateView": "UI 日期视图",
-    "uiTreeview": "UI 树形视图",
-    "changePassword": "更改密码",
-    "profile": "个人资料",
-    "uiFormElements": "UI 表单元素",
-    "uiFileUpload": "UI 文件上传"
-  },
-  "footer": {
-    "copyright": "Easy For Net 版权所有。"
   }
 }

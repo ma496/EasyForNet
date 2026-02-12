@@ -50,6 +50,22 @@
     "usersCreate": "Crear",
     "usersUpdate": "Actualizar"
   },
+  "search": {
+    "dashboard": "Tablero",
+    "users": "Usuarios",
+    "usersCreate": "Crear Usuario",
+    "roles": "Roles",
+    "rolesCreate": "Crear Rol",
+    "uiButtons": "Botones UI",
+    "uiCards": "Tarjetas UI",
+    "uiDatePicker": "Selector de Fecha UI",
+    "uiDateView": "Vista de Fecha UI",
+    "uiTreeview": "Vista de Árbol UI",
+    "changePassword": "Cambiar Contraseña",
+    "profile": "Perfil",
+    "uiFormElements": "Elementos de Formulario UI",
+    "uiFileUpload": "Subida de Archivos UI"
+  },
   "form": {
     "label": {
       "username": "Nombre de usuario",
@@ -150,6 +166,54 @@
       "defaultUserCannotBeUpdated": "El usuario predeterminado no se puede actualizar"
     }
   },
+  "table": {
+    "columns": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo",
+      "roles": "Roles",
+      "userName": "Usuario",
+      "isActive": "Activo",
+      "name": "Nombre",
+      "description": "Descripción",
+      "userCount": "Usuarios"
+    },
+    "pagination": {
+      "showingEntries": "Mostrando ${from} a ${to} de ${totalRecords} entradas"
+    },
+    "noRecords": "No se encontraron registros",
+    "searchPlaceholder": "Buscar...",
+    "export": {
+      "button": "Exportar",
+      "excel": "Excel",
+      "csv": "CSV",
+      "currentPage": "Página Actual",
+      "allRecords": "Todos los Registros"
+    },
+    "actions": "Acciones",
+    "createLink": "Crear",
+    "filter": {
+      "button": "Filtros",
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "allRoles": "Todos los Roles",
+      "activeStatus": "Estado Activo",
+      "role": "Rol",
+      "selectRole": "Seleccionar Rol",
+      "search": "Buscar",
+      "clear": "Limpiar"
+    }
+  },
+  "file": {
+    "upload": "Subir Archivo",
+    "deleteTitle": "Eliminar Archivo",
+    "deleteConfirm": "¿Está seguro de que desea eliminar este archivo?",
+    "tooLarge": "El archivo es demasiado grande"
+  },
+  "footer": {
+    "copyright": "Easy For Net Todos los derechos reservados."
+  },
   "page": {
     "dashboard": {
       "title": "Tablero",
@@ -231,69 +295,5 @@
       },
       "logout": "Cerrar Sesión"
     }
-  },
-  "table": {
-    "columns": {
-      "firstName": "Nombre",
-      "lastName": "Apellido",
-      "email": "Correo",
-      "roles": "Roles",
-      "userName": "Usuario",
-      "isActive": "Activo",
-      "name": "Nombre",
-      "description": "Descripción",
-      "userCount": "Usuarios"
-    },
-    "pagination": {
-      "showingEntries": "Mostrando ${from} a ${to} de ${totalRecords} entradas"
-    },
-    "noRecords": "No se encontraron registros",
-    "searchPlaceholder": "Buscar...",
-    "export": {
-      "button": "Exportar",
-      "excel": "Excel",
-      "csv": "CSV",
-      "currentPage": "Página Actual",
-      "allRecords": "Todos los Registros"
-    },
-    "actions": "Acciones",
-    "createLink": "Crear",
-    "filter": {
-      "button": "Filtros",
-      "all": "Todos",
-      "active": "Activo",
-      "inactive": "Inactivo",
-      "allRoles": "Todos los Roles",
-      "activeStatus": "Estado Activo",
-      "role": "Rol",
-      "selectRole": "Seleccionar Rol",
-      "search": "Buscar",
-      "clear": "Limpiar"
-    }
-  },
-  "file": {
-    "upload": "Subir Archivo",
-    "deleteTitle": "Eliminar Archivo",
-    "deleteConfirm": "¿Está seguro de que desea eliminar este archivo?",
-    "tooLarge": "El archivo es demasiado grande"
-  },
-  "search": {
-    "dashboard": "Tablero",
-    "users": "Usuarios",
-    "usersCreate": "Crear Usuario",
-    "roles": "Roles",
-    "rolesCreate": "Crear Rol",
-    "uiButtons": "Botones UI",
-    "uiCards": "Tarjetas UI",
-    "uiDatePicker": "Selector de Fecha UI",
-    "uiDateView": "Vista de Fecha UI",
-    "uiTreeview": "Vista de Árbol UI",
-    "changePassword": "Cambiar Contraseña",
-    "profile": "Perfil",
-    "uiFormElements": "Elementos de Formulario UI",
-    "uiFileUpload": "Subida de Archivos UI"
-  },
-  "footer": {
-    "copyright": "Easy For Net Todos los derechos reservados."
   }
 }
