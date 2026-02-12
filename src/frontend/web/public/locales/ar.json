@@ -51,7 +51,7 @@
     "usersUpdate": "تحديث"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "تسجيل الدخول",
       "description": "أدخل بيانات اعتمادك لتسجيل الدخول",
       "button": "تسجيل الدخول",

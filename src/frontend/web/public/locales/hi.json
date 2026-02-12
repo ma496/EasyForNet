@@ -51,7 +51,7 @@
     "usersUpdate": "अपडेट करें"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "साइन इन",
       "description": "साइन इन करने के लिए अपनी साख दर्ज करें",
       "button": "साइन इन",

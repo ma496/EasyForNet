@@ -51,7 +51,7 @@
     "usersUpdate": "Actualizar"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "Iniciar Sesión",
       "description": "Ingrese sus credenciales para iniciar sesión",
       "button": "Iniciar Sesión",

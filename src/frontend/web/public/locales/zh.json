@@ -51,7 +51,7 @@
     "usersUpdate": "更新"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "登录",
       "description": "输入您的凭据以登录",
       "button": "登录",

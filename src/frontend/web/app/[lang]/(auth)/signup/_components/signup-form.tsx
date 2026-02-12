@@ -110,7 +110,7 @@ const SignupForm = () => {
         )}
 
         <LocalizedLink href="/signin" className="btn btn-primary w-full mt-2">
-          {t('auth.login.backToSignin')}
+          {t('auth.signin.backToSignin')}
         </LocalizedLink>
       </div>
     )

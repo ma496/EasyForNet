@@ -51,7 +51,7 @@
     "usersUpdate": "Update"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "Sign In",
       "description": "Enter your credentials to sign in",
       "button": "Sign In",

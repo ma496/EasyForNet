@@ -51,7 +51,7 @@
     "usersUpdate": "Обновить"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "Войти",
       "description": "Введите свои учетные данные для входа",
       "button": "Войти",

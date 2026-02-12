@@ -51,7 +51,7 @@
     "usersUpdate": "اپ ڈیٹ"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "سائن ان",
       "description": "سائن ان کرنے کے لیے اپنی اسناد درج کریں",
       "button": "سائن ان",

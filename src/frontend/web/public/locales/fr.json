@@ -51,7 +51,7 @@
     "usersUpdate": "Mettre à jour"
   },
   "auth": {
-    "login": {
+    "signin": {
       "title": "Se connecter",
       "description": "Entrez vos identifiants pour vous connecter",
       "button": "Se connecter",
