@@ -46,8 +46,8 @@ export const ResetPasswordForm = () => {
 
     if (!result.error) {
       successAlert({
-        title: t('auth.resetPassword.success'),
-        text: t('auth.resetPassword.hasBeenReset'),
+        title: t('page.auth.resetPassword.success'),
+        text: t('page.auth.resetPassword.hasBeenReset'),
       })
       router.push('/signin')
     }
@@ -69,7 +69,7 @@ export const ResetPasswordForm = () => {
             <FormPasswordInput name="confirmPassword" label={t('form.label.confirmPassword')} placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isResettingPassword}>
-                {t('auth.resetPassword.button')}
+                {t('page.auth.resetPassword.button')}
               </Button>
             </div>
           </Form>

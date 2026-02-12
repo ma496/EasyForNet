@@ -32,8 +32,8 @@ export const ForgetPasswordForm = () => {
 
     if (!result.error) {
       successAlert({
-        title: t('auth.forgotPassword.success'),
-        text: t('auth.forgotPassword.checkEmail'),
+        title: t('page.auth.forgotPassword.success'),
+        text: t('page.auth.forgotPassword.checkEmail'),
       })
       router.push('/signin')
     }
@@ -53,7 +53,7 @@ export const ForgetPasswordForm = () => {
             <FormInput name="email" type="email" label={t('form.label.email')} placeholder={t('form.placeholder.email')} icon={<Mail size={16} />} autoFocus={true} required={true} />
             <div className="flex justify-end">
               <Button type="submit" isLoading={isForgettingPassword}>
-                {t('auth.forgotPassword.button')}
+                {t('page.auth.forgotPassword.button')}
               </Button>
             </div>
           </Form>

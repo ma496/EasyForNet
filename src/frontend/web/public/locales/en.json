@@ -50,42 +50,6 @@
     "usersCreate": "Create",
     "usersUpdate": "Update"
   },
-  "auth": {
-    "signin": {
-      "title": "Sign In",
-      "description": "Enter your credentials to sign in",
-      "button": "Sign In",
-      "forgotPassword": "Forgot Password?",
-      "signupLink": "Sign Up",
-      "noAccount": "Don't have an account?",
-      "backToSignin": "Back to Sign In"
-    },
-    "signup": {
-      "title": "Sign Up",
-      "description": "Enter your email and password to register",
-      "button": "Sign Up",
-      "signinLink": "Sign In",
-      "alreadyHaveAccount": "Already have an account?",
-      "successTitle": "Success!",
-      "successVerifyEmail": "Registration successful! Please check your email to verify your account.",
-      "successMessage": "Registration successful! Go to sign in page."
-    },
-    "forgotPassword": {
-      "title": "Forget Password",
-      "description": "Enter your email to reset your password",
-      "button": "Send Reset Link",
-      "success": "Password Reset Link Sent",
-      "checkEmail": "Please check your email for password reset instructions"
-    },
-    "resetPassword": {
-      "title": "Reset Password",
-      "description": "Enter your new password to reset your account",
-      "button": "Reset Password",
-      "success": "Password reset successfully",
-      "hasBeenReset": "Your password has been reset successfully"
-    },
-    "logout": "Sign Out"
-  },
   "form": {
     "label": {
       "username": "Username",
@@ -230,6 +194,42 @@
       "notVerifiedMessage": "Your email address is not verified. Please check your inbox for the verification link or click the button below to resend it.",
       "failedTitle": "Verification Failed",
       "failedMessage": "The verification link is invalid or has expired."
+    },
+    "auth": {
+      "signin": {
+        "title": "Sign In",
+        "description": "Enter your credentials to sign in",
+        "button": "Sign In",
+        "forgotPassword": "Forgot Password?",
+        "signupLink": "Sign Up",
+        "noAccount": "Don't have an account?",
+        "backToSignin": "Back to Sign In"
+      },
+      "signup": {
+        "title": "Sign Up",
+        "description": "Enter your email and password to register",
+        "button": "Sign Up",
+        "signinLink": "Sign In",
+        "alreadyHaveAccount": "Already have an account?",
+        "successTitle": "Success!",
+        "successVerifyEmail": "Registration successful! Please check your email to verify your account.",
+        "successMessage": "Registration successful! Go to sign in page."
+      },
+      "forgotPassword": {
+        "title": "Forget Password",
+        "description": "Enter your email to reset your password",
+        "button": "Send Reset Link",
+        "success": "Password Reset Link Sent",
+        "checkEmail": "Please check your email for password reset instructions"
+      },
+      "resetPassword": {
+        "title": "Reset Password",
+        "description": "Enter your new password to reset your account",
+        "button": "Reset Password",
+        "success": "Password reset successfully",
+        "hasBeenReset": "Your password has been reset successfully"
+      },
+      "logout": "Sign Out"
     }
   },
   "table": {

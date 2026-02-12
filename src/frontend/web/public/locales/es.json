@@ -50,42 +50,6 @@
     "usersCreate": "Crear",
     "usersUpdate": "Actualizar"
   },
-  "auth": {
-    "signin": {
-      "title": "Iniciar Sesión",
-      "description": "Ingrese sus credenciales para iniciar sesión",
-      "button": "Iniciar Sesión",
-      "forgotPassword": "¿Olvidó su contraseña?",
-      "signupLink": "Registrarse",
-      "noAccount": "¿No tiene una cuenta?",
-      "backToSignin": "Volver a Iniciar Sesión"
-    },
-    "signup": {
-      "title": "Registrarse",
-      "description": "Ingrese su correo electrónico y contraseña para registrarse",
-      "button": "Registrarse",
-      "signinLink": "Iniciar Sesión",
-      "alreadyHaveAccount": "¿Ya tiene una cuenta?",
-      "successTitle": "¡Éxito!",
-      "successVerifyEmail": "¡Registro exitoso! Por favor verifique su correo electrónico.",
-      "successMessage": "¡Registro exitoso! Vaya a la página de inicio de sesión."
-    },
-    "forgotPassword": {
-      "title": "Olvidé mi Contraseña",
-      "description": "Ingrese su correo electrónico para restablecer su contraseña",
-      "button": "Enviar Enlace de Restablecimiento",
-      "success": "Enlace de restablecimiento enviado",
-      "checkEmail": "Revise su correo electrónico para ver las instrucciones"
-    },
-    "resetPassword": {
-      "title": "Restablecer Contraseña",
-      "description": "Ingrese su nueva contraseña para restablecer su cuenta",
-      "button": "Restablecer Contraseña",
-      "success": "Contraseña restablecida exitosamente",
-      "hasBeenReset": "Su contraseña ha sido restablecida exitosamente"
-    },
-    "logout": "Cerrar Sesión"
-  },
   "form": {
     "label": {
       "username": "Nombre de usuario",
@@ -230,6 +194,42 @@
       "notVerifiedMessage": "Su dirección de correo no está verificada. Por favor revise su bandeja de entrada o haga clic abajo para reenviar.",
       "failedTitle": "Verificación Fallida",
       "failedMessage": "El enlace de verificación es inválido o ha expirado."
+    },
+    "auth": {
+      "signin": {
+        "title": "Iniciar Sesión",
+        "description": "Ingrese sus credenciales para iniciar sesión",
+        "button": "Iniciar Sesión",
+        "forgotPassword": "¿Olvidó su contraseña?",
+        "signupLink": "Registrarse",
+        "noAccount": "¿No tiene una cuenta?",
+        "backToSignin": "Volver a Iniciar Sesión"
+      },
+      "signup": {
+        "title": "Registrarse",
+        "description": "Ingrese su correo electrónico y contraseña para registrarse",
+        "button": "Registrarse",
+        "signinLink": "Iniciar Sesión",
+        "alreadyHaveAccount": "¿Ya tiene una cuenta?",
+        "successTitle": "¡Éxito!",
+        "successVerifyEmail": "¡Registro exitoso! Por favor verifique su correo electrónico.",
+        "successMessage": "¡Registro exitoso! Vaya a la página de inicio de sesión."
+      },
+      "forgotPassword": {
+        "title": "Olvidé mi Contraseña",
+        "description": "Ingrese su correo electrónico para restablecer su contraseña",
+        "button": "Enviar Enlace de Restablecimiento",
+        "success": "Enlace de restablecimiento enviado",
+        "checkEmail": "Revise su correo electrónico para ver las instrucciones"
+      },
+      "resetPassword": {
+        "title": "Restablecer Contraseña",
+        "description": "Ingrese su nueva contraseña para restablecer su cuenta",
+        "button": "Restablecer Contraseña",
+        "success": "Contraseña restablecida exitosamente",
+        "hasBeenReset": "Su contraseña ha sido restablecida exitosamente"
+      },
+      "logout": "Cerrar Sesión"
     }
   },
   "table": {

@@ -111,7 +111,7 @@ const SigninForm = () => {
         </Button>
 
         <Button type="button" className="btn btn-primary w-full mt-2" onClick={() => setShowVerificationMessage(false)}>
-          {t('auth.signin.backToSignin')}
+          {t('page.auth.signin.backToSignin')}
         </Button>
       </div>
     )
@@ -126,18 +126,18 @@ const SigninForm = () => {
 
           <div className="flex justify-between items-center">
             <div className="flex gap-2">
-              <span className="text-sm dark:text-gray-400">{t('auth.signin.noAccount')}</span>
+              <span className="text-sm dark:text-gray-400">{t('page.auth.signin.noAccount')}</span>
               <LocalizedLink href="/signup" className="text-sm text-primary hover:underline dark:text-white">
-                {t('auth.signin.signupLink')}
+                {t('page.auth.signin.signupLink')}
               </LocalizedLink>
             </div>
             <LocalizedLink href="/forget-password" className="text-sm text-primary hover:underline dark:text-white">
-              {t('auth.signin.forgotPassword')}
+              {t('page.auth.signin.forgotPassword')}
             </LocalizedLink>
           </div>
 
           <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isTokenLoading || isLoadingUserInfo}>
-            {t('auth.signin.button')}
+            {t('page.auth.signin.button')}
           </Button>
         </Form>
       )}

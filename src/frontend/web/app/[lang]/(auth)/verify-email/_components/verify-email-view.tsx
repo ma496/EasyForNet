@@ -58,7 +58,7 @@ const VerifyEmailView = () => {
           <h2 className="text-2xl font-bold">{t('page.verifyEmail.failedTitle') || 'Verification Failed'}</h2>
           <p>{t('page.verifyEmail.failedMessage') || 'The verification link is invalid or has expired.'}</p>
           <LocalizedLink href="/signin" className="btn btn-outline-primary mt-4">
-            {t('auth.signin.backToSignin') || 'Back to Sign In'}
+            {t('page.auth.signin.backToSignin') || 'Back to Sign In'}
           </LocalizedLink>
         </>
       )}

@@ -50,42 +50,6 @@
     "usersCreate": "Créer",
     "usersUpdate": "Mettre à jour"
   },
-  "auth": {
-    "signin": {
-      "title": "Se connecter",
-      "description": "Entrez vos identifiants pour vous connecter",
-      "button": "Se connecter",
-      "forgotPassword": "Mot de passe oublié ?",
-      "signupLink": "S'inscrire",
-      "noAccount": "Pas de compte ?",
-      "backToSignin": "Retour à la connexion"
-    },
-    "signup": {
-      "title": "S'inscrire",
-      "description": "Entrez votre email et mot de passe pour vous inscrire",
-      "button": "S'inscrire",
-      "signinLink": "Se connecter",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "successTitle": "Succès !",
-      "successVerifyEmail": "Inscription réussie ! Veuillez vérifier votre email.",
-      "successMessage": "Inscription réussie ! Allez à la page de connexion."
-    },
-    "forgotPassword": {
-      "title": "Mot de passe oublié",
-      "description": "Entrez votre email pour réinitialiser votre mot de passe",
-      "button": "Envoyer le lien",
-      "success": "Lien de réinitialisation envoyé",
-      "checkEmail": "Veuillez vérifier votre email pour les instructions"
-    },
-    "resetPassword": {
-      "title": "Réinitialiser le mot de passe",
-      "description": "Entrez votre nouveau mot de passe",
-      "button": "Réinitialiser le mot de passe",
-      "success": "Mot de passe réinitialisé avec succès",
-      "hasBeenReset": "Votre mot de passe a été réinitialisé avec succès"
-    },
-    "logout": "Se déconnecter"
-  },
   "form": {
     "label": {
       "username": "Nom d'utilisateur",
@@ -230,6 +194,42 @@
       "notVerifiedMessage": "Votre adresse email n'est pas vérifiée. Veuillez vérifier votre boîte de réception ou cliquez ci-dessous pour renvoyer.",
       "failedTitle": "Échec de la vérification",
       "failedMessage": "Le lien de vérification est invalide ou a expiré."
+    },
+    "auth": {
+      "signin": {
+        "title": "Se connecter",
+        "description": "Entrez vos identifiants pour vous connecter",
+        "button": "Se connecter",
+        "forgotPassword": "Mot de passe oublié ?",
+        "signupLink": "S'inscrire",
+        "noAccount": "Pas de compte ?",
+        "backToSignin": "Retour à la connexion"
+      },
+      "signup": {
+        "title": "S'inscrire",
+        "description": "Entrez votre email et mot de passe pour vous inscrire",
+        "button": "S'inscrire",
+        "signinLink": "Se connecter",
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "successTitle": "Succès !",
+        "successVerifyEmail": "Inscription réussie ! Veuillez vérifier votre email.",
+        "successMessage": "Inscription réussie ! Allez à la page de connexion."
+      },
+      "forgotPassword": {
+        "title": "Mot de passe oublié",
+        "description": "Entrez votre email pour réinitialiser votre mot de passe",
+        "button": "Envoyer le lien",
+        "success": "Lien de réinitialisation envoyé",
+        "checkEmail": "Veuillez vérifier votre email pour les instructions"
+      },
+      "resetPassword": {
+        "title": "Réinitialiser le mot de passe",
+        "description": "Entrez votre nouveau mot de passe",
+        "button": "Réinitialiser le mot de passe",
+        "success": "Mot de passe réinitialisé avec succès",
+        "hasBeenReset": "Votre mot de passe a été réinitialisé avec succès"
+      },
+      "logout": "Se déconnecter"
     }
   },
   "table": {

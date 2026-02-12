@@ -50,42 +50,6 @@
     "usersCreate": "创建",
     "usersUpdate": "更新"
   },
-  "auth": {
-    "signin": {
-      "title": "登录",
-      "description": "输入您的凭据以登录",
-      "button": "登录",
-      "forgotPassword": "忘记密码？",
-      "signupLink": "注册",
-      "noAccount": "没有账户？",
-      "backToSignin": "返回登录"
-    },
-    "signup": {
-      "title": "注册",
-      "description": "输入您的电子邮件和密码进行注册",
-      "button": "注册",
-      "signinLink": "登录",
-      "alreadyHaveAccount": "已有账户？",
-      "successTitle": "成功！",
-      "successVerifyEmail": "注册成功！请检查您的电子邮件以验证您的账户。",
-      "successMessage": "注册成功！前往登录页面。"
-    },
-    "forgotPassword": {
-      "title": "忘记密码",
-      "description": "输入您的电子邮件以重置密码",
-      "button": "发送重置链接",
-      "success": "密码重置链接已发送",
-      "checkEmail": "请检查您的电子邮件以获取密码重置说明"
-    },
-    "resetPassword": {
-      "title": "重置密码",
-      "description": "输入您的新密码以重置您的账户",
-      "button": "重置密码",
-      "success": "密码重置成功",
-      "hasBeenReset": "您的密码已成功重置"
-    },
-    "logout": "退出登录"
-  },
   "form": {
     "label": {
       "username": "用户名",
@@ -230,6 +194,42 @@
       "notVerifiedMessage": "您的电子邮件地址未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。",
       "failedTitle": "验证失败",
       "failedMessage": "验证链接无效或已过期。"
+    },
+    "auth": {
+      "signin": {
+        "title": "登录",
+        "description": "输入您的凭据以登录",
+        "button": "登录",
+        "forgotPassword": "忘记密码？",
+        "signupLink": "注册",
+        "noAccount": "没有账户？",
+        "backToSignin": "返回登录"
+      },
+      "signup": {
+        "title": "注册",
+        "description": "输入您的电子邮件和密码进行注册",
+        "button": "注册",
+        "signinLink": "登录",
+        "alreadyHaveAccount": "已有账户？",
+        "successTitle": "成功！",
+        "successVerifyEmail": "注册成功！请检查您的电子邮件以验证您的账户。",
+        "successMessage": "注册成功！前往登录页面。"
+      },
+      "forgotPassword": {
+        "title": "忘记密码",
+        "description": "输入您的电子邮件以重置密码",
+        "button": "发送重置链接",
+        "success": "密码重置链接已发送",
+        "checkEmail": "请检查您的电子邮件以获取密码重置说明"
+      },
+      "resetPassword": {
+        "title": "重置密码",
+        "description": "输入您的新密码以重置您的账户",
+        "button": "重置密码",
+        "success": "密码重置成功",
+        "hasBeenReset": "您的密码已成功重置"
+      },
+      "logout": "退出登录"
     }
   },
   "table": {

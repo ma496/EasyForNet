@@ -64,10 +64,10 @@ const SignupForm = () => {
 
     setRegisteredEmail(values.email)
     if (response.data?.isEmailVerificationRequired) {
-      setSuccessMessage(t('auth.signup.successVerifyEmail'))
+      setSuccessMessage(t('page.auth.signup.successVerifyEmail'))
       setCountdown(15)
     } else {
-      setSuccessMessage(t('auth.signup.successMessage'))
+      setSuccessMessage(t('page.auth.signup.successMessage'))
     }
   }
 
@@ -89,12 +89,12 @@ const SignupForm = () => {
   }
 
   if (successMessage) {
-    const isVerificationRequired = successMessage === t('auth.signup.successVerifyEmail')
+    const isVerificationRequired = successMessage === t('page.auth.signup.successVerifyEmail')
 
     return (
       <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
         <CheckCircle size={48} className="text-green-500" />
-        <h2 className="text-2xl font-bold">{t('auth.signup.successTitle')}</h2>
+        <h2 className="text-2xl font-bold">{t('page.auth.signup.successTitle')}</h2>
         <p>{successMessage}</p>
 
         {isVerificationRequired && (
@@ -110,7 +110,7 @@ const SignupForm = () => {
         )}
 
         <LocalizedLink href="/signin" className="btn btn-primary w-full mt-2">
-          {t('auth.signin.backToSignin')}
+          {t('page.auth.signin.backToSignin')}
         </LocalizedLink>
       </div>
     )
@@ -126,14 +126,14 @@ const SignupForm = () => {
           <FormPasswordInput label={t('form.label.confirmPassword')} name="confirmPassword" placeholder={t('form.placeholder.confirmPassword')} icon={<Lock size={16} />} required={true} />
 
           <div className="flex justify-end gap-2">
-            <span className="text-sm">{t('auth.signup.alreadyHaveAccount')}</span>
+            <span className="text-sm">{t('page.auth.signup.alreadyHaveAccount')}</span>
             <LocalizedLink href="/signin" className="text-sm text-primary hover:underline dark:text-white">
-              {t('auth.signup.signinLink')}
+              {t('page.auth.signup.signinLink')}
             </LocalizedLink>
           </div>
 
           <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLoading}>
-            {t('auth.signup.button')}
+            {t('page.auth.signup.button')}
           </Button>
         </Form>
       )}
