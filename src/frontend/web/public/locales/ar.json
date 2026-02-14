@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "لوحة القيادة",
-      "sales": "المبيعات"
+      "sales": "المبيعات",
+      "revenue": "الإيرادات",
+      "salesByCategory": "المبيعات حسب الفئة",
+      "dailySales": "المبيعات اليومية",
+      "summary": "الملخص",
+      "totalOrders": "إجمالي الطلبات",
+      "totalProfit": "إجمالي الربح",
+      "income": "الدخل",
+      "expenses": "المصروفات",
+      "profit": "الربح",
+      "weekly": "أسبوعي",
+      "monthly": "شهري",
+      "yearly": "سنوي",
+      "viewReport": "عرض التقرير",
+      "editReport": "تعديل التقرير",
+      "markAsDone": "تحديد كمكتمل",
+      "goToColumns": "اذهب إلى الأعمدة للتفاصيل"
     },
     "users": {
       "title": "المستخدمين",

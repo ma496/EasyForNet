@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "Tablero",
-      "sales": "Ventas"
+      "sales": "Ventas",
+      "revenue": "Ingresos",
+      "salesByCategory": "Ventas por Categoría",
+      "dailySales": "Ventas Diarias",
+      "summary": "Resumen",
+      "totalOrders": "Total de Pedidos",
+      "totalProfit": "Beneficio Total",
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "profit": "Beneficio",
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "yearly": "Anual",
+      "viewReport": "Ver Informe",
+      "editReport": "Editar Informe",
+      "markAsDone": "Marcar como Hecho",
+      "goToColumns": "Ir a columnas para detalles"
     },
     "users": {
       "title": "Usuarios",

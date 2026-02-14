@@ -5,10 +5,12 @@ import ReactApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { useAppSelector } from '@/store/hooks'
 import { CreditCard, DollarSign, MoreHorizontal, Inbox, ShoppingCart, Tag } from 'lucide-react'
+import { useTranslation } from '@/components/layouts/translation-provider'
 
 const SaleDashboard = () => {
   const isDark = useAppSelector((state) => state.theme.theme === 'dark' || state.theme.isDarkMode)
   const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
+  const { t } = useTranslation()
 
   const [isMounted, setIsMounted] = useState(false)
   const [chartKey, setChartKey] = useState(0)
@@ -30,11 +32,11 @@ const SaleDashboard = () => {
   const revenueChart: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
-        name: 'Income',
+        name: t('page.dashboard.income'),
         data: [18500, 19200, 17800, 21500, 18900, 22000, 24500, 23000, 21800, 25000, 23500, 26000],
       },
       {
-        name: 'Expenses',
+        name: t('page.dashboard.expenses'),
         data: [15800, 16300, 15000, 16500, 15200, 17800, 14500, 15200, 14800, 16500, 15800, 17200],
       },
     ],
@@ -264,7 +266,7 @@ const SaleDashboard = () => {
   const dailySales: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
-        name: 'Sales',
+        name: t('page.dashboard.sales'),
         data: [58, 65, 72, 83, 59, 75, 68],
       },
       {
@@ -345,7 +347,7 @@ const SaleDashboard = () => {
   const totalOrders: { series: ApexAxisChartSeries; options: ApexOptions } = {
     series: [
       {
-        name: 'Sales',
+        name: t('page.dashboard.sales'),
         data: [45, 52, 49, 65, 58, 72, 63, 75, 60, 68],
       },
     ],
@@ -403,25 +405,25 @@ const SaleDashboard = () => {
           <div className="mb-6 grid gap-6 xl:grid-cols-3">
             <div className="panel h-full xl:col-span-2">
               <div className="mb-5 flex items-center justify-between dark:text-white-light">
-                <h5 className="text-lg font-semibold">Revenue</h5>
+                <h5 className="text-lg font-semibold">{t('page.dashboard.revenue')}</h5>
                 <div className="dropdown">
                   <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal className="text-black/70 hover:text-primary! dark:text-white/70" />}>
                     <ul>
                       <li>
-                        <button type="button">Weekly</button>
+                        <button type="button">{t('page.dashboard.weekly')}</button>
                       </li>
                       <li>
-                        <button type="button">Monthly</button>
+                        <button type="button">{t('page.dashboard.monthly')}</button>
                       </li>
                       <li>
-                        <button type="button">Yearly</button>
+                        <button type="button">{t('page.dashboard.yearly')}</button>
                       </li>
                     </ul>
                   </Dropdown>
                 </div>
               </div>
               <p className="text-lg dark:text-white-light/90">
-                Total Profit <span className="ml-2 text-primary">$18,750</span>
+                {t('page.dashboard.totalProfit')} <span className="ml-2 text-primary">$18,750</span>
               </p>
               <div className="relative">
                 <div className="rounded-lg bg-white dark:bg-black">
@@ -438,7 +440,7 @@ const SaleDashboard = () => {
 
             <div className="panel h-full">
               <div className="mb-5 flex items-center">
-                <h5 className="text-lg font-semibold dark:text-white-light">Sales By Category</h5>
+                <h5 className="text-lg font-semibold dark:text-white-light">{t('page.dashboard.salesByCategory')}</h5>
               </div>
               <div>
                 <div className="rounded-lg bg-white dark:bg-black">
@@ -458,8 +460,8 @@ const SaleDashboard = () => {
             <div className="panel h-full sm:col-span-2 xl:col-span-1">
               <div className="mb-5 flex items-center">
                 <h5 className="text-lg font-semibold dark:text-white-light">
-                  Daily Sales
-                  <span className="block text-sm font-normal text-white-dark">Go to columns for details.</span>
+                  {t('page.dashboard.dailySales')}
+                  <span className="block text-sm font-normal text-white-dark">{t('page.dashboard.goToColumns')}</span>
                 </h5>
                 <div className="relative ltr:ml-auto rtl:mr-auto">
                   <div className="grid h-11 w-11 place-content-center rounded-full bg-[#ffeccb] text-warning dark:bg-warning dark:text-[#ffeccb]">
@@ -481,18 +483,18 @@ const SaleDashboard = () => {
             </div>
             <div className="panel h-full">
               <div className="mb-5 flex items-center justify-between dark:text-white-light">
-                <h5 className="text-lg font-semibold">Summary</h5>
+                <h5 className="text-lg font-semibold">{t('page.dashboard.summary')}</h5>
                 <div className="dropdown">
                   <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal size={16} />}>
                     <ul>
                       <li>
-                        <button type="button">View Report</button>
+                        <button type="button">{t('page.dashboard.viewReport')}</button>
                       </li>
                       <li>
-                        <button type="button">Edit Report</button>
+                        <button type="button">{t('page.dashboard.editReport')}</button>
                       </li>
                       <li>
-                        <button type="button">Mark as Done</button>
+                        <button type="button">{t('page.dashboard.markAsDone')}</button>
                       </li>
                     </ul>
                   </Dropdown>
@@ -507,7 +509,7 @@ const SaleDashboard = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>Income</h6>
+                      <h6>{t('page.dashboard.income')}</h6>
                       <p className="ltr:ml-auto rtl:mr-auto">$125,800</p>
                     </div>
                     <div className="h-2 rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
@@ -523,7 +525,7 @@ const SaleDashboard = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>Profit</h6>
+                      <h6>{t('page.dashboard.profit')}</h6>
                       <p className="ltr:ml-auto rtl:mr-auto">$52,350</p>
                     </div>
                     <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
@@ -539,7 +541,7 @@ const SaleDashboard = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>Expenses</h6>
+                      <h6>{t('page.dashboard.expenses')}</h6>
                       <p className="ltr:ml-auto rtl:mr-auto">$73,450</p>
                     </div>
                     <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
@@ -559,7 +561,7 @@ const SaleDashboard = () => {
                 </div>
                 <h5 className="text-2xl font-semibold ltr:text-right rtl:text-left dark:text-white-light">
                   4,875
-                  <span className="block text-sm font-normal">Total Orders</span>
+                  <span className="block text-sm font-normal">{t('page.dashboard.totalOrders')}</span>
                 </h5>
               </div>
               <div className="rounded-lg bg-transparent">

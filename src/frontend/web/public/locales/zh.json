@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "仪表板",
-      "sales": "销售"
+      "sales": "销售",
+      "revenue": "收入",
+      "salesByCategory": "按类别销售",
+      "dailySales": "每日销售",
+      "summary": "摘要",
+      "totalOrders": "总订单",
+      "totalProfit": "总利润",
+      "income": "收入",
+      "expenses": "支出",
+      "profit": "利润",
+      "weekly": "每周",
+      "monthly": "每月",
+      "yearly": "每年",
+      "viewReport": "查看报告",
+      "editReport": "编辑报告",
+      "markAsDone": "标记为完成",
+      "goToColumns": "前往列查看详细信息"
     },
     "users": {
       "title": "用户",

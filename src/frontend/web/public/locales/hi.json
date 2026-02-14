@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "डैशबोर्ड",
-      "sales": "बिक्री"
+      "sales": "बिक्री",
+      "revenue": "राजस्व",
+      "salesByCategory": "श्रेणी के अनुसार बिक्री",
+      "dailySales": "दैनिक बिक्री",
+      "summary": "सारांश",
+      "totalOrders": "कुल आदेश",
+      "totalProfit": "कुल लाभ",
+      "income": "आय",
+      "expenses": "व्यय",
+      "profit": "लाभ",
+      "weekly": "साप्ताहिक",
+      "monthly": "मासिक",
+      "yearly": "वार्षिक",
+      "viewReport": "रिपोर्ट देखें",
+      "editReport": "रिपोर्ट संपादित करें",
+      "markAsDone": "पूर्ण के रूप में चिह्नित करें",
+      "goToColumns": "विवरण के लिए कॉलम पर जाएं"
     },
     "users": {
       "title": "उपयोगकर्ता",

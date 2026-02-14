@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "ڈیش بورڈ",
-      "sales": "فروخت"
+      "sales": "فروخت",
+      "revenue": "آمدنی",
+      "salesByCategory": "زمرہ کے لحاظ سے فروخت",
+      "dailySales": "روزانہ کی فروخت",
+      "summary": "خلاصہ",
+      "totalOrders": "کل آرڈرز",
+      "totalProfit": "کل منافع",
+      "income": "آمدنی",
+      "expenses": "اخراجات",
+      "profit": "منافع",
+      "weekly": "ہفتہ وار",
+      "monthly": "ماہانہ",
+      "yearly": "سالانہ",
+      "viewReport": "رپورٹ دیکھیں",
+      "editReport": "رپورٹ میں ترمیم کریں",
+      "markAsDone": "ہو گیا کے طور پر نشان زد کریں",
+      "goToColumns": "تفصیلات کے لیے کالم پر جائیں"
     },
     "users": {
       "title": "صارفین",

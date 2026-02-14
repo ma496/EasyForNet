@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "Dashboard",
-      "sales": "Sales"
+      "sales": "Sales",
+      "revenue": "Revenue",
+      "salesByCategory": "Sales By Category",
+      "dailySales": "Daily Sales",
+      "summary": "Summary",
+      "totalOrders": "Total Orders",
+      "totalProfit": "Total Profit",
+      "income": "Income",
+      "expenses": "Expenses",
+      "profit": "Profit",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "viewReport": "View Report",
+      "editReport": "Edit Report",
+      "markAsDone": "Mark as Done",
+      "goToColumns": "Go to columns for details"
     },
     "users": {
       "title": "Users",

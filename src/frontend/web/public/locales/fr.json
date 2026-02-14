@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "Tableau de bord",
-      "sales": "Ventes"
+      "sales": "Ventes",
+      "revenue": "Revenus",
+      "salesByCategory": "Ventes par catégorie",
+      "dailySales": "Ventes journalières",
+      "summary": "Résumé",
+      "totalOrders": "Total des commandes",
+      "totalProfit": "Profit total",
+      "income": "Revenus",
+      "expenses": "Dépenses",
+      "profit": "Profit",
+      "weekly": "Hebdomadaire",
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "viewReport": "Voir le rapport",
+      "editReport": "Modifier le rapport",
+      "markAsDone": "Marquer comme fait",
+      "goToColumns": "Aller aux colonnes pour les détails"
     },
     "users": {
       "title": "Utilisateurs",

@@ -1,9 +1,15 @@
 import { Metadata } from 'next'
-import React from 'react'
 import SaleDashboard from './_components/sale-dashboard'
 
-export const metadata: Metadata = {
-  title: 'Sales Admin',
+import { getDictionary } from '../../../get-dictionary'
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dict = await getDictionary(lang as any)
+  return {
+    title: dict.page.dashboard.title,
+  }
 }
 
 const Sales = () => {

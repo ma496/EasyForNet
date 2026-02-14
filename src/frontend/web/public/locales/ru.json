@@ -217,7 +217,23 @@
   "page": {
     "dashboard": {
       "title": "Панель управления",
-      "sales": "Продажи"
+      "sales": "Продажи",
+      "revenue": "Выручка",
+      "salesByCategory": "Продажи по категориям",
+      "dailySales": "Ежедневные продажи",
+      "summary": "Сводка",
+      "totalOrders": "Всего заказов",
+      "totalProfit": "Общая прибыль",
+      "income": "Доход",
+      "expenses": "Расходы",
+      "profit": "Прибыль",
+      "weekly": "Еженедельно",
+      "monthly": "Ежемесячно",
+      "yearly": "Ежегодно",
+      "viewReport": "Посмотреть отчет",
+      "editReport": "Редактировать отчет",
+      "markAsDone": "Отметить как готовое",
+      "goToColumns": "Перейти к столбцам для деталей"
     },
     "users": {
       "title": "Пользователи",
