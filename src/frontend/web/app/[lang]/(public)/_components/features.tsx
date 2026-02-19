@@ -1,55 +1,52 @@
 import { Users, Palette, Mail, Trash2, Lock, Layers } from 'lucide-react'
+import { getDictionary } from '@/get-dictionary'
+import { Locale } from '@/i18n-config'
 
-const features = [
-  {
-    name: 'Granular Permissions',
-    description:
-      'Built-in role-based access control (RBAC) with granular permissions. Easily manage what users can see and do.',
-    icon: Lock,
-  },
-  {
-    name: 'Email Service',
-    description:
-      'Integrated email service for notifications, password resets, and more. Ready to connect with your SMTP provider.',
-    icon: Mail,
-  },
-  {
-    name: 'Background Jobs',
-    description:
-      'Powered by Hangfire. Includes pre-configured jobs for token cleanup and file maintenance.',
-    icon: Layers,
-  },
-  {
-    name: 'Token & File Cleanup',
-    description:
-      'Automated services to keep your database and storage clean. Removes expired tokens and temporary files.',
-    icon: Trash2,
-  },
-  {
-    name: 'User Management',
-    description:
-      'Complete user lifecycle management. Create, update, and manage user profiles and roles out of the box.',
-    icon: Users,
-  },
-  {
-    name: 'Modern UI Components',
-    description:
-      'A rich library of accessible, dark-mode ready components built with Tailwind CSS and Headless UI.',
-    icon: Palette,
-  },
-]
+const Features = async ({ lang }: { lang: Locale }) => {
+  const dict = await getDictionary(lang)
+  const features = [
+    {
+      name: dict.page.home.features.items.permissions.title,
+      description: dict.page.home.features.items.permissions.description,
+      icon: Lock,
+    },
+    {
+      name: dict.page.home.features.items.email.title,
+      description: dict.page.home.features.items.email.description,
+      icon: Mail,
+    },
+    {
+      name: dict.page.home.features.items.jobs.title,
+      description: dict.page.home.features.items.jobs.description,
+      icon: Layers,
+    },
+    {
+      name: dict.page.home.features.items.cleanup.title,
+      description: dict.page.home.features.items.cleanup.description,
+      icon: Trash2,
+    },
+    {
+      name: dict.page.home.features.items.users.title,
+      description: dict.page.home.features.items.users.description,
+      icon: Users,
+    },
+    {
+      name: dict.page.home.features.items.ui.title,
+      description: dict.page.home.features.items.ui.description,
+      icon: Palette,
+    },
+  ]
 
-const Features = () => {
   return (
     <div id="features" className="bg-gray-50 py-12 dark:bg-gray-900 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-base font-semibold tracking-wide text-primary uppercase">Features</h2>
+          <h2 className="text-base font-semibold tracking-wide text-primary uppercase">{dict.page.home.features.titleBadge}</h2>
           <p className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-            Everything you need to build faster
+            {dict.page.home.features.title}
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-            A complete starter kit with all the essential features pre-built, so you can focus on your unique business requirements.
+            {dict.page.home.features.description}
           </p>
         </div>
 

@@ -215,6 +215,58 @@
     "copyright": "Easy For Net Tous droits réservés."
   },
   "page": {
+    "home": {
+      "hero": {
+        "badge": "Modèle Open Source .NET & Next.js",
+        "titleFocus": "Concentrez-vous sur",
+        "titleHighlight": "la Logique Métier",
+        "description": "Arrêtez de perdre du temps sur le code passe-partout. Une fondation prête pour la production avec authentification, permissions et tâches en arrière-plan préconfigurées.",
+        "dashboardDetail": "Tableau de bord",
+        "signin": "Se connecter",
+        "viewSource": "Voir la source"
+      },
+      "features": {
+        "titleBadge": "Fonctionnalités",
+        "title": "Tout ce dont vous avez besoin pour construire plus vite",
+        "description": "Un kit de démarrage complet avec toutes les fonctionnalités essentielles pré-construites, pour que vous puissiez vous concentrer sur vos besoins métier uniques.",
+        "items": {
+          "permissions": {
+            "title": "Permissions Granulaires",
+            "description": "Contrôle d'accès basé sur les rôles (RBAC) intégré avec des permissions granulaires. Gérez facilement ce que les utilisateurs peuvent voir et faire."
+          },
+          "email": {
+            "title": "Service Email",
+            "description": "Service email intégré pour les notifications, réinitialisations de mot de passe et plus. Prêt à connecter avec votre fournisseur SMTP."
+          },
+          "jobs": {
+            "title": "Tâches en Arrière-plan",
+            "description": "Propulsé par Hangfire. Inclut des tâches préconfigurées pour le nettoyage des jetons et la maintenance des fichiers."
+          },
+          "cleanup": {
+            "title": "Nettoyage des Jetons et Fichiers",
+            "description": "Services automatisés pour garder votre base de données et stockage propres. Supprime les jetons expirés et fichiers temporaires."
+          },
+          "users": {
+            "title": "Gestion des Utilisateurs",
+            "description": "Gestion complète du cycle de vie des utilisateurs. Créez, mettez à jour et gérez les profils et rôles utilisateurs dès le début."
+          },
+          "ui": {
+            "title": "Composants UI Modernes",
+            "description": "Une riche bibliothèque de composants accessibles, prêts pour le mode sombre, construits avec Tailwind CSS et Headless UI."
+          }
+        }
+      },
+      "cta": {
+        "title": "Open Source & Dirigé par la Communauté",
+        "description": "Rejoignez la communauté, contribuez au projet ou forkez-le pour démarrer votre prochaine grande idée.",
+        "button": "Étoile sur GitHub",
+        "opensource": "Open Source",
+        "license": "Licence MIT. Gratuit pour les projets personnels et commerciaux."
+      },
+      "footer": {
+        "copyright": "Easy For Net. Tous droits réservés."
+      }
+    },
     "dashboard": {
       "title": "Tableau de bord",
       "sales": "Ventes",

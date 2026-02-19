@@ -215,6 +215,58 @@
     "copyright": "Easy For Net Todos los derechos reservados."
   },
   "page": {
+    "home": {
+      "hero": {
+        "badge": "Plantilla de código abierto .NET y Next.js",
+        "titleFocus": "Enfócate en",
+        "titleHighlight": "Lógica de Negocio",
+        "description": "Deja de perder tiempo en código repetitivo. Una base lista para producción con autenticación, permisos y trabajos en segundo plano preconfigurados.",
+        "dashboardDetail": "Tablero",
+        "signin": "Iniciar Sesión",
+        "viewSource": "Ver Código"
+      },
+      "features": {
+        "titleBadge": "Características",
+        "title": "Todo lo que necesitas para construir más rápido",
+        "description": "Un kit de inicio completo con todas las características esenciales preconstruidas, para que puedas concentrarte en tus requisitos comerciales únicos.",
+        "items": {
+          "permissions": {
+            "title": "Permisos Granulares",
+            "description": "Control de acceso basado en roles (RBAC) incorporado con permisos granulares. Administra fácilmente lo que los usuarios pueden ver y hacer."
+          },
+          "email": {
+            "title": "Servicio de Correo Electrónico",
+            "description": "Servicio de correo electrónico integrado para notificaciones, restablecimiento de contraseñas y más. Listo para conectar con tu proveedor SMTP."
+          },
+          "jobs": {
+            "title": "Trabajos en Segundo Plano",
+            "description": "Impulsado por Hangfire. Incluye trabajos preconfigurados para limpieza de tokens y mantenimiento de archivos."
+          },
+          "cleanup": {
+            "title": "Limpieza de Tokens y Archivos",
+            "description": "Servicios automatizados para mantener limpia tu base de datos y almacenamiento. Elimina tokens caducados y archivos temporales."
+          },
+          "users": {
+            "title": "Gestión de Usuarios",
+            "description": "Gestión completa del ciclo de vida del usuario. Crea, actualiza y administra perfiles de usuario y roles desde el primer momento."
+          },
+          "ui": {
+            "title": "Componentes de UI Modernos",
+            "description": "Una rica biblioteca de componentes accesibles y listos para modo oscuro construidos con Tailwind CSS y Headless UI."
+          }
+        }
+      },
+      "cta": {
+        "title": "Código Abierto e Impulsado por la Comunidad",
+        "description": "Únete a la comunidad, contribuye al proyecto o haz un fork para comenzar tu próxima gran idea.",
+        "button": "Estrella en GitHub",
+        "opensource": "Código Abierto",
+        "license": "Licencia MIT. Gratis para uso en proyectos personales y comerciales."
+      },
+      "footer": {
+        "copyright": "Easy For Net. Todos los derechos reservados."
+      }
+    },
     "dashboard": {
       "title": "Tablero",
       "sales": "Ventas",

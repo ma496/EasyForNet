@@ -215,6 +215,58 @@
     "copyright": "Easy For Net All rights reserved."
   },
   "page": {
+    "home": {
+      "hero": {
+        "badge": "Open Source .NET & Next.js Template",
+        "titleFocus": "Focus on",
+        "titleHighlight": "Business Logic",
+        "description": "Stop wasting time on boilerplate. A production-ready foundation with Authentication, Permissions, and Background Jobs pre-configured.",
+        "dashboardDetail": "Dashboard",
+        "signin": "Signin",
+        "viewSource": "View Source"
+      },
+      "features": {
+        "titleBadge": "Features",
+        "title": "Everything you need to build faster",
+        "description": "A complete starter kit with all the essential features pre-built, so you can focus on your unique business requirements.",
+        "items": {
+          "permissions": {
+            "title": "Granular Permissions",
+            "description": "Built-in role-based access control (RBAC) with granular permissions. Easily manage what users can see and do."
+          },
+          "email": {
+            "title": "Email Service",
+            "description": "Integrated email service for notifications, password resets, and more. Ready to connect with your SMTP provider."
+          },
+          "jobs": {
+            "title": "Background Jobs",
+            "description": "Powered by Hangfire. Includes pre-configured jobs for token cleanup and file maintenance."
+          },
+          "cleanup": {
+            "title": "Token & File Cleanup",
+            "description": "Automated services to keep your database and storage clean. Removes expired tokens and temporary files."
+          },
+          "users": {
+            "title": "User Management",
+            "description": "Complete user lifecycle management. Create, update, and manage user profiles and roles out of the box."
+          },
+          "ui": {
+            "title": "Modern UI Components",
+            "description": "A rich library of accessible, dark-mode ready components built with Tailwind CSS and Headless UI."
+          }
+        }
+      },
+      "cta": {
+        "title": "Open Source & Community Driven",
+        "description": "Join the community, contribute to the project, or fork it to start your next big idea.",
+        "button": "Star on GitHub",
+        "opensource": "Open Source",
+        "license": "MIT Licensed. Free to use for personal and commercial projects."
+      },
+      "footer": {
+        "copyright": "Easy For Net. All rights reserved."
+      }
+    },
     "dashboard": {
       "title": "Dashboard",
       "sales": "Sales",

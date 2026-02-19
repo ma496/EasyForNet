@@ -2,8 +2,10 @@
 import { LocalizedLink } from '@/components/localized-link'
 import { ArrowRight, Code2 } from 'lucide-react'
 import { useAppSelector } from '@/store/hooks'
+import { useTranslation } from '@/components/layouts/translation-provider'
 
 const Hero = () => {
+  const { t } = useTranslation()
   const authState = useAppSelector(s => s.auth)
 
   return (
@@ -18,14 +20,14 @@ const Hero = () => {
             <div className="text-center">
               <div className="inline-flex items-center rounded-full border border-gray-200 bg-white/50 px-3 py-1 text-sm font-medium text-gray-800 backdrop-blur-sm dark:border-gray-800 dark:bg-white/5 dark:text-gray-200 mb-6">
                 <span className="flex h-2 w-2 rounded-full bg-primary me-2"></span>
-                Open Source .NET & Next.js Template
+                {t('page.home.hero.badge')}
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
-                <span className="block">Focus on</span>
-                <span className="block text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">Business Logic</span>
+                <span className="block">{t('page.home.hero.titleFocus')}</span>
+                <span className="block text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">{t('page.home.hero.titleHighlight')}</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 dark:text-gray-400 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl">
-                Stop wasting time on boilerplate. A production-ready foundation with Authentication, Permissions, and Background Jobs pre-configured.
+                {t('page.home.hero.description')}
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center">
                 <div className="rounded-md shadow">
@@ -35,7 +37,7 @@ const Hero = () => {
                         href="/app"
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
                       >
-                        Dashboard
+                        {t('page.home.hero.dashboardDetail')}
                         <ArrowRight className="ms-2 h-5 w-5" />
                       </LocalizedLink>
                     ) : (
@@ -43,7 +45,7 @@ const Hero = () => {
                         href="/signin"
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
                       >
-                        Signin
+                        {t('page.home.hero.signin')}
                         <ArrowRight className="ms-2 h-5 w-5" />
                       </LocalizedLink>
                     )
@@ -56,7 +58,7 @@ const Hero = () => {
                     className="flex w-full items-center justify-center rounded-md border border-gray-200 bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 md:py-4 md:text-lg dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 transition-all hover:scale-105"
                   >
                     <Code2 className="me-2 h-5 w-5" />
-                    View Source
+                    {t('page.home.hero.viewSource')}
                   </LocalizedLink>
                 </div>
               </div>

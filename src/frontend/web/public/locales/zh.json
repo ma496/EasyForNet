@@ -215,6 +215,58 @@
     "copyright": "Easy For Net 版权所有。"
   },
   "page": {
+    "home": {
+      "hero": {
+        "badge": "开源 .NET & Next.js 模板",
+        "titleFocus": "专注于",
+        "titleHighlight": "业务逻辑",
+        "description": "停止在样板代码上浪费时间。一个预配置了身份验证、权限和后台任务的生产就绪基础。",
+        "dashboardDetail": "仪表板",
+        "signin": "登录",
+        "viewSource": "查看源码"
+      },
+      "features": {
+        "titleBadge": "特性",
+        "title": "构建更快所需的一切",
+        "description": "包含了所有基本功能的完整入门套件，因此您可以专注于您独特的业务需求。",
+        "items": {
+          "permissions": {
+            "title": "精细权限",
+            "description": "内置基于角色的访问控制 (RBAC) 和精细权限。轻松管理用户可以看到和做什么。"
+          },
+          "email": {
+            "title": "邮件服务",
+            "description": "用于通知、密码重置等的集成邮件服务。准备好连接您的 SMTP 提供商。"
+          },
+          "jobs": {
+            "title": "后台任务",
+            "description": "由 Hangfire 提供支持。包括用于令牌清理和文件维护的预配置作业。"
+          },
+          "cleanup": {
+            "title": "令牌和文件清理",
+            "description": "保持数据库和存储清洁的自动化服务。删除过期的令牌和临时文件。"
+          },
+          "users": {
+            "title": "用户管理",
+            "description": "完整的用户生命周期管理。开箱即用地创建、更新和管理用户配置文件和角色。"
+          },
+          "ui": {
+            "title": "现代 UI 组件",
+            "description": "使用 Tailwind CSS 和 Headless UI 构建的丰富、可访问且支持深色模式的组件库。"
+          }
+        }
+      },
+      "cta": {
+        "title": "开源 & 社区驱动",
+        "description": "加入社区，为项目做出贡献，或分叉它以开始您的下一个大创意。",
+        "button": "在 GitHub 上加星",
+        "opensource": "开源",
+        "license": "MIT 许可。免费用于个人和商业项目。"
+      },
+      "footer": {
+        "copyright": "Easy For Net. 版权所有。"
+      }
+    },
     "dashboard": {
       "title": "仪表板",
       "sales": "销售",
