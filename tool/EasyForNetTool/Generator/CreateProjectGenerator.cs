@@ -119,7 +119,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             await AdjustNamespaceAsync(backendTestProjectTargetPath, backendProjectRootNamespace, pascalCaseProjectName);
             await AdjustNamespaceAsync(backendTestProjectTargetPath, backendTestProjectRootNamespace, $"{pascalCaseProjectName}.Tests");
             // replace Easy For Net text with project name in web project
-            await ReplaceInFiles(webTargetPath, @"Easy\s+For\s+Net", $@"{kebabCaseProjectName.Split('-').Select(x => char.ToUpper(x[0]) + x[1..]).Aggregate((current, next) => current + " " + next)}", ".tsx");
+            await ReplaceInFiles(webTargetPath, @"Easy\s+For\s+Net", $@"{kebabCaseProjectName.Split('-').Select(x => char.ToUpper(x[0]) + x[1..]).Aggregate((current, next) => current + " " + next)}", ".json");
             // update package.json and package-lock.json
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package.json"), "name", kebabCaseProjectName);
             await JsonPropertyUpdater.UpdateJsonPropertyAsync(Path.Combine(webTargetPath, "package-lock.json"), "name", kebabCaseProjectName);
