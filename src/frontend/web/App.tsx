@@ -38,7 +38,7 @@ function App({ children }: PropsWithChildren) {
 
     const matchedUrl = getMatchedAuthUrl(pathname)
     if (matchedUrl?.permissions && matchedUrl.permissions.length > 0 && !isAllowed(authState, matchedUrl.permissions)) {
-      router.push('/unauthorized')
+      router.replace('/unauthorized')
     }
   }, [pathname, authState, isLoadingUserInfo, router])
 
