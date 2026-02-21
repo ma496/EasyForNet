@@ -4,8 +4,12 @@ import LanguageDropdown from '@/components/custom/language-dropdown'
 import { getDictionary } from '@/get-dictionary'
 import { Locale } from '@/i18n-config'
 
-export const metadata: Metadata = {
-  title: 'Reset Password',
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  const dict = await getDictionary(lang as Locale)
+  return {
+    title: dict.page.auth.resetPassword.title,
+  }
 }
 
 const ResetPassword = async ({ params }: { params: Promise<{ lang: string }> }) => {

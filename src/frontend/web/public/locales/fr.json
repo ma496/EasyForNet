@@ -268,7 +268,8 @@
       },
       "footer": {
         "copyright": "Easy For Net. Tous droits réservés."
-      }
+      },
+      "title": "Accueil"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -296,7 +297,16 @@
       "updateSuccess": "Utilisateur mis à jour avec succès",
       "deleteTitle": "Supprimer l'utilisateur",
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
-      "deleteSuccess": "Utilisateur supprimé avec succès"
+      "deleteSuccess": "Utilisateur supprimé avec succès",
+      "create": {
+        "title": "Créer un utilisateur"
+      },
+      "list": {
+        "title": "Liste des utilisateurs"
+      },
+      "update": {
+        "title": "Mettre à jour l'utilisateur"
+      }
     },
     "roles": {
       "title": "Rôles",
@@ -307,7 +317,19 @@
       "deleteSuccess": "Rôle supprimé avec succès",
       "notFound": "Rôle non trouvé",
       "permissions": "Permissions",
-      "permissionsUpdateSuccess": "Permissions mises à jour avec succès"
+      "permissionsUpdateSuccess": "Permissions mises à jour avec succès",
+      "changePermissions": {
+        "title": "Changer les permissions"
+      },
+      "create": {
+        "title": "Créer un rôle"
+      },
+      "list": {
+        "title": "Liste des rôles"
+      },
+      "update": {
+        "title": "Mettre à jour le rôle"
+      }
     },
     "profile": {
       "title": "Profil",
@@ -328,7 +350,8 @@
       "notVerifiedTitle": "Vérification de l'email requise",
       "notVerifiedMessage": "Votre adresse email n'est pas vérifiée. Veuillez vérifier votre boîte de réception ou cliquez ci-dessous pour renvoyer.",
       "failedTitle": "Échec de la vérification",
-      "failedMessage": "Le lien de vérification est invalide ou a expiré."
+      "failedMessage": "Le lien de vérification est invalide ou a expiré.",
+      "title": "Vérifier l'email"
     },
     "auth": {
       "signin": {
@@ -364,7 +387,36 @@
         "success": "Mot de passe réinitialisé avec succès",
         "hasBeenReset": "Votre mot de passe a été réinitialisé avec succès"
       },
-      "logout": "Se déconnecter"
+      "logout": "Se déconnecter",
+      "unauthorized": {
+        "title": "Non autorisé"
+      }
+    },
+    "changePassword": {
+      "title": "Changer le mot de passe"
+    },
+    "ui": {
+      "buttons": {
+        "title": "Boutons UI"
+      },
+      "cards": {
+        "title": "Cartes UI"
+      },
+      "datePicker": {
+        "title": "Sélecteur de date UI"
+      },
+      "dateView": {
+        "title": "Vue de date UI"
+      },
+      "fileUpload": {
+        "title": "Téléchargement de fichiers UI"
+      },
+      "formElements": {
+        "title": "Éléments de formulaire UI"
+      },
+      "treeview": {
+        "title": "Vue arborescente UI"
+      }
     }
   }
 }

@@ -1,5 +1,4 @@
 import ProviderComponent from '@/components/layouts/provider-component'
-import { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import { i18n, type Locale } from '@/i18n-config'
 import { getDictionary } from '@/get-dictionary'

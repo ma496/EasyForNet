@@ -268,7 +268,8 @@
       },
       "footer": {
         "copyright": "Easy For Net. 版权所有。"
-      }
+      },
+      "title": "首页"
     },
     "dashboard": {
       "title": "仪表板",
@@ -296,7 +297,16 @@
       "updateSuccess": "用户更新成功",
       "deleteTitle": "删除用户",
       "deleteConfirm": "您确定要删除此用户吗？",
-      "deleteSuccess": "用户删除成功"
+      "deleteSuccess": "用户删除成功",
+      "create": {
+        "title": "创建用户"
+      },
+      "list": {
+        "title": "用户列表"
+      },
+      "update": {
+        "title": "更新用户"
+      }
     },
     "roles": {
       "title": "角色",
@@ -307,7 +317,19 @@
       "deleteSuccess": "角色删除成功",
       "notFound": "角色未找到",
       "permissions": "权限",
-      "permissionsUpdateSuccess": "权限更新成功"
+      "permissionsUpdateSuccess": "权限更新成功",
+      "changePermissions": {
+        "title": "更改权限"
+      },
+      "create": {
+        "title": "创建角色"
+      },
+      "list": {
+        "title": "角色列表"
+      },
+      "update": {
+        "title": "更新角色"
+      }
     },
     "profile": {
       "title": "个人资料",
@@ -328,7 +350,8 @@
       "notVerifiedTitle": "需要验证电子邮件",
       "notVerifiedMessage": "您的电子邮件地址未验证。请检查您的收件箱以获取验证链接，或点击下方按钮重新发送。",
       "failedTitle": "验证失败",
-      "failedMessage": "验证链接无效或已过期。"
+      "failedMessage": "验证链接无效或已过期。",
+      "title": "验证电子邮件"
     },
     "auth": {
       "signin": {
@@ -364,7 +387,36 @@
         "success": "密码重置成功",
         "hasBeenReset": "您的密码已成功重置"
       },
-      "logout": "退出登录"
+      "logout": "退出登录",
+      "unauthorized": {
+        "title": "未授权"
+      }
+    },
+    "changePassword": {
+      "title": "修改密码"
+    },
+    "ui": {
+      "buttons": {
+        "title": "UI 按钮"
+      },
+      "cards": {
+        "title": "UI 卡片"
+      },
+      "datePicker": {
+        "title": "UI 日期选择器"
+      },
+      "dateView": {
+        "title": "UI 日期视图"
+      },
+      "fileUpload": {
+        "title": "UI 文件上传"
+      },
+      "formElements": {
+        "title": "UI 表单元素"
+      },
+      "treeview": {
+        "title": "UI 树形视图"
+      }
     }
   }
 }

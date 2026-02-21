@@ -268,7 +268,8 @@
       },
       "footer": {
         "copyright": "Easy For Net. Todos los derechos reservados."
-      }
+      },
+      "title": "Inicio"
     },
     "dashboard": {
       "title": "Tablero",
@@ -296,7 +297,16 @@
       "updateSuccess": "Usuario actualizado exitosamente",
       "deleteTitle": "Eliminar Usuario",
       "deleteConfirm": "¿Está seguro de que desea eliminar este usuario?",
-      "deleteSuccess": "Usuario eliminado exitosamente"
+      "deleteSuccess": "Usuario eliminado exitosamente",
+      "create": {
+        "title": "Crear usuario"
+      },
+      "list": {
+        "title": "Lista de usuarios"
+      },
+      "update": {
+        "title": "Actualizar usuario"
+      }
     },
     "roles": {
       "title": "Roles",
@@ -307,7 +317,19 @@
       "deleteSuccess": "Rol eliminado exitosamente",
       "notFound": "Rol no encontrado",
       "permissions": "Permisos",
-      "permissionsUpdateSuccess": "Permisos actualizados exitosamente"
+      "permissionsUpdateSuccess": "Permisos actualizados exitosamente",
+      "changePermissions": {
+        "title": "Cambiar permisos"
+      },
+      "create": {
+        "title": "Crear rol"
+      },
+      "list": {
+        "title": "Lista de roles"
+      },
+      "update": {
+        "title": "Actualizar rol"
+      }
     },
     "profile": {
       "title": "Perfil",
@@ -328,7 +350,8 @@
       "notVerifiedTitle": "Verificación de Correo Requerida",
       "notVerifiedMessage": "Su dirección de correo no está verificada. Por favor revise su bandeja de entrada o haga clic abajo para reenviar.",
       "failedTitle": "Verificación Fallida",
-      "failedMessage": "El enlace de verificación es inválido o ha expirado."
+      "failedMessage": "El enlace de verificación es inválido o ha expirado.",
+      "title": "Verificar correo electrónico"
     },
     "auth": {
       "signin": {
@@ -364,7 +387,36 @@
         "success": "Contraseña restablecida exitosamente",
         "hasBeenReset": "Su contraseña ha sido restablecida exitosamente"
       },
-      "logout": "Cerrar Sesión"
+      "logout": "Cerrar Sesión",
+      "unauthorized": {
+        "title": "No autorizado"
+      }
+    },
+    "changePassword": {
+      "title": "Cambiar contraseña"
+    },
+    "ui": {
+      "buttons": {
+        "title": "Botones de UI"
+      },
+      "cards": {
+        "title": "Tarjetas de UI"
+      },
+      "datePicker": {
+        "title": "Selector de fecha de UI"
+      },
+      "dateView": {
+        "title": "Vista de fecha de UI"
+      },
+      "fileUpload": {
+        "title": "Subida de archivos de UI"
+      },
+      "formElements": {
+        "title": "Elementos de formulario de UI"
+      },
+      "treeview": {
+        "title": "Vista de árbol de UI"
+      }
     }
   }
 }

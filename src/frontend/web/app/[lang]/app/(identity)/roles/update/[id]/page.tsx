@@ -1,8 +1,14 @@
+import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/get-dictionary'
 import { Metadata } from 'next'
 import { RoleUpdateForm } from './_components/role-update-form'
 
-export const metadata: Metadata = {
-  title: 'Update Role',
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  const dict = await getDictionary(lang as Locale)
+  return {
+    title: dict.page.roles.update.title,
+  }
 }
 
 interface RoleUpdatePageProps {

@@ -1,11 +1,17 @@
+import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/get-dictionary'
 import VerifyEmailView from './_components/verify-email-view'
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { Metadata } from 'next'
 
-
-export const metadata: Metadata = {
-  title: 'Verify Email',
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  const dict = await getDictionary(lang as Locale)
+  return {
+    title: dict.page.verifyEmail.title,
+  }
 }
+
 
 const BoxedVerifyEmail = async () => {
 

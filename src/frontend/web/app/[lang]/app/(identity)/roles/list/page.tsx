@@ -1,8 +1,14 @@
+import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/get-dictionary'
 import { Metadata } from 'next'
 import { RoleTable } from './_components/role-table'
 
-export const metadata: Metadata = {
-  title: 'Roles',
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  const dict = await getDictionary(lang as Locale)
+  return {
+    title: dict.page.roles.list.title,
+  }
 }
 
 const Roles = () => {
