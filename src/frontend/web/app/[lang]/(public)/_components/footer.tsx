@@ -13,7 +13,7 @@ const Footer = async ({ lang }: { lang: Locale }) => {
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
           <p className="text-center text-base text-gray-400">
-            &copy; {new Date().getFullYear()} {dict.page.home.footer.copyright}
+            © {new Date().getFullYear()}. {dict.brand.name}. {dict.common.allRightsReserved}
           </p>
         </div>
       </div>

@@ -214,9 +214,6 @@
     "deleteConfirm": "您确定要删除此文件吗？",
     "tooLarge": "文件过大"
   },
-  "footer": {
-    "copyright": "Easy For Net 版权所有。"
-  },
   "page": {
     "home": {
       "hero": {
@@ -265,9 +262,6 @@
         "button": "在 GitHub 上加星",
         "opensource": "开源",
         "license": "MIT 许可。免费用于个人和商业项目。"
-      },
-      "footer": {
-        "copyright": "Easy For Net. 版权所有。"
       },
       "title": "首页"
     },

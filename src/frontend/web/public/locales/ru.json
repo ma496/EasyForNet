@@ -214,9 +214,6 @@
     "deleteConfirm": "Вы уверены, что хотите удалить этот файл?",
     "tooLarge": "Файл слишком большой"
   },
-  "footer": {
-    "copyright": "Easy For Net Все права защищены."
-  },
   "page": {
     "home": {
       "hero": {
@@ -265,9 +262,6 @@
         "button": "Звезда на GitHub",
         "opensource": "Open Source",
         "license": "Лицензия MIT. Бесплатно для личных и коммерческих проектов."
-      },
-      "footer": {
-        "copyright": "Easy For Net. Все права защищены."
       },
       "title": "Главная"
     },

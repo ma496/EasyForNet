@@ -214,9 +214,6 @@
     "deleteConfirm": "Are you sure you want to delete this file?",
     "tooLarge": "File is too large"
   },
-  "footer": {
-    "copyright": "Easy For Net All rights reserved."
-  },
   "page": {
     "home": {
       "hero": {
@@ -265,9 +262,6 @@
         "button": "Star on GitHub",
         "opensource": "Open Source",
         "license": "MIT Licensed. Free to use for personal and commercial projects."
-      },
-      "footer": {
-        "copyright": "Easy For Net. All rights reserved."
       },
       "title": "Home"
     },

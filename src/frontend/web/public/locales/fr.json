@@ -214,9 +214,6 @@
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
     "tooLarge": "Fichier trop volumineux"
   },
-  "footer": {
-    "copyright": "Easy For Net Tous droits réservés."
-  },
   "page": {
     "home": {
       "hero": {
@@ -265,9 +262,6 @@
         "button": "Étoile sur GitHub",
         "opensource": "Open Source",
         "license": "Licence MIT. Gratuit pour les projets personnels et commerciaux."
-      },
-      "footer": {
-        "copyright": "Easy For Net. Tous droits réservés."
       },
       "title": "Accueil"
     },

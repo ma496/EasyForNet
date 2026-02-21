@@ -9,11 +9,13 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import SearchComponent from './search-component'
 import { Menu } from 'lucide-react'
 import LanguageDropdown from '../custom/language-dropdown'
+import { useTranslation } from '@/i18n'
 
 const Header = () => {
   const pathname = usePathname()
   const dispatch = useAppDispatch()
   const themeConfig = useAppSelector((state) => state.theme)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]')
@@ -49,7 +51,7 @@ const Header = () => {
           <div className="ms-2 horizontal-logo flex items-center justify-between lg:hidden">
             <Link href="/app" className="flex shrink-0 items-center main-logo">
               <img className="-ms-1 inline w-8" src="/assets/images/icon.png" alt="logo" />
-              <span className="ms-1.5 hidden align-middle text-sm font-semibold transition-all duration-300 md:inline dark:text-white-light">Easy For Net</span>
+              <span className="ms-1.5 hidden align-middle text-sm font-semibold transition-all duration-300 md:inline dark:text-white-light">{t('brand.name')}</span>
             </Link>
             <button
               type="button"
