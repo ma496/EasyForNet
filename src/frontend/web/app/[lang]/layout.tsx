@@ -8,11 +8,16 @@ import { TranslationProvider } from '@/components/layouts/translation-provider'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import '../../styles/tailwind.css'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | Easy For Net',
-    default: 'Easy For Net',
-  },
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
+
+  return {
+    title: {
+      template: `%s | ${dictionary.brand.name}`,
+      default: dictionary.brand.name,
+    },
+  }
 }
 const nunito = Nunito({
   weight: ['400', '500', '600', '700', '800'],
