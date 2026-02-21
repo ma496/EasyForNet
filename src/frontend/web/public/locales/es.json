@@ -387,7 +387,7 @@
         "success": "Contraseña restablecida exitosamente",
         "hasBeenReset": "Su contraseña ha sido restablecida exitosamente"
       },
-      "logout": "Cerrar Sesión",
+      "signout": "Cerrar Sesión",
       "unauthorized": {
         "title": "No autorizado"
       }

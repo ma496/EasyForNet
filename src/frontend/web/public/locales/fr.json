@@ -387,7 +387,7 @@
         "success": "Mot de passe réinitialisé avec succès",
         "hasBeenReset": "Votre mot de passe a été réinitialisé avec succès"
       },
-      "logout": "Se déconnecter",
+      "signout": "Se déconnecter",
       "unauthorized": {
         "title": "Non autorisé"
       }

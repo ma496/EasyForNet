@@ -387,7 +387,7 @@
         "success": "Password reset successfully",
         "hasBeenReset": "Your password has been reset successfully"
       },
-      "logout": "Sign Out",
+      "signout": "Sign Out",
       "unauthorized": {
         "title": "Unauthorized"
       }

@@ -24,7 +24,7 @@ const NavUser = () => {
 
   const [logoutApi] = useSignoutMutation()
 
-  const logoutAction = async () => {
+  const signoutAction = async () => {
     await logoutApi()
     dispatch(signout())
     router.push('/signin')
@@ -89,9 +89,9 @@ const NavUser = () => {
             </LocalizedLink>
           </li>
           <li className="cursor-pointer border-t border-white-light dark:border-white-light/10">
-            <a className="py-3! text-danger" onClick={logoutAction}>
+            <a className="py-3! text-danger" onClick={signoutAction}>
               <LogOut className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
-              {t('auth.logout')}
+              {t('page.auth.signout')}
             </a>
           </li>
         </ul>

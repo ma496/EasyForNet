@@ -387,7 +387,7 @@
         "success": "密码重置成功",
         "hasBeenReset": "您的密码已成功重置"
       },
-      "logout": "退出登录",
+      "signout": "退出登录",
       "unauthorized": {
         "title": "未授权"
       }
