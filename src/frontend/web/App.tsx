@@ -36,9 +36,13 @@ function App({ children }: PropsWithChildren) {
 
     if (!authState.isAuthenticated || !authState.user) return
 
-    const matchedUrl = getMatchedAuthUrl(pathname)
+    const pathSegment = pathname.split('/')[1]
+    const lang = i18n.locales.includes(pathSegment as Locale) ? pathSegment : i18n.defaultLocale
+    const pathToCheck = i18n.locales.includes(pathSegment as Locale) ? pathname.replace(`/${lang}`, '') || '/' : pathname
+
+    const matchedUrl = getMatchedAuthUrl(pathToCheck)
     if (matchedUrl?.permissions && matchedUrl.permissions.length > 0 && !isAllowed(authState, matchedUrl.permissions)) {
-      router.replace('/unauthorized')
+      router.replace(lang === i18n.defaultLocale ? '/unauthorized' : `/${lang}/unauthorized`)
     }
   }, [pathname, authState, isLoadingUserInfo, router])
 
