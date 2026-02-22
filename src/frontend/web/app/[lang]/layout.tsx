@@ -1,6 +1,6 @@
 import ProviderComponent from '@/components/layouts/provider-component'
 import { Nunito } from 'next/font/google'
-import { i18n, type Locale } from '@/i18n-config'
+import { i18nConfig, type Locale } from '@/i18n'
 import { getDictionary } from '@/get-dictionary'
 import { TranslationProvider } from '@/components/layouts/translation-provider'
 
@@ -26,7 +26,7 @@ const nunito = Nunito({
 })
 
 export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }))
+  return i18nConfig.locales.map((locale) => ({ lang: locale }))
 }
 
 export default async function RootLayout({

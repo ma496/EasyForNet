@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Locale } from '@/i18n-config'
+import { Locale } from '@/i18n'
 import { getDictionary } from '@/get-dictionary'
 import UnauthorizedView from './_components/unauthorized-view'
 

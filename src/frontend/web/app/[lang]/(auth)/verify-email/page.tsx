@@ -1,4 +1,4 @@
-import { Locale } from '@/i18n-config'
+import { Locale } from '@/i18n'
 import { getDictionary } from '@/get-dictionary'
 import VerifyEmailView from './_components/verify-email-view'
 import LanguageDropdown from '@/components/custom/language-dropdown'

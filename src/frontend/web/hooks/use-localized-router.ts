@@ -2,7 +2,7 @@
 
 import { useRouter as useNextRouter } from 'next/navigation'
 import { useTranslation } from '@/i18n'
-import { i18n as i18nConfig } from '@/i18n-config'
+import { i18nConfig } from '@/i18n'
 
 export const useLocalizedRouter = () => {
   const router = useNextRouter()

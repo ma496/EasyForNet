@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useTranslation } from '@/i18n' // or from provider
-import { i18n as i18nConfig } from '@/i18n-config'
+import { i18nConfig } from '@/i18n'
 import { ComponentProps } from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

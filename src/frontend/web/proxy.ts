@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { hasAuthCookie } from '@/lib/utils/authentication-and-authorization'
 import { isAuthRequired } from './auth-urls'
-import { i18n } from './i18n-config'
+import { i18nConfig } from './i18n'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
@@ -14,15 +14,15 @@ function getLocale(request: NextRequest): string | undefined {
   // Negotiator requires specific headers type
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
   // Matcher types mismatch with Negotiator output? Apparently not anymore.
-  const locales: string[] = [...i18n.locales]
-  return matchLocale(languages, locales, i18n.defaultLocale)
+  const locales: string[] = [...i18nConfig.locales]
+  return matchLocale(languages, locales, i18nConfig.defaultLocale)
 }
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // 1. Localization Logic
-  const pathnameIsMissingLocale = i18n.locales.every(
+  const pathnameIsMissingLocale = i18nConfig.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
 
@@ -30,10 +30,10 @@ export async function proxy(request: NextRequest) {
   let currentLocale: string
 
   if (pathnameIsMissingLocale) {
-    const locale = getLocale(request) || i18n.defaultLocale
+    const locale = getLocale(request) || i18nConfig.defaultLocale
     currentLocale = locale
 
-    if (locale === i18n.defaultLocale) {
+    if (locale === i18nConfig.defaultLocale) {
       if (!pathname.startsWith('/api') && !pathname.startsWith('/_next') && !pathname.startsWith('/assets') && !pathname.includes('favicon.ico')) {
         // Internal rewrite for default locale
         response = NextResponse.rewrite(new URL(`/${locale}${pathname}`, request.url))
@@ -48,8 +48,8 @@ export async function proxy(request: NextRequest) {
     currentLocale = segment
 
     // Check if it's default locale in URL (e.g. /en/...) and redirect to prefix-less if needed
-    if (segment === i18n.defaultLocale) {
-      const newPathname = pathname.replace(`/${i18n.defaultLocale}`, '') || '/';
+    if (segment === i18nConfig.defaultLocale) {
+      const newPathname = pathname.replace(`/${i18nConfig.defaultLocale}`, '') || '/';
       return NextResponse.redirect(new URL(newPathname, request.url));
     }
   }
@@ -87,7 +87,7 @@ export async function proxy(request: NextRequest) {
     // If currentLocale is other, signin is `/${currentLocale}/signin`
 
     let signinPath = '/signin'
-    if (currentLocale !== i18n.defaultLocale) {
+    if (currentLocale !== i18nConfig.defaultLocale) {
       signinPath = `/${currentLocale}/signin`
     }
 

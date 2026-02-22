@@ -1,6 +1,6 @@
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { getDictionary } from '@/get-dictionary'
-import { Locale } from '@/i18n-config'
+import { Locale } from '@/i18n'
 
 const Footer = async ({ lang }: { lang: Locale }) => {
   const dict = await getDictionary(lang)

@@ -4,7 +4,7 @@ import Hero from './_components/hero'
 import Features from './_components/features'
 import CTA from './_components/cta'
 import Footer from './_components/footer'
-import { Locale } from '@/i18n-config'
+import { Locale } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params

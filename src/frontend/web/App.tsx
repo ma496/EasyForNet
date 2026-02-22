@@ -3,8 +3,7 @@ import { PropsWithChildren, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '@/store/slices/themeConfigSlice'
 import AppLoading from '@/components/layouts/app-loading'
-import { i18n, Locale } from '@/i18n-config'
-import { getTranslation } from '@/i18n'
+import { i18nConfig, Locale, getTranslation } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
 import { isAllowed } from './lib/utils'
@@ -37,12 +36,12 @@ function App({ children }: PropsWithChildren) {
     if (!authState.isAuthenticated || !authState.user) return
 
     const pathSegment = pathname.split('/')[1]
-    const lang = i18n.locales.includes(pathSegment as Locale) ? pathSegment : i18n.defaultLocale
-    const pathToCheck = i18n.locales.includes(pathSegment as Locale) ? pathname.replace(`/${lang}`, '') || '/' : pathname
+    const lang = i18nConfig.locales.includes(pathSegment as Locale) ? pathSegment : i18nConfig.defaultLocale
+    const pathToCheck = i18nConfig.locales.includes(pathSegment as Locale) ? pathname.replace(`/${lang}`, '') || '/' : pathname
 
     const matchedUrl = getMatchedAuthUrl(pathToCheck)
     if (matchedUrl?.permissions && matchedUrl.permissions.length > 0 && !isAllowed(authState, matchedUrl.permissions)) {
-      router.replace(lang === i18n.defaultLocale ? '/unauthorized' : `/${lang}/unauthorized`)
+      router.replace(lang === i18nConfig.defaultLocale ? '/unauthorized' : `/${lang}/unauthorized`)
     }
   }, [pathname, authState, isLoadingUserInfo, router])
 
@@ -56,7 +55,7 @@ function App({ children }: PropsWithChildren) {
 
     // Calculate direction based on URL language
     const pathSegment = pathname.split('/')[1]
-    const lang = i18n.locales.includes(pathSegment as Locale) ? pathSegment : i18n.defaultLocale
+    const lang = i18nConfig.locales.includes(pathSegment as Locale) ? pathSegment : i18nConfig.defaultLocale
     const currentLang = themeConfig.languageList.find(l => l.code === lang)
     const direction = currentLang ? (currentLang.isRTL ? 'rtl' : 'ltr') : 'ltr'
 

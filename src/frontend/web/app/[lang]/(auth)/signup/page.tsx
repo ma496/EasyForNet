@@ -2,7 +2,7 @@ import SignupForm from './_components/signup-form'
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { Metadata } from 'next'
 import { getDictionary } from '@/get-dictionary'
-import { Locale } from '@/i18n-config'
+import { Locale } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
