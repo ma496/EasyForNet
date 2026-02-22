@@ -2,7 +2,7 @@
 import { LocalizedLink } from '@/components/localized-link'
 import { ArrowRight, Code2 } from 'lucide-react'
 import { useAppSelector } from '@/store/hooks'
-import { useTranslation } from '@/components/layouts/translation-provider'
+import { useTranslation } from '@/i18n'
 
 const Hero = () => {
   const { t } = useTranslation()

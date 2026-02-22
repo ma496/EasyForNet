@@ -5,7 +5,7 @@ import ReactApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { useAppSelector } from '@/store/hooks'
 import { CreditCard, DollarSign, MoreHorizontal, Inbox, ShoppingCart, Tag } from 'lucide-react'
-import { useTranslation } from '@/components/layouts/translation-provider'
+import { useTranslation } from '@/i18n'
 
 const SaleDashboard = () => {
   const isDark = useAppSelector((state) => state.theme.theme === 'dark' || state.theme.isDarkMode)
