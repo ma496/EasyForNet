@@ -1,5 +1,5 @@
 import { useDataTable } from './context'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import ScrollBar from 'react-perfect-scrollbar'
 import { cn } from '@/lib/utils'
 import { useId } from 'react'
@@ -11,7 +11,7 @@ interface PaginationProps {
 
 export function DataTablePagination<TData>({ className = '', siblingCount = 1 }: PaginationProps) {
   const { pageSizeOptions, rowCount, table } = useDataTable<TData>()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const pageNumbers = () => {
     const currentPage = table.getState().pagination.pageIndex

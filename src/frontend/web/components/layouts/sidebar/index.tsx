@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useState, useEffect, useMemo } from 'react'
 import { ChevronsDown } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { navItems, NavItem, NavItemGroup } from '@/nav-items'
 import { authUrls } from '@/auth-urls'
 import { SidebarNavGroup } from './nav-group'
@@ -19,7 +19,7 @@ const isNavItemGroup = (item: NavItem | NavItemGroup): item is NavItemGroup => {
 
 const Sidebar = () => {
   const dispatch = useAppDispatch()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const pathname = usePathname()
   const [currentMenu, setCurrentMenu] = useState<string>('')
   const themeConfig = useAppSelector((state) => state.theme)

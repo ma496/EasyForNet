@@ -2,7 +2,7 @@ import { LocalizedLink } from '@/components/localized-link'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { signout } from '@/store/slices/authSlice'
 import { useRouter } from 'next/navigation'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { User, LogOut, Lock } from 'lucide-react'
 import Dropdown, { DropdownRef } from '../dropdown'
 import { useRef } from 'react'
@@ -13,7 +13,7 @@ const NavUser = () => {
   const { user } = useAppSelector((state) => state.auth)
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
   const dropdownRef = useRef<DropdownRef>(null)
   const handleLinkClick = () => {

@@ -1,13 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { FileQuestion, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const NotFound = () => {
   const router = useRouter()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const handleBack = () => {
     router.back()

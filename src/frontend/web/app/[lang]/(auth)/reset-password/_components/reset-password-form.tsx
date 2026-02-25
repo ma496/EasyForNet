@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { useSearchParams } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useResetPasswordMutation } from '@/store/api/identity/account/account-api'
@@ -23,7 +23,7 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 }
 
 export const ResetPasswordForm = () => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   type ResetPasswordFormValues = Yup.InferType<typeof validationSchema>
   const [resetPassword, { isLoading: isResettingPassword }] = useResetPasswordMutation()

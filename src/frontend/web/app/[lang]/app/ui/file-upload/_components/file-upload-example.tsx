@@ -5,12 +5,12 @@ import { FileUpload } from '@/components/ui/form/file-upload'
 import { Pencil, Trash2 } from 'lucide-react'
 import { IconButton } from '@/components/ui/icon-button'
 import { confirmDeleteAlert } from '@/lib/utils'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { MultiFileUpload } from '@/components/ui/form/multi-file-upload'
 import { useState } from 'react'
 
 export const FileUploadExample = () => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const [multiFiles, setMultiFiles] = useState<string[]>([])
   return (
     <div className="container mx-auto space-y-8 p-6">

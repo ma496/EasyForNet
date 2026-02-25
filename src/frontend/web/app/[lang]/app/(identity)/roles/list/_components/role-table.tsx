@@ -9,7 +9,7 @@ import { useRoleListQuery, useLazyRoleListQuery, useRoleDeleteMutation } from '@
 import { SortDirection } from '@/store/api/base/sort-direction'
 import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { exportData, ExportFormat, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { Badge } from '@/components/ui/badge'
@@ -27,7 +27,7 @@ export const RoleTable = () => {
   })
   const [globalFilter, setGlobalFilter] = useState('')
   const [isExporting, setIsExporting] = useState(false)
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const isRTL = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
 
   const {

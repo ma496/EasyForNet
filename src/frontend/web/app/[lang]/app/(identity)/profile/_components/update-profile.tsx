@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { Mail, Pencil, Trash2, User } from 'lucide-react'
 import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { UpdateProfileRequest } from '@/store/api/identity/account/account-dtos'
 import { confirmDeleteAlert, successToast } from '@/lib/utils'
 import { FileUpload } from '@/components/ui/form/file-upload'
@@ -35,7 +35,7 @@ export const UpdateProfile = () => {
   const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation()
   const { data: userProfile, isLoading: isLoadingUserProfile } = useGetUserProfileQuery()
   const [getUserInfo] = useLazyGetUserInfoQuery()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const validationSchema = createValidationSchema(t)
   type UpdateProfileFormValues = Yup.InferType<typeof validationSchema>

@@ -3,7 +3,7 @@
 import { NavItem, NavItemGroup, navItems } from '@/nav-items'
 import { LocalizedLink as Link } from '@/components/localized-link'
 import { usePathname } from 'next/navigation'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 
 const findActivePathItems = (items: (NavItem | NavItemGroup)[], pathname: string): NavItem[] => {
   const result: NavItem[] = []
@@ -44,7 +44,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
   // Remove locale prefix if present (e.g. /en/app -> /app)
   const normalizedPathname = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/')
   const activePathItems = findActivePathItems(navItems, normalizedPathname)
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   return (
     <ul className={`flex gap-2 ${className || ''}`}>

@@ -2,7 +2,7 @@ import { flexRender } from '@tanstack/react-table'
 import { useDataTable } from './context'
 import { SortIcon } from './sort-icon'
 import { Loading } from '../loading'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import ScrollBar from 'react-perfect-scrollbar'
 
 interface DataTableProps {
@@ -13,7 +13,7 @@ interface DataTableProps {
 
 export function DataTable<TData>({ className = '', suppressScrollX = false, suppressScrollY = true }: DataTableProps) {
   const { columns, table, isFetching } = useDataTable<TData>()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   return (
     <ScrollBar

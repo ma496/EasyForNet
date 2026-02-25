@@ -2,7 +2,7 @@
 
 import { ChevronDown, ChevronUp, Filter } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 
 interface UserFilterButtonProps {
   isOpen: boolean
@@ -11,7 +11,7 @@ interface UserFilterButtonProps {
 }
 
 export const UserFilterButton = ({ isOpen, onToggle, activeFiltersCount = 0 }: UserFilterButtonProps) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   return (
     <button

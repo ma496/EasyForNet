@@ -2,7 +2,7 @@
 
 // import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form/form-input'
 import { useSignupMutation, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
@@ -16,7 +16,7 @@ import { successToast } from '@/lib/utils/notification'
 
 const SignupForm = () => {
   // const router = useRouter()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [registeredEmail, setRegisteredEmail] = useState<string>('')
   const [countdown, setCountdown] = useState(0)

@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useRoleUpdateMutation, useRoleGetQuery } from '@/store/api/identity/roles/roles-api'
@@ -29,7 +29,7 @@ interface RoleUpdateFormProps {
 }
 
 export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   const [updateRole, { isLoading: isSavingRole }] = useRoleUpdateMutation()
   const { data: roleData, isLoading: isLoadingRole } = useRoleGetQuery({ id: roleId })

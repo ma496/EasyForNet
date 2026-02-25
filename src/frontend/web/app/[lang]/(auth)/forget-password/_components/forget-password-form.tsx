@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useForgetPasswordMutation } from '@/store/api/identity/account/account-api'
@@ -19,7 +19,7 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 }
 
 export const ForgetPasswordForm = () => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   type ForgetPasswordFormValues = Yup.InferType<typeof validationSchema>
   const [forgetPassword, { isLoading: isForgettingPassword }] = useForgetPasswordMutation()

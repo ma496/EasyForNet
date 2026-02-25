@@ -1,7 +1,7 @@
 'use client'
 // import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form/form-input'
 import { Mail, Lock, Info } from 'lucide-react'
@@ -17,7 +17,7 @@ import { useLocalizedRouter } from '@/hooks/use-localized-router'
 
 const SigninForm = () => {
   const router = useLocalizedRouter()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()

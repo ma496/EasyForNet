@@ -3,7 +3,7 @@ import { PropsWithChildren, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '@/store/slices/themeConfigSlice'
 import AppLoading from '@/components/layouts/app-loading'
-import { i18nConfig, Locale, getTranslation } from '@/i18n'
+import { i18nConfig, Locale } from '@/i18n'
 import { setUserInfo } from './store/slices/authSlice'
 import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-api'
 import { isAllowed } from './lib/utils'
@@ -13,7 +13,6 @@ import { getMatchedAuthUrl } from './auth-urls'
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()
-  const { initLocale } = getTranslation()
   const pathname = usePathname()
   const router = useRouter()
   const authState = useAppSelector((state) => state.auth)
@@ -61,12 +60,9 @@ function App({ children }: PropsWithChildren) {
 
     dispatch(toggleRTL(direction))
 
-    // locale
-    initLocale(themeConfig.locale)
-
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(false)
-  }, [dispatch, initLocale, themeConfig.theme, themeConfig.menu, themeConfig.layout, themeConfig.rtlClass, themeConfig.animation, themeConfig.navbar, themeConfig.locale, themeConfig.semidark, pathname, themeConfig.languageList])
+  }, [dispatch, themeConfig.theme, themeConfig.menu, themeConfig.layout, themeConfig.rtlClass, themeConfig.animation, themeConfig.navbar, themeConfig.locale, themeConfig.semidark, pathname, themeConfig.languageList])
 
   return (
     <div

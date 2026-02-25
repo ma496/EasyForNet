@@ -8,7 +8,7 @@ import { useGetPermissionsQuery } from '@/store/api/identity/permissions/permiss
 import { useChangePermissionsMutation } from '@/store/api/identity/roles/roles-api'
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import AppLoading from '@/components/layouts/app-loading'
@@ -64,7 +64,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   const [changePermissions, { isLoading: isChangingPermissions }] = useChangePermissionsMutation()
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([])
   const [changedPermissions, setChangedPermissions] = useState<string[]>([])
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const router = useLocalizedRouter()
   const [search, setSearch] = useState('')
 

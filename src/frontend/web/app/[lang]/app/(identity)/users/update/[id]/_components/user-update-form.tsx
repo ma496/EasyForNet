@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useUserUpdateMutation } from '@/store/api/identity/users/users-api'
@@ -37,7 +37,7 @@ interface UserUpdateFormProps {
 }
 
 export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const router = useLocalizedRouter()
   const validationSchema = createValidationSchema(t)
   const { data: userData, isLoading: isLoadingUser } = useUserGetQuery({ id: userId })

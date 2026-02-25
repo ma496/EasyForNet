@@ -2,7 +2,7 @@
 import React, { useId, useState, useCallback, useEffect } from 'react'
 import { Plus, Trash2, Loader2, Pencil } from 'lucide-react'
 import { cn, confirmDeleteAlert } from '@/lib/utils'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { IconButton } from '@/components/ui/icon-button'
 import { useFileUploadMutation, useLazyFileGetQuery, useFileDeleteMutation } from '@/store/api/file-management/files/files-api'
 import { ReactSortable } from 'react-sortablejs'
@@ -26,7 +26,7 @@ export const MultiFileUpload = ({
   accept = 'image/*',
   forceDelete = true,
 }: MultiFileUploadProps) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const inputId = useId()
   const [uploadFile, { isLoading: isUploading }] = useFileUploadMutation()
   const [deleteFile] = useFileDeleteMutation()

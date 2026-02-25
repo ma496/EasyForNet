@@ -1,7 +1,7 @@
 import { ReactNode, useId } from 'react'
 import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { useDataTable } from './context'
 
 interface DataTableToolbarProps {
@@ -11,7 +11,7 @@ interface DataTableToolbarProps {
 }
 
 export function DataTableToolbar<TData>({ title, children }: DataTableToolbarProps) {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const { table } = useDataTable<TData>()
 
   return (

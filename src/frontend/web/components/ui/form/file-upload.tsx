@@ -8,7 +8,7 @@ import type { ButtonProps } from '@/components/ui/button'
 import { IconButton } from '@/components/ui/icon-button'
 import { useFileUploadMutation, useFileDeleteMutation, useLazyFileGetQuery } from '@/store/api/file-management/files/files-api'
 import { FileUploadResponse } from '@/store/api/file-management/files/files-dtos'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 
 export interface FileUploadProps {
   variant?: ButtonProps['variant']
@@ -73,7 +73,7 @@ export const FileUpload = ({
 }: FileUploadProps) => {
   const defaultId = useId()
   const inputId = id ?? defaultId
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const [selectedFileName, setSelectedFileName] = useState<string>('')
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | undefined>(undefined)

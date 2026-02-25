@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useUserCreateMutation } from '@/store/api/identity/users/users-api'
@@ -47,7 +47,7 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
 export const UserCreateForm = () => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   const [createUser, { isLoading: isCreatingUser }] = useUserCreateMutation()
   const router = useLocalizedRouter()

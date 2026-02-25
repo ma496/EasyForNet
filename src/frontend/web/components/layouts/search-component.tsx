@@ -3,14 +3,14 @@ import { useRouter } from 'next/navigation'
 import { SearchableItem, searchableItems } from '@/searchable-items'
 import { authUrls } from '@/auth-urls'
 import Link from 'next/link'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { useAppSelector } from '@/store/hooks'
 import { Search } from 'lucide-react'
 import { isAllowed } from '@/lib/utils'
 
 const SearchComponent = () => {
   const router = useRouter()
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const [search, setSearch] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchableItem[]>([])

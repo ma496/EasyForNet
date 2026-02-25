@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -39,6 +39,6 @@ export const shortName = (name: string | undefined, username: string | undefined
 }
 
 export const isTranslationKeyExist = (key: string) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   return t(key) !== key
 }

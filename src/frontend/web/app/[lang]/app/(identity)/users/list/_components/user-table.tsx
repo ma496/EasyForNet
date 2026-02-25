@@ -4,7 +4,7 @@ import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@
 import { SortDirection } from '@/store/api/base/sort-direction'
 import { UserListDto, UserRoleDto } from '@/store/api/identity/users/users-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { ExportFormat, successToast, exportData, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
@@ -38,7 +38,7 @@ export const UserTable = () => {
     isActive: '',
     roleId: '',
   })
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const isRTL = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
 

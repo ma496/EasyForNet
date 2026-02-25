@@ -1,6 +1,6 @@
 'use client'
 
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 import { Select } from '@/components/ui/form/select'
 import { useRoleListQuery } from '@/store/api/identity/roles/roles-api'
 import { Search, X } from 'lucide-react'
@@ -19,7 +19,7 @@ interface UserFilterPanelProps {
 }
 
 export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFilterPanelProps) => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
 
   const { data: rolesData } = useRoleListQuery({ all: true })
 

@@ -1,6 +1,6 @@
 'use client'
 import * as Yup from 'yup'
-import { getTranslation } from '@/i18n'
+import { useTranslation } from '@/i18n'
 // import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useRoleCreateMutation } from '@/store/api/identity/roles/roles-api'
@@ -25,7 +25,7 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
 export const RoleCreateForm = () => {
-  const { t } = getTranslation()
+  const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   const [createRole, { isLoading: isSavingRole }] = useRoleCreateMutation()
   const router = useLocalizedRouter()
