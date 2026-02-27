@@ -1,5 +1,5 @@
 import { Users, Palette, Mail, Trash2, Lock, Layers } from 'lucide-react'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { Locale } from '@/i18n'
 
 const Features = async ({ lang }: { lang: Locale }) => {

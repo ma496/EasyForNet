@@ -1,5 +1,5 @@
 import { Locale } from '@/i18n'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params

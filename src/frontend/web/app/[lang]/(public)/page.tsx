@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import Hero from './_components/hero'
 import Features from './_components/features'
 import CTA from './_components/cta'

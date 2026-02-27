@@ -1,6 +1,6 @@
 import { LocalizedLink } from '@/components/localized-link'
 import { Github } from 'lucide-react'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { Locale } from '@/i18n'
 
 const CTA = async ({ lang }: { lang: Locale }) => {

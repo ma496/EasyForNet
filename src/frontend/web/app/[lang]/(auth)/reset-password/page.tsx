@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { ResetPasswordForm } from './_components/reset-password-form'
 import LanguageDropdown from '@/components/custom/language-dropdown'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { Locale } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

@@ -1,7 +1,7 @@
 import ProviderComponent from '@/components/layouts/provider-component'
 import { Nunito } from 'next/font/google'
 import { i18nConfig, type Locale } from '@/i18n'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { TranslationProvider } from '@/components/layouts/translation-provider'
 
 import 'react-perfect-scrollbar/dist/css/styles.css'

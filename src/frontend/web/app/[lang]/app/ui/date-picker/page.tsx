@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { Locale } from '@/i18n'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { DatePickerExample } from "./_components/date-picker-example"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

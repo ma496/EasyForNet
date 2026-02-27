@@ -1,5 +1,5 @@
 import LanguageDropdown from '@/components/custom/language-dropdown'
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { Locale } from '@/i18n'
 
 const Footer = async ({ lang }: { lang: Locale }) => {

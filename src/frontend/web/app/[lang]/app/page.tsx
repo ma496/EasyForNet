@@ -1,4 +1,4 @@
-import { getDictionary } from '@/get-dictionary'
+import { getDictionary } from '@/i18n'
 import { Metadata } from 'next'
 import SaleDashboard from './_components/sale-dashboard'
 
