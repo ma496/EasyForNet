@@ -1,4 +1,4 @@
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { errorAlert, errorToast, isTranslationKeyExist } from '@/lib/utils'
 
 interface ValidationError {
@@ -15,7 +15,7 @@ interface ApiErrorPayload {
 }
 
 const getValidationMessage = (errors: ValidationError[]) => {
-  const { t } = useTranslation()
+  const { t } = getTranslation()
   let message = ''
   // loop through errors array
   errors.forEach((error: ValidationError) => {
@@ -42,7 +42,7 @@ const isError = (payload: ApiErrorPayload, errorStatus: number, ignoreStatuses?:
 }
 
 export const rtkErrorHandler = (payload: ApiErrorPayload, ignoreStatuses?: number[]) => {
-  const { t } = useTranslation()
+  const { t } = getTranslation()
   if (payload?.status === 'FETCH_ERROR') {
     errorToast.fire({ title: t('error.connection.title'), text: t('error.connection.message') })
   } else if (isError(payload, 400, ignoreStatuses) && payload.data?.errors) {
