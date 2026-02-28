@@ -1,6 +1,5 @@
 'use client'
 
-// import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
 import { useTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
@@ -15,7 +14,6 @@ import { CheckCircle } from 'lucide-react'
 import { successToast } from '@/lib/utils/notification'
 
 const SignupForm = () => {
-  // const router = useRouter()
   const { t } = useTranslation()
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [registeredEmail, setRegisteredEmail] = useState<string>('')

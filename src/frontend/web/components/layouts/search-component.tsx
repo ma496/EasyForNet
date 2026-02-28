@@ -1,15 +1,15 @@
 import { useId, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { SearchableItem, searchableItems } from '@/searchable-items'
 import { authUrls } from '@/auth-urls'
-import Link from 'next/link'
+import { LocalizedLink } from '@/components/localized-link'
 import { useTranslation } from '@/i18n'
 import { useAppSelector } from '@/store/hooks'
 import { Search } from 'lucide-react'
 import { isAllowed } from '@/lib/utils'
 
 const SearchComponent = () => {
-  const router = useRouter()
+  const router = useLocalizedRouter()
   const { t } = useTranslation()
   const [search, setSearch] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -93,7 +93,7 @@ const SearchComponent = () => {
           <ul className="absolute w-full bg-white text-black shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark">
             {searchResults.map((item: SearchableItem, index) => (
               <li key={item.url} className={index === activeIndex ? 'bg-primary/10 text-primary hover:bg-primary/5' : 'hover:bg-primary/5 hover:text-primary'}>
-                <Link
+                <LocalizedLink
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   href={item.url as any}
                   className="block px-4 py-2"
@@ -104,7 +104,7 @@ const SearchComponent = () => {
                   }}
                 >
                   {highlightText(t(item.title), searchQuery)}
-                </Link>
+                </LocalizedLink>
               </li>
             ))}
           </ul>

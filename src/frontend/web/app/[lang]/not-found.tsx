@@ -1,12 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useTranslation } from '@/i18n'
 import { FileQuestion, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const NotFound = () => {
-  const router = useRouter()
+  const router = useLocalizedRouter()
   const { t } = useTranslation()
 
   const handleBack = () => {

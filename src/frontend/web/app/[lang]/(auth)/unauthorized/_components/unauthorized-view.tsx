@@ -1,12 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useTranslation } from '@/i18n'
 import { ArrowLeft, ShieldAlert } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const UnauthorizedView = () => {
-  const router = useRouter()
+  const router = useLocalizedRouter()
   const { t } = useTranslation()
 
   const handleBack = () => {

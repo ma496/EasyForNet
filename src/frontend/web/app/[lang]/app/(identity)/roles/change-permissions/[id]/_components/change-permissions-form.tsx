@@ -9,7 +9,6 @@ import { useChangePermissionsMutation } from '@/store/api/identity/roles/roles-a
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/i18n'
-// import { useRouter } from 'next/navigation'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import AppLoading from '@/components/layouts/app-loading'
 import { Search } from 'lucide-react'

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import Link from 'next/link'
+import { LocalizedLink } from '@/components/localized-link'
 import { toggleSidebar } from '@/store/slices/themeConfigSlice'
 import { usePathname } from 'next/navigation'
 import ThemeChanger from '../custom/theme-changer'
@@ -49,10 +49,10 @@ const Header = () => {
       <div className="shadow-xs">
         <div className="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-black">
           <div className="ms-2 horizontal-logo flex items-center justify-between lg:hidden">
-            <Link href="/app" className="flex shrink-0 items-center main-logo">
+            <LocalizedLink href="/app" className="flex shrink-0 items-center main-logo">
               <img className="-ms-1 inline w-8" src="/assets/images/icon.png" alt="logo" />
               <span className="ms-1.5 hidden align-middle text-sm font-semibold transition-all duration-300 md:inline dark:text-white-light">{t('brand.name')}</span>
-            </Link>
+            </LocalizedLink>
             <button
               type="button"
               className="ms-2 collapse-icon flex flex-none cursor-pointer rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary lg:hidden dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary"

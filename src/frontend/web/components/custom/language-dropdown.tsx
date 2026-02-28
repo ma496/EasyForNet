@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react'
 import { useTranslation } from '@/i18n'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleRTL } from '@/store/slices/themeConfigSlice'
-import { useRouter } from 'next/navigation'
+import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
@@ -28,7 +28,7 @@ interface LanguageDropdownProps {
 
 const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdownProps) => {
   const dispatch = useAppDispatch()
-  const router = useRouter()
+  const router = useLocalizedRouter()
   const { i18n } = useTranslation()
   const dropdownRef = useRef<DropdownRef>(null)
 

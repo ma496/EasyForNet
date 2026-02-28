@@ -1,7 +1,7 @@
 import { LocalizedLink } from '@/components/localized-link'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { signout } from '@/store/slices/authSlice'
-import { useRouter } from 'next/navigation'
+import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useTranslation } from '@/i18n'
 import { User, LogOut, Lock } from 'lucide-react'
 import Dropdown, { DropdownRef } from '../dropdown'
@@ -11,7 +11,7 @@ import { useSignoutMutation } from '@/store/api/identity/account/account-api'
 
 const NavUser = () => {
   const { user } = useAppSelector((state) => state.auth)
-  const router = useRouter()
+  const router = useLocalizedRouter()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
