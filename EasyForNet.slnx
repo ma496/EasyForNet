@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Folder Name="/Template/" />
+  <Folder Name="/Template/Source/">
+    <Project Path="src/backend/Source/Backend.csproj" />
+  </Folder>
+  <Folder Name="/Template/Tests/">
+    <Project Path="src/backend/Tests/Backend.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Tool/">
+    <Project Path="tool/EasyForNetTool.Tests/EasyForNetTool.Tests.csproj" />
+    <Project Path="tool/EasyForNetTool/EasyForNetTool.csproj" />
+  </Folder>
+</Solution>

@@ -13,7 +13,6 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
     public override async Task Generate(CreateProjectArgument argument)
     {
         var version = Helpers.GetVersion();
-        // var version = "1.1.2";
         var templateBaseDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "EasyForNet",
@@ -127,9 +126,10 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             // update common-rules.md
             await ReplaceInFile(Path.Combine(targetPath, ".ai/rules/common-rules.md"), @"EasyForNet\.sln", $@"{pascalCaseProjectName}.sln");
 
+            // create solution file
             Console.WriteLine("Creating solution file...");
-            var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.sln");
-            await ExecuteCommand("dotnet", $"new sln -n {pascalCaseProjectName} -o \"{Path.GetDirectoryName(solutionPath)}\"");
+            var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.slnx");
+            await ExecuteCommand("dotnet", $"new sln -n {pascalCaseProjectName} -o \"{Path.GetDirectoryName(solutionPath)}\" -f slnx");
 
             // Add projects to solution
             var projectFiles = Directory.GetFiles(backendTargetPath, "*.csproj", SearchOption.AllDirectories);
