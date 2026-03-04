@@ -55,7 +55,7 @@ public partial class RoleGetResponseMapper
 
     private static List<Guid> RolePermissionsToPermissions(ICollection<RolePermission> rolePermissions)
     {
-        return rolePermissions.Select(x => x.PermissionId).ToList();
+        return [.. rolePermissions.Select(x => x.PermissionId)];
     }
 }
 

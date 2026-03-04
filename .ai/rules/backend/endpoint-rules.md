@@ -99,7 +99,7 @@ When names are different AND the types need conversion (e.g., `List<Guid>` to `I
 public partial User Map(UserCreateRequest request);
 
 private static ICollection<UserRole> RolesToUserRoles(List<Guid> roles)
-    => roles.Select(x => new UserRole { RoleId = x }).ToList();
+    => [.. roles.Select(x => new UserRole { RoleId = x })];
 ```
 
 ### Ignoring Properties
@@ -171,7 +171,7 @@ public partial class UserCreateRequestMapper
     public partial User Map(UserCreateRequest request);
 
     private static ICollection<UserRole> RolesToUserRoles(List<Guid> roles)
-        => roles.Select(x => new UserRole { RoleId = x }).ToList();
+        => [.. roles.Select(x => new UserRole { RoleId = x })];
 }
 
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
@@ -181,7 +181,7 @@ public partial class UserCreateResponseMapper
     public partial UserCreateResponse Map(User entity);
 
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => x.RoleId).ToList();
+        => [.. userRoles.Select(x => x.RoleId)];
 }
 ```
 
@@ -256,7 +256,7 @@ public partial class UserUpdateResponseMapper
     public partial UserUpdateResponse Map(User entity);
 
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => x.RoleId).ToList();
+        => [.. userRoles.Select(x => x.RoleId)];
 }
 ```
 
@@ -301,7 +301,7 @@ public partial class UserGetResponseMapper
     public partial UserGetResponse Map(User entity);
 
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => x.RoleId).ToList();
+        => [.. userRoles.Select(x => x.RoleId)];
 }
 ```
 
@@ -338,7 +338,7 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
         var dtoMapper = new UserListDtoMapper();
         await Send.ResponseAsync(new UserListResponse
         {
-            Items = items.Select(dtoMapper.Map).ToList(),
+            Items = [.. items.Select(dtoMapper.Map)],
             Total = total
         }, cancellation: ct);
     }
@@ -374,7 +374,7 @@ public partial class UserListDtoMapper
     public partial UserListDto Map(User entity);
 
     private static List<UserRoleDto> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => new UserRoleDto { Id = x.RoleId, Name = x.Role.Name }).ToList();
+        => [.. userRoles.Select(x => new UserRoleDto { Id = x.RoleId, Name = x.Role.Name })];
 }
 ```
 ### Delete Endpoint (DELETE)

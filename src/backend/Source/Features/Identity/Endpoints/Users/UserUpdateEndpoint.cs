@@ -89,7 +89,7 @@ public partial class UserUpdateResponseMapper
 
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
     {
-        return userRoles.Select(x => x.RoleId).ToList();
+        return [.. userRoles.Select(x => x.RoleId)];
     }
 }
 

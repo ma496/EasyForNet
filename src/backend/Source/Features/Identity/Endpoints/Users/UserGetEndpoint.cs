@@ -57,5 +57,5 @@ public partial class UserGetResponseMapper
     public partial UserGetResponse Map(User entity);
 
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => x.RoleId).ToList();
+        => [.. userRoles.Select(x => x.RoleId)];
 }

@@ -27,7 +27,7 @@ public class ArchitectHelperTests(App app) : AppTestsBase(app)
             );
     }
 
-    private void MustHaveDependencies(IReadOnlyList<TypeDefinition> dependencies, params Type[] mustHaveTypes)
+    private static void MustHaveDependencies(IReadOnlyList<TypeDefinition> dependencies, params Type[] mustHaveTypes)
     {
         var dependenciesFullName = dependencies.Select(x => x.FullName).ToList();
         foreach (var type in mustHaveTypes)
@@ -38,16 +38,13 @@ public class ArchitectHelperTests(App app) : AppTestsBase(app)
     }
     
     
+    #pragma warning disable CS9113
     [SuppressMessage("ReSharper", "UnusedParameter.Local"),SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public abstract class ServiceOneBase
+    public abstract class ServiceOneBase(FeatureAOneService featureAOneService)
     {
         const string Name = "ServiceOne";
-        protected ServiceOneBase(FeatureAOneService featureAOneService)
-        {
-            
-        }
-        
-        protected int MultiplyBy3(int number)
+
+        protected static int MultiplyBy3(int number)
             => number * 3;
 
         private static void MethodOne()
@@ -58,13 +55,11 @@ public class ArchitectHelperTests(App app) : AppTestsBase(app)
         #pragma warning restore CS0219 // Variable is assigned but its value is never used
         }
     }
+    #pragma warning restore CS9113
     
-    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class ServiceOne : ServiceOneBase
+    #pragma warning disable CS9113
+    public class ServiceOne(IFeatureAOneService _) : ServiceOneBase(new())
     {
-        public ServiceOne(IFeatureAOneService featureAOneService) : base(new())
-        {
-            
-        }
     }
+    #pragma warning restore CS9113
 }

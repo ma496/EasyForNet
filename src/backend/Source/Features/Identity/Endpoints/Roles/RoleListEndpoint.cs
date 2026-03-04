@@ -37,7 +37,7 @@ sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListReque
         var dtoMapper = new RoleListDtoMapper();
         var response = new RoleListResponse
         {
-            Items = items.Select(dtoMapper.Map).ToList(),
+            Items = [.. items.Select(dtoMapper.Map)],
             Total = total
         };
 
@@ -74,19 +74,19 @@ sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Ro
 {
     public override List<RoleListDto> FromEntity(List<Role> e)
     {
-        return e.Select(entity => new RoleListDto
+        return [.. e.Select(entity => new RoleListDto
         {
             Id = entity.Id,
             Name = entity.Name,
             NameNormalized = entity.NameNormalized,
             Description = entity.Description,
-            Permissions = entity.RolePermissions.Select(x => x.PermissionId).ToList(),
+            Permissions = [.. entity.RolePermissions.Select(x => x.PermissionId)],
             UserCount = entity.UserRoles.Count,
             CreatedAt = entity.CreatedAt,
             CreatedBy = entity.CreatedBy,
             UpdatedAt = entity.UpdatedAt,
             UpdatedBy = entity.UpdatedBy,
-        }).ToList();
+        })];
     }
 }
 
@@ -96,10 +96,10 @@ public partial class RoleListDtoMapper
     [MapProperty(nameof(Role.RolePermissions), nameof(RoleGetResponse.Permissions), Use = nameof(RolePermissionsToPermissions)),
      MapProperty(nameof(Role.UserRoles.Count), nameof(RoleGetResponse.UserCount))]
     public partial RoleListDto Map(Role entity);
-    
+
     private static List<Guid> RolePermissionsToPermissions(ICollection<RolePermission> rolePermissions)
     {
-        return rolePermissions.Select(x => x.PermissionId).ToList();
+        return [.. rolePermissions.Select(x => x.PermissionId)];
     }
 }
 

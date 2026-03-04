@@ -15,7 +15,7 @@ public class PermissionDefinitionService(PermissionDefinitionContext context) : 
 
     public IReadOnlyList<FlattenedPermission> GetFlattenedPermissions()
     {
-        return GetPermissions().SelectMany(GetPermissions).ToList();
+        return [.. GetPermissions().SelectMany(GetPermissions)];
     }
 
     #region Helpers

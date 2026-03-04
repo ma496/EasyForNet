@@ -20,14 +20,14 @@ sealed class UserCreateEndpoint(IUserService userService, AppDbContext dbContext
         {
             ThrowError("Username already exists", ErrorCodes.UsernameAlreadyExists);
         }
-        
+
         var emailExists = await dbContext.Users
             .AnyAsync(x => x.EmailNormalized == request.Email.Trim().ToLowerInvariant(), cancellationToken);
         if (emailExists)
         {
             ThrowError("Email already exists", ErrorCodes.EmailAlreadyExists);
         }
-        
+
         var requestMapper = new UserCreateRequestMapper();
         var entity = requestMapper.Map(request);
         entity.IsEmailVerified = true;
@@ -82,7 +82,7 @@ public partial class UserCreateRequestMapper
     public partial User Map(UserCreateRequest request);
 
     private static ICollection<UserRole> RolesToUserRoles(List<Guid> roles)
-        => roles.Select(x => new UserRole { RoleId = x }).ToList();
+        => [.. roles.Select(x => new UserRole { RoleId = x })];
 }
 
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
@@ -90,8 +90,8 @@ public partial class UserCreateResponseMapper
 {
     [MapProperty("UserRoles", "Roles", Use = nameof(UserRolesToRoles))]
     public partial UserCreateResponse Map(User entity);
-    
+
     private static List<Guid> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => x.RoleId).ToList();
+        => [.. userRoles.Select(x => x.RoleId)];
 }
 

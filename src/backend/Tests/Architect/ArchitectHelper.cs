@@ -69,7 +69,7 @@ public static class ArchitectHelper
                 {
                     // We only care about methods declared in the current type of the hierarchy
                     if (method.DeclaringType != currentType) continue;
-                    
+
                     // Return type
                     AddDependenciesFrom(method.ReturnType);
 
@@ -96,7 +96,7 @@ public static class ArchitectHelper
                                     // Also check generic arguments of the method call itself
                                     if (methodReference is GenericInstanceMethod genericMethod)
                                     {
-                                        foreach(var arg in genericMethod.GenericArguments)
+                                        foreach (var arg in genericMethod.GenericArguments)
                                         {
                                             AddDependenciesFrom(arg);
                                         }
@@ -119,6 +119,6 @@ public static class ArchitectHelper
         }
 
         // Filter out the type itself and return the final list.
-        return dependencies.Where(d => d != type).ToList();
+        return [.. dependencies.Where(d => d != type)];
     }
 }

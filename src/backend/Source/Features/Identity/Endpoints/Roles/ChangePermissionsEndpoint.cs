@@ -45,7 +45,7 @@ sealed class ChangePermissionsEndpoint(IRoleService roleService)
             new()
             {
                 Id = entity.Id,
-                Permissions = entity.RolePermissions.Select(x => x.PermissionId).ToList()
+                Permissions = [.. entity.RolePermissions.Select(x => x.PermissionId)]
             }, cancellation: cancellationToken
         );
     }

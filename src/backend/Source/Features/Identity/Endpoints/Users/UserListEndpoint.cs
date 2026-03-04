@@ -49,7 +49,7 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
         var dtoMapper = new UserListDtoMapper();
         var response = new UserListResponse
         {
-            Items = items.Select(dtoMapper.Map).ToList(),
+            Items = [.. items.Select(dtoMapper.Map)],
             Total = total
         };
 
@@ -99,5 +99,5 @@ public partial class UserListDtoMapper
     public partial UserListDto Map(User entity);
 
     private static List<UserRoleDto> UserRolesToRoles(ICollection<UserRole> userRoles)
-        => userRoles.Select(x => new UserRoleDto { Id = x.RoleId, Name = x.Role.Name }).ToList();
+        => [.. userRoles.Select(x => new UserRoleDto { Id = x.RoleId, Name = x.Role.Name })];
 }
