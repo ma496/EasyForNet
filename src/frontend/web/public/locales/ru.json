@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "Обновить роль"
-      }
+      },
+      "permissionGroups": "Группы Разрешений"
     },
     "profile": {
       "title": "Профиль",

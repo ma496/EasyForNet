@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "تحديث الدور"
-      }
+      },
+      "permissionGroups": "مجموعات الصلاحيات"
     },
     "profile": {
       "title": "الملف الشخصي",

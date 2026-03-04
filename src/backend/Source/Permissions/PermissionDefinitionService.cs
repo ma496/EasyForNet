@@ -4,18 +4,33 @@ using Backend.Attributes;
 
 public interface IPermissionDefinitionService
 {
-    IReadOnlyList<PermissionDefinition> GetPermissions();
+    IReadOnlyList<PermissionGroupDefinition> GetPermissionGroups();
     IReadOnlyList<FlattenedPermission> GetFlattenedPermissions();
 }
 
 [NoDirectUse]
-public class PermissionDefinitionService(PermissionDefinitionContext context) : IPermissionDefinitionService
+public class PermissionDefinitionService(IEnumerable<IPermissionDefinitionProvider> providers) : IPermissionDefinitionService
 {
-    public IReadOnlyList<PermissionDefinition> GetPermissions() => context.GetPermissions();
+    public IReadOnlyList<PermissionGroupDefinition> GetPermissionGroups()
+    {
+        var groups = new List<PermissionGroupDefinition>();
+        foreach (var provider in providers)
+        {
+            var context = new PermissionDefinitionContext();
+            provider.Define(context);
+            groups.Add(new PermissionGroupDefinition
+            {
+                GroupName = provider.GroupName,
+                Permissions = context.GetPermissions()
+            });
+        }
+        return groups.AsReadOnly();
+    }
 
     public IReadOnlyList<FlattenedPermission> GetFlattenedPermissions()
     {
-        return [.. GetPermissions().SelectMany(GetPermissions)];
+        var allPermissions = GetPermissionGroups().SelectMany(g => g.Permissions);
+        return [.. allPermissions.SelectMany(GetPermissions)];
     }
 
     #region Helpers

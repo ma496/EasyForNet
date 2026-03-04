@@ -10,18 +10,18 @@ sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissio
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var permissions = permissionDefinitionService.GetPermissions();
+        var groups = permissionDefinitionService.GetPermissionGroups();
 
         await Send.ResponseAsync(new()
         {
-            Permissions = permissions
+            Groups = groups
         }, cancellation: cancellationToken);
     }
 }
 
 sealed class GetDefinePermissionsResponse
 {
-    public IReadOnlyList<PermissionDefinition> Permissions { get; set; } = [];
+    public IReadOnlyList<PermissionGroupDefinition> Groups { get; set; } = [];
 }
 
 

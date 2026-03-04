@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "Mettre à jour le rôle"
-      }
+      },
+      "permissionGroups": "Groupes d'autorisations"
     },
     "profile": {
       "title": "Profil",

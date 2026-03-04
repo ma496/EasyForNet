@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "Update Role"
-      }
+      },
+      "permissionGroups": "Permission Groups"
     },
     "profile": {
       "title": "Profile",

@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "更新角色"
-      }
+      },
+      "permissionGroups": "权限组"
     },
     "profile": {
       "title": "个人资料",

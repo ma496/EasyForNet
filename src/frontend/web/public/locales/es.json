@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "Actualizar rol"
-      }
+      },
+      "permissionGroups": "Grupos de Permisos"
     },
     "profile": {
       "title": "Perfil",

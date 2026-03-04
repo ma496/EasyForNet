@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "کردار اپ ڈیٹ کریں"
-      }
+      },
+      "permissionGroups": "اجازت کے گروپس"
     },
     "profile": {
       "title": "پروفائل",

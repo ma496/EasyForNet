@@ -1,18 +1,20 @@
-namespace Backend.Permissions;
+namespace Backend.Features.Identity.Core;
 
-public class PermissionDefinitionProvider
+using Backend.Permissions;
+
+public class IdentityPermissionsProvider : IPermissionDefinitionProvider
 {
+    public string GroupName => "Identity";
+
     public void Define(PermissionDefinitionContext context)
     {
-        var identityPermissions = context.AddPermission("Identity", "Identity");
-
-        var usersPermissions = identityPermissions.AddChild("Users", "Users");
+        var usersPermissions = context.AddPermission("Users", "Users");
         usersPermissions.AddChild(Allow.User_View, "View");
         usersPermissions.AddChild(Allow.User_Create, "Create");
         usersPermissions.AddChild(Allow.User_Update, "Update");
         usersPermissions.AddChild(Allow.User_Delete, "Delete");
 
-        var rolesPermissions = identityPermissions.AddChild("Roles", "Roles");
+        var rolesPermissions = context.AddPermission("Roles", "Roles");
         rolesPermissions.AddChild(Allow.Role_View, "View");
         rolesPermissions.AddChild(Allow.Role_Create, "Create");
         rolesPermissions.AddChild(Allow.Role_Update, "Update");

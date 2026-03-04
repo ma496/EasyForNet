@@ -87,8 +87,14 @@ Helper.AddFeatures(bld.Services, bld.Configuration);
 
 // configure services 
 bld.Services.AddScoped<DataSeeder>();
-bld.Services.AddSingleton<PermissionDefinitionContext>();
-bld.Services.AddScoped<PermissionDefinitionProvider>();
+
+var permissionProviders = typeof(Program).Assembly.GetTypes()
+    .Where(t => typeof(IPermissionDefinitionProvider).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
+foreach (var provider in permissionProviders)
+{
+    bld.Services.AddScoped(typeof(IPermissionDefinitionProvider), provider);
+}
+
 bld.Services.AddScoped<IPermissionDefinitionService, PermissionDefinitionService>();
 
 // Configure email services
@@ -102,9 +108,7 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
-    var permissionDefinitionProvider = scope.ServiceProvider.GetRequiredService<PermissionDefinitionProvider>();
-    var permissionDefinitionContext = scope.ServiceProvider.GetRequiredService<PermissionDefinitionContext>();
-    permissionDefinitionProvider.Define(permissionDefinitionContext);
+
     var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
     await seeder.SeedAsync();
 }

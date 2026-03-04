@@ -323,7 +323,8 @@
       },
       "update": {
         "title": "भूमिका अपडेट करें"
-      }
+      },
+      "permissionGroups": "अनुमति समूह"
     },
     "profile": {
       "title": "प्रोफ़ाइल",

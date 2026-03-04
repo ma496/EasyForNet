@@ -1,4 +1,9 @@
 export interface PermissionDefinitionResponse {
+  groups: PermissionGroupDefinition[]
+}
+
+export interface PermissionGroupDefinition {
+  groupName: string
   permissions: PermissionDefinition[]
 }
 
