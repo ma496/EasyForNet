@@ -2,7 +2,6 @@ namespace Backend.Data;
 
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
-using System.Reflection;
 using Backend.Permissions;
 
 public class DataSeeder(IUserService userService,
@@ -18,7 +17,7 @@ public class DataSeeder(IUserService userService,
         var permissionsToUpdate = flattenedPermissions.Where(p => savedPermissions.Any(sp => sp.Name == p.Name && sp.DisplayName != p.DisplayName)).ToList();
         var permissionsToDelete = savedPermissions.Where(sp => flattenedPermissions.All(p => p.Name != sp.Name)).ToList();
 
-        await permissionService.CreateAsync(permissionsToAdd.Select(p => new Permission { Name = p.Name, DisplayName = p.DisplayName }).ToList());
+        await permissionService.CreateAsync([.. permissionsToAdd.Select(p => new Permission { Name = p.Name, DisplayName = p.DisplayName })]);
         foreach (var permission in permissionsToUpdate)
         {
             var savedPermission = savedPermissions.FirstOrDefault(sp => sp.Name == permission.Name);
@@ -28,8 +27,8 @@ public class DataSeeder(IUserService userService,
                 await permissionService.UpdateAsync(savedPermission);
             }
         }
-        await permissionService.RemovePermissionsFromAllRoles(permissionsToDelete.Select(p => p.Id).ToList());
-        await permissionService.DeleteAsync(permissionsToDelete.Select(p => p.Id).ToList());
+        await permissionService.RemovePermissionsFromAllRoles([.. permissionsToDelete.Select(p => p.Id)]);
+        await permissionService.DeleteAsync([.. permissionsToDelete.Select(p => p.Id)]);
 
         // all permissions
         var permissions = await permissionService.Permissions().AsNoTracking().ToListAsync();
@@ -39,15 +38,9 @@ public class DataSeeder(IUserService userService,
             await roleService.CreateAsync(new Role { Default = true, Name = "Admin", Description = "Admin Role" });
         var adminPermissions = await permissionService.GetRolePermissionsAsync(adminRole.Id);
         var adminPermissionsToAssign = permissions.Where(p => adminPermissions.All(ap => ap.Name != p.Name)).ToList();
-        foreach (var permission in adminPermissionsToAssign)
-        {
-            await roleService.AssignPermissionAsync(adminRole.Id, permission.Id);
-        }
+        await roleService.AssignPermissionsAsync(adminRole.Id, [.. adminPermissionsToAssign.Select(p => p.Id)]);
         var adminPermissionsToRemove = adminPermissions.Where(ap => permissions.All(p => p.Name != ap.Name)).ToList();
-        foreach (var permission in adminPermissionsToRemove)
-        {
-            await roleService.RemovePermissionAsync(adminRole.Id, permission.Id);
-        }
+        await roleService.RemovePermissionsAsync(adminRole.Id, [.. adminPermissionsToRemove.Select(p => p.Id)]);
 
         // admin user
         var adminUser = await userService.GetByUsernameAsync("admin") ??
@@ -55,40 +48,6 @@ public class DataSeeder(IUserService userService,
         if (!await userService.IsInRoleAsync(adminUser.Id, adminRole.Id))
         {
             await userService.AssignRoleAsync(adminUser.Id, adminRole.Id);
-        }
-
-        // public user permissions
-        var publicPermissions = typeof(Allow).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-            .Where(f => f.IsLiteral && !f.IsInitOnly && f.GetCustomAttribute<PublicAttribute>() != null)
-            .Select(f => f.GetRawConstantValue()?.ToString())
-            .Where(v => v != null)
-            .Cast<string>()
-            .ToList();
-        var loadPublicPermissions = permissions
-            .Where(p => publicPermissions.Contains(p.Name))
-            .ToList();
-
-        // public user role
-        var publicUserRole = await roleService.GetByNameAsync("Public") ??
-            await roleService.CreateAsync(new Role { Default = true, Name = "Public", Description = "Public User Role" });
-        var publicUserPermissions = await permissionService.GetRolePermissionsAsync(publicUserRole.Id);
-        var publicUserPermissionsToAssign = loadPublicPermissions.Where(p => publicUserPermissions.All(up => up.Name != p.Name)).ToList();
-        foreach (var permission in publicUserPermissionsToAssign)
-        {
-            await roleService.AssignPermissionAsync(publicUserRole.Id, permission.Id);
-        }
-        var publicUserPermissionsToRemove = publicUserPermissions.Where(up => loadPublicPermissions.All(p => p.Name != up.Name)).ToList();
-        foreach (var permission in publicUserPermissionsToRemove)
-        {
-            await roleService.RemovePermissionAsync(publicUserRole.Id, permission.Id);
-        }
-
-        // public user
-        var publicUser = await userService.GetByUsernameAsync("public") ??
-            await userService.CreateAsync(new User { Default = true, Username = "public", Email = "public@example.com", IsEmailVerified = true }, "Public#123");
-        if (!await userService.IsInRoleAsync(publicUser.Id, publicUserRole.Id))
-        {
-            await userService.AssignRoleAsync(publicUser.Id, publicUserRole.Id);
         }
     }
 }

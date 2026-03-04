@@ -13,7 +13,9 @@ public interface IRoleService
     Task DeleteAsync(Guid id);
     Task DeleteAsync(Role role);
     Task AssignPermissionAsync(Guid roleId, Guid permissionId);
+    Task AssignPermissionsAsync(Guid roleId, List<Guid> permissionIds);
     Task RemovePermissionAsync(Guid roleId, Guid permissionId);
+    Task RemovePermissionsAsync(Guid roleId, List<Guid> permissionIds);
     Task<List<string>> GetRolePermissionsAsync(Guid roleId);
 }
 
@@ -71,6 +73,19 @@ public class RoleService(AppDbContext dbContext) : IRoleService
         await dbContext.SaveChangesAsync();
     }
 
+    public async Task AssignPermissionsAsync(Guid roleId, List<Guid> permissionIds)
+    {
+        var rolePermissions = permissionIds
+            .Select(permissionId =>
+                new RolePermission
+                {
+                    RoleId = roleId,
+                    PermissionId = permissionId
+                });
+        dbContext.RolePermissions.AddRange(rolePermissions);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task RemovePermissionAsync(Guid roleId, Guid permissionId)
     {
         var rolePermission = await dbContext.RolePermissions
@@ -80,6 +95,15 @@ public class RoleService(AppDbContext dbContext) : IRoleService
             dbContext.RolePermissions.Remove(rolePermission);
             await dbContext.SaveChangesAsync();
         }
+    }
+
+    public async Task RemovePermissionsAsync(Guid roleId, List<Guid> permissionIds)
+    {
+        var rolePermissions = await dbContext.RolePermissions
+            .Where(rp => rp.RoleId == roleId && permissionIds.Contains(rp.PermissionId))
+            .ToListAsync();
+        dbContext.RolePermissions.RemoveRange(rolePermissions);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<List<string>> GetRolePermissionsAsync(Guid roleId)
