@@ -77,7 +77,7 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Development.json");
             CopyFrom($"{backendProjectPath}/Source", $"{backendTargetPath}/Source", "appsettings.json", "appsettings.Testing.json");
             CopyDirectory(webProjectPath, webTargetPath, true);
-            CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore");
+            CopyFiles(versionedTemplateDir, targetPath, ".editorconfig", ".gitignore", "AGENTS.md");
             CopyDirectory($"{versionedTemplateDir}/.config", $"{targetPath}/.config", true);
             CopyDirectory($"{versionedTemplateDir}/.ai", $"{targetPath}/.ai", true);
             CopyDirectory($"{versionedTemplateDir}/.vscode", $"{targetPath}/.vscode", true);

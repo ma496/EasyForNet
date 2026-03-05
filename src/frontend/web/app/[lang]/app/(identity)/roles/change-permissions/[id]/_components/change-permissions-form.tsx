@@ -157,7 +157,7 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   }, [permissionTreeNodes])
 
   return (
-    <div className="panel h-full md:w-[600px] lg:w-[800px]">
+    <div className="panel h-full md:w-150 lg:w-200">
       {!isFetchingRole && !isLoadingDefinePermissions && !isLoadingPermissions ? (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
