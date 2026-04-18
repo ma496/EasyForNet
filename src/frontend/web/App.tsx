@@ -9,6 +9,8 @@ import { useLazyGetUserInfoQuery } from './store/api/identity/account/account-ap
 import { isAllowed } from './lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import { getMatchedAuthUrl } from './auth-urls'
+import CookieConsentDialog from '@/components/custom/cookie-consent-dialog'
+import { useCookieConsent } from '@/hooks/use-cookie-consent'
 
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme)
@@ -18,6 +20,7 @@ function App({ children }: PropsWithChildren) {
   const authState = useAppSelector((state) => state.auth)
   const [isLoading, setIsLoading] = useState(true)
   const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery()
+  const { showDialog: showConsentDialog, isLoading: consentLoading, accept, decline } = useCookieConsent()
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -70,6 +73,9 @@ function App({ children }: PropsWithChildren) {
         } main-section relative font-nunito text-sm font-normal antialiased`}
     >
       {isLoading || isLoadingUserInfo ? <AppLoading /> : children}
+      {showConsentDialog && !consentLoading && (
+        <CookieConsentDialog isOpen={true} onAccept={accept} onDecline={decline} />
+      )}
     </div>
   )
 }

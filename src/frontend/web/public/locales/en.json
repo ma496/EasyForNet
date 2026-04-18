@@ -2,6 +2,12 @@
   "brand": {
     "name": "Easy For Net"
   },
+  "cookieConsent": {
+    "title": "Cookie Consent",
+    "description": "We use cookies to enhance your browsing experience. By continuing to visit this site you agree to our use of cookies.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
   "common": {
     "back": "Back",
     "more": "More",

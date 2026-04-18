@@ -399,186 +399,182 @@ const SaleDashboard = () => {
   }
 
   return (
-    <>
-      <div>
-        <div className="pt-5">
-          <div className="mb-6 grid gap-6 xl:grid-cols-3">
-            <div className="panel h-full xl:col-span-2">
-              <div className="mb-5 flex items-center justify-between dark:text-white-light">
-                <h5 className="text-lg font-semibold">{t('page.dashboard.revenue')}</h5>
-                <div className="dropdown">
-                  <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal className="text-black/70 hover:text-primary! dark:text-white/70" />}>
-                    <ul>
-                      <li>
-                        <button type="button">{t('page.dashboard.weekly')}</button>
-                      </li>
-                      <li>
-                        <button type="button">{t('page.dashboard.monthly')}</button>
-                      </li>
-                      <li>
-                        <button type="button">{t('page.dashboard.yearly')}</button>
-                      </li>
-                    </ul>
-                  </Dropdown>
-                </div>
-              </div>
-              <p className="text-lg dark:text-white-light/90">
-                {t('page.dashboard.totalProfit')} <span className="ml-2 text-primary">$18,750</span>
-              </p>
-              <div className="relative">
-                <div className="rounded-lg bg-white dark:bg-black">
-                  {isMounted ? (
-                    <ReactApexChart series={revenueChart.series} options={revenueChart.options} type="area" height={325} width={'100%'} />
-                  ) : (
-                    <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
-                      <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="panel h-full">
-              <div className="mb-5 flex items-center">
-                <h5 className="text-lg font-semibold dark:text-white-light">{t('page.dashboard.salesByCategory')}</h5>
-              </div>
-              <div>
-                <div className="rounded-lg bg-white dark:bg-black">
-                  {isMounted ? (
-                    <ReactApexChart key={`sales-by-category-${chartKey}`} series={salesByCategory.series} options={salesByCategory.options} type="donut" height={460} width={'100%'} />
-                  ) : (
-                    <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
-                      <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
-                    </div>
-                  )}
-                </div>
-              </div>
+    <div>
+      <div className="mb-6 grid gap-6 xl:grid-cols-3">
+        <div className="panel h-full xl:col-span-2">
+          <div className="mb-5 flex items-center justify-between dark:text-white-light">
+            <h5 className="text-lg font-semibold">{t('page.dashboard.revenue')}</h5>
+            <div className="dropdown">
+              <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal className="text-black/70 hover:text-primary! dark:text-white/70" />}>
+                <ul>
+                  <li>
+                    <button type="button">{t('page.dashboard.weekly')}</button>
+                  </li>
+                  <li>
+                    <button type="button">{t('page.dashboard.monthly')}</button>
+                  </li>
+                  <li>
+                    <button type="button">{t('page.dashboard.yearly')}</button>
+                  </li>
+                </ul>
+              </Dropdown>
             </div>
           </div>
-
-          <div className="mb-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            <div className="panel h-full sm:col-span-2 xl:col-span-1">
-              <div className="mb-5 flex items-center">
-                <h5 className="text-lg font-semibold dark:text-white-light">
-                  {t('page.dashboard.dailySales')}
-                  <span className="block text-sm font-normal text-white-dark">{t('page.dashboard.goToColumns')}</span>
-                </h5>
-                <div className="relative ltr:ml-auto rtl:mr-auto">
-                  <div className="grid h-11 w-11 place-content-center rounded-full bg-[#ffeccb] text-warning dark:bg-warning dark:text-[#ffeccb]">
-                    <DollarSign size={16} />
-                  </div>
+          <p className="text-lg dark:text-white-light/90">
+            {t('page.dashboard.totalProfit')} <span className="ml-2 text-primary">$18,750</span>
+          </p>
+          <div className="relative">
+            <div className="rounded-lg bg-white dark:bg-black">
+              {isMounted ? (
+                <ReactApexChart series={revenueChart.series} options={revenueChart.options} type="area" height={325} width={'100%'} />
+              ) : (
+                <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
+                  <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
                 </div>
-              </div>
-              <div>
-                <div className="rounded-lg bg-white dark:bg-black">
-                  {isMounted ? (
-                    <ReactApexChart series={dailySales.series} options={dailySales.options} type="bar" height={160} width={'100%'} />
-                  ) : (
-                    <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
-                      <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
-                    </div>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
-            <div className="panel h-full">
-              <div className="mb-5 flex items-center justify-between dark:text-white-light">
-                <h5 className="text-lg font-semibold">{t('page.dashboard.summary')}</h5>
-                <div className="dropdown">
-                  <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal size={16} />}>
-                    <ul>
-                      <li>
-                        <button type="button">{t('page.dashboard.viewReport')}</button>
-                      </li>
-                      <li>
-                        <button type="button">{t('page.dashboard.editReport')}</button>
-                      </li>
-                      <li>
-                        <button type="button">{t('page.dashboard.markAsDone')}</button>
-                      </li>
-                    </ul>
-                  </Dropdown>
-                </div>
-              </div>
-              <div className="space-y-9">
-                <div className="flex items-center">
-                  <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
-                    <div className="grid h-9 w-9 place-content-center rounded-full bg-secondary-light text-secondary dark:bg-secondary dark:text-secondary-light">
-                      <Inbox size={16} />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>{t('page.dashboard.income')}</h6>
-                      <p className="ltr:ml-auto rtl:mr-auto">$125,800</p>
-                    </div>
-                    <div className="h-2 rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
-                      <div className="h-full w-11/12 rounded-full bg-linear-to-r from-[#7579ff] to-[#b224ef]"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
-                    <div className="grid h-9 w-9 place-content-center rounded-full bg-success-light text-success dark:bg-success dark:text-success-light">
-                      <Tag size={16} />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>{t('page.dashboard.profit')}</h6>
-                      <p className="ltr:ml-auto rtl:mr-auto">$52,350</p>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
-                      <div className="h-full w-full rounded-full bg-linear-to-r from-[#3cba92] to-[#0ba360]" style={{ width: '65%' }}></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
-                    <div className="grid h-9 w-9 place-content-center rounded-full bg-warning-light text-warning dark:bg-warning dark:text-warning-light">
-                      <CreditCard size={16} />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-2 flex font-semibold text-white-dark">
-                      <h6>{t('page.dashboard.expenses')}</h6>
-                      <p className="ltr:ml-auto rtl:mr-auto">$73,450</p>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
-                      <div className="h-full w-full rounded-full bg-linear-to-r from-[#f09819] to-[#ff5858]" style={{ width: '80%' }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
-            <div className="panel h-full p-0">
-              <div className="absolute flex w-full items-center justify-between p-5">
-                <div className="relative">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-success-light text-success dark:bg-success dark:text-success-light">
-                    <ShoppingCart size={16} />
-                  </div>
+        <div className="panel h-full">
+          <div className="mb-5 flex items-center">
+            <h5 className="text-lg font-semibold dark:text-white-light">{t('page.dashboard.salesByCategory')}</h5>
+          </div>
+          <div>
+            <div className="rounded-lg bg-white dark:bg-black">
+              {isMounted ? (
+                <ReactApexChart key={`sales-by-category-${chartKey}`} series={salesByCategory.series} options={salesByCategory.options} type="donut" height={460} width={'100%'} />
+              ) : (
+                <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
+                  <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
                 </div>
-                <h5 className="text-2xl font-semibold ltr:text-right rtl:text-left dark:text-white-light">
-                  4,875
-                  <span className="block text-sm font-normal">{t('page.dashboard.totalOrders')}</span>
-                </h5>
-              </div>
-              <div className="rounded-lg bg-transparent">
-                {/* loader */}
-                {isMounted ? (
-                  <ReactApexChart series={totalOrders.series} options={totalOrders.options} type="area" height={290} width={'100%'} />
-                ) : (
-                  <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
-                    <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </>
+
+      <div className="mb-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="panel h-full sm:col-span-2 xl:col-span-1">
+          <div className="mb-5 flex items-center">
+            <h5 className="text-lg font-semibold dark:text-white-light">
+              {t('page.dashboard.dailySales')}
+              <span className="block text-sm font-normal text-white-dark">{t('page.dashboard.goToColumns')}</span>
+            </h5>
+            <div className="relative ltr:ml-auto rtl:mr-auto">
+              <div className="grid h-11 w-11 place-content-center rounded-full bg-[#ffeccb] text-warning dark:bg-warning dark:text-[#ffeccb]">
+                <DollarSign size={16} />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="rounded-lg bg-white dark:bg-black">
+              {isMounted ? (
+                <ReactApexChart series={dailySales.series} options={dailySales.options} type="bar" height={160} width={'100%'} />
+              ) : (
+                <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
+                  <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="panel h-full">
+          <div className="mb-5 flex items-center justify-between dark:text-white-light">
+            <h5 className="text-lg font-semibold">{t('page.dashboard.summary')}</h5>
+            <div className="dropdown">
+              <Dropdown placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`} button={<MoreHorizontal size={16} />}>
+                <ul>
+                  <li>
+                    <button type="button">{t('page.dashboard.viewReport')}</button>
+                  </li>
+                  <li>
+                    <button type="button">{t('page.dashboard.editReport')}</button>
+                  </li>
+                  <li>
+                    <button type="button">{t('page.dashboard.markAsDone')}</button>
+                  </li>
+                </ul>
+              </Dropdown>
+            </div>
+          </div>
+          <div className="space-y-9">
+            <div className="flex items-center">
+              <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                <div className="grid h-9 w-9 place-content-center rounded-full bg-secondary-light text-secondary dark:bg-secondary dark:text-secondary-light">
+                  <Inbox size={16} />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="mb-2 flex font-semibold text-white-dark">
+                  <h6>{t('page.dashboard.income')}</h6>
+                  <p className="ltr:ml-auto rtl:mr-auto">$125,800</p>
+                </div>
+                <div className="h-2 rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
+                  <div className="h-full w-11/12 rounded-full bg-linear-to-r from-[#7579ff] to-[#b224ef]"></div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                <div className="grid h-9 w-9 place-content-center rounded-full bg-success-light text-success dark:bg-success dark:text-success-light">
+                  <Tag size={16} />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="mb-2 flex font-semibold text-white-dark">
+                  <h6>{t('page.dashboard.profit')}</h6>
+                  <p className="ltr:ml-auto rtl:mr-auto">$52,350</p>
+                </div>
+                <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
+                  <div className="h-full w-full rounded-full bg-linear-to-r from-[#3cba92] to-[#0ba360]" style={{ width: '65%' }}></div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <div className="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                <div className="grid h-9 w-9 place-content-center rounded-full bg-warning-light text-warning dark:bg-warning dark:text-warning-light">
+                  <CreditCard size={16} />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="mb-2 flex font-semibold text-white-dark">
+                  <h6>{t('page.dashboard.expenses')}</h6>
+                  <p className="ltr:ml-auto rtl:mr-auto">$73,450</p>
+                </div>
+                <div className="h-2 w-full rounded-full bg-dark-light shadow-sm dark:bg-[#1b2e4b]">
+                  <div className="h-full w-full rounded-full bg-linear-to-r from-[#f09819] to-[#ff5858]" style={{ width: '80%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="panel h-full p-0">
+          <div className="absolute flex w-full items-center justify-between p-5">
+            <div className="relative">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-success-light text-success dark:bg-success dark:text-success-light">
+                <ShoppingCart size={16} />
+              </div>
+            </div>
+            <h5 className="text-2xl font-semibold ltr:text-right rtl:text-left dark:text-white-light">
+              4,875
+              <span className="block text-sm font-normal">{t('page.dashboard.totalOrders')}</span>
+            </h5>
+          </div>
+          <div className="rounded-lg bg-transparent">
+            {/* loader */}
+            {isMounted ? (
+              <ReactApexChart series={totalOrders.series} options={totalOrders.options} type="area" height={290} width={'100%'} />
+            ) : (
+              <div className="dark:bg-opacity-[0.08] grid min-h-81.25 place-content-center bg-white-light/30 dark:bg-dark">
+                <span className="inline-flex h-5 w-5 animate-spin rounded-full border-2 border-black border-l-transparent! dark:border-white"></span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
