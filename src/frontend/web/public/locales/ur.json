@@ -49,6 +49,7 @@
     "changePassword": "پاس ورڈ تبدیل کریں",
     "profile": "پروفائل",
     "uiFileUpload": "فائل اپ لوڈ",
+    "uiTooltips": "ٹولٹپس",
     "usersList": "فہرست",
     "usersCreate": "بنائیں",
     "usersUpdate": "اپ ڈیٹ"
@@ -67,7 +68,8 @@
     "changePassword": "پاس ورڈ تبدیل کریں",
     "profile": "پروفائل",
     "uiFormElements": "UI فارم عناصر",
-    "uiFileUpload": "UI فائل اپ لوڈ"
+    "uiFileUpload": "UI فائل اپ لوڈ",
+    "uiTooltips": "UI ٹولٹپس"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "یو آئی ٹری ویو"
+      },
+      "tooltip": {
+        "title": "UI ٹولٹپ"
       }
     }
   }

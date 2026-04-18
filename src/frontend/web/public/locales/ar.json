@@ -49,6 +49,7 @@
     "changePassword": "تغيير كلمة المرور",
     "profile": "الملف الشخصي",
     "uiFileUpload": "رفع الملفات",
+    "uiTooltips": "تلميحات",
     "usersList": "قائمة",
     "usersCreate": "إنشاء",
     "usersUpdate": "تحديث"
@@ -67,7 +68,8 @@
     "changePassword": "تغيير كلمة المرور",
     "profile": "الملف الشخصي",
     "uiFormElements": "عناصر النموذج",
-    "uiFileUpload": "رفع الملفات"
+    "uiFileUpload": "رفع الملفات",
+    "uiTooltips": "تلميحات واجهة المستخدم"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "عرض شجري لواجهة المستخدم"
+      },
+      "tooltip": {
+        "title": "تلميح واجهة المستخدم"
       }
     }
   }

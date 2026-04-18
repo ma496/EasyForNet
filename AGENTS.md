@@ -169,9 +169,9 @@ sealed class UserGetEndpoint(IUserService svc) : Endpoint<UserGetRequest, UserGe
 ### Frontend Pages (Next.js)
 
 **Directory Structure:**
-- Admin pages: `src/frontend/web/app/app/`
-- Public pages: `src/frontend/web/app/(public)/`
-- Route groups: `app/app/(identity)/users/`
+- Admin pages: `src/frontend/web/app/[lang]/admin/`
+- Public pages: `src/frontend/web/app/[lang](public)/`
+- Route groups: `src/frontend/web/app/[lang]/admin/(identity)/users/`
 - Page components: `_components/` subdirectory
 
 **Page Rules:**
@@ -223,7 +223,6 @@ public class UserGetTests(App app) : AppTestsBase(app)
 - Meta (global usings): `src/backend/Source/Meta.cs`
 
 **Frontend:**
-- Entry: `src/frontend/web/app/layout.tsx`
 - Permissions: `src/frontend/web/allow.ts`
 - Store: `src/frontend/web/store/`
 - Components: `src/frontend/web/components/`

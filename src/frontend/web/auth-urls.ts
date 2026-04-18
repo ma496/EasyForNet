@@ -7,34 +7,34 @@ export interface AuthUrl {
 
 export const authUrls: AuthUrl[] = [
   {
-    url: '/app',
+    url: '/admin',
   },
   {
-    url: '/app/users/list',
+    url: '/admin/users/list',
     permissions: [Allow.User_View],
   },
   {
-    url: '/app/users/create',
+    url: '/admin/users/create',
     permissions: [Allow.User_Create],
   },
   {
-    url: '/app/users/update/{id}',
+    url: '/admin/users/update/{id}',
     permissions: [Allow.User_Update],
   },
   {
-    url: '/app/roles/list',
+    url: '/admin/roles/list',
     permissions: [Allow.Role_View],
   },
   {
-    url: '/app/roles/create',
+    url: '/admin/roles/create',
     permissions: [Allow.Role_Create],
   },
   {
-    url: '/app/roles/update/{id}',
+    url: '/admin/roles/update/{id}',
     permissions: [Allow.Role_Update],
   },
   {
-    url: '/app/roles/change-permissions/{id}',
+    url: '/admin/roles/change-permissions/{id}',
     permissions: [Allow.Role_ChangePermissions],
   },
 ]
@@ -70,6 +70,6 @@ export const getMatchedAuthUrl = (url: string): AuthUrl | undefined => {
 }
 
 export const isAuthRequired = (url: string) => {
-  return url.includes('/app/') || !!getMatchedAuthUrl(url)
+  return url.includes('/admin/') || !!getMatchedAuthUrl(url)
 }
 

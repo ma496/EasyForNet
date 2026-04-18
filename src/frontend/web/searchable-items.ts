@@ -6,63 +6,67 @@ export interface SearchableItem {
 export const searchableItems: SearchableItem[] = [
   {
     title: 'search.dashboard',
-    url: '/app',
+    url: '/admin',
   },
   {
     title: 'search.users',
-    url: '/app/users/list',
+    url: '/admin/users/list',
 
   },
   {
     title: 'search.usersCreate',
-    url: '/app/users/create',
+    url: '/admin/users/create',
 
   },
   {
     title: 'search.roles',
-    url: '/app/roles/list',
+    url: '/admin/roles/list',
 
   },
   {
     title: 'search.rolesCreate',
-    url: '/app/roles/create',
+    url: '/admin/roles/create',
 
   },
   {
     title: 'search.profile',
-    url: '/app/profile',
+    url: '/admin/profile',
   },
   {
     title: 'search.changePassword',
-    url: '/app/change-password',
+    url: '/admin/change-password',
   },
 
   {
     title: 'search.uiFormElements',
-    url: '/app/ui/form-elements',
+    url: '/admin/ui/form-elements',
   },
   {
     title: 'search.uiButtons',
-    url: '/app/ui/buttons',
+    url: '/admin/ui/buttons',
   },
   {
     title: 'search.uiCards',
-    url: '/app/ui/cards',
+    url: '/admin/ui/cards',
   },
   {
     title: 'search.uiDatePicker',
-    url: '/app/ui/date-picker',
+    url: '/admin/ui/date-picker',
   },
   {
     title: 'search.uiDateView',
-    url: '/app/ui/date-view',
+    url: '/admin/ui/date-view',
   },
   {
     title: 'search.uiTreeview',
-    url: '/app/ui/treeview',
+    url: '/admin/ui/treeview',
   },
   {
     title: 'search.uiFileUpload',
-    url: '/app/ui/file-upload',
+    url: '/admin/ui/file-upload',
+  },
+  {
+    title: 'search.uiTooltips',
+    url: '/admin/ui/tooltips',
   },
 ]

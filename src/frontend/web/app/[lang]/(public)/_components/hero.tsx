@@ -34,7 +34,7 @@ const Hero = () => {
                   {
                     authState.isAuthenticated ? (
                       <LocalizedLink
-                        href="/app"
+                        href="/admin"
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary/90 md:py-4 md:text-lg transition-all hover:scale-105"
                       >
                         {t('page.home.hero.dashboardDetail')}

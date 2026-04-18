@@ -4,12 +4,12 @@ This document defines the rules and conventions for creating and organizing page
 
 ## Directory Structure
 
-- **Admin Pages**: All admin-related pages must be located in `src/frontend/web/app/app/`.
-- **Public Pages**: All public-facing pages must be located in `src/frontend/web/app/(public)/`.
+- **Admin Pages**: All admin-related pages must be located in `src/frontend/web/app/[lang]/admin/`.
+- **Public Pages**: All public-facing pages must be located in `src/frontend/web/app/[lang]/(public)/`.
 - **Feature Organization**: Use Next.js route groups (directories in parentheses) to organize pages by feature.
-  - Example: `app/app/(identity)/users/`
+  - Example: `src/frontend/web/app/[lang]/admin/(identity)/users/`
 - **Page-Specific Components**: Components that are only used within a specific page must be placed in a `_components` directory within that page's directory.
-  - Example: `app/app/users/list/_components/user-table.tsx`
+  - Example: `src/frontend/web/app/[lang]/admin/users/list/_components/user-table.tsx`
 
 ## Page Component Rules
 

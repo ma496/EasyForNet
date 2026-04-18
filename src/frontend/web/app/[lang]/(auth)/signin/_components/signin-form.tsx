@@ -74,7 +74,7 @@ const SigninForm = () => {
       if (userInfoRes.data.roles.find((role) => role.name === 'Public')) {
         router.push(`/`, { scroll: false })
       } else {
-        router.push(`/app`, { scroll: false })
+        router.push(`/admin`, { scroll: false })
       }
     }
   }

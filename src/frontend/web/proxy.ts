@@ -57,24 +57,24 @@ export async function proxy(request: NextRequest) {
   // 2. Auth Logic
   // Normalize path by stripping locale to check against auth rules
   // If we are rewriting (response exists), the effective path is `/${locale}${pathname}` (which has locale).
-  // But we want to check logic against the "logical" path (admin pages defined as /app/...).
+  // But we want to check logic against the "logical" path (admin pages defined as /admin/...).
 
-  // Actually isAuthRequired checks for /app/.
-  // If path is `/en/app/...`, `pathname` (original) is what we have?
-  // If we have `response` (rewrite), the *original* `request.nextUrl.pathname` is `/app/...` (missing locale).
-  // If we *don't* have `response` (path has locale), `request.nextUrl.pathname` is `/en/app/...`.
+  // Actually isAuthRequired checks for /admin/.
+  // If path is `/en/admin/...`, `pathname` (original) is what we have?
+  // If we have `response` (rewrite), the *original* `request.nextUrl.pathname` is `/admin/...` (missing locale).
+  // If we *don't* have `response` (path has locale), `request.nextUrl.pathname` is `/en/admin/...`.
 
   let pathToCheck = pathname
   if (!pathnameIsMissingLocale) {
     // Remove locale prefix for auth check
-    // e.g. /en/app/dashboard -> /app/dashboard
+    // e.g. /en/admin/dashboard -> /admin/dashboard
     // e.g. /en -> /
     pathToCheck = pathname.replace(`/${currentLocale}`, '') || '/'
   }
 
-  // NOTE: isAuthRequired checks `url.includes('/app/')`.
-  // `/app/dashboard` includes `/app/`.
-  // `/en/app/dashboard` includes `/app/`.
+  // NOTE: isAuthRequired checks `url.includes('/admin/')`.
+  // `/admin/dashboard` includes `/admin/`.
+  // `/en/admin/dashboard` includes `/admin/`.
   // So strict normalization might not be strictly required for *inclusion* check,
   // but `getMatchedAuthUrl` does strict matching on `url`.
   // So we SHOULD normalize.

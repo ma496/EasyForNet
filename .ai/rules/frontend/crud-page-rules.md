@@ -6,7 +6,7 @@ This document defines the rules and conventions for creating CRUD (Create, Read,
 
 A typical CRUD feature should be organized into a directory with subdirectories for each action:
 
-- `src/frontend/web/app/app/feature-group/my-entities/`
+- `src/frontend/web/app/[lang]/admin/feature-group/my-entities/`
   - `list/`
     - `page.tsx` (Server Component)
     - `_components/`
@@ -125,15 +125,15 @@ After creating the CRUD pages, they must be registered in the following files to
 - Example:
   ```typescript
   {
-    url: '/app/feature-group/my-entities/list',
+    url: '/admin/feature-group/my-entities/list',
     permissions: [Allow.MyEntity_View],
   },
   {
-    url: '/app/feature-group/my-entities/create',
+    url: '/admin/feature-group/my-entities/create',
     permissions: [Allow.MyEntity_Create],
   },
   {
-    url: '/app/feature-group/my-entities/update/{id}',
+    url: '/admin/feature-group/my-entities/update/{id}',
     permissions: [Allow.MyEntity_Update],
   }
   ```
@@ -146,12 +146,12 @@ After creating the CRUD pages, they must be registered in the following files to
   ```typescript
   {
     title: 'nav_my_entities',
-    url: '/app/feature-group/my-entities/list',
+    url: '/admin/feature-group/my-entities/list',
     icon: MyIcon,
     children: [
-      { title: 'nav_my_entities_list', url: '/app/feature-group/my-entities/list' },
-      { title: 'nav_my_entities_create', url: '/app/feature-group/my-entities/create' },
-      { title: 'nav_my_entities_update', url: '/app/feature-group/my-entities/update/{id}', show: false },
+      { title: 'nav_my_entities_list', url: '/admin/feature-group/my-entities/list' },
+      { title: 'nav_my_entities_create', url: '/admin/feature-group/my-entities/create' },
+      { title: 'nav_my_entities_update', url: '/admin/feature-group/my-entities/update/{id}', show: false },
     ],
   }
   ```
@@ -163,11 +163,11 @@ After creating the CRUD pages, they must be registered in the following files to
   ```typescript
   {
     title: 'search_my_entities',
-    url: '/app/feature-group/my-entities/list',
+    url: '/admin/feature-group/my-entities/list',
   },
   {
     title: 'search_my_entities_create',
-    url: '/app/feature-group/my-entities/create',
+    url: '/admin/feature-group/my-entities/create',
   }
   ```
 

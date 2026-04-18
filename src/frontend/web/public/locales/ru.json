@@ -49,6 +49,7 @@
     "changePassword": "Сменить пароль",
     "profile": "Профиль",
     "uiFileUpload": "Загрузка файлов",
+    "uiTooltips": "Подсказки",
     "usersList": "Список",
     "usersCreate": "Создать",
     "usersUpdate": "Обновить"
@@ -67,7 +68,8 @@
     "changePassword": "Сменить пароль",
     "profile": "Профиль",
     "uiFormElements": "Элементы формы UI",
-    "uiFileUpload": "Загрузка файлов UI"
+    "uiFileUpload": "Загрузка файлов UI",
+    "uiTooltips": "Подсказки UI"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "Древовидный вид интерфейса"
+      },
+      "tooltip": {
+        "title": "UI Подсказка"
       }
     }
   }

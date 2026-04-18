@@ -49,7 +49,7 @@ const Header = () => {
       <div className="shadow-xs">
         <div className="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-black">
           <div className="ms-2 horizontal-logo flex items-center justify-between lg:hidden">
-            <LocalizedLink href="/app" className="flex shrink-0 items-center main-logo">
+            <LocalizedLink href="/admin" className="flex shrink-0 items-center main-logo">
               <img className="-ms-1 inline w-8" src="/assets/images/icon.png" alt="logo" />
               <span className="ms-1.5 hidden align-middle text-sm font-semibold transition-all duration-300 md:inline dark:text-white-light">{t('brand.name')}</span>
             </LocalizedLink>

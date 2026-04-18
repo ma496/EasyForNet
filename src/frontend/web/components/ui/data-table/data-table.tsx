@@ -28,7 +28,11 @@ export function DataTable<TData>({ className = '', suppressScrollX = false, supp
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="p-4 text-left font-semibold first:rounded-tl-md last:rounded-tr-md" style={{ width: header.getSize() }}>
+                  <th
+                    key={header.id}
+                    className="p-4 text-left font-semibold first:rounded-tl-md last:rounded-tr-md"
+                    style={{ width: header.getSize(), minWidth: header.column.columnDef.minSize, maxWidth: header.column.columnDef.maxSize }}
+                  >
                     {header.isPlaceholder ? null : (
                       <div className={`group flex items-center ${header.column.getCanSort() ? 'cursor-pointer select-none' : ''}`} onClick={header.column.getToggleSortingHandler()}>
                         {flexRender(header.column.columnDef.header, header.getContext())}
@@ -54,7 +58,11 @@ export function DataTable<TData>({ className = '', suppressScrollX = false, supp
                   className={`border-b border-white-light/40 hover:bg-white-light/20 dark:border-[#191e3a] dark:hover:bg-[#1a2941]/40 ${row.getIsSelected() ? 'bg-primary/10 dark:bg-primary/20' : ''}`}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3">
+                    <td
+                      key={cell.id}
+                      className="px-4 py-3"
+                      style={{ width: cell.column.getSize(), minWidth: cell.column.columnDef.minSize, maxWidth: cell.column.columnDef.maxSize }}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}

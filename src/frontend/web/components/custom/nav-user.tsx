@@ -77,13 +77,13 @@ const NavUser = () => {
             </div>
           </li>
           <li>
-            <LocalizedLink href="/app/profile" className="dark:hover:text-white" onClick={handleLinkClick}>
+            <LocalizedLink href="/admin/profile" className="dark:hover:text-white" onClick={handleLinkClick}>
               <User className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
               {t('navigation.profile')}
             </LocalizedLink>
           </li>
           <li>
-            <LocalizedLink href="/app/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
+            <LocalizedLink href="/admin/change-password" className="dark:hover:text-white" onClick={handleLinkClick}>
               <Lock className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
               {t('navigation.changePassword')}
             </LocalizedLink>

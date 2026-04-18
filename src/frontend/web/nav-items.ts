@@ -21,12 +21,12 @@ export interface NavItem {
 export const navItems: (NavItem | NavItemGroup)[] = [
   {
     title: 'navigation.dashboard',
-    url: '/app',
+    url: '/admin',
     icon: Home,
     children: [
       {
         title: 'navigation.dashboardSales',
-        url: '/app',
+        url: '/admin',
       },
     ],
   },
@@ -35,23 +35,23 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     items: [
       {
         title: 'navigation.users',
-        url: '/app/users/list',
+        url: '/admin/users/list',
         icon: Users,
 
         children: [
           {
             title: 'navigation.usersList',
-            url: '/app/users/list',
+            url: '/admin/users/list',
 
           },
           {
             title: 'navigation.usersCreate',
-            url: '/app/users/create',
+            url: '/admin/users/create',
 
           },
           {
             title: 'navigation.usersUpdate',
-            url: '/app/users/update/{id}',
+            url: '/admin/users/update/{id}',
 
             show: false,
           },
@@ -59,29 +59,29 @@ export const navItems: (NavItem | NavItemGroup)[] = [
       },
       {
         title: 'navigation.roles',
-        url: '/app/roles/list',
+        url: '/admin/roles/list',
         icon: Shield,
 
         children: [
           {
             title: 'navigation.rolesList',
-            url: '/app/roles/list',
+            url: '/admin/roles/list',
 
           },
           {
             title: 'navigation.rolesCreate',
-            url: '/app/roles/create',
+            url: '/admin/roles/create',
 
           },
           {
             title: 'navigation.rolesUpdate',
-            url: '/app/roles/update/{id}',
+            url: '/admin/roles/update/{id}',
 
             show: false,
           },
           {
             title: 'navigation.rolesChangePermissions',
-            url: '/app/roles/change-permissions/{id}',
+            url: '/admin/roles/change-permissions/{id}',
 
             show: false,
           },
@@ -94,51 +94,56 @@ export const navItems: (NavItem | NavItemGroup)[] = [
     items: [
       {
         title: 'navigation.uiFormElements',
-        url: '/app/ui/form-elements',
+        url: '/admin/ui/form-elements',
         icon: FormInput,
       },
       {
         title: 'navigation.uiButtons',
-        url: '/app/ui/buttons',
+        url: '/admin/ui/buttons',
         icon: Zap,
       },
       {
         title: 'navigation.uiCards',
-        url: '/app/ui/cards',
+        url: '/admin/ui/cards',
         icon: Palette,
       },
       {
         title: 'navigation.uiDatePicker',
-        url: '/app/ui/date-picker',
+        url: '/admin/ui/date-picker',
         icon: Calendar,
       },
       {
         title: 'navigation.uiDateView',
-        url: '/app/ui/date-view',
+        url: '/admin/ui/date-view',
         icon: Clock,
       },
 
       {
         title: 'navigation.uiTreeview',
-        url: '/app/ui/treeview',
+        url: '/admin/ui/treeview',
         icon: TreePine,
       },
       {
         title: 'navigation.uiFileUpload',
-        url: '/app/ui/file-upload',
+        url: '/admin/ui/file-upload',
         icon: Upload,
+      },
+      {
+        title: 'navigation.uiTooltips',
+        url: '/admin/ui/tooltips',
+        icon: Palette,
       },
     ],
   },
   {
     title: 'navigation.changePassword',
-    url: '/app/change-password',
+    url: '/admin/change-password',
     icon: Lock,
     show: false,
   },
   {
     title: 'navigation.profile',
-    url: '/app/profile',
+    url: '/admin/profile',
     icon: User,
     show: false,
   },

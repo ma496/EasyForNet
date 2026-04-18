@@ -120,11 +120,11 @@ const Sidebar = () => {
 
   return (
     <div className={semidark ? 'dark' : ''}>
-      <nav className={`fixed top-0 sidebar bottom-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300 ${semidark ? 'text-white-dark' : ''}`}>
+      <nav className={`fixed top-0 sidebar bottom-0 z-50 h-full min-h-screen w-65 shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300 ${semidark ? 'text-white-dark' : ''}`}>
         <div className="flex h-full flex-col bg-white dark:bg-black">
           <div className="flex items-center justify-between px-4 py-3">
-            <Link href="/app" className="flex shrink-0 items-center main-logo">
-              <img className="ms-[5px] w-8 flex-none" src="/assets/images/icon.png" alt="logo" />
+            <Link href="/admin" className="flex shrink-0 items-center main-logo">
+              <img className="ms-1.25 w-8 flex-none" src="/assets/images/icon.png" alt="logo" />
               <span className="align-middle text-[18px] font-semibold lg:inline ms-1.5 dark:text-white-light">{t('brand.name')}</span>
             </Link>
 

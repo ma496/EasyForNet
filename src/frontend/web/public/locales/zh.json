@@ -49,6 +49,7 @@
     "changePassword": "更改密码",
     "profile": "个人资料",
     "uiFileUpload": "文件上传",
+    "uiTooltips": "工具提示",
     "usersList": "列表",
     "usersCreate": "创建",
     "usersUpdate": "更新"
@@ -67,7 +68,8 @@
     "changePassword": "更改密码",
     "profile": "个人资料",
     "uiFormElements": "UI 表单元素",
-    "uiFileUpload": "UI 文件上传"
+    "uiFileUpload": "UI 文件上传",
+    "uiTooltips": "UI 工具提示"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "UI 树形视图"
+      },
+      "tooltip": {
+        "title": "UI 工具提示"
       }
     }
   }

@@ -49,6 +49,7 @@
     "changePassword": "Changer le mot de passe",
     "profile": "Profil",
     "uiFileUpload": "Téléchargement de fichiers",
+    "uiTooltips": "Info-bulles",
     "usersList": "Liste",
     "usersCreate": "Créer",
     "usersUpdate": "Mettre à jour"
@@ -67,7 +68,8 @@
     "changePassword": "Changer le mot de passe",
     "profile": "Profil",
     "uiFormElements": "Éléments de formulaire UI",
-    "uiFileUpload": "Téléchargement de fichiers UI"
+    "uiFileUpload": "Téléchargement de fichiers UI",
+    "uiTooltips": "Info-bulles UI"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "Vue arborescente UI"
+      },
+      "tooltip": {
+        "title": "UI Info-bulle"
       }
     }
   }

@@ -49,6 +49,7 @@
     "changePassword": "Change Password",
     "profile": "Profile",
     "uiFileUpload": "File Upload",
+    "uiTooltips": "Tooltips",
     "usersList": "List",
     "usersCreate": "Create",
     "usersUpdate": "Update"
@@ -67,7 +68,8 @@
     "changePassword": "Change Password",
     "profile": "Profile",
     "uiFormElements": "UI Form Elements",
-    "uiFileUpload": "UI File Upload"
+    "uiFileUpload": "UI File Upload",
+    "uiTooltips": "UI Tooltips"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "UI Tree View"
+      },
+      "tooltip": {
+        "title": "UI Tooltip"
       }
     }
   }

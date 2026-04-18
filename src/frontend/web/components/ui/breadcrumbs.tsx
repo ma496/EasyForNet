@@ -41,7 +41,7 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ className }: BreadcrumbsProps) {
   const pathname = usePathname()
-  // Remove locale prefix if present (e.g. /en/app -> /app)
+  // get the path items based on pathname, support dynamic route like /admin/items/{id}
   const normalizedPathname = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/')
   const activePathItems = findActivePathItems(navItems, normalizedPathname)
   const { t } = useTranslation()
@@ -49,7 +49,7 @@ export function Breadcrumbs({ className }: BreadcrumbsProps) {
   return (
     <ul className={`flex gap-2 ${className || ''}`}>
       <li>
-        <Link href="/app" className="text-primary hover:underline">
+        <Link href="/admin" className="text-primary hover:underline">
           {t('navigation.home')}
         </Link>
       </li>

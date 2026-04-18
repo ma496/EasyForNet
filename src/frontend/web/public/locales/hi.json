@@ -49,6 +49,7 @@
     "changePassword": "पासवर्ड बदलें",
     "profile": "प्रोफ़ाइल",
     "uiFileUpload": "फ़ाइल अपलोड",
+    "uiTooltips": "टूलटिप्स",
     "usersList": "सूची",
     "usersCreate": "बनाएं",
     "usersUpdate": "अपडेट करें"
@@ -67,7 +68,8 @@
     "changePassword": "पासवर्ड बदलें",
     "profile": "प्रोफ़ाइल",
     "uiFormElements": "UI फॉर्म तत्व",
-    "uiFileUpload": "UI फ़ाइल अपलोड"
+    "uiFileUpload": "UI फ़ाइल अपलोड",
+    "uiTooltips": "UI टूलटिप्स"
   },
   "form": {
     "label": {
@@ -411,6 +413,9 @@
       },
       "treeview": {
         "title": "यूआई ट्री व्यू"
+      },
+      "tooltip": {
+        "title": "UI टूलटिप"
       }
     }
   }
