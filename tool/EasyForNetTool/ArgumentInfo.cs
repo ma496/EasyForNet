@@ -36,6 +36,14 @@ public class ArgumentInfo
                         Description = "Path of project.",
                         Required = false,
                     },
+                    new ArgumentOption
+                    {
+                        Name = "--multilanguage",
+                        ShortName = "-m",
+                        Description = "Enable multi-language support.",
+                        Required = false,
+                        Default = "false",
+                    },
                 ]
             },
         ];

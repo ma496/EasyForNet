@@ -126,6 +126,56 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             // update common-rules.md
             await ReplaceInFile(Path.Combine(targetPath, ".ai/rules/common-rules.md"), @"EasyForNet\.sln", $@"{pascalCaseProjectName}.sln");
 
+            // Cleanup localization files when multiLanguage is false
+            if (!argument.MultiLanguage)
+            {
+                Console.WriteLine("Cleaning up localization files...");
+
+                // 1. Delete non-English locale files (ur, zh, ar, hi, es, fr, ru)
+                var localesPath = Path.Combine(webTargetPath, "public", "locales");
+                foreach (var locale in new[] { "ur", "zh", "ar", "hi", "es", "fr", "ru" })
+                {
+                    var filePath = Path.Combine(localesPath, $"{locale}.json");
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
+                }
+
+                // 2. Update server.ts - keep only en dictionary
+                var serverTsPath = Path.Combine(webTargetPath, "i18n", "server.ts");
+                if (File.Exists(serverTsPath))
+                {
+                    var content = await File.ReadAllTextAsync(serverTsPath);
+                    content = Regex.Replace(content,
+                        @"const dictionaries = \{[^}]+\}",
+                        @"const dictionaries = {
+  en: () => import('../public/locales/en.json').then((module) => module.default),
+}");
+                    await File.WriteAllTextAsync(serverTsPath, content);
+                }
+
+                // 3. Update config.ts - set locales to only ['en']
+                var configTsPath = Path.Combine(webTargetPath, "i18n", "config.ts");
+                if (File.Exists(configTsPath))
+                {
+                    var content = await File.ReadAllTextAsync(configTsPath);
+                    content = Regex.Replace(content, @"locales: \[[^\]]+\]", "locales: ['en']");
+                    await File.WriteAllTextAsync(configTsPath, content);
+                }
+
+                // 4. Update themeConfigSlice.tsx - remove non-English languages
+                var themeConfigPath = Path.Combine(webTargetPath, "store", "slices", "themeConfigSlice.tsx");
+                if (File.Exists(themeConfigPath))
+                {
+                    var content = await File.ReadAllTextAsync(themeConfigPath);
+                    content = Regex.Replace(content,
+                        @"languageList: \[[^\]]+\]",
+                        @"languageList: [
+    { code: 'en', name: 'English', isRTL: false },
+  ]");
+                    await File.WriteAllTextAsync(themeConfigPath, content);
+                }
+            }
+
             // create solution file
             Console.WriteLine("Creating solution file...");
             var solutionPath = Path.Combine(backendTargetPath, $"{pascalCaseProjectName}.slnx");

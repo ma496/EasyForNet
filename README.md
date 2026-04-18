@@ -35,11 +35,12 @@ dotnet efn --version
 To create a new project using the EasyForNet tool, run the following command:
 
 ```sh
-dotnet efn cp -n {name} -o {path}
+dotnet efn cp -n {name} -o {path} -m {true|false}
 ```
 
 - `-n {name}`: Specifies the name of the new project.
 - `-o {path}`: (Optional) Specifies the output directory for the new project.
+- `-m {true|false}`: (Optional) Enable multi-language support. Default is `false`. When `false`, only English language files are included. When `true`, all supported languages (English, Urdu, Chinese, Arabic, Hindi, Spanish, French, Russian) are included.
 
 ## Build Backend
 
