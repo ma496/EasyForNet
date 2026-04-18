@@ -186,22 +186,25 @@ export const TooltipExample = () => {
                   className="font-medium text-primary"
                 />
               </div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-xs min-w-32">No underline:</span>
+                <Truncated
+                  limit={20}
+                  underline={false}
+                  text="Truncated without underline."
+                />
+              </div>
             </div>
           }
-          code={`<Truncated text="This is a very long text that will be truncated automatically..." />
+          code={`<Truncated text="This is a very long text that will be truncated..." />
 
-<Truncated text="This text is short and fits within the default 40 character limit." />
+<Truncated text="Short text within limit." />
 
-<Truncated
-  limit={20}
-  text="This text exceeds a custom limit of twenty characters."
-/>
+<Truncated limit={20} text="Text exceeding custom limit." />
 
-<Truncated
-  animate
-  text="Truncated text with animation enabled."
-  className="text-primary"
-/>`}
+<Truncated animate text="Truncated with animation." className="text-primary" />
+
+<Truncated underline={false} text="Truncated without underline." />`}
         />
       </div>
 
