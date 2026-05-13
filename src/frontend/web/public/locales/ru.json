@@ -32,7 +32,9 @@
     "submit": "Отправить",
     "actions": "Действия",
     "allRightsReserved": "Все права защищены.",
-    "deleteConfirm": "Да, удалить"
+    "deleteConfirm": "Да, удалить",
+    "notifications": "Уведомления",
+    "viewAll": "Показать все"
   },
   "navigation": {
     "home": "Главная",
@@ -58,7 +60,10 @@
     "uiTooltips": "Подсказки",
     "usersList": "Список",
     "usersCreate": "Создать",
-    "usersUpdate": "Обновить"
+    "usersUpdate": "Обновить",
+    "notifications": "Уведомления",
+    "notificationsList": "Список",
+    "notificationsDetail": "Детали"
   },
   "search": {
     "dashboard": "Панель управления",
@@ -187,7 +192,14 @@
       "isActive": "Активен",
       "name": "Название",
       "description": "Описание",
-      "userCount": "Пользователи"
+      "userCount": "Пользователи",
+      "type": "Тип",
+      "title": "Название",
+      "message": "Сообщение",
+      "status": "Статус",
+      "date": "Дата",
+      "group": "Группа",
+      "updated": "Обновлено"
     },
     "pagination": {
       "showingEntries": "Показано с ${from} по ${to} из ${totalRecords} записей"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "UI Подсказка"
       }
+    },
+    "notifications": {
+      "title": "Уведомления",
+      "detail": {
+        "title": "Детали уведомления"
+      },
+      "viewAll": "Посмотреть все уведомления"
+    }
+  },
+  "notifications": {
+    "noNotifications": "Нет уведомлений",
+    "viewAll": "Посмотреть все уведомления",
+    "markAllRead": "Отметить все как прочитанные",
+    "markAsRead": "Отметить как прочитанное",
+    "markAsUnread": "Отметить как непрочитанное",
+    "delete": "Удалить",
+    "all": "Все",
+    "read": "Прочитано",
+    "unread": "Не прочитано",
+    "group": "Группа",
+    "metadata": "Метаданные",
+    "markedAsRead": "Уведомление отмечено как прочитанное",
+    "markedAsUnread": "Уведомление отмечено как непрочитанное",
+    "markedAllAsRead": "Все уведомления отмечены как прочитанные",
+    "deleted": "Уведомление удалено",
+    "deleteTitle": "Удалить уведомление",
+    "deleteConfirm": "Вы уверены, что хотите удалить это уведомление?",
+    "markAllReadConfirmTitle": "Отметить все как прочитанные",
+    "markAllReadConfirmText": "Вы уверены, что хотите отметить все уведомления как прочитанные?",
+    "filterByGroup": "Фильтровать по группе",
+    "groups": {
+      "inventory": "Инвентарь",
+      "system": "Система",
+      "payments": "Платежи",
+      "orders": "Заказы"
+    },
+    "types": {
+      "info": "Информация",
+      "warning": "Предупреждение",
+      "error": "Ошибка",
+      "success": "Успех"
+    },
+    "inventoryBelowLimit": {
+      "title": "Предупреждение о низком запасе",
+      "message": "Товар ниже минимального уровня запаса"
+    },
+    "systemUpdate": {
+      "title": "Обновление системы",
+      "message": "Доступно обновление системы"
+    },
+    "orderCompleted": {
+      "title": "Заказ выполнен",
+      "message": "Ваш заказ успешно выполнен"
+    },
+    "paymentFailed": {
+      "title": "Оплата не удалась",
+      "message": "Транзакция оплаты не удалась"
+    },
+    "welcome": {
+      "title": "Добро пожаловать",
+      "message": "Добро пожаловать в приложение"
     }
   }
 }

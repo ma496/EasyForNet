@@ -32,7 +32,9 @@
     "submit": "جمع کرائیں",
     "actions": "کارروائیاں",
     "allRightsReserved": "تمام حقوق محفوظ ہیں۔",
-    "deleteConfirm": "ہاں، اسے حذف کریں"
+    "deleteConfirm": "ہاں، اسے حذف کریں",
+    "notifications": "اطلاعات",
+    "viewAll": "سب دیکھیں"
   },
   "navigation": {
     "home": "ہوم",
@@ -58,7 +60,10 @@
     "uiTooltips": "ٹولٹپس",
     "usersList": "فہرست",
     "usersCreate": "بنائیں",
-    "usersUpdate": "اپ ڈیٹ"
+    "usersUpdate": "اپ ڈیٹ",
+    "notifications": "اطلاعات",
+    "notificationsList": "فہرست",
+    "notificationsDetail": "تفصیلات"
   },
   "search": {
     "dashboard": "ڈیش بورڈ",
@@ -187,7 +192,14 @@
       "isActive": "فعال",
       "name": "نام",
       "description": "تفصیل",
-      "userCount": "صارفین"
+      "userCount": "صارفین",
+      "type": "قسم",
+      "title": "عنوان",
+      "message": "پیغام",
+      "status": "حیثیت",
+      "date": "تاریخ",
+      "group": "گروپ",
+      "updated": "اپ ڈیٹ"
     },
     "pagination": {
       "showingEntries": "${totalRecords} اندراجات میں سے ${from} سے ${to} دکھائے جا رہے ہیں"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "UI ٹولٹپ"
       }
+    },
+    "notifications": {
+      "title": "اطلاعات",
+      "detail": {
+        "title": "اطلاع کی تفصیلات"
+      },
+      "viewAll": "تمام اطلاعات دیکھیں"
+    }
+  },
+  "notifications": {
+    "noNotifications": "کوئی اطلاع نہیں",
+    "viewAll": "تمام اطلاعات دیکھیں",
+    "markAllRead": "سب کو پڑھا ہوا نشان زد کریں",
+    "markAsRead": "پڑھا ہوا نشان زد کریں",
+    "markAsUnread": "ناقابل پڑھ نشان زد کریں",
+    "delete": "حذف کریں",
+    "all": "سب",
+    "read": "پڑھا ہوا",
+    "unread": "نا پڑھا",
+    "group": "گروپ",
+    "metadata": "میٹا ڈیٹا",
+    "markedAsRead": "اطلاع پڑھا ہوا نشان زد",
+    "markedAsUnread": "اطلاع نا پڑھا نشان زد",
+    "markedAllAsRead": "تمام اطلاعات پڑھا ہوا نشان زد",
+    "deleted": "اطلاع حذف ہو گئی",
+    "deleteTitle": "اطلاع حذف کریں",
+    "deleteConfirm": "کیا آپ واقعی اس اطلاع کو حذف کرنا چاہتے ہیں؟",
+    "markAllReadConfirmTitle": "سب کو پڑھا ہوا نشان زد کریں",
+    "markAllReadConfirmText": "کیا آپ واقعی تمام اطلاعات کو پڑھا ہوا نشان زد کرنا چاہتے ہیں؟",
+    "filterByGroup": "گروپ کے مطابق فلٹر کریں",
+    "groups": {
+      "inventory": "انوینٹری",
+      "system": "سسٹم",
+      "payments": "ادائیگی",
+      "orders": "آرڈرز"
+    },
+    "types": {
+      "info": "معلومات",
+      "warning": "انتباہ",
+      "error": "خرابی",
+      "success": "کامیابی"
+    },
+    "inventoryBelowLimit": {
+      "title": "کم انوینٹری الرٹ",
+      "message": "آئٹم کم از کم اسٹاک لیول سے نیچے ہے"
+    },
+    "systemUpdate": {
+      "title": "سسٹم اپ ڈیٹ",
+      "message": "سسٹم اپ ڈیٹ دستیاب ہے"
+    },
+    "orderCompleted": {
+      "title": "آرڈر مکمل",
+      "message": "آپ کا آرڈر کامیابی سے مکمل ہو گیا"
+    },
+    "paymentFailed": {
+      "title": "ادائیگی ناکام",
+      "message": "ادائیگی کا لین دین ناکام ہو گیا"
+    },
+    "welcome": {
+      "title": "خوش آمدید",
+      "message": "ایپلیکیشن میں خوش آمدید"
     }
   }
 }

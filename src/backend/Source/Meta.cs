@@ -13,6 +13,7 @@ global using Backend.Base;
 global using Backend.Base.Dto;
 global using Backend.ErrorHandling;
 global using Backend.Attributes;
+global using Backend.Exceptions;
 
 using System.Runtime.CompilerServices;
 

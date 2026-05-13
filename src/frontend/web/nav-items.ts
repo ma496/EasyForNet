@@ -1,4 +1,4 @@
-import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Clock } from 'lucide-react'
+import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, FormInput, Upload, Clock, Bell } from 'lucide-react'
 import type { ElementType } from 'react'
 
 
@@ -83,6 +83,23 @@ export const navItems: (NavItem | NavItemGroup)[] = [
             title: 'navigation.rolesChangePermissions',
             url: '/admin/roles/change-permissions/{id}',
 
+            show: false,
+          },
+        ],
+      },
+      {
+        title: 'navigation.notifications',
+        url: '/admin/notifications',
+        icon: Bell,
+
+        children: [
+          {
+            title: 'navigation.notificationsList',
+            url: '/admin/notifications',
+          },
+          {
+            title: 'navigation.notificationsDetail',
+            url: '/admin/notifications/{id}',
             show: false,
           },
         ],

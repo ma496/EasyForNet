@@ -32,7 +32,9 @@
     "submit": "Submit",
     "actions": "Actions",
     "allRightsReserved": "All rights reserved.",
-    "deleteConfirm": "Yes, delete it"
+    "deleteConfirm": "Yes, delete it",
+    "notifications": "Notifications",
+    "viewAll": "View all"
   },
   "navigation": {
     "home": "Home",
@@ -58,7 +60,10 @@
     "uiTooltips": "Tooltips",
     "usersList": "List",
     "usersCreate": "Create",
-    "usersUpdate": "Update"
+    "usersUpdate": "Update",
+    "notifications": "Notifications",
+    "notificationsList": "List",
+    "notificationsDetail": "Detail"
   },
   "search": {
     "dashboard": "Dashboard",
@@ -187,7 +192,14 @@
       "isActive": "Active",
       "name": "Name",
       "description": "Description",
-      "userCount": "Users"
+      "userCount": "Users",
+      "type": "Type",
+      "title": "Title",
+      "message": "Message",
+      "status": "Status",
+      "date": "Date",
+      "group": "Group",
+      "updated": "Updated"
     },
     "pagination": {
       "showingEntries": "Showing ${from} to ${to} of ${totalRecords} entries"
@@ -423,6 +435,66 @@
       "tooltip": {
         "title": "UI Tooltip"
       }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "detail": {
+        "title": "Notification Details"
+      }
+    }
+  },
+  "notifications": {
+    "noNotifications": "No notifications",
+    "viewAll": "View all notifications",
+    "markAllRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "markAsUnread": "Mark as unread",
+    "delete": "Delete",
+    "all": "All",
+    "read": "Read",
+    "unread": "Unread",
+    "group": "Group",
+    "metadata": "Metadata",
+    "markedAsRead": "Notification marked as read",
+    "markedAsUnread": "Notification marked as unread",
+    "markedAllAsRead": "All notifications marked as read",
+    "deleted": "Notification deleted",
+    "deleteTitle": "Delete Notification",
+    "deleteConfirm": "Are you sure you want to delete this notification?",
+    "markAllReadConfirmTitle": "Mark All as Read",
+    "markAllReadConfirmText": "Are you sure you want to mark all notifications as read?",
+    "filterByGroup": "Filter by group",
+    "groups": {
+      "inventory": "Inventory",
+      "system": "System",
+      "payments": "Payments",
+      "orders": "Orders"
+    },
+    "types": {
+      "info": "Info",
+      "warning": "Warning",
+      "error": "Error",
+      "success": "Success"
+    },
+    "inventoryBelowLimit": {
+      "title": "Low Inventory Alert",
+      "message": "Item is below the minimum stock level"
+    },
+    "systemUpdate": {
+      "title": "System Update",
+      "message": "A system update is available"
+    },
+    "orderCompleted": {
+      "title": "Order Completed",
+      "message": "Your order has been completed successfully"
+    },
+    "paymentFailed": {
+      "title": "Payment Failed",
+      "message": "A payment transaction has failed"
+    },
+    "welcome": {
+      "title": "Welcome",
+      "message": "Welcome to the application"
     }
   }
 }

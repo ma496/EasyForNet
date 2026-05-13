@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { appApi } from '@/store/api/_app-api'
 import { themeConfigSlice } from '@/store/slices/themeConfigSlice'
 import { authSlice } from '@/store/slices/authSlice'
+import { notificationsSlice } from '@/store/slices/notificationsSlice'
 import { rtkErrorMiddleware } from '@/store/middlewares/rtk-error-middleware'
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     [themeConfigSlice.name]: themeConfigSlice.reducer,
     [appApi.reducerPath]: appApi.reducer,
     [authSlice.name]: authSlice.reducer,
+    [notificationsSlice.name]: notificationsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

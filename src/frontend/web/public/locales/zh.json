@@ -32,7 +32,9 @@
     "submit": "提交",
     "actions": "操作",
     "allRightsReserved": "版权所有。",
-    "deleteConfirm": "是的，删除它"
+    "deleteConfirm": "是的，删除它",
+    "notifications": "通知",
+    "viewAll": "查看全部"
   },
   "navigation": {
     "home": "首页",
@@ -58,7 +60,10 @@
     "uiTooltips": "工具提示",
     "usersList": "列表",
     "usersCreate": "创建",
-    "usersUpdate": "更新"
+    "usersUpdate": "更新",
+    "notifications": "通知",
+    "notificationsList": "列表",
+    "notificationsDetail": "详情"
   },
   "search": {
     "dashboard": "仪表板",
@@ -187,7 +192,14 @@
       "isActive": "启用",
       "name": "名称",
       "description": "描述",
-      "userCount": "用户"
+      "userCount": "用户",
+      "type": "类型",
+      "title": "标题",
+      "message": "消息",
+      "status": "状态",
+      "date": "日期",
+      "group": "组",
+      "updated": "已更新"
     },
     "pagination": {
       "showingEntries": "显示 ${from} 到 ${to} 条，共 ${totalRecords} 条记录"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "UI 工具提示"
       }
+    },
+    "notifications": {
+      "title": "通知",
+      "detail": {
+        "title": "通知详情"
+      },
+      "viewAll": "查看所有通知"
+    }
+  },
+  "notifications": {
+    "noNotifications": "没有通知",
+    "viewAll": "查看所有通知",
+    "markAllRead": "全部标为已读",
+    "markAsRead": "标为已读",
+    "markAsUnread": "标为未读",
+    "delete": "删除",
+    "all": "全部",
+    "read": "已读",
+    "unread": "未读",
+    "group": "组",
+    "metadata": "元数据",
+    "markedAsRead": "通知已标为已读",
+    "markedAsUnread": "通知已标为未读",
+    "markedAllAsRead": "所有通知已标为已读",
+    "deleted": "通知已删除",
+    "deleteTitle": "删除通知",
+    "deleteConfirm": "您确定要删除此通知吗？",
+    "markAllReadConfirmTitle": "全部标为已读",
+    "markAllReadConfirmText": "您确定要将所有通知标为已读吗？",
+    "filterByGroup": "按组筛选",
+    "groups": {
+      "inventory": "库存",
+      "system": "系统",
+      "payments": "支付",
+      "orders": "订单"
+    },
+    "types": {
+      "info": "信息",
+      "warning": "警告",
+      "error": "错误",
+      "success": "成功"
+    },
+    "inventoryBelowLimit": {
+      "title": "库存不足警告",
+      "message": "物品低于最低库存水平"
+    },
+    "systemUpdate": {
+      "title": "系统更新",
+      "message": "有系统更新可用"
+    },
+    "orderCompleted": {
+      "title": "订单已完成",
+      "message": "您的订单已成功完成"
+    },
+    "paymentFailed": {
+      "title": "支付失败",
+      "message": "支付交易失败"
+    },
+    "welcome": {
+      "title": "欢迎",
+      "message": "欢迎使用应用程序"
     }
   }
 }

@@ -10,12 +10,16 @@ import SearchComponent from './search-component'
 import { Menu } from 'lucide-react'
 import LanguageDropdown from '../custom/language-dropdown'
 import { useTranslation } from '@/i18n'
+import NotificationBell from '../notifications/notification-bell'
+import { useNotificationHub } from '@/hooks/use-notification-hub'
 
 const Header = () => {
   const pathname = usePathname()
   const dispatch = useAppDispatch()
   const themeConfig = useAppSelector((state) => state.theme)
   const { t } = useTranslation()
+
+  useNotificationHub()
 
   useEffect(() => {
     const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]')
@@ -68,6 +72,10 @@ const Header = () => {
             </div>
 
             <div className="flex items-center justify-center gap-2">
+              <div>
+                <NotificationBell />
+              </div>
+
               <div>
                 <ThemeChanger theme={themeConfig.theme} />
               </div>

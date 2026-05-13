@@ -8,7 +8,6 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Net.Http.Headers;
-using Backend.Features.FileManagement.Core;
 using Microsoft.AspNetCore.Http.Features;
 using Backend.Processors;
 
@@ -84,6 +83,7 @@ bld.Services.Configure<FormOptions>(o => o.MultipartBodyLengthLimit = 1073741824
 
 // configure features
 Helper.AddFeatures(bld.Services, bld.Configuration);
+
 
 // configure services 
 bld.Services.AddScoped<DataSeeder>();

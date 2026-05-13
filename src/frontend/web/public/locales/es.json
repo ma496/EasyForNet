@@ -32,7 +32,9 @@
     "submit": "Enviar",
     "actions": "Acciones",
     "allRightsReserved": "Todos los derechos reservados.",
-    "deleteConfirm": "Sí, eliminarlo"
+    "deleteConfirm": "Sí, eliminarlo",
+    "notifications": "Notificaciones",
+    "viewAll": "Ver todo"
   },
   "navigation": {
     "home": "Inicio",
@@ -58,7 +60,10 @@
     "uiTooltips": "Tooltips",
     "usersList": "Lista",
     "usersCreate": "Crear",
-    "usersUpdate": "Actualizar"
+    "usersUpdate": "Actualizar",
+    "notifications": "Notificaciones",
+    "notificationsList": "Lista",
+    "notificationsDetail": "Detalles"
   },
   "search": {
     "dashboard": "Tablero",
@@ -187,7 +192,14 @@
       "isActive": "Activo",
       "name": "Nombre",
       "description": "Descripción",
-      "userCount": "Usuarios"
+      "userCount": "Usuarios",
+      "type": "Tipo",
+      "title": "Título",
+      "message": "Mensaje",
+      "status": "Estado",
+      "date": "Fecha",
+      "group": "Grupo",
+      "updated": "Actualizado"
     },
     "pagination": {
       "showingEntries": "Mostrando ${from} a ${to} de ${totalRecords} entradas"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "UI Tooltip"
       }
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "detail": {
+        "title": "Detalles de la notificación"
+      },
+      "viewAll": "Ver todas las notificaciones"
+    }
+  },
+  "notifications": {
+    "noNotifications": "No hay notificaciones",
+    "viewAll": "Ver todas las notificaciones",
+    "markAllRead": "Marcar todo como leído",
+    "markAsRead": "Marcar como leído",
+    "markAsUnread": "Marcar como no leído",
+    "delete": "Eliminar",
+    "all": "Todos",
+    "read": "Leído",
+    "unread": "No leído",
+    "group": "Grupo",
+    "metadata": "Metadatos",
+    "markedAsRead": "Notificación marcada como leída",
+    "markedAsUnread": "Notificación marcada como no leída",
+    "markedAllAsRead": "Todas las notificaciones marcadas como leídas",
+    "deleted": "Notificación eliminada",
+    "deleteTitle": "Eliminar notificación",
+    "deleteConfirm": "¿Está seguro de que desea eliminar esta notificación?",
+    "markAllReadConfirmTitle": "Marcar todo como leído",
+    "markAllReadConfirmText": "¿Está seguro de que desea marcar todas las notificaciones como leídas?",
+    "filterByGroup": "Filtrar por grupo",
+    "groups": {
+      "inventory": "Inventario",
+      "system": "Sistema",
+      "payments": "Pagos",
+      "orders": "Pedidos"
+    },
+    "types": {
+      "info": "Información",
+      "warning": "Advertencia",
+      "error": "Error",
+      "success": "Éxito"
+    },
+    "inventoryBelowLimit": {
+      "title": "Alerta de inventario bajo",
+      "message": "El artículo está por debajo del nivel mínimo de stock"
+    },
+    "systemUpdate": {
+      "title": "Actualización del sistema",
+      "message": "Hay una actualización del sistema disponible"
+    },
+    "orderCompleted": {
+      "title": "Pedido completado",
+      "message": "Su pedido se ha completado correctamente"
+    },
+    "paymentFailed": {
+      "title": "Pago fallido",
+      "message": "Ha fallado una transacción de pago"
+    },
+    "welcome": {
+      "title": "Bienvenido",
+      "message": "Bienvenido a la aplicación"
     }
   }
 }

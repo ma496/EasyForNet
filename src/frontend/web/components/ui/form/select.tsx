@@ -119,7 +119,7 @@ export const Select = ({
         <button
           type="button"
           className={cn(
-            'form-input flex min-h-[40px] w-full cursor-pointer items-center gap-1 bg-transparent pe-10 text-left',
+            'form-input flex min-h-10 w-full cursor-pointer items-center gap-1 bg-transparent pe-10 ltr:text-left rtl:text-right',
             icon && 'ps-10',
             size === 'sm' && 'py-1.5 text-xs',
             size === 'lg' && 'py-2.5 text-base',
@@ -130,14 +130,14 @@ export const Select = ({
           style={{ backgroundImage: 'none' }}
           onClick={() => setOpen((v) => !v)}
         >
-          {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
-          <span className={cn('flex-1 truncate', !value && 'text-gray-400')}>{value ? getSelectedLabel() : placeholder}</span>
+          {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
+          <span className={cn('flex-1 truncate ltr:text-left rtl:text-right', !value && 'text-gray-400')}>{value ? getSelectedLabel() : placeholder}</span>
           {clearable && value && (
-            <div role="button" className="absolute end-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
+            <div role="button" className="absolute inset-e-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
               <X size={16} />
             </div>
           )}
-          <span className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2">
+          <span className="pointer-events-none absolute inset-e-4 top-1/2 -translate-y-1/2">
             <ChevronDown className={cn('h-4 w-4 transition-transform', open && 'rotate-180')} />
           </span>
         </button>
@@ -147,7 +147,7 @@ export const Select = ({
             style={{ maxHeight: `${maxVisibleItems * 40 + 8 + (searchable ? 50 : 0)}px` }}
           >
             {searchable && (
-              <div className="sticky top-0 z-10 flex h-[50px] items-center border-b border-gray-100 bg-white px-2 py-2 dark:border-[#253b5c] dark:bg-[#1b2e4b]" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 z-10 flex h-12.5 items-center border-b border-gray-100 bg-white px-2 py-2 dark:border-[#253b5c] dark:bg-[#1b2e4b]" onClick={(e) => e.stopPropagation()}>
                 <Input
                   name={name}
                   id={`${controlId}-search`}

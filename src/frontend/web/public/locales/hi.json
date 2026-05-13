@@ -32,7 +32,9 @@
     "submit": "जमा करें",
     "actions": "क्रियाएं",
     "allRightsReserved": "सर्वाधिकार सुरक्षित।",
-    "deleteConfirm": "हाँ, इसे हटा दें"
+    "deleteConfirm": "हाँ, इसे हटा दें",
+    "notifications": "सूचनाएं",
+    "viewAll": "सभी देखें"
   },
   "navigation": {
     "home": "होम",
@@ -58,7 +60,10 @@
     "uiTooltips": "टूलटिप्स",
     "usersList": "सूची",
     "usersCreate": "बनाएं",
-    "usersUpdate": "अपडेट करें"
+    "usersUpdate": "अपडेट करें",
+    "notifications": "सूचनाएं",
+    "notificationsList": "सूची",
+    "notificationsDetail": "विवरण"
   },
   "search": {
     "dashboard": "डैशबोर्ड",
@@ -187,7 +192,14 @@
       "isActive": "सक्रिय",
       "name": "नाम",
       "description": "विवरण",
-      "userCount": "उपयोगकर्ता"
+      "userCount": "उपयोगकर्ता",
+      "type": "प्रकार",
+      "title": "शीर्षक",
+      "message": "संदेश",
+      "status": "स्थिति",
+      "date": "तारीख",
+      "group": "समूह",
+      "updated": "अपडेट किया गया"
     },
     "pagination": {
       "showingEntries": "${totalRecords} प्रविष्टियों में से ${from} से ${to} दिखा रहा है"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "UI टूलटिप"
       }
+    },
+    "notifications": {
+      "title": "सूचनाएं",
+      "detail": {
+        "title": "सूचना विवरण"
+      },
+      "viewAll": "सभी सूचनाएं देखें"
+    }
+  },
+  "notifications": {
+    "noNotifications": "कोई सूचना नहीं",
+    "viewAll": "सभी सूचनाएं देखें",
+    "markAllRead": "सभी को पढ़ा हुआ चिह्नित करें",
+    "markAsRead": "पढ़ा हुआ चिह्नित करें",
+    "markAsUnread": "अपढ़ा चिह्नित करें",
+    "delete": "हटाएं",
+    "all": "सभी",
+    "read": "पढ़ा हुआ",
+    "unread": "अपठित",
+    "group": "समूह",
+    "metadata": "मेटाडेटा",
+    "markedAsRead": "सूचना पढ़ा हुआ चिह्नित",
+    "markedAsUnread": "सूचना अपढ़ी चिह्नित",
+    "markedAllAsRead": "सभी सूचनाएं पढ़ा हुआ चिह्नित",
+    "deleted": "सूचना हटाई गई",
+    "deleteTitle": "सूचना हटाएं",
+    "deleteConfirm": "क्या आप वाकई इस सूचना को हटाना चाहते हैं?",
+    "markAllReadConfirmTitle": "सभी को पढ़ा हुआ चिह्नित करें",
+    "markAllReadConfirmText": "क्या आप वाकई सभी सूचनाओं को पढ़ा हुआ चिह्नित करना चाहते हैं?",
+    "filterByGroup": "समूह के अनुसार फ़िल्टर करें",
+    "groups": {
+      "inventory": "इन्वेंटरी",
+      "system": "सिस्टम",
+      "payments": "भुगतान",
+      "orders": "ऑर्डर"
+    },
+    "types": {
+      "info": "जानकारी",
+      "warning": "चेतावनी",
+      "error": "त्रुटि",
+      "success": "सफलता"
+    },
+    "inventoryBelowLimit": {
+      "title": "कम इन्वेंटरी चेतावनी",
+      "message": "आइटम न्यूनतम स्टॉक स्तर से नीचे है"
+    },
+    "systemUpdate": {
+      "title": "सिस्टम अपडेट",
+      "message": "एक सिस्टम अपडेट उपलब्ध है"
+    },
+    "orderCompleted": {
+      "title": "ऑर्डर पूर्ण",
+      "message": "आपका ऑर्डर सफलतापूर्वक पूर्ण हुआ"
+    },
+    "paymentFailed": {
+      "title": "भुगतान विफल",
+      "message": "एक भुगतान लेनदेन विफल रहा"
+    },
+    "welcome": {
+      "title": "स्वागत है",
+      "message": "आवेदन में आपका स्वागत है"
     }
   }
 }

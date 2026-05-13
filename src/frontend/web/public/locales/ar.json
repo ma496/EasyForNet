@@ -32,7 +32,9 @@
     "submit": "إرسال",
     "actions": "إجراءات",
     "allRightsReserved": "جميع الحقوق محفوظة.",
-    "deleteConfirm": "نعم، احذفه"
+    "deleteConfirm": "نعم، احذفه",
+    "notifications": "الإشعارات",
+    "viewAll": "عرض الكل"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -58,7 +60,10 @@
     "uiTooltips": "تلميحات",
     "usersList": "قائمة",
     "usersCreate": "إنشاء",
-    "usersUpdate": "تحديث"
+    "usersUpdate": "تحديث",
+    "notifications": "الإشعارات",
+    "notificationsList": "قائمة",
+    "notificationsDetail": "التفاصيل"
   },
   "search": {
     "dashboard": "لوحة القيادة",
@@ -187,7 +192,14 @@
       "isActive": "نشط",
       "name": "الاسم",
       "description": "الوصف",
-      "userCount": "المستخدمين"
+      "userCount": "المستخدمين",
+      "type": "النوع",
+      "title": "العنوان",
+      "message": "الرسالة",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "group": "المجموعة",
+      "updated": "محدث"
     },
     "pagination": {
       "showingEntries": "عرض ${from} إلى ${to} من ${totalRecords} مُدخل"
@@ -423,6 +435,67 @@
       "tooltip": {
         "title": "تلميح واجهة المستخدم"
       }
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "detail": {
+        "title": "تفاصيل الإشعار"
+      },
+      "viewAll": "عرض جميع الإشعارات"
+    }
+  },
+  "notifications": {
+    "noNotifications": "لا توجد إشعارات",
+    "viewAll": "عرض جميع الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "markAsRead": "تحديد كمقروء",
+    "markAsUnread": "تحديد كغير مقروء",
+    "delete": "حذف",
+    "all": "الكل",
+    "read": "مقروء",
+    "unread": "غير مقروء",
+    "group": "المجموعة",
+    "metadata": "البيانات الوصفية",
+    "markedAsRead": "تم تحديد الإشعار كمقروء",
+    "markedAsUnread": "تم تحديد الإشعار كغير مقروء",
+    "markedAllAsRead": "تم تحديد جميع الإشعارات كمقروءة",
+    "deleted": "تم حذف الإشعار",
+    "deleteTitle": "حذف الإشعار",
+    "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا الإشعار؟",
+    "markAllReadConfirmTitle": "تحديد الكل كمقروء",
+    "markAllReadConfirmText": "هل أنت متأكد أنك تريد تحديد جميع الإشعارات كمقروءة؟",
+    "filterByGroup": "تصفية حسب المجموعة",
+    "groups": {
+      "inventory": "المخزون",
+      "system": "النظام",
+      "payments": "المدفوعات",
+      "orders": "الطلبات"
+    },
+    "types": {
+      "info": "معلومات",
+      "warning": "تحذير",
+      "error": "خطأ",
+      "success": "نجاح"
+    },
+    "inventoryBelowLimit": {
+      "title": "تنبيه انخفاض المخزون",
+      "message": "العنصر أقل من مستوى المخزون الأدنى"
+    },
+    "systemUpdate": {
+      "title": "تحديث النظام",
+      "message": "يتوفر تحديث للنظام"
+    },
+    "orderCompleted": {
+      "title": "اكتمل الطلب",
+      "message": "تم إكمال طلبك بنجاح"
+    },
+    "paymentFailed": {
+      "title": "فشل الدفع",
+      "message": "فشلت معاملة الدفع"
+    },
+    "welcome": {
+      "title": "مرحبا",
+      "message": "مرحبا بك في التطبيق"
     }
   }
 }

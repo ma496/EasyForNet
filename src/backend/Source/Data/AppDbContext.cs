@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using Backend.Data.Entities.Base;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
+using Backend.Features.Notifications.Core.Entities;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options,
                           ICurrentUserService currentUserService)
@@ -17,6 +18,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<AuthToken> AuthTokens => Set<AuthToken>();
     public DbSet<Token> Tokens => Set<Token>();
+
+    // Notifications
+    public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<NotificationVisit> NotificationVisits => Set<NotificationVisit>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -32,7 +32,9 @@
     "submit": "Soumettre",
     "actions": "Actions",
     "allRightsReserved": "Tous droits réservés.",
-    "deleteConfirm": "Oui, supprimer"
+    "deleteConfirm": "Oui, supprimer",
+    "notifications": "Notifications",
+    "viewAll": "Voir tout"
   },
   "navigation": {
     "home": "Accueil",
@@ -58,7 +60,10 @@
     "uiTooltips": "Info-bulles",
     "usersList": "Liste",
     "usersCreate": "Créer",
-    "usersUpdate": "Mettre à jour"
+    "usersUpdate": "Mettre à jour",
+    "notifications": "Notifications",
+    "notificationsList": "Liste",
+    "notificationsDetail": "Détails"
   },
   "search": {
     "dashboard": "Tableau de bord",
@@ -187,7 +192,13 @@
       "isActive": "Actif",
       "name": "Nom",
       "description": "Description",
-      "userCount": "Utilisateurs"
+      "userCount": "Utilisateurs",
+      "type": "Type",
+      "title": "Titre",
+      "message": "Message",
+      "status": "Statut",
+      "date": "Date",
+      "group": "Groupe"
     },
     "pagination": {
       "showingEntries": "Affichage de ${from} à ${to} sur ${totalRecords} entrées"
@@ -423,6 +434,67 @@
       "tooltip": {
         "title": "UI Info-bulle"
       }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "detail": {
+        "title": "Détails de la notification"
+      },
+      "viewAll": "Voir toutes les notifications"
+    }
+  },
+  "notifications": {
+    "noNotifications": "Aucune notification",
+    "viewAll": "Voir toutes les notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "markAsRead": "Marquer comme lu",
+    "markAsUnread": "Marquer comme non lu",
+    "delete": "Supprimer",
+    "all": "Tous",
+    "read": "Lu",
+    "unread": "Non lu",
+    "group": "Groupe",
+    "metadata": "Métadonnées",
+    "markedAsRead": "Notification marquée comme lue",
+    "markedAsUnread": "Notification marquée comme non lue",
+    "markedAllAsRead": "Toutes les notifications marquées comme lues",
+    "deleted": "Notification supprimée",
+    "deleteTitle": "Supprimer la notification",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette notification?",
+    "markAllReadConfirmTitle": "Tout marquer comme lu",
+    "markAllReadConfirmText": "Êtes-vous sûr de vouloir marquer toutes les notifications comme lues?",
+    "filterByGroup": "Filtrer par groupe",
+    "groups": {
+      "inventory": "Inventaire",
+      "system": "Système",
+      "payments": "Paiements",
+      "orders": "Commandes"
+    },
+    "types": {
+      "info": "Information",
+      "warning": "Avertissement",
+      "error": "Erreur",
+      "success": "Succès"
+    },
+    "inventoryBelowLimit": {
+      "title": "Alerte stock bas",
+      "message": "L'article est en dessous du niveau de stock minimum"
+    },
+    "systemUpdate": {
+      "title": "Mise à jour du système",
+      "message": "Une mise à jour du système est disponible"
+    },
+    "orderCompleted": {
+      "title": "Commande terminée",
+      "message": "Votre commande a été terminée avec succès"
+    },
+    "paymentFailed": {
+      "title": "Paiement échoué",
+      "message": "Une transaction de paiement a échoué"
+    },
+    "welcome": {
+      "title": "Bienvenue",
+      "message": "Bienvenue dans l'application"
     }
   }
 }
