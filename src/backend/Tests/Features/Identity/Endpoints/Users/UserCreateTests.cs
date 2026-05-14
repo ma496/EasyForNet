@@ -41,7 +41,7 @@ public class UserCreateTests(App app) : AppTestsBase(app)
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => true);
         var request = faker.Generate();
-        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
+        request.Roles = [TestRoles.TestRoleId];
         var (rsp, res) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);

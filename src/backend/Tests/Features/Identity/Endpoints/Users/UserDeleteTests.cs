@@ -19,7 +19,7 @@ public class UserDeleteTests(App app) : AppTestsBase(app)
                     .RuleFor(u => u.LastName, f => f.Name.LastName())
                     .RuleFor(u => u.IsActive, f => true);
         var request = faker.Generate();
-        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
+        request.Roles = [TestRoles.TestRoleId];
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);

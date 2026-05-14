@@ -85,12 +85,4 @@ public abstract class NotificationsTestsBase(App app) : AppTestsBase(app)
         var user = await userService.GetByUsernameAsync("admin");
         return user!.Id;
     }
-
-    protected async Task<Guid> GetTestUserIdAsync()
-    {
-        return await DbContext.Users
-            .Where(x => x.Username == UserConst.Test)
-            .Select(x => x.Id)
-            .SingleAsync();
-    }
 }

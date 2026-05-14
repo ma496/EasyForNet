@@ -71,7 +71,7 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
 
         var faker = new Faker<User>()
             .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex);
-        var newUser = await CreateAdminUserAsync($"testuser-{faker.Generate().Username}", UserConst.DefaultPassword);
+        var newUser = await CreateAdminUserAsync($"testuser-{faker.Generate().Username}", TestUsers.DefaultPassword);
         var otherUserNotification = await CreateUserNotificationAsync(newUser.Id);
 
         var (rsp, _) = await App.Client.POSTAsync<NotificationMarkAsUnreadEndpoint, NotificationMarkAsUnreadRequest, NotificationMarkAsUnreadResponse>(

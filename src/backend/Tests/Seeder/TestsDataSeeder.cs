@@ -9,12 +9,17 @@ public class TestsDataSeeder(IUserService userService, IRoleService roleService,
     {
         var permissions = await permissionService.Permissions().ToListAsync();
 
-        await CreateUserWithRole(permissions, UserConst.Test, RoleConst.Test);
-        await CreateUserWithRole(permissions, UserConst.TestOne, RoleConst.TestOne);
-        await CreateUserWithRole(permissions, UserConst.TestTwo, RoleConst.TestTwo);
+        var (testUserId, testRoleId) = await CreateUserWithRole(permissions, "test", "Test");
+        var (testOneUserId, testOneRoleId) = await CreateUserWithRole(permissions, "testone", "TestOne");
+        var (testTwoUserId, testTwoRoleId) = await CreateUserWithRole(permissions, "testtwo", "TestTwo");
+
+        var adminUserId = await userService.GetByUsernameAsync("admin") is User adminUser ? adminUser.Id : Guid.Empty;
+        var adminRoleId = await roleService.GetByNameAsync("Admin") is Role adminRole ? adminRole.Id : Guid.Empty;
+        TestUsers.SetUserIds(adminUserId, testUserId, testOneUserId, testTwoUserId);
+        TestRoles.SetRoleIds(adminRoleId, testRoleId, testOneRoleId, testTwoRoleId);
     }
 
-    private async Task CreateUserWithRole(List<Permission> permissions, string username, string roleName)
+    private async Task<(Guid userId, Guid roleId)> CreateUserWithRole(List<Permission> permissions, string username, string roleName)
     {
         var role = await roleService.GetByNameAsync(roleName) ??
             await roleService.CreateAsync(new Role { Default = true, Name = roleName });
@@ -31,5 +36,6 @@ public class TestsDataSeeder(IUserService userService, IRoleService roleService,
         {
             await userService.AssignRoleAsync(user.Id, role.Id);
         }
+        return (user.Id, role.Id);
     }
 }

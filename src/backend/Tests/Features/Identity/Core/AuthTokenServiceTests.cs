@@ -9,12 +9,9 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
     {
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
         var dbContext = App.Services.GetRequiredService<AppDbContext>();
-        var user = await dbContext.Users
-            .Where(u => u.Username == UserConst.Test)
-            .FirstOrDefaultAsync(cancellationToken: TestContext.Current.CancellationToken) ?? throw new("User not found");
-        var token = NewToken(user.Id, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1));
+        var token = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1));
         var savedToken = await authTokenService.SaveTokenAsync(token);
-        var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = user.Id.ToString() });
+        var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = TestUsers.TestUserId.ToString() });
 
         isValid.Should().BeTrue();
     }
@@ -24,12 +21,9 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
     {
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
         var dbContext = App.Services.GetRequiredService<AppDbContext>();
-        var user = await dbContext.Users
-            .Where(u => u.Username == UserConst.Test)
-            .FirstOrDefaultAsync(cancellationToken: TestContext.Current.CancellationToken) ?? throw new("User not found");
-        var token = NewToken(user.Id, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
+        var token = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
         var savedToken = await authTokenService.SaveTokenAsync(token);
-        var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = user.Id.ToString() });
+        var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = TestUsers.TestUserId.ToString() });
 
         isValid.Should().BeFalse();
     }
@@ -40,11 +34,8 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
         var authTokenCleanService = App.Services.GetRequiredService<IAuthTokenCleanService>();
         var dbContext = App.Services.GetRequiredService<AppDbContext>();
-        var user = await dbContext.Users
-            .Where(u => u.Username == UserConst.Test)
-            .FirstOrDefaultAsync(cancellationToken: TestContext.Current.CancellationToken) ?? throw new Exception("User not found");
         // create expired token
-        var expiredToken = NewToken(user.Id, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
+        var expiredToken = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
         var token = await authTokenService.SaveTokenAsync(expiredToken);
         // delete expired tokens
         await authTokenCleanService.DeleteExpiredTokensAsync();

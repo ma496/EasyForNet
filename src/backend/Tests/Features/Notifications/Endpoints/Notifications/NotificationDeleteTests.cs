@@ -29,9 +29,7 @@ public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var testUserId = await GetTestUserIdAsync();
-
-        var otherUserNotification = await CreateUserNotificationAsync(testUserId);
+        var otherUserNotification = await CreateUserNotificationAsync(TestUsers.TestUserId);
 
         var (rsp, _) = await App.Client.DELETEAsync<NotificationDeleteEndpoint, NotificationDeleteRequest, NotificationDeleteResponse>(
             new() { Id = otherUserNotification.Id });

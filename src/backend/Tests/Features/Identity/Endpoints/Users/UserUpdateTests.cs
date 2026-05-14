@@ -19,7 +19,7 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => true);
         var request = faker.Generate();
-        request.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
+        request.Roles = [TestRoles.TestRoleId];
         var (createRsp, createRes) = await App.Client.POSTAsync<UserCreateEndpoint, UserCreateRequest, UserCreateResponse>(request);
 
         createRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -30,7 +30,7 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => false);
         var updateRequest = updateFaker.Generate();
-        updateRequest.Roles = [(await roleService.GetByNameAsync(RoleConst.TestOne))!.Id, (await roleService.GetByNameAsync(RoleConst.TestTwo))!.Id];
+        updateRequest.Roles = [TestRoles.TestOneRoleId, TestRoles.TestTwoRoleId];
         var (updateRsp, updateRes) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -52,7 +52,7 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.IsActive, f => true);
         var updateRequest = updateFaker.Generate();
-        updateRequest.Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id];
+        updateRequest.Roles = [TestRoles.TestRoleId];
         var (updateRsp, _) = await App.Client.PUTAsync<UserUpdateEndpoint, UserUpdateRequest, UserUpdateResponse>(updateRequest);
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -76,7 +76,7 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
                 FirstName = "Modified",
                 LastName = "Default",
                 IsActive = false,
-                Roles = [(await roleService.GetByNameAsync(RoleConst.Test))!.Id]
+                Roles = [TestRoles.TestRoleId]
             });
 
         updateRsp.StatusCode.Should().Be(HttpStatusCode.BadRequest);

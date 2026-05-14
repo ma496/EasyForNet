@@ -85,7 +85,7 @@ public class UserListTests(App app) : AppTestsBase(app)
         await SetAuthTokenAsync();
 
         var roleService = App.Services.GetRequiredService<IRoleService>();
-        var testRoleId = (await roleService.GetByNameAsync(RoleConst.Test))!.Id;
+        var testRoleId = TestRoles.TestRoleId;
 
         // Create active users
         var activeFaker = new Faker<UserCreateRequest>()

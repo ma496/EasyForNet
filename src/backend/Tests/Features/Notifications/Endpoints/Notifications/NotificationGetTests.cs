@@ -52,8 +52,7 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var testUserId = await GetTestUserIdAsync();
-        var otherUserNotification = await CreateUserNotificationAsync(testUserId);
+        var otherUserNotification = await CreateUserNotificationAsync(TestUsers.TestUserId);
 
         var (rsp, _) = await App.Client.GETAsync<NotificationGetEndpoint, NotificationGetRequest, NotificationGetResponse>(
             new() { Id = otherUserNotification.Id });

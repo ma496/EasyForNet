@@ -12,12 +12,12 @@ public class NotificationMarkAllAsReadTests(App app) : NotificationsTestsBase(ap
 
         var faker = new Faker<User>()
             .RuleFor(u => u.Username, f => f.Internet.UserName() + f.UniqueIndex);
-        var newUser = await CreateAdminUserAsync($"testuser-{faker.Generate().Username}", UserConst.DefaultPassword);
+        var newUser = await CreateAdminUserAsync($"testuser-{faker.Generate().Username}", TestUsers.DefaultPassword);
         var userNotification1 = await CreateUserNotificationAsync(newUser.Id);
         var userNotification2 = await CreateUserNotificationAsync(newUser.Id);
         var globalNotification = await CreateGlobalNotificationAsync();
 
-        await SetAuthTokenAsync(newUser.Username, UserConst.DefaultPassword);
+        await SetAuthTokenAsync(newUser.Username, TestUsers.DefaultPassword);
 
         var (rsp, res) = await App.Client.POSTAsync<NotificationMarkAllAsReadEndpoint, NotificationMarkAllAsReadResponse>();
 
