@@ -5,7 +5,7 @@ using Mono.Cecil;
 using NetArchTest.Rules;
 using TestResult = NetArchTest.Rules.TestResult;
 
-public class NoDirectUseTests(ITestOutputHelper output)
+public class NoDirectUseTests()
 {
     [Fact]
     public void ClassesWithNoDirectUseAttribute_ShouldNotBeUsedDirectly()
@@ -81,8 +81,6 @@ public class NoDirectUseTests(ITestOutputHelper output)
 
         // Assert
         Assert.False(testResult.IsSuccessful);
-        
-        output.WriteLine(GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
     }
 
     private static string GetFailingTypesMessage(TestResult result, IReadOnlyList<Type> typesWithNoDirectUseAttribute)

@@ -4,7 +4,7 @@ using Backend.Tests.Architect.Features.FeatureA;
 using Backend.Tests.Architect.Features.FeatureB;
 using Backend.Tests.Architect.Features.FeatureB.Stat;
 
-public class FeatureDependencyTests(App app, ITestOutputHelper output) : AppTestsBase(app)
+public class FeatureDependencyTests(App app) : AppTestsBase(app)
 {
     [Fact]
     public void Features_Should_Not_Have_Unwanted_Dependencies()
@@ -26,7 +26,6 @@ public class FeatureDependencyTests(App app, ITestOutputHelper output) : AppTest
         var testOutput = featureDependencyTester.Test(assembly, baseFeatureNamespace);
       
         Assert.False(testOutput.IsSuccess);
-        output.WriteLine("Feature dependency failed:\n" + FormatFailureMessage(testOutput));
         
         MustHaveForbiddenTypes(testOutput, typeof(FeatureBStat), 
             [typeof(IFeatureAOneService)]);
