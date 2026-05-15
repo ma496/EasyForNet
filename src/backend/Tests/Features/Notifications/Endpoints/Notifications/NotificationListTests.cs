@@ -9,7 +9,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification = await CreateUserNotificationAsync(userId);
 
         var (rsp, res) = await App.Client.GETAsync<NotificationListEndpoint, NotificationListRequest, NotificationListResponse>(
@@ -55,7 +55,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         for (int i = 0; i < 5; i++)
         {
             await CreateUserNotificationAsync(userId);
@@ -87,7 +87,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var unread = await CreateUserNotificationAsync(userId);
         unread.IsRead = false;
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -124,12 +124,12 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var groupName = "test-group";
 
         var grouped = await CreateUserNotificationAsync(userId);
         grouped.Group = groupName;
-        await App.Services.GetRequiredService<AppDbContext>().SaveChangesAsync(TestContext.Current.CancellationToken);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         await CreateUserNotificationAsync(userId);
 

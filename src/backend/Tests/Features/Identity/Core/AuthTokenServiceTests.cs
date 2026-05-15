@@ -8,7 +8,6 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
     public async Task IsValidRefreshTokenAsync_ShouldReturnTrue_WhenTokenIsValid()
     {
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
-        var dbContext = App.Services.GetRequiredService<AppDbContext>();
         var token = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(1));
         var savedToken = await authTokenService.SaveTokenAsync(token);
         var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = TestUsers.TestUserId.ToString() });
@@ -20,7 +19,6 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
     public async Task IsValidRefreshTokenAsync_ShouldReturnFalse_WhenTokenIsInvalid()
     {
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
-        var dbContext = App.Services.GetRequiredService<AppDbContext>();
         var token = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
         var savedToken = await authTokenService.SaveTokenAsync(token);
         var isValid = await authTokenService.IsValidRefreshTokenAsync(new TokenRequest { RefreshToken = savedToken.RefreshToken, UserId = TestUsers.TestUserId.ToString() });
@@ -33,7 +31,6 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
     {
         var authTokenService = App.Services.GetRequiredService<IAuthTokenService>();
         var authTokenCleanService = App.Services.GetRequiredService<IAuthTokenCleanService>();
-        var dbContext = App.Services.GetRequiredService<AppDbContext>();
         // create expired token
         var expiredToken = NewToken(TestUsers.TestUserId, $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1), $"{Guid.NewGuid()}_{Faker.GlobalUniqueIndex}", DateTime.UtcNow.AddDays(-1));
         var token = await authTokenService.SaveTokenAsync(expiredToken);
@@ -41,7 +38,7 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
         await authTokenCleanService.DeleteExpiredTokensAsync();
 
         // assert
-        var deletedToken = await dbContext.AuthTokens
+        var deletedToken = await DbContext.AuthTokens
             .Where(t => t.Id == token.Id)
             .FirstOrDefaultAsync(cancellationToken: TestContext.Current.CancellationToken);
 

@@ -20,7 +20,7 @@ public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification1 = await CreateUserNotificationAsync(userId);
         notification1.Group = "group-a";
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -43,7 +43,7 @@ public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification1 = await CreateUserNotificationAsync(userId);
         notification1.Group = "group-a";
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -64,7 +64,7 @@ public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification1 = await CreateUserNotificationAsync(userId);
         notification1.Group = "zebra";
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);

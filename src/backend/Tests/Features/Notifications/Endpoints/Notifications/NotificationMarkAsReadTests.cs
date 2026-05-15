@@ -10,7 +10,7 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification = await CreateUserNotificationAsync(userId);
         notification.IsRead = false;
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -32,7 +32,7 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification = await CreateGlobalNotificationAsync();
 
         var (rsp, res) = await App.Client.POSTAsync<NotificationMarkAsReadEndpoint, NotificationMarkAsReadRequest, NotificationMarkAsReadResponse>(
@@ -51,7 +51,7 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
     {
         await SetAuthTokenAsync();
 
-        var userId = await GetCurrentUserIdAsync();
+        var userId = TestUsers.AdminUserId;
         var notification = await CreateUserNotificationAsync(userId);
         notification.IsRead = true;
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
