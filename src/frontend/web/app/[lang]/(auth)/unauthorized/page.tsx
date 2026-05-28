@@ -1,13 +1,11 @@
 import { Metadata } from 'next'
-import { Locale } from '@/i18n'
-import { getDictionary } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import UnauthorizedView from './_components/unauthorized-view'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.auth.unauthorized.title,
+    title: await getServerTranslation(lang, 'page.auth.unauthorized.title'),
   }
 }
 

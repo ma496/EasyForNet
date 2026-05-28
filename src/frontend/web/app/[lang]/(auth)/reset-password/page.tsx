@@ -1,20 +1,21 @@
 import { Metadata } from 'next'
 import { ResetPasswordForm } from './_components/reset-password-form'
 import LanguageDropdown from '@/components/custom/language-dropdown'
-import { getDictionary } from '@/i18n'
-import { Locale } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.auth.resetPassword.title,
+    title: await getServerTranslation(lang, 'page.auth.resetPassword.title'),
   }
 }
 
 const ResetPassword = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
+  const [title, description] = await Promise.all([
+    getServerTranslation(lang, 'page.auth.resetPassword.title'),
+    getServerTranslation(lang, 'page.auth.resetPassword.description'),
+  ])
 
   return (
     <div>
@@ -26,8 +27,8 @@ const ResetPassword = async ({ params }: { params: Promise<{ lang: string }> }) 
             </div>
             <div className="mx-auto w-full max-w-[440px]">
               <div className="mb-10">
-                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.page.auth.resetPassword.title}</h1>
-                <p className="text-base leading-normal font-bold text-white-dark">{dict.page.auth.resetPassword.description}</p>
+                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{title}</h1>
+                <p className="text-base leading-normal font-bold text-white-dark">{description}</p>
               </div>
               <ResetPasswordForm />
             </div>

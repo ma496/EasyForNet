@@ -1,7 +1,7 @@
 import ProviderComponent from '@/components/layouts/provider-component'
 import { Nunito } from 'next/font/google'
-import { i18nConfig, type Locale } from '@/i18n'
-import { getDictionary } from '@/i18n'
+import { getDictionary, i18nConfig, type Locale } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import { TranslationProvider } from '@/components/layouts/translation-provider'
 
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -9,12 +9,12 @@ import '../../styles/tailwind.css'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params
-  const dictionary = await getDictionary(lang)
+  const brandName = await getServerTranslation(lang, 'brand.name')
 
   return {
     title: {
-      template: `%s | ${dictionary.brand.name}`,
-      default: dictionary.brand.name,
+      template: `%s | ${brandName}`,
+      default: brandName,
     },
   }
 }

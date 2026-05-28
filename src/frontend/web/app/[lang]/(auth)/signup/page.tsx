@@ -1,20 +1,21 @@
 import SignupForm from './_components/signup-form'
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { Metadata } from 'next'
-import { getDictionary } from '@/i18n'
-import { Locale } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.auth.signup.title,
+    title: await getServerTranslation(lang, 'page.auth.signup.title'),
   }
 }
 
 const BoxedSignup = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
+  const [title, description] = await Promise.all([
+    getServerTranslation(lang, 'page.auth.signup.title'),
+    getServerTranslation(lang, 'page.auth.signup.description'),
+  ])
 
   return (
     <div>
@@ -26,8 +27,8 @@ const BoxedSignup = async ({ params }: { params: Promise<{ lang: string }> }) =>
             </div>
             <div className="mx-auto w-full max-w-[440px]">
               <div className="mb-10">
-                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{dict.page.auth.signup.title || 'Sign Up'}</h1>
-                <p className="text-base leading-normal font-bold text-white-dark">{dict.page.auth.signup.description || 'Enter your email and password to register'}</p>
+                <h1 className="text-3xl leading-snug! font-extrabold text-primary uppercase md:text-4xl">{title || 'Sign Up'}</h1>
+                <p className="text-base leading-normal font-bold text-white-dark">{description || 'Enter your email and password to register'}</p>
               </div>
               <SignupForm />
             </div>

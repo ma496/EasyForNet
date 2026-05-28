@@ -1,9 +1,11 @@
 import LanguageDropdown from '@/components/custom/language-dropdown'
-import { getDictionary } from '@/i18n'
-import { Locale } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 
-const Footer = async ({ lang }: { lang: Locale }) => {
-  const dict = await getDictionary(lang)
+const Footer = async ({ lang }: { lang: string }) => {
+  const [brandName, allRightsReserved] = await Promise.all([
+    getServerTranslation(lang, 'brand.name'),
+    getServerTranslation(lang, 'common.allRightsReserved'),
+  ])
 
   return (
     <footer className="bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
@@ -13,7 +15,7 @@ const Footer = async ({ lang }: { lang: Locale }) => {
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
           <p className="text-center text-base text-gray-400">
-            © {new Date().getFullYear()}. {dict.brand.name}. {dict.common.allRightsReserved}
+            © {new Date().getFullYear()}. {brandName}. {allRightsReserved}
           </p>
         </div>
       </div>

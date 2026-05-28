@@ -1,13 +1,12 @@
-import { Locale, getDictionary } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import { Metadata } from 'next'
 import { RoleCreateForm } from './_components/role-create-form'
 import { AdminPageContent } from '@/components/layouts/admin-page-content'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.roles.create.title,
+    title: await getServerTranslation(lang, 'page.roles.create.title'),
   }
 }
 
@@ -17,11 +16,11 @@ interface RoleCreatePageProps {
 
 const RoleCreate = async ({ params }: RoleCreatePageProps) => {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
+  const title = await getServerTranslation(lang, 'page.roles.create.title')
 
   return (
     <AdminPageContent
-      title={dict.page.roles.create.title}
+      title={title}
       innerClassName='max-w-[620]'
     >
       <RoleCreateForm />

@@ -1,13 +1,12 @@
-import { Locale, getDictionary } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import { Metadata } from 'next'
 import { UpdateProfile } from './_components/update-profile'
 import { AdminPageContent } from '@/components/layouts/admin-page-content'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.profile.title,
+    title: await getServerTranslation(lang, 'page.profile.title'),
   }
 }
 
@@ -17,11 +16,11 @@ interface ProfilePageProps {
 
 const Profile = async ({ params }: ProfilePageProps) => {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
+  const title = await getServerTranslation(lang, 'page.profile.title')
 
   return (
     <AdminPageContent
-      title={dict.page.profile.title}
+      title={title}
       innerClassName='max-w-[620]'
     >
       <UpdateProfile />

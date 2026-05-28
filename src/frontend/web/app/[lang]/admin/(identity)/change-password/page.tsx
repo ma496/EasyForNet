@@ -1,13 +1,12 @@
-import { Locale, getDictionary } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import { Metadata } from 'next'
 import { ChangePasswordForm } from './_components/change-password-form'
 import { AdminPageContent } from '@/components/layouts/admin-page-content'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.changePassword.title,
+    title: await getServerTranslation(lang, 'page.changePassword.title'),
   }
 }
 
@@ -17,11 +16,11 @@ interface ChangePasswordPageProps {
 
 const ChangePassword = async ({ params }: ChangePasswordPageProps) => {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
+  const title = await getServerTranslation(lang, 'page.changePassword.title')
 
   return (
     <AdminPageContent
-      title={dict.page.changePassword.title}
+      title={title}
       innerClassName='max-w-[620]'
     >
       <ChangePasswordForm />

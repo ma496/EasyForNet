@@ -1,14 +1,12 @@
-import { Locale } from '@/i18n'
-import { getDictionary } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 import VerifyEmailView from './_components/verify-email-view'
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const dict = await getDictionary(lang as Locale)
   return {
-    title: dict.page.verifyEmail.title,
+    title: await getServerTranslation(lang, 'page.verifyEmail.title'),
   }
 }
 

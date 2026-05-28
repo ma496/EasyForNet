@@ -1,38 +1,70 @@
 import { Users, Palette, Mail, Trash2, Lock, Layers } from 'lucide-react'
-import { getDictionary } from '@/i18n'
-import { Locale } from '@/i18n'
+import { getServerTranslation } from '@/i18n'
 
-const Features = async ({ lang }: { lang: Locale }) => {
-  const dict = await getDictionary(lang)
+const Features = async ({ lang }: { lang: string }) => {
+  const [
+    titleBadge,
+    title,
+    description,
+    permissionsTitle,
+    permissionsDesc,
+    emailTitle,
+    emailDesc,
+    jobsTitle,
+    jobsDesc,
+    cleanupTitle,
+    cleanupDesc,
+    usersTitle,
+    usersDesc,
+    uiTitle,
+    uiDesc,
+  ] = await Promise.all([
+    getServerTranslation(lang, 'page.home.features.titleBadge'),
+    getServerTranslation(lang, 'page.home.features.title'),
+    getServerTranslation(lang, 'page.home.features.description'),
+    getServerTranslation(lang, 'page.home.features.items.permissions.title'),
+    getServerTranslation(lang, 'page.home.features.items.permissions.description'),
+    getServerTranslation(lang, 'page.home.features.items.email.title'),
+    getServerTranslation(lang, 'page.home.features.items.email.description'),
+    getServerTranslation(lang, 'page.home.features.items.jobs.title'),
+    getServerTranslation(lang, 'page.home.features.items.jobs.description'),
+    getServerTranslation(lang, 'page.home.features.items.cleanup.title'),
+    getServerTranslation(lang, 'page.home.features.items.cleanup.description'),
+    getServerTranslation(lang, 'page.home.features.items.users.title'),
+    getServerTranslation(lang, 'page.home.features.items.users.description'),
+    getServerTranslation(lang, 'page.home.features.items.ui.title'),
+    getServerTranslation(lang, 'page.home.features.items.ui.description'),
+  ])
+
   const features = [
     {
-      name: dict.page.home.features.items.permissions.title,
-      description: dict.page.home.features.items.permissions.description,
+      name: permissionsTitle,
+      description: permissionsDesc,
       icon: Lock,
     },
     {
-      name: dict.page.home.features.items.email.title,
-      description: dict.page.home.features.items.email.description,
+      name: emailTitle,
+      description: emailDesc,
       icon: Mail,
     },
     {
-      name: dict.page.home.features.items.jobs.title,
-      description: dict.page.home.features.items.jobs.description,
+      name: jobsTitle,
+      description: jobsDesc,
       icon: Layers,
     },
     {
-      name: dict.page.home.features.items.cleanup.title,
-      description: dict.page.home.features.items.cleanup.description,
+      name: cleanupTitle,
+      description: cleanupDesc,
       icon: Trash2,
     },
     {
-      name: dict.page.home.features.items.users.title,
-      description: dict.page.home.features.items.users.description,
+      name: usersTitle,
+      description: usersDesc,
       icon: Users,
     },
     {
-      name: dict.page.home.features.items.ui.title,
-      description: dict.page.home.features.items.ui.description,
+      name: uiTitle,
+      description: uiDesc,
       icon: Palette,
     },
   ]
@@ -41,12 +73,12 @@ const Features = async ({ lang }: { lang: Locale }) => {
     <div id="features" className="bg-gray-50 py-12 dark:bg-gray-900 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-base font-semibold tracking-wide text-primary uppercase">{dict.page.home.features.titleBadge}</h2>
+          <h2 className="text-base font-semibold tracking-wide text-primary uppercase">{titleBadge}</h2>
           <p className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-            {dict.page.home.features.title}
+            {title}
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-            {dict.page.home.features.description}
+            {description}
           </p>
         </div>
 

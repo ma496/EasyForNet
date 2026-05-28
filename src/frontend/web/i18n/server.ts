@@ -12,6 +12,22 @@ const dictionaries = {
 }
 
 /**
- * This method you should use in server components.
+ * This method only should used in TranslationProvider and getServerTranslation.
+ * When you need to use in server components, please use getServerTranslation instead of getDictionary.
  */
 export const getDictionary = async (locale: Locale) => dictionaries[locale]?.() ?? dictionaries.en()
+
+/**
+ * This method you should use in server components.
+ * Get a single localization value by key. Supports nested keys with dot notation (e.g., "brand.name").
+ */
+export const getServerTranslation = async (langCode: string, key: string): Promise<string> => {
+  const dict = await getDictionary(langCode as Locale)
+  const keys = key.split('.')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let result: any = dict
+  for (const k of keys) {
+    result = result?.[k]
+  }
+  return result ?? key
+}
