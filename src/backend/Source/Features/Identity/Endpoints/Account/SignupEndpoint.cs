@@ -69,7 +69,7 @@ sealed class SignupEndpoint(IUserService userService,
                 @$"
             <div>
                 <p>Click the link below to verify your email:</p>
-                <a href=""{webSetting.Value.Url}/verify-email?token={token.Value}"">Verify Email</a>
+                <a href=""{webSetting.Value.DefaultDomain}/verify-email?token={token.Value}"">Verify Email</a>
             </div>", true);
 
             await transaction.CommitAsync(cancellationToken);

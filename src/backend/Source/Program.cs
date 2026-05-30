@@ -17,17 +17,37 @@ bld.Services
    .AddFastEndpoints(o => o.SourceGeneratorDiscoveredTypes = DiscoveredTypes.All)
    .SwaggerDocument();
 
-// Add CORS configuration
-bld.Services.AddCors(options =>
+// Add CORS configuration - flexible for development, strict for production
+if (bld.Environment.IsDevelopment())
 {
-    options.AddDefaultPolicy(builder =>
+    bld.Services.AddCors(options =>
     {
-        builder.WithOrigins(bld.Configuration["Web:Url"] ?? "http://localhost:3000")
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.SetIsOriginAllowed(origin =>
+                   origin.StartsWith("http://localhost:"))
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        });
     });
-});
+}
+else
+{
+    bld.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+        {
+            var webSetting = new WebSetting();
+            bld.Configuration.GetSection("Web").Bind(webSetting);
+
+            builder.WithOrigins(webSetting.AllowedDomains())
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        });
+    });
+}
 
 bld.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(bld.Configuration.GetConnectionString("DefaultConnection")));

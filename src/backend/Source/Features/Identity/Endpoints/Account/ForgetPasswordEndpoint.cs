@@ -36,7 +36,7 @@ sealed class ForgetPasswordEndpoint(ITokenService tokenService,
             @$"
             <div>
                 <p>Click the link below to reset your password:</p>
-                <a href=""{webSetting.Value.Url}/reset-password?token={resetToken.Value}"">Reset Password</a>
+                <a href=""{webSetting.Value.DefaultDomain}/reset-password?token={resetToken.Value}"">Reset Password</a>
             </div>", true);
 
         await Send.OkAsync(cancellationToken);
