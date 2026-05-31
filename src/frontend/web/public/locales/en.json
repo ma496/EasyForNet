@@ -348,6 +348,7 @@
     },
     "profile": {
       "title": "Profile",
+      "description": "Update your personal information",
       "updateSuccess": "Profile updated successfully",
       "deleteAvatarTitle": "Delete Profile Picture",
       "deleteAvatarConfirm": "Are you sure you want to delete your profile picture?",
@@ -408,7 +409,8 @@
       }
     },
     "changePassword": {
-      "title": "Change Password"
+      "title": "Change Password",
+      "description": "Ensure your account stays secure"
     },
     "ui": {
       "buttons": {

@@ -348,6 +348,7 @@
     },
     "profile": {
       "title": "个人资料",
+      "description": "更新您的个人信息",
       "updateSuccess": "个人资料更新成功",
       "deleteAvatarTitle": "删除头像",
       "deleteAvatarConfirm": "您确定要删除您的个人资料图片吗？",
@@ -408,7 +409,8 @@
       }
     },
     "changePassword": {
-      "title": "修改密码"
+      "title": "修改密码",
+      "description": "确保您的账户安全"
     },
     "ui": {
       "buttons": {

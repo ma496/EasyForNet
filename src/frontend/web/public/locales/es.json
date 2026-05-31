@@ -348,6 +348,7 @@
     },
     "profile": {
       "title": "Perfil",
+      "description": "Actualiza tu información personal",
       "updateSuccess": "Perfil actualizado exitosamente",
       "deleteAvatarTitle": "Eliminar Foto de Perfil",
       "deleteAvatarConfirm": "¿Está seguro de que desea eliminar su foto de perfil?",
@@ -408,7 +409,8 @@
       }
     },
     "changePassword": {
-      "title": "Cambiar contraseña"
+      "title": "Cambiar contraseña",
+      "description": "Asegura tu cuenta manteniéndola segura"
     },
     "ui": {
       "buttons": {

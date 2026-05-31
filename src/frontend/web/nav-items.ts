@@ -154,13 +154,13 @@ export const navItems: (NavItem | NavItemGroup)[] = [
   },
   {
     title: 'navigation.changePassword',
-    url: '/admin/change-password',
+    url: '/change-password',
     icon: Lock,
     show: false,
   },
   {
     title: 'navigation.profile',
-    url: '/admin/profile',
+    url: '/profile',
     icon: User,
     show: false,
   },

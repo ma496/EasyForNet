@@ -7,6 +7,12 @@ export interface AuthUrl {
 
 export const authUrls: AuthUrl[] = [
   {
+    url: '/change-password',
+  },
+  {
+    url: '/profile',
+  },
+  {
     url: '/admin',
   },
   {

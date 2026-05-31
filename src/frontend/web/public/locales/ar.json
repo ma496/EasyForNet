@@ -348,6 +348,7 @@
     },
     "profile": {
       "title": "الملف الشخصي",
+      "description": "تحديث معلوماتك الشخصية",
       "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
       "deleteAvatarTitle": "حذف الصورة الشخصية",
       "deleteAvatarConfirm": "هل أنت متأكد أنك تريد حذف صورتك الشخصية؟",
@@ -408,7 +409,8 @@
       }
     },
     "changePassword": {
-      "title": "تغيير كلمة المرور"
+      "title": "تغيير كلمة المرور",
+      "description": "تأكد من أن حسابك آمن"
     },
     "ui": {
       "buttons": {

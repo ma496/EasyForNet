@@ -30,11 +30,11 @@ export const searchableItems: SearchableItem[] = [
   },
   {
     title: 'search.profile',
-    url: '/admin/profile',
+    url: '/profile',
   },
   {
     title: 'search.changePassword',
-    url: '/admin/change-password',
+    url: '/change-password',
   },
 
   {
