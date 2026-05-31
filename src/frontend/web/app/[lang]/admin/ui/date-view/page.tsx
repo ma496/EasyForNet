@@ -1,14 +1,6 @@
 import { getServerTranslation } from '@/i18n'
-import { Metadata } from 'next'
 import { DateViewExample } from './_components/date-view-example'
 import { AdminPageContent } from '@/components/layouts/admin-page-content'
-
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
-  const { lang } = await params
-  return {
-    title: await getServerTranslation(lang, 'page.ui.dateView.title'),
-  }
-}
 
 interface DateViewPageProps {
   params: Promise<{ lang: string }>

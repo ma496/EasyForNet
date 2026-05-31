@@ -1,12 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { AlertCircleIcon, ArrowRightIcon, BellIcon, CheckIcon, MailIcon, Plus, SendIcon } from 'lucide-react'
-import { Metadata } from 'next'
 import { IconButton } from '@/components/ui/icon-button'
 import CodeShowcase from '@/components/ui/code-showcase'
-
-export const metadata: Metadata = {
-  title: 'Buttons',
-}
 
 export const ButtonsExample = () => {
   const basicButtonsCode = `<Button>Default</Button>
