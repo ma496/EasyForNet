@@ -154,13 +154,13 @@ export const TreeviewExample = () => {
 ]
 
 <TreeView
-  className="panel w-[300px]"
+  className="panel w-75"
   data={treeData}
   onNodeClick={(node) => console.log("Clicked:", node)}
 />`
 
   const selectableTreeCode = `<TreeView
-  className="panel w-[300px]"
+  className="panel w-75"
   data={treeData}
   enableSelection={true}
   defaultSelectedIds={["1.1.1, 1.1.2"]}
@@ -170,7 +170,7 @@ export const TreeviewExample = () => {
 />`
 
   const expandedTreeCode = `<TreeView
-  className="panel w-[300px]"
+  className="panel w-75"
   data={treeData}
   defaultExpandedIds={["1", "1.1"]}
   expandAll={false}
@@ -194,7 +194,7 @@ export const TreeviewExample = () => {
 ]
 
 <TreeView
-  className="panel w-[350px]"
+  className="panel w-87.5"
   data={orgData}
   defaultExpandedIds={["ceo", "cto", "cfo"]}
   enableSelection={true}
@@ -215,7 +215,7 @@ export const TreeviewExample = () => {
           code={basicTreeCode}
           preview={
             <div className="flex justify-center">
-              <TreeView className="panel w-[300px]" data={basicTreeData} onNodeClick={handleNodeClick} />
+              <TreeView className="panel w-75" data={basicTreeData} onNodeClick={handleNodeClick} />
             </div>
           }
         />
@@ -227,7 +227,7 @@ export const TreeviewExample = () => {
           code={selectableTreeCode}
           preview={
             <div className="flex justify-center">
-              <TreeView className="panel w-[300px]" data={basicTreeData} enableSelection={true} defaultSelectedIds={selectableDefaultSelectedIds} onSelectionChange={handleSelectionChange} />
+              <TreeView className="panel w-75" data={basicTreeData} enableSelection={true} defaultSelectedIds={selectableDefaultSelectedIds} onSelectionChange={handleSelectionChange} />
             </div>
           }
         />
@@ -239,7 +239,7 @@ export const TreeviewExample = () => {
           code={expandedTreeCode}
           preview={
             <div className="flex justify-center">
-              <TreeView className="panel w-[300px]" data={advancedTreeData} defaultExpandedIds={advancedDefaultExpandedIds} onNodeClick={handleNodeClick} />
+              <TreeView className="panel w-75" data={advancedTreeData} defaultExpandedIds={advancedDefaultExpandedIds} onNodeClick={handleNodeClick} />
             </div>
           }
         />
@@ -252,7 +252,7 @@ export const TreeviewExample = () => {
           preview={
             <div className="flex justify-center">
               <TreeView
-                className="panel w-[350px]"
+                className="panel w-87.5"
                 data={organizationData}
                 defaultExpandedIds={organizationDefaultExpandedIds}
                 enableSelection={true}
@@ -268,7 +268,7 @@ export const TreeviewExample = () => {
           title="All Features Combined"
           description="TreeView with all features enabled: selection, pre-expansion, click handlers"
           code={`<TreeView
-  className="panel w-[400px]"
+  className="panel w-100"
   data={complexTreeData}
   enableSelection={true}
   defaultExpandedIds={["1", "1.1"]}
@@ -279,7 +279,7 @@ export const TreeviewExample = () => {
           preview={
             <div className="flex justify-center">
               <TreeView
-                className="panel w-[400px]"
+                className="panel w-100"
                 data={advancedTreeData}
                 enableSelection={true}
                 defaultExpandedIds={featuresDefaultExpandedIds}

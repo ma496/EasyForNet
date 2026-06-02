@@ -21,7 +21,7 @@ export const CardsExample = () => {
   </CardContent>
 </Card>`
 
-  const customSizedCardCode = `<Card className="w-[300px]">
+  const customSizedCardCode = `<Card className="w-75">
   <CardHeader>
     <CardTitle>Custom Width</CardTitle>
   </CardHeader>
@@ -131,7 +131,7 @@ export const CardsExample = () => {
           description="Card with fixed width dimensions"
           code={customSizedCardCode}
           preview={
-            <Card className="w-[300px]">
+            <Card className="w-75">
               <CardHeader>
                 <CardTitle>Custom Width</CardTitle>
               </CardHeader>

@@ -308,16 +308,16 @@ export const FormLazyMultiSelect = <TItem, TRequest>({
           style={{ backgroundImage: 'none' }}
           onClick={() => setOpen((v) => !v)}
         >
-          {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
+          {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
           <span className="flex flex-1 items-center truncate">
             {renderValue()}
           </span>
           {field.value && (
-            <div role="button" className="absolute end-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
+            <div role="button" className="absolute inset-e-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
               <X size={16} />
             </div>
           )}
-          <span className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2">
+          <span className="pointer-events-none absolute inset-e-4 top-1/2 -translate-y-1/2">
             <ChevronDown className={cn('h-4 w-4 transition-transform', open && 'rotate-180')} />
           </span>
         </button>

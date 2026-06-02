@@ -48,7 +48,7 @@ export const FormCheckbox = ({ label, name, id, showValidation = true, className
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
-      <div className="flex min-h-[20px] items-center">
+      <div className="flex min-h-5 items-center">
         <input {...field} {...props} type="checkbox" id={inputId} name={name} className={cn('mb-0', formCheckboxVariants({ variant, size }), hasError && 'border-danger focus:ring-danger')} />
         {label && (
           <label

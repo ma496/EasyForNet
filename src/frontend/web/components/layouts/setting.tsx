@@ -16,7 +16,7 @@ const Setting = () => {
 
       <nav
         className={`${(showCustomizer && 'ltr:right-0! rtl:left-0!') || ''
-          } fixed top-0 bottom-0 z-51 w-full max-w-[400px] bg-white p-4 shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-[right] duration-300 ltr:-right-[400px] rtl:-left-[400px] dark:bg-black`}
+          } fixed top-0 bottom-0 z-51 w-full max-w-100 bg-white p-4 shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-[right] duration-300 ltr:-right-100 rtl:-left-100 dark:bg-black`}
       >
         <button
           type="button"

@@ -35,28 +35,10 @@
 
 @import 'tailwindcss';
 
-@plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/typography";
-
 @config '../tailwind.config.js';
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 @utility dark {
   &body {
@@ -142,11 +124,11 @@
   }
 
   & .sidebar {
-    @apply ltr:-left-[260px] rtl:-right-[260px];
+    @apply ltr:left-[-260px] rtl:right-[-260px];
   }
 
   &.toggle-sidebar .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   & .nav-item a div:first-child svg {
@@ -278,24 +260,24 @@
   }
 
   .horizontal & {
-    @apply ltr:-left-[260px] rtl:-right-[260px];
+    @apply ltr:left-[-260px] rtl:right-[-260px];
   }
 
   .horizontal.toggle-sidebar & {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   .vertical & {
-    @apply ltr:-left-[260px] rtl:-right-[260px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply ltr:left-[-260px] rtl:right-[-260px] lg:ltr:left-0 lg:rtl:right-0;
   }
 
   .vertical.toggle-sidebar & {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   /* Collapsible vertical layouts */
   .collapsible-vertical & {
-    @apply hover:w-[260px] ltr:-left-[260px] rtl:-right-[260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply hover:w-[260px] ltr:left-[-260px] rtl:right-[-260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
   }
 
   .collapsible-vertical.toggle-sidebar & {
@@ -595,7 +577,7 @@
 
 @utility toggle-sidebar {
   &.horizontal .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   /* Vertical layouts */
@@ -611,7 +593,7 @@
   }
 
   &.vertical .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   &.collapsible-vertical .sidebar {
@@ -683,11 +665,11 @@
   }
 
   & .sidebar {
-    @apply ltr:-left-[260px] rtl:-right-[260px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply ltr:left-[-260px] rtl:right-[-260px] lg:ltr:left-0 lg:rtl:right-0;
   }
 
   &.toggle-sidebar .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-[260px] lg:rtl:-right-[260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
   }
 
   &.boxed-layout .sidebar {
@@ -728,7 +710,7 @@
 @utility collapsible-vertical {
   /* Collapsible vertical layouts */
   & .sidebar {
-    @apply hover:w-[260px] ltr:-left-[260px] rtl:-right-[260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply hover:w-[260px] ltr:left-[-260px] rtl:right-[-260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
   }
 
   &.toggle-sidebar .sidebar {
@@ -1472,6 +1454,24 @@
 
   &table tbody tr:last-child td {
     @apply border-b-0;
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 

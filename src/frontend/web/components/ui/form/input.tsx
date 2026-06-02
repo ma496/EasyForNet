@@ -27,7 +27,7 @@ export const Input = ({ label, name, id, className, icon, error, showError = tru
       )}
       <div className="relative text-white-dark">
         <input {...props} name={name} id={inputId} autoComplete={autoComplete} className={cn('form-input', icon && 'ps-10')} />
-        {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
+        {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
       </div>
       {showError && error && <div className="mt-1 text-danger">{error}</div>}
     </div>

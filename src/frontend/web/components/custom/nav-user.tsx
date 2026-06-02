@@ -52,7 +52,7 @@ const NavUser = () => {
           </div>
         }
       >
-        <ul className="w-[230px] py-0! font-semibold text-dark dark:text-white-light/90">
+        <ul className="w-57.5 py-0! font-semibold text-dark dark:text-white-light/90">
           <li>
             <div className="flex items-center px-4 py-4">
               <div className="h-9 w-9 rounded-full overflow-hidden">

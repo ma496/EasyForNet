@@ -33,8 +33,8 @@ export const PasswordInput = ({ label, name, id, className, icon, error, showErr
       )}
       <div className="relative text-white-dark">
         <input {...props} name={name} id={inputId} autoComplete={autoComplete} type={showPassword ? 'text' : 'password'} className={cn('form-input', icon && 'ps-10', 'pe-10')} />
-        {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
-        <button type="button" onClick={togglePasswordVisibility} tabIndex={-1} className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden">
+        {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
+        <button type="button" onClick={togglePasswordVisibility} tabIndex={-1} className="absolute inset-e-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden">
           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>
       </div>

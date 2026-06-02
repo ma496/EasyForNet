@@ -55,7 +55,7 @@ export const CodeShowcase = ({ title, description, preview, code, className = ''
             </pre>
           </div>
         ) : (
-          <div className="flex min-h-[100px] items-center justify-center">{preview}</div>
+          <div className="flex min-h-25 items-center justify-center">{preview}</div>
         )}
       </CardContent>
     </Card>

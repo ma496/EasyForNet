@@ -136,10 +136,10 @@ export const FormMultiSelect = ({
         <button
           type="button"
           className={cn(
-            'form-input flex min-h-[40px] w-full cursor-pointer flex-wrap items-center gap-1 bg-transparent py-[2px] pr-10 text-left',
+            'form-input flex min-h-10 w-full cursor-pointer flex-wrap items-center gap-1 bg-transparent py-0.5 pr-10 text-left',
             icon && 'ps-10',
-            size === 'sm' && 'py-[4px] text-xs',
-            size === 'lg' && 'py-[7px] text-base',
+            size === 'sm' && 'py-1 text-xs',
+            size === 'lg' && 'py-1.75 text-base',
           )
           }
           id={controlId}
@@ -147,16 +147,16 @@ export const FormMultiSelect = ({
           style={{ backgroundImage: 'none' }}
           onClick={() => setOpen((v) => !v)}
         >
-          {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
+          {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
           <span className={cn('flex flex-1 flex-wrap items-center gap-1', !field.value?.length && 'text-gray-400')}>
             {Array.isArray(field.value) && field.value.length > 0 ? renderValue() : placeholder && (!field.value || field.value.length === 0) && placeholder}
           </span>
           {Array.isArray(field.value) && field.value.length > 0 && (
-            <div role="button" className="absolute end-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
+            <div role="button" className="absolute inset-e-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-hidden" tabIndex={-1} onClick={handleClear}>
               <X size={16} />
             </div>
           )}
-          <span className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2">
+          <span className="pointer-events-none absolute inset-e-4 top-1/2 -translate-y-1/2">
             <ChevronDown className={cn('h-4 w-4 transition-transform', open && 'rotate-180')} />
           </span>
         </button>

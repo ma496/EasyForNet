@@ -42,7 +42,7 @@ export const Checkbox = ({ label, name, className, variant, size, error, showErr
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, error && showError && 'has-error')}>
-      <div className="flex min-h-[20px] items-center">
+      <div className="flex min-h-5 items-center">
         <input {...props} type="checkbox" id={checkboxId} name={name} className={cn('mb-0', checkboxVariants({ variant, size }), error && 'border-danger focus:ring-danger')} />
         {label && (
           <label

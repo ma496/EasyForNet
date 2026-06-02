@@ -42,7 +42,7 @@ export const Radio = ({ label, name, id, className, variant, size, error, showEr
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, error && showError && 'has-error')}>
-      <div className="flex min-h-[20px] items-center">
+      <div className="flex min-h-5 items-center">
         <input {...props} type="radio" name={name} id={radioId} className={cn('mb-0', radioVariants({ variant, size }), error && 'border-danger focus:ring-danger')} />
         {label && (
           <label

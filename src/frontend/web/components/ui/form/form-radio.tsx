@@ -46,7 +46,7 @@ export const FormRadio = ({ label, name, id, showValidation = true, className, v
 
   return (
     <div className={cn('inline-flex flex-wrap items-start gap-2', className, (isDirty || submitCount > 0) && (hasError ? 'has-error' : ''))}>
-      <div className="flex min-h-[20px] items-center">
+      <div className="flex min-h-5 items-center">
         <input {...field} {...props} type="radio" name={name} id={inputId} className={cn('mb-0', formRadioVariants({ variant, size }), hasError && 'border-danger focus:ring-danger')} />
         {label && (
           <label

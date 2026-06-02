@@ -39,7 +39,7 @@ export const ForgetPasswordForm = () => {
   }
 
   return (
-    <div className="panel flex min-w-[300px] flex-col gap-4 sm:min-w-[500px]">
+    <div className="panel flex min-w-75 flex-col gap-4 sm:min-w-125">
       <Formik
         initialValues={{
           email: '',

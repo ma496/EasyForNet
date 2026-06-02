@@ -31,7 +31,7 @@ export const FormInput = ({ label, name, id, showValidation = true, className, i
       )}
       <div className="relative text-white-dark">
         <input {...field} {...props} id={inputId} name={name} autoComplete={autoComplete} className={cn('form-input', icon && 'ps-10')} />
-        {icon && <span className="absolute start-4 top-1/2 -translate-y-1/2">{icon}</span>}
+        {icon && <span className="absolute inset-s-4 top-1/2 -translate-y-1/2">{icon}</span>}
       </div>
       {showValidation && (isDirty || submitCount > 0) && hasError && <div className="mt-1 text-danger">{meta.error}</div>}
     </div>

@@ -28,7 +28,7 @@ export const FileUploadExample = () => {
   maxSizeBytes={2 * 1024 * 1024}
 />`}
         preview={
-          <div className="panel w-[420px]">
+          <div className="panel w-105">
             <div className="flex items-center justify-center space-y-3">
               <FileUpload
                 name="basic-upload"
@@ -93,7 +93,7 @@ export const FileUploadExample = () => {
   )}
 </FileUpload>`}
         preview={
-          <div className="panel w-[420px]">
+          <div className="panel w-105">
             <div className="space-y-3 p-4">
               <FileUpload
                 name="avatar-upload"
@@ -167,7 +167,7 @@ export const FileUploadExample = () => {
   onFilesChanged={setFiles}
 />`}
         preview={
-          <div className="panel w-full max-w-[600px]">
+          <div className="panel w-full max-w-150">
             <MultiFileUpload
               name="multi-upload"
               label="Gallery"
