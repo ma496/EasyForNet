@@ -2,7 +2,6 @@ import SignupForm from './_components/signup-form'
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { Metadata } from 'next'
 import { getServerTranslation } from '@/i18n'
-import { BackLink } from '@/components/custom/back-link'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
@@ -23,9 +22,6 @@ const BoxedSignup = async ({ params }: { params: Promise<{ lang: string }> }) =>
       <div className="relative flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat px-6 py-10 sm:px-16 dark:bg-[#060818]">
         <div className="relative w-full max-w-217.5 rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
           <div className="relative flex flex-col justify-center rounded-md bg-white/60 px-6 py-20 backdrop-blur-lg lg:min-h-189.5 dark:bg-black/50">
-            <div className="absolute inset-s-6 top-6">
-              <BackLink label="Back" />
-            </div>
             <div className="absolute inset-e-6 top-6">
               <LanguageDropdown />
             </div>
