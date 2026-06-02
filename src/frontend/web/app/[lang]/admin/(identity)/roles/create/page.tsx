@@ -13,7 +13,7 @@ const RoleCreate = async ({ params }: RoleCreatePageProps) => {
   return (
     <AdminPageContent
       title={title}
-      innerClassName='max-w-[620]'
+      innerClassName='max-w-155'
     >
       <RoleCreateForm />
     </AdminPageContent>

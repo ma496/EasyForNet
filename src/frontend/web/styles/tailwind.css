@@ -124,11 +124,11 @@
   }
 
   & .sidebar {
-    @apply ltr:left-[-260px] rtl:right-[-260px];
+    @apply ltr:-left-65 rtl:-right-65;
   }
 
   &.toggle-sidebar .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   & .nav-item a div:first-child svg {
@@ -175,7 +175,7 @@
   }
 
   & ul.sub-menu {
-    @apply absolute top-full z-10 hidden min-w-[180px] rounded-sm bg-white p-0 py-2 text-dark shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
+    @apply absolute top-full z-10 hidden min-w-45 rounded-sm bg-white p-0 py-2 text-dark shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
   }
 
   & ul.sub-menu a {
@@ -260,24 +260,24 @@
   }
 
   .horizontal & {
-    @apply ltr:left-[-260px] rtl:right-[-260px];
+    @apply ltr:-left-65 rtl:-right-65;
   }
 
   .horizontal.toggle-sidebar & {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   .vertical & {
-    @apply ltr:left-[-260px] rtl:right-[-260px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply ltr:-left-65 rtl:-right-65 lg:ltr:left-0 lg:rtl:right-0;
   }
 
   .vertical.toggle-sidebar & {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   /* Collapsible vertical layouts */
   .collapsible-vertical & {
-    @apply hover:w-[260px] ltr:left-[-260px] rtl:right-[-260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply hover:w-65 ltr:-left-65 rtl:-right-65 lg:w-17.5 lg:ltr:left-0 lg:rtl:right-0;
   }
 
   .collapsible-vertical.toggle-sidebar & {
@@ -285,7 +285,7 @@
   }
 
   .collapsible-vertical.toggle-sidebar & {
-    @apply lg:w-[260px];
+    @apply lg:w-65;
   }
 
   .collapsible-vertical.toggle-sidebar & .nav-item > a {
@@ -498,7 +498,7 @@
   }
 
   .horizontal-menu &ul {
-    @apply absolute top-full z-10 hidden min-w-[180px] rounded-sm bg-white p-0 py-2 text-dark shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
+    @apply absolute top-full z-10 hidden min-w-45 rounded-sm bg-white p-0 py-2 text-dark shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
   }
 
   .horizontal-menu &ul a {
@@ -544,7 +544,7 @@
 
 @utility main-content {
   .main-container & {
-    @apply transition-all duration-300 lg:ms-[260px];
+    @apply transition-all duration-300 lg:ms-65;
   }
 
   .horizontal .main-container & {
@@ -556,11 +556,11 @@
   }
 
   .collapsible-vertical.toggle-sidebar & {
-    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-[260px] lg:rtl:mr-[260px];
+    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-65 lg:rtl:mr-65;
   }
 
   .collapsible-vertical & {
-    @apply lg:w-[calc(100%-70px)] lg:ltr:ml-[70px] lg:rtl:mr-[70px];
+    @apply lg:w-[calc(100%-70px)] lg:ltr:ml-17.5 lg:rtl:mr-17.5;
   }
 }
 
@@ -577,7 +577,7 @@
 
 @utility toggle-sidebar {
   &.horizontal .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   /* Vertical layouts */
@@ -593,7 +593,7 @@
   }
 
   &.vertical .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   &.collapsible-vertical .sidebar {
@@ -601,7 +601,7 @@
   }
 
   &.collapsible-vertical .sidebar {
-    @apply lg:w-[260px];
+    @apply lg:w-65;
   }
 
   &.collapsible-vertical .sidebar .nav-item > a {
@@ -609,7 +609,7 @@
   }
 
   &.collapsible-vertical .main-content {
-    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-[260px] lg:rtl:mr-[260px];
+    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-65 lg:rtl:mr-65;
   }
 
   & .collapsible-vertical .sidebar .sub-menu {
@@ -665,11 +665,11 @@
   }
 
   & .sidebar {
-    @apply ltr:left-[-260px] rtl:right-[-260px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply ltr:-left-65 rtl:-right-65 lg:ltr:left-0 lg:rtl:right-0;
   }
 
   &.toggle-sidebar .sidebar {
-    @apply ltr:left-0 rtl:right-0 lg:ltr:left-[-260px] lg:rtl:right-[-260px];
+    @apply ltr:left-0 rtl:right-0 lg:ltr:-left-65 lg:rtl:-right-65;
   }
 
   &.boxed-layout .sidebar {
@@ -710,7 +710,7 @@
 @utility collapsible-vertical {
   /* Collapsible vertical layouts */
   & .sidebar {
-    @apply hover:w-[260px] ltr:left-[-260px] rtl:right-[-260px] lg:w-[70px] lg:ltr:left-0 lg:rtl:right-0;
+    @apply hover:w-65 ltr:-left-65 rtl:-right-65 lg:w-17.5 lg:ltr:left-0 lg:rtl:right-0;
   }
 
   &.toggle-sidebar .sidebar {
@@ -718,7 +718,7 @@
   }
 
   &.toggle-sidebar .sidebar {
-    @apply lg:w-[260px];
+    @apply lg:w-65;
   }
 
   &.toggle-sidebar .sidebar .nav-item > a {
@@ -726,7 +726,7 @@
   }
 
   &.toggle-sidebar .main-content {
-    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-[260px] lg:rtl:mr-[260px];
+    @apply lg:w-[calc(100%-260px)] lg:ltr:ml-65 lg:rtl:mr-65;
   }
 
   & .sidebar .sub-menu {
@@ -746,7 +746,7 @@
   }
 
   & .main-content {
-    @apply lg:w-[calc(100%-70px)] lg:ltr:ml-[70px] lg:rtl:mr-[70px];
+    @apply lg:w-[calc(100%-70px)] lg:ltr:ml-17.5 lg:rtl:mr-17.5;
   }
 
   & .sidebar .collapse-icon {
@@ -832,7 +832,7 @@
 
 @utility boxed-layout {
   /* boxed-layout */
-  @apply mx-auto max-w-[1400px];
+  @apply mx-auto max-w-350;
 
   &.vertical .sidebar {
     @apply overflow-hidden lg:ltr:left-auto lg:rtl:right-auto;
@@ -1410,7 +1410,7 @@
   }
 
   & ul {
-    @apply my-1 min-w-[120px] rounded-sm bg-white p-0 py-2 text-black shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
+    @apply my-1 min-w-30 rounded-sm bg-white p-0 py-2 text-black shadow-sm dark:bg-[#1b2e4b] dark:text-white-dark;
   }
 
   & ul li > a {

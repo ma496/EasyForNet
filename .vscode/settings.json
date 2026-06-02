@@ -3,5 +3,10 @@
     "editor.formatOnSave": false
   },
   "terminal.integrated.scrollback": 100000,
-  "terminal.integrated.shellIntegration.enabled": true
+  "terminal.integrated.shellIntegration.enabled": true,
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "innerClassName",
+  ]
 }

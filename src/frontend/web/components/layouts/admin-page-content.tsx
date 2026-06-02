@@ -4,7 +4,7 @@ interface PageContentProps {
   title?: string | React.ReactNode
   children: React.ReactNode
   className?: string
-  innerClassName?: string
+  innerClassName?: React.HTMLAttributes<HTMLElement>['className']
 }
 
 export function AdminPageContent({ title, children, className, innerClassName }: PageContentProps) {
