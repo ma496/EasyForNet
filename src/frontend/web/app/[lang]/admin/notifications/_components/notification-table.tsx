@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from '@/i18n'
-import { createColumnHelper, SortingState, PaginationState, ColumnDef } from '@tanstack/react-table'
+import { createColumnHelper, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
@@ -24,22 +24,27 @@ import { confirmAlert } from '@/lib/utils/notification'
 import { NotificationFilterPanel, NotificationFilters } from './notification-filter-panel'
 import { NotificationFilterButton } from './notification-filter-button'
 import Truncated from '@/components/ui/truncated'
+import { useTableUrlState } from '@/hooks/use-table-url-state'
+import { parseAsString, parseAsStringEnum } from 'nuqs'
 
 export const NotificationTable = () => {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10
+  const url = useTableUrlState({
+    filters: {
+      isRead: parseAsStringEnum(['true', 'false'] as const).withOptions({
+        clearOnDefault: true,
+        history: 'push',
+      }),
+      group: parseAsString.withOptions({
+        clearOnDefault: true,
+        history: 'push',
+      }),
+    },
   })
-  const [globalFilter, setGlobalFilter] = useState('')
+
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const [appliedFilters, setAppliedFilters] = useState<NotificationFilters>({
-    isRead: '',
-    group: '',
-  })
   const [pendingFilters, setPendingFilters] = useState<NotificationFilters>({
-    isRead: '',
-    group: '',
+    isRead: url.filters.isRead ?? '',
+    group: url.filters.group ?? '',
   })
   const { t } = useTranslation()
 
@@ -49,15 +54,30 @@ export const NotificationTable = () => {
     return null
   }
 
+  // When the filter panel opens, sync the draft values from the URL.
+  useEffect(() => {
+    if (filtersOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPendingFilters({
+        isRead: url.filters.isRead ?? '',
+        group: url.filters.group ?? '',
+      })
+    }
+  }, [filtersOpen, url.filters.isRead, url.filters.group])
+
+  const appliedFilters: NotificationFilters = {
+    isRead: url.filters.isRead ?? '',
+    group: url.filters.group ?? '',
+  }
   const activeFiltersCount = [appliedFilters.isRead, appliedFilters.group].filter(Boolean).length
 
   const {
     data: notificationResponse,
     isFetching: isGettingNotifications
   } = useNotificationListQuery({
-    page: pagination.pageIndex + 1,
-    pageSize: pagination.pageSize,
-    search: globalFilter,
+    page: url.page,
+    pageSize: url.pageSize,
+    search: url.search || undefined,
     isRead: getIsReadValue(appliedFilters.isRead),
     group: appliedFilters.group || undefined
   })
@@ -67,18 +87,18 @@ export const NotificationTable = () => {
   const [deleteNotification] = useNotificationDeleteMutation()
 
   const handleSearch = () => {
-    setAppliedFilters(pendingFilters)
-    setPagination({ ...pagination, pageIndex: 0 })
+    url.filters.setMany({
+      isRead: pendingFilters.isRead === '' ? null : (pendingFilters.isRead as 'true' | 'false'),
+      group: pendingFilters.group === '' ? null : pendingFilters.group,
+    })
+    url.resetPage()
   }
 
   const handleClear = () => {
-    const clearedFilters = {
-      isRead: '',
-      group: '',
-    }
+    const clearedFilters = { isRead: '', group: '' }
     setPendingFilters(clearedFilters)
-    setAppliedFilters(clearedFilters)
-    setPagination({ ...pagination, pageIndex: 0 })
+    url.filters.clearFilters()
+    url.resetPage()
   }
 
   const handleFilterChange = (newFilters: NotificationFilters) => {
@@ -177,7 +197,6 @@ export const NotificationTable = () => {
     columnHelper.accessor('messageKey', {
       header: t('table.columns.message'),
       cell: (info) => (
-        // <span className="text-gray-500 dark:text-gray-400">{t(info.getValue())}</span>
         <Truncated
           text={t(info.getValue())}
           className="text-gray-500 dark:text-gray-400"
@@ -250,12 +269,12 @@ export const NotificationTable = () => {
       rowCount={notificationResponse?.total || 0}
       columns={columns}
       enableRowSelection={false}
-      sorting={sorting}
-      setSorting={setSorting}
-      pagination={pagination}
-      setPagination={setPagination}
-      globalFilter={globalFilter}
-      setGlobalFilter={setGlobalFilter}
+      sorting={url.sorting}
+      setSorting={url.setSorting}
+      pagination={url.pagination}
+      setPagination={url.setPagination}
+      globalFilter={url.searchInput}
+      setGlobalFilter={url.setGlobalFilter}
       isFetching={isGettingNotifications}
     >
       {filtersOpen && (

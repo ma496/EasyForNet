@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useUserListQuery, useLazyUserListQuery, useUserDeleteMutation } from '@/store/api/identity/users/users-api'
 import { SortDirection } from '@/store/api/base/sort-direction'
 import { UserListDto, UserRoleDto } from '@/store/api/identity/users/users-dtos'
@@ -8,10 +8,9 @@ import { useTranslation } from '@/i18n'
 import { ExportFormat, successToast, exportData, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
-// import Link from 'next/link'
 import { LocalizedLink } from '@/components/localized-link'
 import { Allow } from '@/allow'
-import { createColumnHelper, SortingState, PaginationState, ColumnDef } from '@tanstack/react-table'
+import { createColumnHelper, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
@@ -20,23 +19,28 @@ import { confirmDeleteAlert, errorAlert } from '@/lib/utils'
 import { UserFilterPanel, UserFilters } from './user-filter-panel'
 import { UserFilterButton } from './user-filter-button'
 import { Badge } from '@/components/ui/badge'
+import { useTableUrlState } from '@/hooks/use-table-url-state'
+import { parseAsString, parseAsStringEnum } from 'nuqs'
 
 export const UserTable = () => {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
+  const url = useTableUrlState({
+    filters: {
+      isActive: parseAsStringEnum(['true', 'false'] as const).withOptions({
+        clearOnDefault: true,
+        history: 'push',
+      }),
+      roleId: parseAsString.withOptions({
+        clearOnDefault: true,
+        history: 'push',
+      }),
+    },
   })
-  const [globalFilter, setGlobalFilter] = useState('')
+
   const [isExporting, setIsExporting] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const [appliedFilters, setAppliedFilters] = useState<UserFilters>({
-    isActive: '',
-    roleId: '',
-  })
   const [pendingFilters, setPendingFilters] = useState<UserFilters>({
-    isActive: '',
-    roleId: '',
+    isActive: url.filters.isActive ?? '',
+    roleId: url.filters.roleId ?? '',
   })
   const { t } = useTranslation()
 
@@ -48,17 +52,33 @@ export const UserTable = () => {
     return undefined
   }
 
+  // When the filter panel opens, sync the draft values from the URL so the
+  // user sees the currently-applied filters.
+  useEffect(() => {
+    if (filtersOpen) {
+      setPendingFilters({
+        isActive: url.filters.isActive ?? '',
+        roleId: url.filters.roleId ?? '',
+      })
+    }
+  }, [filtersOpen, url.filters.isActive, url.filters.roleId])
+
+  // Derived "applied" filters for the active-count badge.
+  const appliedFilters: UserFilters = {
+    isActive: url.filters.isActive ?? '',
+    roleId: url.filters.roleId ?? '',
+  }
   const activeFiltersCount = [appliedFilters.isActive, appliedFilters.roleId].filter(Boolean).length
 
   const {
     data: userListResponse,
     isFetching: isGettingUsers,
   } = useUserListQuery({
-    page: pagination.pageIndex + 1,
-    pageSize: pagination.pageSize,
-    sortField: sorting[0]?.id,
-    sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
-    search: globalFilter,
+    page: url.page,
+    pageSize: url.pageSize,
+    sortField: url.sortField ?? undefined,
+    sortDirection: url.sortDirection === 'desc' ? SortDirection.Desc : SortDirection.Asc,
+    search: url.search || undefined,
     isActive: getIsActiveValue(appliedFilters.isActive),
     roleId: appliedFilters.roleId || undefined,
   })
@@ -72,18 +92,18 @@ export const UserTable = () => {
   const canDelete = isAllowed(authState, [Allow.User_Delete])
 
   const handleSearch = () => {
-    setAppliedFilters(pendingFilters)
-    setPagination({ ...pagination, pageIndex: 0 })
+    url.filters.setMany({
+      isActive: pendingFilters.isActive === '' ? null : (pendingFilters.isActive as 'true' | 'false'),
+      roleId: pendingFilters.roleId === '' ? null : pendingFilters.roleId,
+    })
+    url.resetPage()
   }
 
   const handleClear = () => {
-    const clearedFilters = {
-      isActive: '',
-      roleId: '',
-    }
+    const clearedFilters = { isActive: '', roleId: '' }
     setPendingFilters(clearedFilters)
-    setAppliedFilters(clearedFilters)
-    setPagination({ ...pagination, pageIndex: 0 })
+    url.filters.clearFilters()
+    url.resetPage()
   }
 
   const handleFilterChange = (newFilters: UserFilters) => {
@@ -96,11 +116,11 @@ export const UserTable = () => {
       let dataToExport: UserListDto[] = []
       if (all) {
         const response = await fetchUsers({
-          page: pagination.pageIndex + 1,
-          pageSize: pagination.pageSize,
-          sortField: sorting[0]?.id,
-          sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
-          search: globalFilter,
+          page: url.page,
+          pageSize: url.pageSize,
+          sortField: url.sortField ?? undefined,
+          sortDirection: url.sortDirection === 'desc' ? SortDirection.Desc : SortDirection.Asc,
+          search: url.search || undefined,
           all: true,
           isActive: getIsActiveValue(appliedFilters.isActive),
           roleId: appliedFilters.roleId || undefined,
@@ -214,12 +234,12 @@ export const UserTable = () => {
       rowCount={userListResponse?.total || 0}
       columns={columns}
       enableRowSelection={false}
-      sorting={sorting}
-      setSorting={setSorting}
-      pagination={pagination}
-      setPagination={setPagination}
-      globalFilter={globalFilter}
-      setGlobalFilter={setGlobalFilter}
+      sorting={url.sorting}
+      setSorting={url.setSorting}
+      pagination={url.pagination}
+      setPagination={url.setPagination}
+      globalFilter={url.searchInput}
+      setGlobalFilter={url.setGlobalFilter}
       isFetching={isGettingUsers}
     >
       <DataTableToolbar>

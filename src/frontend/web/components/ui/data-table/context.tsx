@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react'
 import { ColumnDef, SortingState, PaginationState, VisibilityState, RowSelectionState, Table, getPaginationRowModel, getCoreRowModel, useReactTable, getSortedRowModel } from '@tanstack/react-table'
 
 interface DataTableContextProps<TData> {
@@ -90,10 +90,6 @@ export function DataTableProvider<TData>({
     manualPagination: true,
     manualFiltering: true,
   })
-
-  useEffect(() => {
-    table.firstPage()
-  }, [pagination.pageSize, globalFilter, table])
 
   const value = useMemo(
     () => ({

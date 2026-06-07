@@ -1,5 +1,5 @@
 'use client'
-import { createColumnHelper, SortingState, PaginationState, ColumnDef } from '@tanstack/react-table'
+import { createColumnHelper, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
@@ -17,14 +17,11 @@ import { useAppSelector } from '@/store/hooks'
 import { LocalizedLink } from '@/components/localized-link'
 import { Allow } from '@/allow'
 import { confirmDeleteAlert, errorAlert, successToast } from '@/lib/utils'
+import { useTableUrlState } from '@/hooks/use-table-url-state'
 
 export const RoleTable = () => {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  })
-  const [globalFilter, setGlobalFilter] = useState('')
+  const url = useTableUrlState()
+
   const [isExporting, setIsExporting] = useState(false)
   const { t } = useTranslation()
   const isRTL = useAppSelector((state) => state.theme.rtlClass) === 'rtl'
@@ -33,11 +30,11 @@ export const RoleTable = () => {
     data: roleListResponse,
     isFetching: isGettingRoles,
   } = useRoleListQuery({
-    page: pagination.pageIndex + 1,
-    pageSize: pagination.pageSize,
-    sortField: sorting[0]?.id,
-    sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
-    search: globalFilter || undefined,
+    page: url.page,
+    pageSize: url.pageSize,
+    sortField: url.sortField ?? undefined,
+    sortDirection: url.sortDirection === 'desc' ? SortDirection.Desc : SortDirection.Asc,
+    search: url.search || undefined,
   })
 
   const [fetchRoles] = useLazyRoleListQuery()
@@ -55,11 +52,11 @@ export const RoleTable = () => {
       let dataToExport: RoleListDto[] = []
       if (all) {
         const response = await fetchRoles({
-          page: pagination.pageIndex + 1,
-          pageSize: pagination.pageSize,
-          sortField: sorting[0]?.id,
-          sortDirection: sorting[0]?.desc ? SortDirection.Desc : SortDirection.Asc,
-          search: globalFilter || undefined,
+          page: url.page,
+          pageSize: url.pageSize,
+          sortField: url.sortField ?? undefined,
+          sortDirection: url.sortDirection === 'desc' ? SortDirection.Desc : SortDirection.Asc,
+          search: url.search || undefined,
           all: true,
         })
         if (response.data) {
@@ -152,12 +149,12 @@ export const RoleTable = () => {
       rowCount={roleListResponse?.total || 0}
       columns={columns}
       enableRowSelection={false}
-      sorting={sorting}
-      setSorting={setSorting}
-      pagination={pagination}
-      setPagination={setPagination}
-      globalFilter={globalFilter}
-      setGlobalFilter={setGlobalFilter}
+      sorting={url.sorting}
+      setSorting={url.setSorting}
+      pagination={url.pagination}
+      setPagination={url.setPagination}
+      globalFilter={url.searchInput}
+      setGlobalFilter={url.setGlobalFilter}
       isFetching={isGettingRoles}
     >
       <DataTableToolbar>
