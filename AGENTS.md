@@ -237,11 +237,3 @@ public class UserGetTests(App app) : AppTestsBase(app)
 
 - Username: `admin`
 - Password: `Admin#123`
-
-## AI Rules Reference
-
-Additional detailed rules available in:
-- `.ai/rules/common-rules.md` - Common conventions
-- `.ai/rules/backend/endpoint-rules.md` - Endpoint patterns
-- `.ai/rules/backend/endpoint-test-rules.md` - Test patterns
-- `.ai/rules/frontend/page-rules.md` - Frontend patterns
