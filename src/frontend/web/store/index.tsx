@@ -5,6 +5,11 @@ import { authSlice } from '@/store/slices/authSlice'
 import { notificationsSlice } from '@/store/slices/notificationsSlice'
 import { rtkErrorMiddleware } from '@/store/middlewares/rtk-error-middleware'
 
+/**
+ * Root Redux store combining the theme config, auth, and notifications
+ * slices with the RTK Query appApi. Adds the custom rtkErrorMiddleware
+ * to the default middleware chain to surface rejected API errors.
+ */
 export const store = configureStore({
   reducer: {
     [themeConfigSlice.name]: themeConfigSlice.reducer,

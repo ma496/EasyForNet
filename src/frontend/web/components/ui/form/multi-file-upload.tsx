@@ -7,6 +7,7 @@ import { IconButton } from '@/components/ui/icon-button'
 import { useFileUploadMutation, useLazyFileGetQuery, useFileDeleteMutation } from '@/store/api/file-management/files/files-api'
 import { ReactSortable } from 'react-sortablejs'
 
+/** Props for the MultiFileUpload component, which uploads and reorders multiple files via the file-management API, exposing replace/delete actions for each file and notifying the parent of the new filename list. */
 interface MultiFileUploadProps {
   label?: string
   name: string
@@ -17,6 +18,9 @@ interface MultiFileUploadProps {
   forceDelete?: boolean
 }
 
+/**
+ * MultiFileUpload is a client component that renders a grid of uploaded files with drag-to-reorder, replace, and delete actions, plus a dropzone tile for adding new files; it integrates with the file-management API and revokes object URLs on cleanup.
+ */
 export const MultiFileUpload = ({
   label,
   // name,

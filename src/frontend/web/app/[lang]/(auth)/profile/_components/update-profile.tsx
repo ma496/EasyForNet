@@ -15,6 +15,9 @@ import { confirmDeleteAlert, successToast } from '@/lib/utils'
 import { FileUpload } from '@/components/ui/form/file-upload'
 import { IconButton } from '@/components/ui/icon-button'
 
+/**
+ * Builds a Yup validation schema for the update-profile form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object({
     firstName: Yup.string().when('lastName', {
@@ -30,6 +33,10 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   })
 }
 
+/**
+ * Interactive client-side form that lets the authenticated user view and update their personal profile information.
+ * Supports avatar upload/deletion and refreshes the cached user info on a successful save.
+ */
 export const UpdateProfile = () => {
   const dispatch = useAppDispatch()
   const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation()

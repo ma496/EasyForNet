@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Core.Entities;
 
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// A named, grantable action in the system. Permissions are assigned to roles and ultimately to users through those roles.
+/// </summary>
 public class Permission : AuditableEntity<Guid>
 {
     public string Name { get; set; } = null!;

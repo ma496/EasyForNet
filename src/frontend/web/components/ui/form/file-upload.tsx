@@ -10,6 +10,7 @@ import { useFileUploadMutation, useFileDeleteMutation, useLazyFileGetQuery } fro
 import { FileUploadResponse } from '@/store/api/file-management/files/files-dtos'
 import { useTranslation } from '@/i18n'
 
+/** Props for the FileUpload component, which wraps a hidden file input, calls the file-management API to upload/delete files, and optionally renders a custom UI via a render-prop child. */
 export interface FileUploadProps {
   variant?: ButtonProps['variant']
   size?: ButtonProps['size']
@@ -48,6 +49,9 @@ export interface FileUploadProps {
   }) => React.ReactNode
 }
 
+/**
+ * FileUpload is a client component that integrates with the file-management API to upload a single file, expose its blob URL, and optionally delete the previous file when a new one is selected; it supports both a default button UI and a render-prop child for custom layouts.
+ */
 export const FileUpload = ({
   label,
   name,

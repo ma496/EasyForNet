@@ -1,6 +1,10 @@
 import { Users, Palette, Mail, Trash2, Lock, Layers } from 'lucide-react'
 import { getServerTranslation } from '@/i18n'
 
+/**
+ * Server-rendered features section of the public landing page.
+ * Loads the localized strings for the badge, heading, and six feature cards, then renders them in a responsive grid with icons.
+ */
 const Features = async ({ lang }: { lang: string }) => {
   const [
     titleBadge,

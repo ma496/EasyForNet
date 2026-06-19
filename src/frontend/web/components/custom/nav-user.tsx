@@ -9,6 +9,9 @@ import { useRef } from 'react'
 import { ImagePreview } from './image-preview'
 import { useSignoutMutation } from '@/store/api/identity/account/account-api'
 
+/**
+ * Header dropdown that shows the signed-in user avatar, profile/change-password links, and a sign-out action that hits the logout API and redirects to the sign-in page.
+ */
 const NavUser = () => {
   const { user } = useAppSelector((state) => state.auth)
   const router = useLocalizedRouter()

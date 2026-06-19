@@ -6,11 +6,17 @@ import { useRoleListQuery } from '@/store/api/identity/roles/roles-api'
 import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+/**
+ * Filter values accepted by the user list filter panel, representing active status and role selection as strings.
+ */
 export interface UserFilters {
   isActive: string
   roleId: string
 }
 
+/**
+ * Props for the UserFilterPanel, including the current filter values, change handler, and search/clear callbacks.
+ */
 interface UserFilterPanelProps {
   filters: UserFilters
   onChange: (filters: UserFilters) => void
@@ -18,6 +24,9 @@ interface UserFilterPanelProps {
   onClear: () => void
 }
 
+/**
+ * Interactive client-side filter panel for the users list that exposes active-status and role selectors with search/clear actions.
+ */
 export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFilterPanelProps) => {
   const { t } = useTranslation()
 

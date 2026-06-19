@@ -9,6 +9,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
+/**
+ * Server-rendered unauthorized (HTTP 403) route that simply delegates to the UnauthorizedView component to display the access-denied screen.
+ */
 const UnauthorizedPage = () => {
   return <UnauthorizedView />
 }

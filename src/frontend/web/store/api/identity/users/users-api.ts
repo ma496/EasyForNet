@@ -12,6 +12,11 @@ import {
   UserUpdateResponse
 } from './users-dtos'
 
+/**
+ * RTK Query API for user management: CRUD on users and a paginated
+ * listing endpoint that supports filtering by isActive/roleId. Uses
+ * the 'Users' tag type for cache invalidation across the feature.
+ */
 export const usersApi = appApi
   .enhanceEndpoints({
     addTagTypes: ['Users'],

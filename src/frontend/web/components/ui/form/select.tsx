@@ -7,12 +7,14 @@ import ScrollBar from 'react-perfect-scrollbar'
 import { Input } from './input'
 import { useAppSelector } from '@/store/hooks'
 
+/** Single label/value option used by the Select component. */
 interface Option {
   label: string
   value: string
   disabled?: boolean
 }
 
+/** Props for the standalone Select, a controlled single-value combobox that takes a name-keyed onChange/onTouch pair and accepts touched/error from a parent (typically Formik via custom wiring). */
 interface SelectProps {
   label?: string
   name: string // Kept for the 'onChange' handler and <label> 'for'
@@ -35,6 +37,9 @@ interface SelectProps {
   required?: boolean
 }
 
+/**
+ * Select is a client component that renders a fully controlled single-value searchable combobox popover, designed to be wired up to a parent form (typically via Formik) using the name-keyed onChange/onTouch callbacks.
+ */
 export const Select = ({
   label,
   name,

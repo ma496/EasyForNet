@@ -2,6 +2,9 @@ namespace Backend.Features.Notifications.Endpoints.Notifications;
 
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// GET endpoint that returns the distinct set of notification group names used for filtering in the UI.
+/// </summary>
 sealed class NotificationGetGroupsEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<NotificationGetGroupsResponse>
 {
     public override void Configure()
@@ -24,6 +27,9 @@ sealed class NotificationGetGroupsEndpoint(AppDbContext dbContext) : EndpointWit
     }
 }
 
+/// <summary>
+/// Response payload containing the list of distinct notification group names.
+/// </summary>
 public sealed class NotificationGetGroupsResponse
 {
     public List<string> Groups { get; set; } = [];

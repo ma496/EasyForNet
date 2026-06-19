@@ -7,6 +7,9 @@ import { useAppSelector } from '@/store/hooks'
 import { CreditCard, DollarSign, MoreHorizontal, Inbox, ShoppingCart, Tag } from 'lucide-react'
 import { useTranslation } from '@/i18n'
 
+/**
+ * Interactive client-side sales dashboard page content with revenue, category, daily sales, and total orders charts that adapt to the active theme and direction.
+ */
 const SaleDashboard = () => {
   const isDark = useAppSelector((state) => state.theme.theme === 'dark' || state.theme.isDarkMode)
   const isRtl = useAppSelector((state) => state.theme.rtlClass) === 'rtl'

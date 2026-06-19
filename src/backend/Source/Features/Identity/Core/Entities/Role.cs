@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Core.Entities;
 
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// A named bundle of permissions that can be assigned to one or more users, simplifying access management.
+/// </summary>
 public class Role : AuditableEntity<Guid>, IHasNormalizedProperties
 {
     public bool Default { get; set; }

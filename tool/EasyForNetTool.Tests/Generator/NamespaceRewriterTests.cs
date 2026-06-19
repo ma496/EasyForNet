@@ -3,8 +3,15 @@ namespace EasyForNetTool.Tests.Generator;
 using EasyForNetTool.Generator;
 using Microsoft.CodeAnalysis.CSharp;
 
+/// <summary>
+/// Unit tests for the <see cref="NamespaceRewriter"/> syntax rewriter.
+/// </summary>
 public class NamespaceRewriterTests
 {
+    /// <summary>
+    /// Tests that namespace declarations, using statements, and qualified names are rewritten,
+    /// but local variables with the same name as the old root remain unchanged.
+    /// </summary>
     [Fact]
     public void Should_Rewrite_Namespace_Declaration_And_Using_Statements()
     {

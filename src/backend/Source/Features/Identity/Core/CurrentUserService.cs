@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Core;
 using System.Security.Claims;
 using Backend.Attributes;
 
+/// <summary>
+/// Provides access to the identity, claims, roles, and permissions of the user making the current HTTP request.
+/// </summary>
 [AllowOutside]
 public interface ICurrentUserService
 {
@@ -14,8 +17,12 @@ public interface ICurrentUserService
     bool HasPermission(string permission);
     IEnumerable<string> GetCurrentUserRoles();
     IEnumerable<string> GetCurrentUserPermissions();
-} 
+}
 
+/// <summary>
+/// Default <see cref="ICurrentUserService"/> implementation that reads values from the <see cref="ClaimsPrincipal"/>
+/// exposed by the current <see cref="HttpContext"/>.
+/// </summary>
 [NoDirectUse]
 public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {

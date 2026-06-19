@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { EyeIcon, CodeIcon, CopyIcon, CheckIcon } from 'lucide-react'
 
+/** Props for the CodeShowcase component, which renders a title, optional description, a live preview, and a toggleable code block with a copy-to-clipboard action. */
 interface CodeShowcaseProps {
   title: string
   description?: string
@@ -13,6 +14,9 @@ interface CodeShowcaseProps {
   className?: string
 }
 
+/**
+ * CodeShowcase is a client component that displays a UI preview alongside the source code that produced it, with buttons to toggle between the two and copy the code to the clipboard.
+ */
 export const CodeShowcase = ({ title, description, preview, code, className = '' }: CodeShowcaseProps) => {
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)

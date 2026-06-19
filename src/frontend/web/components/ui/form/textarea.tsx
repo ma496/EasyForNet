@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { useId } from 'react'
 
+/** Props for the standalone Textarea, a multi-line input with an optional label and externally provided error display. */
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   name: string
@@ -12,6 +13,9 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
   required?: boolean
 }
 
+/**
+ * Textarea is a client component that renders a styled native textarea with an optional label and an externally provided error message.
+ */
 export const Textarea = ({ label, name, id, className, error, showError = true, autoComplete = 'off', required = false, ...props }: TextareaProps) => {
   const generatedId = useId()
   const textareaId = id ?? generatedId

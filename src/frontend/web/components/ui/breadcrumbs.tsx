@@ -5,6 +5,9 @@ import { LocalizedLink as Link } from '@/components/localized-link'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from '@/i18n'
 
+/**
+ * Walks the nav-items tree and returns the chain of NavItems leading to (and including) the item matching the given pathname, supporting dynamic `{id}` segments.
+ */
 const findActivePathItems = (items: (NavItem | NavItemGroup)[], pathname: string): NavItem[] => {
   const result: NavItem[] = []
 
@@ -35,10 +38,15 @@ const findActivePathItems = (items: (NavItem | NavItemGroup)[], pathname: string
   return result
 }
 
+/** Props for the Breadcrumbs component, accepting optional extra styling on the list element. */
 interface BreadcrumbsProps {
   className?: string
 }
 
+/**
+ * Breadcrumbs renders the navigation trail for the current path, using a localized link to "/admin" as the home entry and translating each segment's title from the nav-items configuration.
+ * It is a client component that reads the current pathname with usePathname.
+ */
 export function Breadcrumbs({ className }: BreadcrumbsProps) {
   const pathname = usePathname()
   // get the path items based on pathname, support dynamic route like /admin/items/{id}

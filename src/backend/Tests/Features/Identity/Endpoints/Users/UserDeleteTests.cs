@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
 
+/// <summary>
+/// Tests for the <see cref="UserDeleteEndpoint"/> covering deletion of users, non-existent users, and protected default users.
+/// </summary>
 public class UserDeleteTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a created user can be successfully deleted and subsequent GET returns 404.
+    /// </summary>
     [Fact]
     public async Task Delete_User()
     {
@@ -44,6 +50,9 @@ public class UserDeleteTests(App app) : AppTestsBase(app)
         getRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that deleting a non-existent user returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Delete_NonExistent_User()
     {
@@ -58,6 +67,9 @@ public class UserDeleteTests(App app) : AppTestsBase(app)
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that attempting to delete the default admin user returns 400 Bad Request with <see cref="ErrorCodes.DefaultUserCannotBeDeleted"/>.
+    /// </summary>
     [Fact]
     public async Task Cannot_Delete_Admin_User()
     {

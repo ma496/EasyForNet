@@ -7,6 +7,10 @@ import { useTranslation } from '@/i18n'
 import { LocalizedLink } from '@/components/localized-link'
 import { Loader2, CheckCircle, XCircle } from 'lucide-react'
 
+/**
+ * Interactive client-side view that handles the email-verification callback by reading the token from the URL and calling the verify API.
+ * Displays a verifying spinner, success, or error state with appropriate navigation back to the sign-in page.
+ */
 const VerifyEmailView = () => {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')

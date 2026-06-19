@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button'
 import { CodeShowcase } from '@/components/ui/code-showcase'
 import { InfoIcon, SettingsIcon, UserIcon, HeartIcon } from 'lucide-react'
 
+/**
+ * Interactive client-side showcase component that demonstrates the Tooltip component's basic usage, positioning directions, rich content, delays, animations, and integration with the Truncated text component.
+ */
 export const TooltipExample = () => {
   return (
     <div className="space-y-8 p-6">

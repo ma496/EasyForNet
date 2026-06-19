@@ -5,6 +5,7 @@ import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { Eye, EyeOff } from 'lucide-react'
 
+/** Props for the Formik-aware FormPasswordInput, a password input with a built-in show/hide toggle bound to a form field by name. */
 interface FormPasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   name: string
@@ -14,6 +15,9 @@ interface FormPasswordInputProps extends React.InputHTMLAttributes<HTMLInputElem
   required?: boolean
 }
 
+/**
+ * FormPasswordInput is a client component that uses Formik's useField and useFormikContext to bind a password-style input to a form field, with an inline eye-icon toggle for showing/hiding the value and validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormPasswordInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', required = false, ...props }: FormPasswordInputProps) => {
   const [field, meta] = useField(name)
   const { submitCount } = useFormikContext()

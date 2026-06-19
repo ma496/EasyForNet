@@ -6,11 +6,17 @@ import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useNotificationGetGroupsQuery } from '@/store/api/notifications/notifications-api'
 
+/**
+ * Filter values accepted by the notification list filter panel, representing read-status and group selection as strings.
+ */
 export interface NotificationFilters {
   isRead: string
   group: string
 }
 
+/**
+ * Props for the NotificationFilterPanel, including the current filter values, change handler, and search/clear callbacks.
+ */
 interface NotificationFilterPanelProps {
   filters: NotificationFilters
   onChange: (filters: NotificationFilters) => void
@@ -18,6 +24,9 @@ interface NotificationFilterPanelProps {
   onClear: () => void
 }
 
+/**
+ * Interactive client-side filter panel for the notifications list that exposes read-status and group selectors with search/clear actions.
+ */
 export const NotificationFilterPanel = ({ filters, onChange, onSearch, onClear }: NotificationFilterPanelProps) => {
   const { t } = useTranslation()
   const { data: groupsData } = useNotificationGetGroupsQuery({})

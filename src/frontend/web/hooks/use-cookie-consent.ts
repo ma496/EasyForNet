@@ -10,6 +10,12 @@ interface CookieConsentData {
   timestamp: number
 }
 
+/**
+ * Manages the cookie consent dialog state by reading/writing the user's
+ * consent decision to localStorage. The dialog is re-shown once 24 hours
+ * have passed since the last interaction. Returns visibility flags plus
+ * accept and decline handlers.
+ */
 export const useCookieConsent = () => {
   const [showDialog, setShowDialog] = useState(false)
   const [isLoading, setIsLoading] = useState(true)

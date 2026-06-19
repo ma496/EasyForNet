@@ -14,6 +14,9 @@ import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
 import { successToast } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the user create form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     username: Yup.string()
@@ -45,6 +48,9 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
+/**
+ * Interactive client-side form for creating a new user, including credentials, profile fields, role assignment via a lazy multi-select, and active-state toggle.
+ */
 export const UserCreateForm = () => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

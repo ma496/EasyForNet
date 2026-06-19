@@ -4,6 +4,11 @@ using Backend.Features.Identity.Core;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
+/// <summary>
+/// FastEndpoints refresh-token service that issues and validates access/refresh token
+/// pairs for the account sign-in flow, persisting tokens and synchronizing the auth
+/// and refresh-token cookies on each issuance.
+/// </summary>
 public class TokenService : RefreshTokenService<FastEndpoints.Security.TokenRequest, TokenResponse>
 {
     private readonly IUserService _userService;
@@ -11,6 +16,10 @@ public class TokenService : RefreshTokenService<FastEndpoints.Security.TokenRequ
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly int _refreshTokenValidity;
 
+    /// <summary>
+    /// Configures the underlying refresh-token pipeline using the supplied auth settings
+    /// and registers a pre-processor that recovers the refresh token from the user's cookie.
+    /// </summary>
     public TokenService(IUserService userService,
                        IOptions<AuthSetting> authSetting,
                        IAuthTokenService authTokenService,
@@ -122,6 +131,11 @@ public class TokenService : RefreshTokenService<FastEndpoints.Security.TokenRequ
     }
 }
 
+/// <summary>
+/// Global pre-processor that recovers refresh-token information from the
+/// <c>refreshToken</c> cookie when it is not provided directly on the request, also
+/// falling back to the authenticated user's identifier when needed.
+/// </summary>
 public class RefreshTokenPreProcessor : IGlobalPreProcessor
 {
     public Task PreProcessAsync(IPreProcessorContext context, CancellationToken ct)

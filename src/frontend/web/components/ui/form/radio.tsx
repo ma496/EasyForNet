@@ -27,6 +27,7 @@ const radioVariants = cva('form-radio cursor-pointer', {
   },
 })
 
+/** Props for the standalone Radio, a native radio input with optional label, color/size variants, and externally provided error display. */
 interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>, VariantProps<typeof radioVariants> {
   label?: string
   name: string
@@ -36,6 +37,9 @@ interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
   required?: boolean
 }
 
+/**
+ * Radio is a client component that renders a styled native radio input with an optional label and an externally provided error message.
+ */
 export const Radio = ({ label, name, id, className, variant, size, error, showError = true, required = false, ...props }: RadioProps) => {
   const generatedId = useId()
   const radioId = id ?? generatedId

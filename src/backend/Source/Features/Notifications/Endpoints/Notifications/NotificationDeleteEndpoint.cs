@@ -2,8 +2,10 @@ namespace Backend.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
-using Backend.Features.Notifications.Core;
 
+/// <summary>
+/// DELETE endpoint that removes a user-targeted notification owned by the current user.
+/// </summary>
 sealed class NotificationDeleteEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : Endpoint<NotificationDeleteRequest, NotificationDeleteResponse>
 {
     public override void Configure()
@@ -36,10 +38,16 @@ sealed class NotificationDeleteEndpoint(AppDbContext dbContext, ICurrentUserServ
     }
 }
 
+/// <summary>
+/// Request payload containing the identifier of the notification to delete.
+/// </summary>
 sealed class NotificationDeleteRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>
+/// Validates that the <see cref="NotificationDeleteRequest"/> has a non-empty notification id.
+/// </summary>
 sealed class NotificationDeleteValidator : Validator<NotificationDeleteRequest>
 {
     public NotificationDeleteValidator()
@@ -48,6 +56,9 @@ sealed class NotificationDeleteValidator : Validator<NotificationDeleteRequest>
     }
 }
 
+/// <summary>
+/// Response payload confirming the deletion of a notification.
+/// </summary>
 public sealed class NotificationDeleteResponse : BaseDto<Guid>
 {
     public bool Success { get; set; }

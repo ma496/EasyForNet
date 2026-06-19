@@ -3,6 +3,9 @@
 import { NavItem, NavItemGroup } from '@/nav-items'
 import { SidebarNavItem } from './nav-item'
 
+/**
+ * Props for the {@link SidebarNavGroup} component, receiving the entry to render along with shared sidebar state (current menu, path, translator, toggle handler).
+ */
 interface NavGroupProps {
   group: NavItem | NavItemGroup
   currentMenu: string
@@ -11,10 +14,16 @@ interface NavGroupProps {
   onToggleMenu: (title: string) => void
 }
 
+/**
+ * Type guard that narrows a {@link NavItem} | {@link NavItemGroup} union to {@link NavItemGroup} by checking for the `items` property.
+ */
 const isNavItemGroup = (item: NavItem | NavItemGroup): item is NavItemGroup => {
   return 'items' in item
 }
 
+/**
+ * Renders either a labeled group of sidebar nav items (with a heading) or a single {@link SidebarNavItem} when the entry is a flat nav item.
+ */
 export const SidebarNavGroup = ({ group, currentMenu, pathname, t, onToggleMenu }: NavGroupProps) => {
   if (isNavItemGroup(group)) {
     return (

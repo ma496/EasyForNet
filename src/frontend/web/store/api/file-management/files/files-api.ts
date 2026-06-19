@@ -1,6 +1,10 @@
 import { appApi } from '@/store/api/_app-api'
 import { FileDeleteRequest, FileDeleteResponse, FileGetRequest, FileUploadRequest, FileUploadResponse } from './files-dtos'
 
+/**
+ * RTK Query API for file management: upload a file (multipart FormData),
+ * fetch a file as a Blob, and delete a file by its server-side name.
+ */
 export const filesApi = appApi.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({

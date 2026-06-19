@@ -4,8 +4,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Users;
 
 using Backend.Features.Identity.Endpoints.Users;
 
+/// <summary>
+/// Tests for the <see cref="UserGetEndpoint"/> covering retrieval of existing and non-existent users.
+/// </summary>
 public class UserGetTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a created user can be retrieved by ID with the correct username and email.
+    /// </summary>
     [Fact]
     public async Task Get_User()
     {
@@ -36,6 +42,9 @@ public class UserGetTests(App app) : AppTestsBase(app)
         getRes.Email.Should().Be(request.Email);
     }
 
+    /// <summary>
+    /// Verifies that requesting a non-existent user returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Get_NonExistent_User()
     {

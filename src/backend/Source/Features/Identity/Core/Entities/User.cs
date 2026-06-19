@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Core.Entities;
 
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// Represents an authenticated principal in the system, holding identity, credentials, profile data, and role memberships.
+/// </summary>
 public class User : AuditableEntity<Guid>, IHasNormalizedProperties
 {
     public bool Default { get; set; }

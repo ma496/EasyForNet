@@ -3,6 +3,10 @@ namespace Backend.Features.Identity.Core;
 using Backend.Attributes;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// Defines CRUD and lookup operations for <see cref="Permission"/> entities, including the role/permission
+/// junction and per-user permission resolution.
+/// </summary>
 public interface IPermissionService
 {
     Task<Permission?> GetByIdAsync(Guid id);
@@ -20,6 +24,10 @@ public interface IPermissionService
     Task RemovePermissionsFromAllRoles(List<Guid> permissionIds);
 }
 
+/// <summary>
+/// EF Core-backed implementation of <see cref="IPermissionService"/> that manages permission entities and their
+/// links to roles and users.
+/// </summary>
 [NoDirectUse]
 public class PermissionService(AppDbContext dbContext) : IPermissionService
 {

@@ -2,9 +2,10 @@ namespace Backend.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
-using Backend.Features.Notifications.Core;
-using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// POST endpoint that marks a single notification as unread for the current user.
+/// </summary>
 sealed class NotificationMarkAsUnreadEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : Endpoint<NotificationMarkAsUnreadRequest, NotificationMarkAsUnreadResponse>
 {
     public override void Configure()
@@ -47,10 +48,16 @@ sealed class NotificationMarkAsUnreadEndpoint(AppDbContext dbContext, ICurrentUs
     }
 }
 
+/// <summary>
+/// Request payload containing the identifier of the notification to mark as unread.
+/// </summary>
 sealed class NotificationMarkAsUnreadRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>
+/// Validates that the <see cref="NotificationMarkAsUnreadRequest"/> has a non-empty notification id.
+/// </summary>
 sealed class NotificationMarkAsUnreadValidator : Validator<NotificationMarkAsUnreadRequest>
 {
     public NotificationMarkAsUnreadValidator()
@@ -59,6 +66,9 @@ sealed class NotificationMarkAsUnreadValidator : Validator<NotificationMarkAsUnr
     }
 }
 
+/// <summary>
+/// Response payload confirming that a notification has been marked as unread.
+/// </summary>
 public sealed class NotificationMarkAsUnreadResponse : BaseDto<Guid>
 {
     public bool Success { get; set; }

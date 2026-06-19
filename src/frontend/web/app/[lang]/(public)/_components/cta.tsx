@@ -2,6 +2,10 @@ import { LocalizedLink } from '@/components/localized-link'
 import { Github } from 'lucide-react'
 import { getServerTranslation } from '@/i18n'
 
+/**
+ * Server-rendered call-to-action section of the public landing page that promotes the GitHub repository.
+ * Loads localized copy and renders a heading, description, GitHub link, and a small open-source/feature tile.
+ */
 const CTA = async ({ lang }: { lang: string }) => {
   const [title, description, button, opensource, license] = await Promise.all([
     getServerTranslation(lang, 'page.home.cta.title'),

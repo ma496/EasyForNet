@@ -3,6 +3,9 @@ import { AlertCircleIcon, ArrowRightIcon, BellIcon, CheckIcon, MailIcon, Plus, S
 import { IconButton } from '@/components/ui/icon-button'
 import CodeShowcase from '@/components/ui/code-showcase'
 
+/**
+ * Interactive showcase component that demonstrates the available variants, sizes, icons, loading states, rounded styles, icon-only, and custom-styled buttons alongside their source snippets.
+ */
 export const ButtonsExample = () => {
   const basicButtonsCode = `<Button>Default</Button>
 <Button variant="outline">Outline</Button>

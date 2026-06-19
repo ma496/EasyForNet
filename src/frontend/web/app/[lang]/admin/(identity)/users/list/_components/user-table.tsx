@@ -22,6 +22,10 @@ import { Badge } from '@/components/ui/badge'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import { parseAsString, parseAsStringEnum } from 'nuqs'
 
+/**
+ * Interactive client-side data table that lists users with sorting, pagination, search, role/active filters synced to the URL, and permission-gated create/update/delete actions.
+ * Also supports exporting the current page or full filtered set to Excel or CSV.
+ */
 export const UserTable = () => {
   const url = useTableUrlState({
     filters: {

@@ -5,6 +5,7 @@ import AnimateHeight from 'react-animate-height'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+/** A single node in the TreeView data structure, optionally carrying child nodes and arbitrary attached data. */
 export interface TreeNode {
   id: string
   label: string
@@ -13,6 +14,7 @@ export interface TreeNode {
   show?: boolean
 }
 
+/** Props for the TreeView component, which renders a hierarchical list of TreeNodes with optional checkboxes and click handlers. */
 interface TreeViewProps {
   data: TreeNode[]
   className?: string
@@ -45,6 +47,10 @@ interface TreeViewItemProps extends TreeNode {
   show?: boolean
 }
 
+/**
+ * TreeViewItem renders a single node in the tree with its checkbox (when selection is enabled), expand/collapse toggle, and label, recursively rendering children with an animated height transition.
+ * It is a client component used internally by TreeView.
+ */
 const TreeViewItem = ({
   id,
   label,
@@ -154,6 +160,9 @@ const TreeViewItem = ({
   )
 }
 
+/**
+ * TreeView is a client component that renders a hierarchical list of TreeNode data with support for parent/child checkbox selection state, expand/collapse, and selection/click callbacks.
+ */
 export const TreeView = ({
   data,
   className,

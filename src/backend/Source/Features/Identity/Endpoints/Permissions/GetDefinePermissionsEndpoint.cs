@@ -1,5 +1,9 @@
 namespace Backend.Features.Identity.Endpoints.Permissions;
 
+/// <summary>
+/// GET endpoint that returns the static set of permission groups defined in code via
+/// the permission-definition service (used to drive role/permission editors).
+/// </summary>
 sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissionDefinitionService) : EndpointWithoutRequest<GetDefinePermissionsResponse>
 {
     public override void Configure()
@@ -19,6 +23,10 @@ sealed class GetDefinePermissionsEndpoint(IPermissionDefinitionService permissio
     }
 }
 
+/// <summary>
+/// Response payload for the "define" permissions endpoint, containing the static
+/// permission groups registered with the application.
+/// </summary>
 sealed class GetDefinePermissionsResponse
 {
     public IReadOnlyList<PermissionGroupDefinition> Groups { get; set; } = [];

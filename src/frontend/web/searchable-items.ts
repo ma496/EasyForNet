@@ -1,8 +1,10 @@
+/** Lightweight title/url pair used by the global search palette to surface in-app destinations. */
 export interface SearchableItem {
   title: string
   url: string
 }
 
+/** Flat list of destinations offered by the global search feature, with i18n-keyed titles and their target urls. */
 export const searchableItems: SearchableItem[] = [
   {
     title: 'search.dashboard',

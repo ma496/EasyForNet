@@ -19,6 +19,10 @@ import { Allow } from '@/allow'
 import { confirmDeleteAlert, errorAlert, successToast } from '@/lib/utils'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 
+/**
+ * Interactive client-side data table that lists roles with sorting, pagination, search, and per-row update/delete/change-permissions actions gated by the user's permissions.
+ * Also supports exporting the current page or the full filtered set to Excel or CSV.
+ */
 export const RoleTable = () => {
   const url = useTableUrlState()
 

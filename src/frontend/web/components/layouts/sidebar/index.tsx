@@ -13,10 +13,16 @@ import { authUrls } from '@/auth-urls'
 import { SidebarNavGroup } from './nav-group'
 import { isAllowed } from '@/lib/utils'
 
+/**
+ * Type guard that narrows a {@link NavItem} | {@link NavItemGroup} union to {@link NavItemGroup} by checking for the `items` property.
+ */
 const isNavItemGroup = (item: NavItem | NavItemGroup): item is NavItemGroup => {
   return 'items' in item
 }
 
+/**
+ * Client-side sidebar navigation: filters nav items by the current user's permissions, manages which group is open, auto-expands the active parent on route change, and renders the logo plus a scrollable list of {@link SidebarNavGroup}s.
+ */
 const Sidebar = () => {
   const dispatch = useAppDispatch()
   const { t } = useTranslation()

@@ -7,6 +7,11 @@ const initialState: AuthState = {
   isAuthenticated: false,
 }
 
+/**
+ * Auth slice storing the currently signed-in user and an authentication
+ * flag. Provides reducers to set the user info (and derive the auth flag)
+ * and to sign out (clearing both fields).
+ */
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

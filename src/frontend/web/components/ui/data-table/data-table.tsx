@@ -5,12 +5,16 @@ import { Loading } from '../loading'
 import { useTranslation } from '@/i18n'
 import ScrollBar from 'react-perfect-scrollbar'
 
+/** Props for the DataTable, the body component that renders the table's header/rows from the shared DataTable context, with optional scrollbar suppression. */
 interface DataTableProps {
   className?: string
   suppressScrollX?: boolean
   suppressScrollY?: boolean
 }
 
+/**
+ * DataTable is the body component of the data-table system that renders the table's headers (with click-to-sort affordance), rows, and either a loading indicator, a localized "no records" message, or the data rows themselves from the shared DataTable context.
+ */
 export function DataTable<TData>({ className = '', suppressScrollX = false, suppressScrollY = true }: DataTableProps) {
   const { columns, table, isFetching } = useDataTable<TData>()
   const { t } = useTranslation()

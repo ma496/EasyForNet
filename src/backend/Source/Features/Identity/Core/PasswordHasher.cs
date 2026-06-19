@@ -3,12 +3,18 @@ namespace Backend.Features.Identity.Core;
 using System.Security.Cryptography;
 using Backend.Attributes;
 
+/// <summary>
+/// Hashes and verifies user passwords using a salted PBKDF2 scheme with constant-time comparison.
+/// </summary>
 public interface IPasswordHasher
 {
     string HashPassword(string password);
     bool VerifyPassword(string hashedPassword, string providedPassword);
 }
 
+/// <summary>
+/// Default <see cref="IPasswordHasher"/> implementation backed by <c>Rfc2898DeriveBytes</c> with a per-password random salt.
+/// </summary>
 [NoDirectUse]
 public class PasswordHasher : IPasswordHasher
 {

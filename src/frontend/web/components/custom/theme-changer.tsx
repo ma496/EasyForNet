@@ -3,11 +3,17 @@ import { toggleTheme } from '@/store/slices/themeConfigSlice'
 import { Sun, Moon, Laptop } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+/**
+ * Props for the {@link ThemeChanger} component, providing the current theme and an optional className.
+ */
 interface ThemeChangerProps {
   theme: string
   className?: string
 }
 
+/**
+ * Renders a round icon button that cycles through the available theme modes (light, dark, system) and dispatches the new theme to the Redux store.
+ */
 const ThemeChanger = ({ theme, className }: ThemeChangerProps) => {
   const dispatch = useDispatch()
 

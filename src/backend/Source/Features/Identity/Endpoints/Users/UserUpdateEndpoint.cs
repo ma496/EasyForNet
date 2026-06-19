@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>PUT /users/{id}</c> to update a user's profile, active state, and role memberships.
+/// </summary>
 sealed class UserUpdateEndpoint(IUserService userService)
     : Endpoint<UserUpdateRequest, UserUpdateResponse>
 {
@@ -48,6 +51,9 @@ sealed class UserUpdateEndpoint(IUserService userService)
     }
 }
 
+/// <summary>
+/// Request payload for updating an existing user, including the new set of role assignments.
+/// </summary>
 public sealed class UserUpdateRequest : BaseDto<Guid>
 {
     public string? FirstName { get; set; }
@@ -56,6 +62,9 @@ public sealed class UserUpdateRequest : BaseDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
+/// <summary>
+/// FluentValidation rules for an update-user request, requiring at least one role and length-bounding optional name fields.
+/// </summary>
 sealed class UserUpdateValidator : Validator<UserUpdateRequest>
 {
     public UserUpdateValidator()
@@ -66,6 +75,9 @@ sealed class UserUpdateValidator : Validator<UserUpdateRequest>
     }
 }
 
+/// <summary>
+/// Response payload returned after a successful user update, echoing the user's id and updated fields.
+/// </summary>
 public sealed class UserUpdateResponse : BaseDto<Guid>
 {
     public string? FirstName { get; set; }
@@ -74,6 +86,9 @@ public sealed class UserUpdateResponse : BaseDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
+/// <summary>
+/// This mapper that updates a <see cref="User"/> entity in-place from a <see cref="UserUpdateRequest"/>, ignoring the role list which is handled separately.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
 public partial class UserUpdateRequestMapper
 {
@@ -81,6 +96,9 @@ public partial class UserUpdateRequestMapper
     public partial void Update(UserUpdateRequest request, User entity);
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="User"/> entity into a <see cref="UserUpdateResponse"/>, collapsing <see cref="UserRole"/> join rows into role ids.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class UserUpdateResponseMapper
 {

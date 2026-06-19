@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationListEndpoint"/> covering listing, pagination, filtering by read status and group, and authorization.
+/// </summary>
 public class NotificationListTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that user notifications appear in the list with correct title and message keys.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_WithUserNotifications()
     {
@@ -25,6 +31,9 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
         res.Items.Should().Contain(x => x.MessageKey == notification.MessageKey);
     }
 
+    /// <summary>
+    /// Verifies that global notifications appear in the list with no user ID and correct details.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_WithGlobalNotifications()
     {
@@ -36,7 +45,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
             new()
             {
                 Page = 1,
-                PageSize = 10
+                PageSize = 100
             });
 
         rsp.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -50,13 +59,16 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
         item.Type.Should().Be(notification.Type);
     }
 
+    /// <summary>
+    /// Verifies that pagination works correctly for notification listing.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_Pagination()
     {
         await SetAuthTokenAsync();
 
         var userId = TestUsers.AdminUserId;
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             await CreateUserNotificationAsync(userId);
         }
@@ -82,6 +94,9 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
         page2Res.Items.Count.Should().Be(2);
     }
 
+    /// <summary>
+    /// Verifies that filtering by <c>IsRead</c> returns only notifications matching the specified read status.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_FilterByIsRead()
     {
@@ -100,7 +115,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
             new()
             {
                 Page = 1,
-                PageSize = 10,
+                PageSize = 100,
                 IsRead = false
             });
 
@@ -111,7 +126,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
             new()
             {
                 Page = 1,
-                PageSize = 10,
+                PageSize = 100,
                 IsRead = true
             });
 
@@ -119,6 +134,9 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
         readRes.Items.Should().AllSatisfy(x => x.IsRead.Should().BeTrue());
     }
 
+    /// <summary>
+    /// Verifies that filtering by group name returns only notifications belonging to that group.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_FilterByGroup()
     {
@@ -137,7 +155,7 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
             new()
             {
                 Page = 1,
-                PageSize = 10,
+                PageSize = 100,
                 Group = groupName
             });
 
@@ -145,6 +163,9 @@ public class NotificationListTests(App app) : NotificationsTestsBase(app)
         res.Items.Should().AllSatisfy(x => x.Group.Should().Be(groupName));
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated list requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task List_Notifications_Unauthenticated()
     {

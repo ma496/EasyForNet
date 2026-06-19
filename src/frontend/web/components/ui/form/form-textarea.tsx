@@ -4,6 +4,7 @@ import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { useId } from 'react'
 
+/** Props for the Formik-aware FormTextarea, a multi-line text input bound to a form field by name with an optional label. */
 interface FormTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   name: string
@@ -12,6 +13,9 @@ interface FormTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaEle
   required?: boolean
 }
 
+/**
+ * FormTextarea is a client component that uses Formik's useField/useFormikContext to bind a styled textarea to a form field, showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormTextarea = ({ label, name, id, showValidation = true, className, autoComplete = 'off', required = false, ...props }: FormTextareaProps) => {
   const [field, meta] = useField(name)
   const { submitCount } = useFormikContext()

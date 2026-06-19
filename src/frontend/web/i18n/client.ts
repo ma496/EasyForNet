@@ -5,6 +5,12 @@ import { usePathname, useRouter } from "next/navigation"
 import { useContext } from "react"
 import { i18nConfig } from "./config"
 
+/**
+ * Client-side React hook that reads the active translation dictionary
+ * from TranslationContext and exposes a t(key, vars) helper plus an
+ * i18n object with the current language and a changeLanguage handler
+ * that updates the locale segment of the URL.
+ */
 export const useTranslation = () => {
   const dictionary = useContext(TranslationContext)
   const router = useRouter()

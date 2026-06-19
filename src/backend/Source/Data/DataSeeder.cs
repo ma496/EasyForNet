@@ -7,12 +7,22 @@ using Backend.Features.Notifications.Core.Entities;
 using Backend.Permissions;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// Populates the database with baseline data on first run and keeps the
+/// permission catalog, admin role, and admin user in sync with the current
+/// code-defined definitions.
+/// </summary>
 public class DataSeeder(IUserService userService,
                         IRoleService roleService,
                         IPermissionService permissionService,
                         IPermissionDefinitionService permissionDefinitionService,
                         AppDbContext dbContext)
 {
+    /// <summary>
+    /// Reconciles persisted permissions, roles, and users with the definitions
+    /// declared in code and inserts sample notification data for the admin user
+    /// when none exists.
+    /// </summary>
     public async Task SeedAsync()
     {
         var flattenedPermissions = permissionDefinitionService.GetFlattenedPermissions();

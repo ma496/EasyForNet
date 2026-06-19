@@ -8,6 +8,9 @@ import { useAppSelector } from '@/store/hooks'
 import { Search } from 'lucide-react'
 import { isAllowed } from '@/lib/utils'
 
+/**
+ * Header search input that fuzzy-matches the list of searchable (and authorized) navigation items, exposes a keyboard-navigable result list, and routes to the selected item on Enter.
+ */
 const SearchComponent = () => {
   const router = useLocalizedRouter()
   const { t } = useTranslation()

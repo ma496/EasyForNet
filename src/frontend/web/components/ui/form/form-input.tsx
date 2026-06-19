@@ -4,6 +4,7 @@ import { useField, useFormikContext } from 'formik'
 import { cn } from '@/lib/utils'
 import { useId } from 'react'
 
+/** Props for the Formik-aware FormInput, a text-style input bound to a form field by name with optional label, leading icon, and validation display. */
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   name: string
@@ -13,6 +14,9 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
 }
 
+/**
+ * FormInput is a client component that uses Formik's useField and useFormikContext to bind a styled text input to a form field, supporting an optional leading icon and showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormInput = ({ label, name, id, showValidation = true, className, icon, autoComplete = 'off', required = false, ...props }: FormInputProps) => {
   const [field, meta] = useField(name)
   const { submitCount } = useFormikContext()

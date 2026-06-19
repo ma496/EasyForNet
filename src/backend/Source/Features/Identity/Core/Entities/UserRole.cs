@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Core.Entities;
 
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// Junction entity linking a <see cref="User"/> to a <see cref="Role"/>, representing the user's role memberships.
+/// </summary>
 public class UserRole : AuditableEntity
 {
     public Guid UserId { get; set; }

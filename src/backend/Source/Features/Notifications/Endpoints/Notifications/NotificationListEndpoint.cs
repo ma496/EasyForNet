@@ -5,6 +5,10 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Notifications.Core;
 using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// GET endpoint that returns a paged, filterable list of notifications visible to the current user,
+/// resolving per-user read state for global notifications.
+/// </summary>
 sealed class NotificationListEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : Endpoint<NotificationListRequest, NotificationListResponse>
 {
     public override void Configure()
@@ -63,9 +67,7 @@ sealed class NotificationListEndpoint(AppDbContext dbContext, ICurrentUserServic
 
         query = query
             .OrderBy(x => x.IsRead)
-            .ThenByDescending(x => x.CreatedAt)
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize);
+            .Process(request, applyDefaultOrdering: false);
 
         var notifications = await NotificationListDtoMapper.ProjectTo(query)
             .ToListAsync(cancellationToken);
@@ -93,12 +95,19 @@ sealed class NotificationListEndpoint(AppDbContext dbContext, ICurrentUserServic
     }
 }
 
+/// <summary>
+/// Request payload for listing notifications, supporting pagination, read-state filtering,
+/// group filtering, and free-text search.
+/// </summary>
 sealed class NotificationListRequest : ListRequestDto<Guid>
 {
     public bool? IsRead { get; set; }
     public string? Group { get; set; }
 }
 
+/// <summary>
+/// Validator for <see cref="NotificationListRequest"/> that applies the standard list request rules.
+/// </summary>
 sealed class NotificationListValidator : Validator<NotificationListRequest>
 {
     public NotificationListValidator()
@@ -107,10 +116,16 @@ sealed class NotificationListValidator : Validator<NotificationListRequest>
     }
 }
 
+/// <summary>
+/// Paged response containing notification list items and the total count.
+/// </summary>
 public sealed class NotificationListResponse : ListDto<NotificationListDto>
 {
 }
 
+/// <summary>
+/// DTO representing a single notification in list responses.
+/// </summary>
 public sealed class NotificationListDto : AuditableDto<Guid>
 {
     public NotificationType Type { get; set; }
@@ -123,6 +138,9 @@ public sealed class NotificationListDto : AuditableDto<Guid>
     public Guid? UserId { get; set; }
 }
 
+/// <summary>
+/// Mapper that projects a <see cref="Notification"/> query into <see cref="NotificationListDto"/> DTOs.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public static partial class NotificationListDtoMapper
 {

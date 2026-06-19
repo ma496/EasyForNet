@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Core;
 using Backend.Attributes;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// Defines CRUD and lookup operations for <see cref="Role"/> entities, including management of role-permission assignments.
+/// </summary>
 public interface IRoleService
 {
     Task<Role?> GetByIdAsync(Guid id);
@@ -19,6 +22,9 @@ public interface IRoleService
     Task<List<string>> GetRolePermissionsAsync(Guid roleId);
 }
 
+/// <summary>
+/// EF Core-backed implementation of <see cref="IRoleService"/> that manages roles and the role-permission junction table.
+/// </summary>
 [NoDirectUse]
 public class RoleService(AppDbContext dbContext) : IRoleService
 {

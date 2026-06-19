@@ -3,6 +3,9 @@ import { useAppSelector } from '@/store/hooks'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
+/**
+ * ContentAnimation is a client component that wraps the main content area and applies the user's chosen entry animation from the theme config, replaying it on every route change.
+ */
 const ContentAnimation = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
   const themeConfig = useAppSelector((state) => state.theme)

@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Core;
 using Backend.Attributes;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// Defines CRUD and lookup operations for <see cref="User"/> entities, including password management and role assignment.
+/// </summary>
 public interface IUserService
 {
     Task<User?> GetByIdAsync(Guid id);
@@ -24,6 +27,9 @@ public interface IUserService
     Task UpdateLastSigninAsync(Guid userId);
 }
 
+/// <summary>
+/// EF Core-backed implementation of <see cref="IUserService"/> that manages users, their passwords, and role memberships.
+/// </summary>
 [NoDirectUse]
 public class UserService(AppDbContext dbContext, IPasswordHasher passwordHasher) : IUserService
 {

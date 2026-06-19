@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationGetEndpoint"/> covering retrieval of user and global notifications, read tracking, and authorization.
+/// </summary>
 public class NotificationGetTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a user notification can be retrieved by ID with the correct title and message keys.
+    /// </summary>
     [Fact]
     public async Task Get_UserNotification()
     {
@@ -21,6 +27,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         res.MessageKey.Should().Be(notification.MessageKey);
     }
 
+    /// <summary>
+    /// Verifies that a global notification can be retrieved and has no user ID assigned.
+    /// </summary>
     [Fact]
     public async Task Get_GlobalNotification()
     {
@@ -36,6 +45,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         res.UserId.Should().BeNull();
     }
 
+    /// <summary>
+    /// Verifies that requesting a non-existent notification returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Get_NonExistent_Notification()
     {
@@ -47,6 +59,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that accessing another user's notification returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Get_OtherUserNotification_Should_NotFound()
     {
@@ -60,6 +75,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that a global notification is initially marked as unread (IsRead = false) when not yet visited.
+    /// </summary>
     [Fact]
     public async Task Get_GlobalNotification_Unvisited()
     {
@@ -74,6 +92,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         res.IsRead.Should().BeFalse();
     }
 
+    /// <summary>
+    /// Verifies that a global notification is marked as read (IsRead = true) after being visited by the user.
+    /// </summary>
     [Fact]
     public async Task Get_GlobalNotification_Visited()
     {
@@ -90,6 +111,9 @@ public class NotificationGetTests(App app) : NotificationsTestsBase(app)
         res.IsRead.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated get requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task Get_Unauthenticated()
     {

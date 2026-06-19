@@ -1,7 +1,11 @@
+/** Props for the SortIcon, the small chevron rendered next to a sortable data-table column header to indicate its current sort state. */
 interface SortIconProps {
   isSorted: boolean | 'asc' | 'desc'
 }
 
+/**
+ * SortIcon renders a chevron icon that reflects the current sort state of a data-table column header (up for asc, down for desc, and a faded double-chevron placeholder on hover when not sorted).
+ */
 export function SortIcon({ isSorted }: SortIconProps) {
   if (!isSorted) {
     return (

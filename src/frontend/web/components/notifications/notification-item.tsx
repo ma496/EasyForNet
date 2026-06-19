@@ -6,10 +6,16 @@ import { formatDistanceToNow } from 'date-fns'
 import { AlertTriangle, AlertCircle, CheckCircle, Info } from 'lucide-react'
 import { LocalizedLink } from '@/components/localized-link'
 
+/**
+ * Props for the {@link NotificationItem} component, receiving the {@link NotificationDto} to display.
+ */
 interface NotificationItemProps {
   notification: NotificationDto
 }
 
+/**
+ * Renders a single notification row (icon, translated title/message, relative timestamp) as a link to the notification details, color-coded by type and styled differently when unread.
+ */
 const NotificationItem = ({ notification }: NotificationItemProps) => {
   const { t } = useTranslation()
 

@@ -42,6 +42,9 @@ const validationSchema = Yup.object({
   projectType: Yup.string().required('Project type is required'),
 })
 
+/**
+ * Interactive client-side showcase component that demonstrates both Formik-integrated and standalone form components, including a full validated form, variant comparisons, and disabled-state examples.
+ */
 export const FormElementsExample = () => {
   // General component states
   const [generalInput, setGeneralInput] = useState('')

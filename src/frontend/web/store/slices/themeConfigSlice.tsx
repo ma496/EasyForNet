@@ -44,6 +44,12 @@ const initialState: ThemeConfigState = {
   ],
 }
 
+/**
+ * Theme/layout configuration slice managing dark mode, menu style, layout,
+ * RTL direction, page animations, navbar style, sidebar visibility, and
+ * the supported language list. Reducers also persist values to
+ * localStorage and apply DOM side effects (e.g. toggling body class).
+ */
 export const themeConfigSlice = createSlice({
   name: 'theme',
   initialState: initialState,

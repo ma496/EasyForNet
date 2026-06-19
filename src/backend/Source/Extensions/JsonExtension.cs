@@ -33,13 +33,10 @@ public static class JsonExtension
 
         try
         {
-            // Use the System.Text.Json.JsonSerializer to perform the serialization.
             return JsonSerializer.Serialize(obj, defaultOptions);
         }
         catch (JsonException ex)
         {
-            // Handle potential serialization errors gracefully.
-            // You might want to log this error in a real application.
             return $"{{ \"error\": \"Could not serialize object to JSON.\", \"details\": \"{ex.Message}\" }}";
         }
     }

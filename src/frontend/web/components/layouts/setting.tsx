@@ -4,6 +4,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleAnimation, toggleNavbar, toggleTheme } from '@/store/slices/themeConfigSlice'
 import { Settings, X, Sun, Moon, Laptop } from 'lucide-react'
 
+/**
+ * Off-canvas "template customizer" panel that exposes runtime toggles for color scheme, navbar type, and router transition animation, persisting choices via the theme config slice.
+ */
 const Setting = () => {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()

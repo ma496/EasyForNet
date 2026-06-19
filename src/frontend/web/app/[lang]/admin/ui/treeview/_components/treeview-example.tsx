@@ -111,6 +111,9 @@ const organizationData: TreeNode[] = [
   },
 ]
 
+/**
+ * Interactive client-side showcase component that demonstrates the TreeView in basic, selectable, pre-expanded, organization-chart, and fully-featured configurations.
+ */
 export const TreeviewExample = () => {
   // Stabilize array references with useMemo
   const selectableDefaultSelectedIds = React.useMemo(() => ['1.1.1', '1.1.2'], [])

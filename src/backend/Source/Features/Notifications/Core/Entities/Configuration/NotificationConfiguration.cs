@@ -4,6 +4,11 @@ using Backend.Features.Notifications.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+/// <summary>
+/// EF Core entity configuration for <see cref="Notification"/>. Maps the entity to the
+/// "Notifications" table in the "notifications" schema, stores <see cref="NotificationType"/>
+/// as a string, and defines indexes for lookups by title key, message key, creation date, and user.
+/// </summary>
 public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 {
     public void Configure(EntityTypeBuilder<Notification> builder)

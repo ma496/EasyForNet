@@ -11,6 +11,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
+/**
+ * Server-rendered profile route under the auth route group.
+ * Loads localized title/description, frames the form with a back link and language switcher, and renders the update-profile form.
+ */
 const Profile = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params
   const [title, description] = await Promise.all([

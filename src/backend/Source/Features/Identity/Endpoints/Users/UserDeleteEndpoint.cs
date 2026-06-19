@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Endpoints.Users;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// This endpoint that handles <c>DELETE /users/{id}</c> to remove an existing user (refusing to delete a default user).
+/// </summary>
 sealed class UserDeleteEndpoint(IUserService userService) : Endpoint<UserDeleteRequest, UserDeleteResponse>
 {
     public override void Configure()
@@ -29,10 +32,16 @@ sealed class UserDeleteEndpoint(IUserService userService) : Endpoint<UserDeleteR
     }
 }
 
+/// <summary>
+/// Request payload identifying the user to delete by id.
+/// </summary>
 sealed class UserDeleteRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>
+/// FluentValidation rules requiring a non-empty id for user deletion.
+/// </summary>
 sealed class UserDeleteValidator : Validator<UserDeleteRequest>
 {
     public UserDeleteValidator()
@@ -41,6 +50,9 @@ sealed class UserDeleteValidator : Validator<UserDeleteRequest>
     }
 }
 
+/// <summary>
+/// Response payload indicating the outcome of a user deletion attempt.
+/// </summary>
 sealed class UserDeleteResponse
 {
     public bool Success { get; set; }

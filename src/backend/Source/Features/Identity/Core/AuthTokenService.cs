@@ -3,12 +3,18 @@ namespace Backend.Features.Identity.Core;
 using Backend.Attributes;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// Persists issued JWT (access/refresh) token pairs to the database and validates subsequent refresh-token requests.
+/// </summary>
 public interface IAuthTokenService
 {
     Task<AuthToken> SaveTokenAsync(TokenResponse rsp);
     Task<bool> IsValidRefreshTokenAsync(TokenRequest req);
 }
 
+/// <summary>
+/// EF Core implementation of <see cref="IAuthTokenService"/> that stores token records and checks refresh-token validity.
+/// </summary>
 [NoDirectUse]
 public class AuthTokenService(AppDbContext dbContext) : IAuthTokenService
 {

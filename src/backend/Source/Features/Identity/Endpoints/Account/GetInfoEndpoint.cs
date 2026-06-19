@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Authenticated GET endpoint that returns the current user's profile information along
+/// with their assigned roles and the permissions granted to those roles.
+/// </summary>
 sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     : EndpointWithoutRequest<UserGetInfoResponse>
 {
@@ -50,6 +54,10 @@ sealed class GetInfoEndpoint(AppDbContext dbContext, ICurrentUserService current
     }
 }
 
+/// <summary>
+/// Response payload for the account info endpoint, exposing the user's identity fields
+/// together with the roles they belong to and the permissions granted by those roles.
+/// </summary>
 sealed class UserGetInfoResponse
 {
     public Guid Id { get; set; }

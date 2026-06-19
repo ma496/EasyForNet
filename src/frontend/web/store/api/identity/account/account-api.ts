@@ -17,6 +17,11 @@ import {
   ResendVerifyEmailRequest
 } from './account-dtos'
 
+/**
+ * RTK Query API for account-related endpoints: login, signup, email
+ * verification, password change/reset, refresh token, fetching and
+ * updating the current user profile, and signing out.
+ */
 export const accountApi = appApi.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({

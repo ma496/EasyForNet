@@ -1,6 +1,7 @@
 import { format as formatDate, isValid } from 'date-fns'
 import { cn } from '@/lib/utils'
 
+/** Props for the DateView component, which formats a date value for display and handles empty/invalid inputs gracefully. */
 export interface DateViewProps {
   date?: Date | string | number | null
   format?: string
@@ -8,6 +9,9 @@ export interface DateViewProps {
   placeholder?: string
 }
 
+/**
+ * DateView renders a date formatted with date-fns, showing a muted placeholder for empty values and an "Invalid Date" label for unparseable inputs.
+ */
 export const DateView = ({
   date,
   format = 'dd MMM yyyy',

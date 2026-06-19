@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// This endpoint that handles <c>DELETE /roles/{id}</c> to remove an existing role (refusing to delete a default role).
+/// </summary>
 sealed class RoleDeleteEndpoint(IRoleService roleService) : Endpoint<RoleDeleteRequest, RoleDeleteResponse>
 {
     public override void Configure()
@@ -29,10 +32,16 @@ sealed class RoleDeleteEndpoint(IRoleService roleService) : Endpoint<RoleDeleteR
     }
 }
 
+/// <summary>
+/// Request payload identifying the role to delete by id.
+/// </summary>
 sealed class RoleDeleteRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>
+/// FluentValidation rules requiring a non-empty id for role deletion.
+/// </summary>
 sealed class RoleDeleteValidator : Validator<RoleDeleteRequest>
 {
     public RoleDeleteValidator()
@@ -41,6 +50,9 @@ sealed class RoleDeleteValidator : Validator<RoleDeleteRequest>
     }
 }
 
+/// <summary>
+/// Response payload indicating the outcome of a role deletion attempt.
+/// </summary>
 sealed class RoleDeleteResponse
 {
     public bool Success { get; set; }

@@ -2,6 +2,9 @@ namespace EasyForNetTool;
 
 using EasyForNetTool.Parsing;
 
+/// <summary>
+/// Defines metadata about a CLI argument, including its type, names, description and available options.
+/// </summary>
 public class ArgumentInfo
 {
     public ArgumentType Type { get; init; }
@@ -10,6 +13,10 @@ public class ArgumentInfo
     public string Description { get; init; } = null!;
     public IList<ArgumentOption> Options { get; init; } = null!;
 
+    /// <summary>
+    /// Returns the list of all supported CLI arguments with their options.
+    /// </summary>
+    /// <returns>A list of <see cref="ArgumentInfo"/> instances describing each command.</returns>
     public static IList<ArgumentInfo> Arguments()
     {
         return
@@ -50,6 +57,9 @@ public class ArgumentInfo
     }
 }
 
+/// <summary>
+/// Represents a single option (flag) for a CLI argument, including its names, description and constraints.
+/// </summary>
 public class ArgumentOption
 {
     public string Name { get; init; } = null!;

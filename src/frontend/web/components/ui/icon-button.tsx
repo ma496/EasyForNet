@@ -38,11 +38,16 @@ const iconButtonVariants = cva('btn cursor-pointer inline-flex items-center just
   },
 })
 
+/** Props for the IconButton component, a square aspect-ratio button that displays a single icon and supports a loading state. */
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof iconButtonVariants> {
   icon: React.ReactNode
   isLoading?: boolean
 }
 
+/**
+ * IconButton is a square, icon-only button built on the same variant system as Button that swaps its icon for a spinner while loading.
+ * It forwards a ref to the underlying HTMLButtonElement.
+ */
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(({ className, variant, size, rounded, icon, isLoading, disabled, ...props }, ref) => {
   return (
     <button

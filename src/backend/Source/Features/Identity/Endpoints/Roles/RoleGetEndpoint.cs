@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>GET /roles/{id}</c> to return a single role with its permission list and user count.
+/// </summary>
 sealed class RoleGetEndpoint(IRoleService roleService) : Endpoint<RoleGetRequest, RoleGetResponse>
 {
     public override void Configure()
@@ -30,13 +33,27 @@ sealed class RoleGetEndpoint(IRoleService roleService) : Endpoint<RoleGetRequest
     }
 }
 
+/// <summary>
+/// Request payload identifying the role to fetch by id.
+/// </summary>
 sealed class RoleGetRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>>
+/// FluentValidation rules requiring a non-empty id for role retrieval.
+/// </summary>
 sealed class RoleGetValidator : Validator<RoleGetRequest>
-{ }
+{
+    public RoleGetValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
 
+/// <summary>
+/// Response payload containing the role's metadata, assigned permission ids, and user count.
+/// </summary>
 public sealed class RoleGetResponse : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
@@ -46,6 +63,9 @@ public sealed class RoleGetResponse : AuditableDto<Guid>
     public int UserCount { get; set; }
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="Role"/> entity into a <see cref="RoleGetResponse"/>, collapsing <see cref="RolePermission"/> join rows into permission ids and computing the user count.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class RoleGetResponseMapper
 {

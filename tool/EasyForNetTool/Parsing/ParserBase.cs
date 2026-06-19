@@ -2,12 +2,21 @@ namespace EasyForNetTool.Parsing;
 
 using EasyForNetTool.Extensions;
 
+/// <summary>
+/// Base class for CLI argument parsers providing shared parsing utilities.
+/// </summary>
 public abstract class ParserBase
 {
+    /// <summary>
+    /// Parses the raw CLI arguments into a typed <see cref="Argument"/>.
+    /// </summary>
     public abstract Argument Parse(string[] args);
 
     //protected abstract void SetEndpointArguments(TArgument argument, Dictionary<string, string> endpointArguments);
 
+    /// <summary>
+    /// Sets properties on the argument object based on parsed options and argument metadata.
+    /// </summary>
     protected void SetOptions(Enum argumentType, Argument argument, Dictionary<string, string> options)
     {
         var argumentInfoList = ArgumentInfo.Arguments()
@@ -43,6 +52,9 @@ public abstract class ParserBase
         }
     }
 
+    /// <summary>
+    /// Sets a single property on the argument object from the option value.
+    /// </summary>
     private static void SetProperty(Argument argument, string value, ArgumentOption opt)
     {
         value = opt.NormalizeMethod != null ? opt.NormalizeMethod.Invoke(value) : value;
@@ -57,6 +69,9 @@ public abstract class ParserBase
         property.SetValue(argument, value);
     }
 
+    /// <summary>
+    /// Extracts the option arguments by skipping the command name.
+    /// </summary>
     protected string[] GetOptions(string[] array)
     {
         if (array.Length == 1)
@@ -64,6 +79,9 @@ public abstract class ParserBase
         return SubArray(array, 1);
     }
 
+    /// <summary>
+    /// Returns a sub-array starting from the specified index.
+    /// </summary>
     protected string[] SubArray(string[] array, int startIndex)
     {
         var subArray = new List<string>();
@@ -74,6 +92,9 @@ public abstract class ParserBase
         return subArray.ToArray();
     }
 
+    /// <summary>
+    /// Converts an array of alternating key-value strings into a dictionary.
+    /// </summary>
     protected Dictionary<string, string> ToKeyValue(string[] array)
     {
         if (array.Length % 2 != 0)

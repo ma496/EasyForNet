@@ -1,6 +1,7 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { Fragment, ReactNode, Children, isValidElement, createContext, useContext } from 'react'
 
+/** Allowed maximum widths for the Modal panel. */
 type ModalSize = 'sm' | 'lg' | 'xl'
 
 interface BaseProps {
@@ -8,12 +9,14 @@ interface BaseProps {
   className?: string
 }
 
+/** Props for the top-level Modal component controlling open state, size, and close behavior. */
 interface ModalProps extends BaseProps {
   isOpen: boolean
   onClose: () => void
   size?: ModalSize
 }
 
+/** Props for the Modal.Header subcomponent, which optionally renders a close button bound to the parent modal. */
 interface ModalHeaderProps extends BaseProps {
   showCloseButton?: boolean
 }
@@ -23,6 +26,9 @@ type ModalFooterProps = BaseProps
 // Create context for modal
 const ModalContext = createContext<{ onClose: () => void } | null>(null)
 
+/**
+ * ModalHeader renders the top bar of a Modal with a title area and an optional close button that invokes the parent modal's onClose handler.
+ */
 const ModalHeader = ({ children, className = '', showCloseButton = true }: ModalHeaderProps) => {
   const context = useContext(ModalContext)
 
@@ -52,10 +58,16 @@ const ModalHeader = ({ children, className = '', showCloseButton = true }: Modal
   )
 }
 
+/**
+ * ModalFooter renders the bottom bar of a Modal as a right-aligned flex row, typically used for action buttons.
+ */
 const ModalFooter = ({ children, className = '' }: ModalFooterProps) => {
   return <div className={`flex items-center justify-end gap-2 px-5 py-3 ${className}`}>{children}</div>
 }
 
+/**
+ * Modal is a headless-ui-based dialog with size variants (sm/lg/xl) that composes Modal.Header, content, and Modal.Footer children into a centered, animated panel with a dark backdrop.
+ */
 const Modal = ({ isOpen, onClose, children, size = 'lg', className = '' }: ModalProps) => {
   const maxWidthClass = {
     sm: 'max-w-sm',

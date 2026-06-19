@@ -13,6 +13,9 @@ import { useTranslation } from '@/i18n'
 import NotificationBell from '../notifications/notification-bell'
 import { useNotificationHub } from '@/hooks/use-notification-hub'
 
+/**
+ * Header is the client-side application top bar that contains the brand logo, mobile sidebar toggle, search box, notification bell, theme changer, language dropdown, and the user navigation menu; it also activates the current horizontal-menu link and subscribes to the notification hub.
+ */
 const Header = () => {
   const pathname = usePathname()
   const dispatch = useAppDispatch()

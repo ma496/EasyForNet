@@ -26,6 +26,9 @@ interface LanguageDropdownProps {
   onlyFlag?: boolean
 }
 
+/**
+ * Client-side dropdown that lists the available languages and allows the user to switch the active locale, updating i18n, RTL state, and refreshing the localized router.
+ */
 const LanguageDropdown = ({ className = '', onlyFlag = false }: LanguageDropdownProps) => {
   const dispatch = useAppDispatch()
   const router = useLocalizedRouter()

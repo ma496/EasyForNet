@@ -8,6 +8,11 @@ const initialState: NotificationsState = {
   unreadCount: 0,
 };
 
+/**
+ * Notifications slice holding the current unread notification count,
+ * used by the UI to render the badge. Updated via the setUnreadCount
+ * reducer (e.g. by useNotificationHub polling).
+ */
 export const notificationsSlice = createSlice({
   name: 'notifications',
   initialState,

@@ -31,6 +31,9 @@ const validationSchema = Yup.object({
   }).nullable(),
 })
 
+/**
+ * Interactive client-side showcase component that demonstrates the DatePicker in single, multiple, and range modes along with Formik integration and a props reference table.
+ */
 export const DatePickerExample = () => {
   const [basicDate, setBasicDate] = useState<Date>()
   const [multipleDate, setMultipleDate] = useState<Date[]>([])

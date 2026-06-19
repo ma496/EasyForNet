@@ -7,12 +7,14 @@ import ScrollBar from 'react-perfect-scrollbar'
 import { Input } from './input'
 import { useAppSelector } from '@/store/hooks'
 
+/** Single label/value option used by the multi-select components. */
 interface Option {
   label: string
   value: string
   disabled?: boolean
 }
 
+/** Props for the standalone MultiSelect, a multi-value combobox driven by a controlled value/onChange pair with optional search, icon, and external error display. */
 interface MultiSelectProps {
   label?: string
   name: string
@@ -33,6 +35,9 @@ interface MultiSelectProps {
   required?: boolean
 }
 
+/**
+ * MultiSelect is a client component that renders a controlled, badge-style multi-value combobox popover for use outside of Formik (it is the non-Formik counterpart of FormMultiSelect).
+ */
 export const MultiSelect = ({
   label,
   name,

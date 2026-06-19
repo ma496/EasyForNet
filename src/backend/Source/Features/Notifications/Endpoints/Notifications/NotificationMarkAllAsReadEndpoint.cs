@@ -1,9 +1,11 @@
 namespace Backend.Features.Notifications.Endpoints.Notifications;
 
-using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
 using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// POST endpoint that marks all unread notifications as read for the current user.
+/// </summary>
 sealed class NotificationMarkAllAsReadEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : EndpointWithoutRequest<NotificationMarkAllAsReadResponse>
 {
     public override void Configure()
@@ -49,6 +51,9 @@ sealed class NotificationMarkAllAsReadEndpoint(AppDbContext dbContext, ICurrentU
     }
 }
 
+/// <summary>
+/// Response payload confirming that all notifications were marked as read.
+/// </summary>
 public sealed class NotificationMarkAllAsReadResponse
 {
     public bool Success { get; set; }

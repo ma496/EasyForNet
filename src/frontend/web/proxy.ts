@@ -6,6 +6,11 @@ import { i18nConfig } from './i18n'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
+/**
+ * Determines the best-matching locale for an incoming request by
+ * negotiating the Accept-Language header against the configured locales,
+ * falling back to the default locale.
+ */
 function getLocale(request: NextRequest): string | undefined {
   // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {}
@@ -18,6 +23,12 @@ function getLocale(request: NextRequest): string | undefined {
   return matchLocale(languages, locales, i18nConfig.defaultLocale)
 }
 
+/**
+ * Next.js middleware that handles two concerns: locale prefixing
+ * (rewriting/redirecting to the right localized path) and authentication
+ * gating (redirecting unauthenticated requests to the signin page when
+ * the route is registered in auth-urls.ts).
+ */
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 

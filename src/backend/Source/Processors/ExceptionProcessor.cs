@@ -2,8 +2,19 @@ namespace Backend.Processors;
 
 using Npgsql;
 
+/// <summary>
+/// Global FastEndpoints post-processor that converts unhandled exceptions thrown
+/// during request processing into standardized JSON error responses. Special-cases
+/// <see cref="DbUpdateException"/> to surface PostgreSQL constraint violations as
+/// 400-level errors and treats any other exception as a 500 internal server error.
+/// </summary>
 public class ExceptionProcessor(IWebHostEnvironment env) : IGlobalPostProcessor
 {
+    /// <summary>
+    /// Inspects the request context for an unhandled exception, maps it to an
+    /// appropriate HTTP status code and standard error payload, and marks the
+    /// exception as handled so the pipeline can short-circuit normally.
+    /// </summary>
     public async Task PostProcessAsync(IPostProcessorContext context, CancellationToken ct)
     {
         if (!context.HasExceptionOccurred)
@@ -65,6 +76,12 @@ public class ExceptionProcessor(IWebHostEnvironment env) : IGlobalPostProcessor
         context.ExceptionDispatchInfo.Throw();
     }
 
+    /// <summary>
+    /// Maps a <see cref="PostgresException"/> to a user-friendly error tuple of
+    /// property name, message, and application error code based on the SQLSTATE
+    /// (unique violation, not null violation, foreign key violation, check violation,
+    /// or generic database error).
+    /// </summary>
     private static (string? propertyName, string message, string code) GetErrorMessage(PostgresException ex)
     {
         switch (ex.SqlState)

@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>POST /users</c> to create a new user with the supplied roles.
+/// </summary>
 sealed class UserCreateEndpoint(IUserService userService, AppDbContext dbContext) : Endpoint<UserCreateRequest, UserCreateResponse>
 {
     public override void Configure()
@@ -38,6 +41,9 @@ sealed class UserCreateEndpoint(IUserService userService, AppDbContext dbContext
     }
 }
 
+/// <summary>
+/// Request payload for creating a new user, including the initial password and role assignments.
+/// </summary>
 public sealed class UserCreateRequest
 {
     public string Username { get; set; } = null!;
@@ -49,6 +55,9 @@ public sealed class UserCreateRequest
     public List<Guid> Roles { get; set; } = [];
 }
 
+/// <summary>
+/// FluentValidation rules ensuring a create-user request supplies a unique username, valid email, strong password, and at least one role.
+/// </summary>
 sealed class UserCreateValidator : Validator<UserCreateRequest>
 {
     public UserCreateValidator()
@@ -62,6 +71,9 @@ sealed class UserCreateValidator : Validator<UserCreateRequest>
     }
 }
 
+/// <summary>
+/// Response payload returned after a successful user creation, echoing the assigned identifiers and roles.
+/// </summary>
 public sealed class UserCreateResponse : BaseDto<Guid>
 {
     public string Username { get; set; } = null!;
@@ -74,6 +86,9 @@ public sealed class UserCreateResponse : BaseDto<Guid>
     public List<Guid> Roles { get; set; } = [];
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="UserCreateRequest"/> into a <see cref="User"/> entity, expanding role ids into <see cref="UserRole"/> join rows.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
 public partial class UserCreateRequestMapper
 {
@@ -85,6 +100,9 @@ public partial class UserCreateRequestMapper
         => [.. roles.Select(x => new UserRole { RoleId = x })];
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="User"/> entity into a <see cref="UserCreateResponse"/>, collapsing <see cref="UserRole"/> join rows back into role ids.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class UserCreateResponseMapper
 {

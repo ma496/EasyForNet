@@ -2,8 +2,17 @@ namespace Backend.Processors;
 
 using Backend.Settings;
 
+/// <summary>
+/// Global FastEndpoints pre-processor that rejects incoming requests whose declared
+/// content length exceeds the configured maximum payload size, returning a 413
+/// Payload Too Large response in the project's standard error format.
+/// </summary>
 public class ToLargePayloadProcessor(IOptions<PayloadSetting> payloadOptions) : IGlobalPreProcessor
 {
+    /// <summary>
+    /// Inspects the request's content length and, when it exceeds the configured
+    /// maximum, short-circuits the pipeline with a 413 response payload.
+    /// </summary>
     public async Task PreProcessAsync(IPreProcessorContext context, CancellationToken ct)
     {
         var maxSize = payloadOptions.Value.MaximumSize;

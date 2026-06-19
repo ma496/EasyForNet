@@ -12,12 +12,14 @@ import { Input } from './input'
 import ScrollBar from 'react-perfect-scrollbar'
 import { useAppSelector } from '@/store/hooks'
 
+/** Single label/value option used by the lazy-loaded select components. */
 interface Option {
   label: string
   value: string
   disabled?: boolean
 }
 
+/** Props for the Formik-aware FormLazySelect, a single-select that fetches pages of options on demand via a RTK Query lazy hook and binds the selected value to a form field. */
 interface FormLazySelectProps<TItem, TRequest> {
   label?: string
   name: string
@@ -41,6 +43,9 @@ interface FormLazySelectProps<TItem, TRequest> {
   required?: boolean
 }
 
+/**
+ * FormLazySelect is a client component that combines a Formik-bound string field with debounced, server-paginated option fetching, infinite scroll, and the ability to fetch the label of a pre-selected item that is not in the current page.
+ */
 export const FormLazySelect = <TItem, TRequest>({
   label,
   name,

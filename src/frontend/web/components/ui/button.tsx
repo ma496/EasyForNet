@@ -38,11 +38,18 @@ const buttonVariants = cva('btn cursor-pointer inline-flex items-center justify-
   },
 })
 
+/**
+ * Props for the Button component, a styled native button element that supports variants, sizes, loading state, and an optional leading icon.
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   isLoading?: boolean
   icon?: React.ReactNode
 }
 
+/**
+ * Button is a styled native button with variant/size/rounded options that supports a loading spinner state and an optional leading icon.
+ * It forwards a ref to the underlying HTMLButtonElement and is automatically disabled while loading.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, rounded, isLoading, disabled, children, icon, ...props }, ref) => {
   return (
     <button className={cn(buttonVariants({ variant, size, rounded }), className)} ref={ref} disabled={disabled || isLoading} {...props}>

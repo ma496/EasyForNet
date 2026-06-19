@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Roles;
 
+/// <summary>
+/// Tests for the <see cref="RoleUpdateEndpoint"/> covering updating roles, non-existent roles, and protected default roles.
+/// </summary>
 public class RoleUpdateTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a created role can be successfully updated with new name and description.
+    /// </summary>
     [Fact]
     public async Task Update_Role()
     {
@@ -30,6 +36,9 @@ public class RoleUpdateTests(App app) : AppTestsBase(app)
         updateRes.Description.Should().Be(updateRequest.Description);
     }
 
+    /// <summary>
+    /// Verifies that updating a non-existent role returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Update_NonExistent_Role()
     {
@@ -45,6 +54,9 @@ public class RoleUpdateTests(App app) : AppTestsBase(app)
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that updating the default Admin role returns 400 Bad Request with <see cref="ErrorCodes.DefaultRoleCannotBeUpdated"/>.
+    /// </summary>
     [Fact]
     public async Task Update_Admin_Role_Should_Fail()
     {

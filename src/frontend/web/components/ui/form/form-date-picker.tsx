@@ -29,8 +29,12 @@ interface FormRangeDatePickerProps extends Omit<RangeDatePickerProps, 'selected'
 }
 
 // Union type for all form date picker props
+/** Union of Formik-aware FormDatePicker prop variants, discriminated by the `mode` field, that internally drive the underlying DatePicker. */
 export type FormDatePickerProps = FormSingleDatePickerProps | FormMultipleDatePickerProps | FormRangeDatePickerProps
 
+/**
+ * FormDatePicker is a client component that wraps DatePicker and binds it to a Formik field by name, showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormDatePicker = (props: FormDatePickerProps) => {
   const { name, id, label, showValidation = true, className, mode = 'single', required = false, ...restProps } = props
 

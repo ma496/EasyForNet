@@ -8,12 +8,14 @@ import ScrollBar from 'react-perfect-scrollbar'
 import { Input } from './input'
 import { useAppSelector } from '@/store/hooks'
 
+/** Single label/value option used by the multi-select components. */
 interface Option {
   label: string
   value: string
   disabled?: boolean
 }
 
+/** Props for the Formik-aware FormMultiSelect, a multi-select combobox bound to an array form field by name with optional search, icon, and size variants. */
 interface FormMultiSelectProps {
   label?: string
   name: string
@@ -30,6 +32,9 @@ interface FormMultiSelectProps {
   required?: boolean
 }
 
+/**
+ * FormMultiSelect is a client component that uses Formik's useField/useFormikContext to bind a multi-value, badge-rendered combobox to a form field, showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormMultiSelect = ({
   label,
   name,

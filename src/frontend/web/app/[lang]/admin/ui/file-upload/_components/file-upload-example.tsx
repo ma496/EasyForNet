@@ -9,6 +9,9 @@ import { useTranslation } from '@/i18n'
 import { MultiFileUpload } from '@/components/ui/form/multi-file-upload'
 import { useState } from 'react'
 
+/**
+ * Interactive client-side showcase component that demonstrates the FileUpload in basic, profile-avatar, and multi-file configurations with their source snippets.
+ */
 export const FileUploadExample = () => {
   const { t } = useTranslation()
   const [multiFiles, setMultiFiles] = useState<string[]>([])

@@ -12,6 +12,9 @@ import { getMatchedAuthUrl } from './auth-urls'
 import CookieConsentDialog from '@/components/custom/cookie-consent-dialog'
 import { useCookieConsent } from '@/hooks/use-cookie-consent'
 
+/**
+ * Interactive client-side root component that loads the authenticated user, applies the persisted theme/menu/layout preferences, performs route-level permission checks, and conditionally renders the cookie consent dialog.
+ */
 function App({ children }: PropsWithChildren) {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()

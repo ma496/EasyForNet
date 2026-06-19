@@ -4,8 +4,14 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
 using Backend.Tests.Seeder;
 
+/// <summary>
+/// Tests for the <see cref="UserListEndpoint"/> covering listing, pagination, and filtering of users.
+/// </summary>
 public class UserListTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that listing users returns a non-empty collection containing the created users.
+    /// </summary>
     [Fact]
     public async Task List_Users()
     {
@@ -37,6 +43,9 @@ public class UserListTests(App app) : AppTestsBase(app)
         listRes.Items.Count.Should().BeGreaterThanOrEqualTo(3);
     }
 
+    /// <summary>
+    /// Verifies that pagination works correctly and returns different results for different pages.
+    /// </summary>
     [Fact]
     public async Task List_Users_Pagination()
     {
@@ -79,6 +88,9 @@ public class UserListTests(App app) : AppTestsBase(app)
         page2Res.Should().NotBeEquivalentTo(page1Res);
     }
 
+    /// <summary>
+    /// Verifies that filtering by <c>IsActive</c> flag returns only active users, inactive users, or all users when no filter is applied.
+    /// </summary>
     [Fact]
     public async Task List_Users_FilterByIsActive()
     {

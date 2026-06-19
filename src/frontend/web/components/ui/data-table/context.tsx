@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react'
 import { ColumnDef, SortingState, PaginationState, VisibilityState, RowSelectionState, Table, getPaginationRowModel, getCoreRowModel, useReactTable, getSortedRowModel } from '@tanstack/react-table'
 
+/** Shape of the data-table context shared by DataTableProvider, exposing the data, columns, sort/pagination/filter/selection state, and the underlying tanstack-react-table instance. */
 interface DataTableContextProps<TData> {
   data: TData[]
   rowCount?: number
@@ -24,6 +25,9 @@ interface DataTableContextProps<TData> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DataTableContext = createContext<DataTableContextProps<any> | undefined>(undefined)
 
+/**
+ * useDataTable is the context hook for accessing the shared DataTable state and the underlying tanstack-react-table instance, throwing if used outside a DataTableProvider.
+ */
 export function useDataTable<TData>() {
   const context = useContext(DataTableContext)
   if (context === undefined) {
@@ -32,6 +36,7 @@ export function useDataTable<TData>() {
   return context as DataTableContextProps<TData>
 }
 
+/** Props for the DataTableProvider, which owns the parent-controlled state (sorting, pagination, global filter) and wires it into a tanstack-react-table instance configured for manual (server-side) operations. */
 interface DataTableProviderProps<TData> {
   children: ReactNode
   data: TData[]
@@ -48,6 +53,9 @@ interface DataTableProviderProps<TData> {
   isFetching?: boolean
 }
 
+/**
+ * DataTableProvider is a context provider that holds a tanstack-react-table instance configured for manual (server-side) sorting, pagination, and filtering, plus column visibility and row selection state, exposing them to descendant data-table subcomponents.
+ */
 export function DataTableProvider<TData>({
   children,
   data,

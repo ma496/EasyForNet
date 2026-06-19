@@ -9,6 +9,9 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
 import { successToast } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the role create form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     name: Yup.string()
@@ -23,6 +26,9 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
+/**
+ * Interactive client-side form for creating a new role, with name and description fields, validation, and navigation back to the roles list on success.
+ */
 export const RoleCreateForm = () => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

@@ -2,6 +2,9 @@
 import { toggleSidebar } from '@/store/slices/themeConfigSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
+/**
+ * Renders a translucent mobile-only backdrop that closes the sidebar when tapped.
+ */
 const Overlay = () => {
   const themeConfig = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()

@@ -28,6 +28,7 @@ const formRadioVariants = cva('form-radio cursor-pointer', {
   },
 })
 
+/** Props for the Formik-aware FormRadio, a radio input bound to a form field by name with optional label and color/size variants. */
 interface FormRadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>, VariantProps<typeof formRadioVariants> {
   label?: string
   name: string
@@ -36,6 +37,9 @@ interface FormRadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement
   required?: boolean
 }
 
+/**
+ * FormRadio is a client component that uses Formik's useField and useFormikContext to bind a styled radio input to a form field, showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormRadio = ({ label, name, id, showValidation = true, className, variant, size, required = false, ...props }: FormRadioProps) => {
   const [field, meta] = useField({ name, type: 'radio', value: props.value })
   const { submitCount } = useFormikContext()

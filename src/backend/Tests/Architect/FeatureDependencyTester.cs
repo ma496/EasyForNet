@@ -6,18 +6,36 @@ using Mono.Cecil;
 using NetArchTest.Rules;
 using TypeDefinition = Mono.Cecil.TypeDefinition;
 
+/// <summary>
+/// Output of a feature dependency test containing success status, the failing feature namespace, and details of failed types.
+/// </summary>
 public record FeatureDependencyTestOutput(bool IsSuccess,
                                           string FeatureNamespace,
                                           IReadOnlyList<FailedTypeInfo> FailedTypes);
 
+/// <summary>
+/// Information about a type that failed the dependency check, including the forbidden dependencies it references.
+/// </summary>
 public record FailedTypeInfo(Type Type, IReadOnlyList<TypeDefinition> ForbiddenTypes);
 
+/// <summary>
+/// Service for testing feature dependency rules across an assembly.
+/// </summary>
 public interface IFeatureDependencyTester
 {
+    /// <summary>
+    /// Tests all features within the given assembly namespace for unauthorized cross-feature dependencies.
+    /// </summary>
     FeatureDependencyTestOutput Test(Assembly assembly, string baseFeatureNamespace);
 }
 
+/// <summary>
+/// Implements feature dependency testing by discovering features and applying <see cref="FeatureDependencyRule"/> to each.
+/// </summary>
 public class FeatureDependencyTester : IFeatureDependencyTester {
+    /// <summary>
+    /// Tests all features within the given assembly namespace for unauthorized cross-feature dependencies.
+    /// </summary>
     public FeatureDependencyTestOutput Test(Assembly assembly, string baseFeatureNamespace)
     {
         var featureNamespaces = Types.InAssembly(assembly)
@@ -84,6 +102,9 @@ public class FeatureDependencyTester : IFeatureDependencyTester {
         return new(isSuccessFlag, featureNamespaceFlag, failedTypesFlag);
     }
     
+    /// <summary>
+    /// Extracts the top-level feature namespace from a fully qualified namespace relative to the base feature namespace.
+    /// </summary>
     private static string GetFeatureFromNamespace(string baseFeatureNamespace, string @namespace)
     {
         if (string.IsNullOrEmpty(@namespace) || !@namespace.StartsWith($"{baseFeatureNamespace}."))

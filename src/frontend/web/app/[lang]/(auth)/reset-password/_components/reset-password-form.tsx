@@ -10,6 +10,9 @@ import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Lock } from 'lucide-react'
 import { errorAlert, successAlert } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the reset-password form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     password: Yup.string()
@@ -22,6 +25,10 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   })
 }
 
+/**
+ * Interactive client-side form that completes a password reset using the token from the URL query string.
+ * Validates the new password/confirmation, calls the reset API, and redirects to the sign-in page on success.
+ */
 export const ResetPasswordForm = () => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

@@ -2,8 +2,14 @@ namespace EasyForNetTool.Tests.Parsing;
 
 using EasyForNetTool.Parsing;
 
+/// <summary>
+/// Unit tests for the <see cref="CreateProjectArgument"/> class, focusing on name validation and normalization.
+/// </summary>
 public class CreateProjectArgumentTests
 {
+    /// <summary>
+    /// Tests that valid project names are correctly normalized to PascalCase.
+    /// </summary>
     [Fact]
     public void CreateProjectArgument_Name_Valid()
     {
@@ -20,6 +26,9 @@ public class CreateProjectArgumentTests
         Assert.Equal("ValidName", argument.Name);
     }
 
+    /// <summary>
+    /// Tests that invalid project names throw a <see cref="UserFriendlyException"/>.
+    /// </summary>
     [Fact]
     public void CreateProjectArgument_Name_Invalid()
     {

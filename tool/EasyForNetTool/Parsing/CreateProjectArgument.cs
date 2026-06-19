@@ -2,6 +2,9 @@ namespace EasyForNetTool.Parsing;
 
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// Represents the parsed arguments for the "createproject" CLI command.
+/// </summary>
 public class CreateProjectArgument : Argument
 {
     private string _name = null!;

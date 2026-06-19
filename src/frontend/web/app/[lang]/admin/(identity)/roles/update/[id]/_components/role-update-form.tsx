@@ -9,6 +9,9 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
 import { successToast } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the role update form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     name: Yup.string()
@@ -23,10 +26,16 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
+/**
+ * Props for the RoleUpdateForm, supplying the id of the role being edited.
+ */
 interface RoleUpdateFormProps {
   roleId: string
 }
 
+/**
+ * Interactive client-side form for editing an existing role's name and description, populated from the API and submitted back through the role-update mutation.
+ */
 export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

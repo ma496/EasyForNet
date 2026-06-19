@@ -5,6 +5,9 @@ import { NavItem } from '@/nav-items'
 import AnimateHeight from 'react-animate-height'
 import { ChevronDown } from 'lucide-react'
 
+/**
+ * Props for the {@link SidebarNavItem} component, providing the nav item definition and shared sidebar state used for active styling and expand/collapse behavior.
+ */
 interface NavItemProps {
   item: NavItem
   currentMenu: string
@@ -13,6 +16,9 @@ interface NavItemProps {
   onToggleMenu: (title: string) => void
 }
 
+/**
+ * Renders a single sidebar entry: either a collapsible parent with a height-animated child submenu, or a plain link to the item's URL with active-state highlighting against the current pathname.
+ */
 export const SidebarNavItem = ({ item, currentMenu, pathname, t, onToggleMenu }: NavItemProps) => {
   if (item.children) {
     return (

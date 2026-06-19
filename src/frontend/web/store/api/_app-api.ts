@@ -74,6 +74,12 @@ const baseQueryWithReauth: BaseQueryFn<
   return result
 }
 
+/**
+ * Base RTK Query API instance used as the root for all feature APIs
+ * (account, users, roles, files, notifications, etc.). Wraps a
+ * fetchBaseQuery with a reauth flow that refreshes the access token on
+ * 401/404 and signs the user out / redirects on failure.
+ */
 export const appApi = createApi({
   reducerPath: 'appApi',
   baseQuery: baseQueryWithReauth,

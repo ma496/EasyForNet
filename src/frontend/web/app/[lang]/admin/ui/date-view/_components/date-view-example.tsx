@@ -4,6 +4,9 @@ import { DateView } from '@/components/ui/date-view'
 import { CodeShowcase } from '@/components/ui/code-showcase'
 import { Calendar } from 'lucide-react'
 
+/**
+ * Interactive client-side showcase component that demonstrates the DateView component in basic, custom-format, and edge-case (null/invalid/timestamp) scenarios.
+ */
 export const DateViewExample = () => {
   const now = new Date()
   const dateString = '2023-12-25'

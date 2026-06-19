@@ -3,6 +3,9 @@ namespace Backend.Features.FileManagement;
 using Backend.Attributes;
 using Backend.Features.FileManagement.Core;
 
+/// <summary>
+/// Feature module that registers the file management services with the DI container.
+/// </summary>
 [BypassNoDirectUse]
 public class FileManagementFeature : IFeature
 {

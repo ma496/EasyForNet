@@ -13,6 +13,10 @@ import { useState, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
 import { successToast } from '@/lib/utils/notification'
 
+/**
+ * Interactive client-side form that registers a new user with username, email, and password.
+ * Shows a success view after registration and optionally offers a resend-verification-email countdown when email verification is required.
+ */
 const SignupForm = () => {
   const { t } = useTranslation()
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)

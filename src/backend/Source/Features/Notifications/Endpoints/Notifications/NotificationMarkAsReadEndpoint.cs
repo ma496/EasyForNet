@@ -2,9 +2,11 @@ namespace Backend.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Base.Dto;
 using Backend.Features.Identity.Core;
-using Backend.Features.Notifications.Core;
 using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// POST endpoint that marks a single notification as read for the current user.
+/// </summary>
 sealed class NotificationMarkAsReadEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : Endpoint<NotificationMarkAsReadRequest, NotificationMarkAsReadResponse>
 {
     public override void Configure()
@@ -56,10 +58,16 @@ sealed class NotificationMarkAsReadEndpoint(AppDbContext dbContext, ICurrentUser
     }
 }
 
+/// <summary>
+/// Request payload containing the identifier of the notification to mark as read.
+/// </summary>
 sealed class NotificationMarkAsReadRequest : BaseDto<Guid>
 {
 }
 
+/// <summary>
+/// Validates that the <see cref="NotificationMarkAsReadRequest"/> has a non-empty notification id.
+/// </summary>
 sealed class NotificationMarkAsReadValidator : Validator<NotificationMarkAsReadRequest>
 {
     public NotificationMarkAsReadValidator()
@@ -68,6 +76,9 @@ sealed class NotificationMarkAsReadValidator : Validator<NotificationMarkAsReadR
     }
 }
 
+/// <summary>
+/// Response payload confirming that a notification has been marked as read.
+/// </summary>
 public sealed class NotificationMarkAsReadResponse : BaseDto<Guid>
 {
     public bool Success { get; set; }

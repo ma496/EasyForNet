@@ -5,6 +5,10 @@ using Backend.Features.Identity.Core;
 using Backend.Settings;
 using Microsoft.Extensions.Options;
 
+/// <summary>
+/// Anonymous POST endpoint that re-issues an email verification message to a user who
+/// has not yet verified their email address.
+/// </summary>
 sealed class ResendVerifyEmailEndpoint(IUserService userService,
                                ITokenService tokenService,
                                IEmailBackgroundJobs emailBackgroundJobs,
@@ -56,11 +60,19 @@ sealed class ResendVerifyEmailEndpoint(IUserService userService,
     }
 }
 
+/// <summary>
+/// Request payload for resending an email verification, accepting either the user's
+/// email or username as a single identifier.
+/// </summary>
 sealed class ResendVerifyEmailRequest
 {
     public string EmailOrUsername { get; set; } = null!;
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="ResendVerifyEmailRequest"/>, requiring that
+/// the email-or-username field is supplied.
+/// </summary>
 sealed class ResendVerifyEmailValidator : Validator<ResendVerifyEmailRequest>
 {
     public ResendVerifyEmailValidator()

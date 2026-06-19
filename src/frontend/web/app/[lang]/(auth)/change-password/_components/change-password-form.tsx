@@ -11,6 +11,9 @@ import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Button } from '@/components/ui/button'
 import { Lock } from 'lucide-react'
 
+/**
+ * Builds a Yup validation schema for the change-password form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     currentPassword: Yup.string()
@@ -25,6 +28,10 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   })
 }
 
+/**
+ * Interactive client-side form that lets an authenticated user change their account password.
+ * Submits the new credentials, signs the user out on success, and redirects to the sign-in page.
+ */
 export const ChangePasswordForm = () => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

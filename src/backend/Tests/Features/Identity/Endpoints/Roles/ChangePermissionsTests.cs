@@ -4,8 +4,14 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Identity.Endpoints.Roles;
 
+/// <summary>
+/// Tests for the <see cref="ChangePermissionsEndpoint"/> covering assigning permissions to roles.
+/// </summary>
 public class ChangePermissionsTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that permissions can be successfully assigned to a newly created role.
+    /// </summary>
     [Fact]
     public async Task Change_Permissions()
     {
@@ -34,6 +40,9 @@ public class ChangePermissionsTests(App app) : AppTestsBase(app)
         res.Permissions.Should().Equal(permissions);
     }
 
+    /// <summary>
+    /// Verifies that permissions can be updated on a role that already has permissions, replacing the existing set with a mix of old and new permissions.
+    /// </summary>
     [Fact]
     public async Task Change_Permissions_Of_Role_Already_Has_Permissions()
     {

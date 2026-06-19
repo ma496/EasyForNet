@@ -1,10 +1,12 @@
 import { Allow } from './allow'
 
+/** Pairing of a route pattern with the permissions required to access it (used by route guards and the proxy). */
 export interface AuthUrl {
   url: string
   permissions?: string[]
 }
 
+/** Registry of routes the app considers "guarded", each annotated with the permissions required to access it. */
 export const authUrls: AuthUrl[] = [
   {
     url: '/change-password',
@@ -45,6 +47,11 @@ export const authUrls: AuthUrl[] = [
   },
 ]
 
+/**
+ * Finds the single auth-guarded route definition that matches the given
+ * URL, supporting dynamic {id} segments via regex. Throws if more than
+ * one definition matches the same pathname.
+ */
 export const getMatchedAuthUrl = (url: string): AuthUrl | undefined => {
   const pathname = url.split('?')[0]
   const matches = authUrls.filter((authUrl) => {
@@ -75,6 +82,7 @@ export const getMatchedAuthUrl = (url: string): AuthUrl | undefined => {
   return matches[0]
 }
 
+/** Returns true if the given URL targets the /admin area or matches any entry in the authUrls registry. */
 export const isAuthRequired = (url: string) => {
   return url.includes('/admin/') || !!getMatchedAuthUrl(url)
 }

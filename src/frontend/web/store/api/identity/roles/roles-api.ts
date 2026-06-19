@@ -14,6 +14,11 @@ import {
   ChangePermissionsResponse
 } from './roles-dtos'
 
+/**
+ * RTK Query API for role management: CRUD on roles plus a dedicated
+ * endpoint to change a role's permission set. Tag-invalidates the
+ * 'Roles' collection on mutations to keep lists/details in sync.
+ */
 export const rolesApi = appApi
   .enhanceEndpoints({
     addTagTypes: ['Roles'],

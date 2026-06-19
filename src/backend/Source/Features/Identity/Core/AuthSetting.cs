@@ -1,5 +1,8 @@
 namespace Backend.Features.Identity.Core;
 
+/// <summary>
+/// Strongly-typed configuration options for the authentication subsystem, including token lifetimes and JWT settings.
+/// </summary>
 public class AuthSetting
 {
     public JwtSetting Jwt { get; set; } = null!;
@@ -7,6 +10,9 @@ public class AuthSetting
     public int RefreshTokenValidity { get; set; } // in hours
 }
 
+/// <summary>
+/// JWT signing configuration: secret key, issuer, and audience used to validate issued access tokens.
+/// </summary>
 public class JwtSetting
 {
     public string Key { get; set; } = null!;

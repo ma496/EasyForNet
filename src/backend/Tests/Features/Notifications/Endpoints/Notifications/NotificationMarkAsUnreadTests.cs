@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationMarkAsUnreadEndpoint"/> covering marking user and global notifications as unread.
+/// </summary>
 public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a user notification can be marked as unread (IsRead = false).
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_UserNotification()
     {
@@ -27,6 +33,9 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
         updated!.IsRead.Should().BeFalse();
     }
 
+    /// <summary>
+    /// Verifies that a global notification can be marked as unread by removing the visit record for the current user.
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_GlobalNotification()
     {
@@ -47,6 +56,9 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
         isVisited.Should().BeFalse();
     }
 
+    /// <summary>
+    /// Verifies that marking an already-unread user notification still returns success.
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_AlreadyUnread_UserNotification()
     {
@@ -64,6 +76,9 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
         res.Success.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that marking another user's notification as unread returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_OtherUserNotification_Should_NotFound()
     {
@@ -80,6 +95,9 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that marking a non-existent notification as unread returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_NonExistent_Notification()
     {
@@ -91,6 +109,9 @@ public class NotificationMarkAsUnreadTests(App app) : NotificationsTestsBase(app
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task MarkAsUnread_Unauthenticated()
     {

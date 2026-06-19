@@ -4,43 +4,38 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// Queryable extensions that apply the standard pagination, sorting, and
+/// inclusion rules shared by the list endpoints.
+/// </summary>
 public static class IQueryableExtension
 {
-    public static IQueryable<T> Process<T, TId>(this IQueryable<T> query, ListRequestDto<TId> request)
+    /// <summary>
+    /// Applies the sort, include, and pagination rules described by a
+    /// <see cref="ListRequestDto{TId}"/> to the source query, choosing a
+    /// sensible default ordering based on the entity's audit metadata.
+    /// </summary>
+    /// <param name="query">The source queryable of <see cref="IBaseEntity{TId}"/> instances.</param>
+    /// <param name="request">The list request describing sorting and pagination.</param>
+    /// <param name="applyDefaultOrdering">Whether to apply default ordering by CreatedAt or UpdatedAt when no explicit sort field is provided; defaults to true.</param>
+    /// <returns>A new <see cref="IQueryable{T}"/> with the requested ordering, filter, and paging applied.</returns>
+    public static IQueryable<T> Process<T, TId>(this IQueryable<T> query, ListRequestDto<TId> request,
+        bool applyDefaultOrdering = true)
         where T : class, IBaseEntity<TId>
     {
         var processQuery = query;
 
         if (!string.IsNullOrWhiteSpace(request.SortField))
         {
-            processQuery = processQuery.OrderBy($"{request.SortField} {(request.SortDirection == SortDirection.Desc ? "desc" : "asc")}");
+            processQuery = processQuery.OrderBy($"{request.SortField} {(request.SortDirection == SortDirection.Desc ? "DESC" : "ASC")}");
         }
-        else if (typeof(IUpdatableEntity).IsAssignableFrom(typeof(T)))
+        else if (applyDefaultOrdering && typeof(IUpdatableEntity).IsAssignableFrom(typeof(T)))
         {
-            var sortExpression = $"{nameof(IUpdatableEntity.UpdatedAt)} DESC";
-            if (typeof(ICreatableEntity).IsAssignableFrom(typeof(T))
-                && typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
-            {
-                sortExpression += $", {nameof(ICreatableEntity.CreatedAt)} DESC, {nameof(IBaseEntity<object>.Id)} DESC";
-            }
-            else if (typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
-            {
-                sortExpression += $", {nameof(IBaseEntity<object>.Id)} DESC";
-            }
-            processQuery = processQuery.OrderBy(sortExpression);
+            processQuery = processQuery.OrderBy($"{nameof(IUpdatableEntity.UpdatedAt)} DESC");
         }
-        else if (typeof(ICreatableEntity).IsAssignableFrom(typeof(T)))
+        else if (applyDefaultOrdering && typeof(ICreatableEntity).IsAssignableFrom(typeof(T)))
         {
-            var sortExpression = $"{nameof(ICreatableEntity.CreatedAt)} desc";
-            if (typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
-            {
-                sortExpression = $"{nameof(ICreatableEntity.CreatedAt)} desc, {nameof(IBaseEntity<object>.Id)} desc";
-            }
-            processQuery = processQuery.OrderBy(sortExpression);
-        }
-        else if (typeof(T).GetProperty(nameof(IBaseEntity<object>.Id)) != null)
-        {
-            processQuery = processQuery.OrderBy($"{nameof(IBaseEntity<object>.Id)} desc");
+            processQuery = processQuery.OrderBy($"{nameof(ICreatableEntity.CreatedAt)} DESC");
         }
 
         if (request.IncludeIds?.Count > 0)
@@ -57,11 +52,28 @@ public static class IQueryableExtension
         return processQuery;
     }
 
+    /// <summary>
+    /// Applies <paramref name="predicate"/> to the query only when
+    /// <paramref name="condition"/> is <c>true</c>; otherwise returns the query unchanged.
+    /// </summary>
+    /// <param name="query">The source queryable.</param>
+    /// <param name="condition">Whether to apply the predicate.</param>
+    /// <param name="predicate">The filter to apply when the condition holds.</param>
+    /// <returns>The filtered or unchanged queryable.</returns>
     public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
     {
         return condition ? query.Where(predicate) : query;
     }
 
+    /// <summary>
+    /// Orders the query by the supplied expression only when
+    /// <paramref name="condition"/> is <c>true</c>; otherwise returns the query unchanged.
+    /// </summary>
+    /// <param name="query">The source queryable.</param>
+    /// <param name="condition">Whether to apply the ordering.</param>
+    /// <param name="expression">The key selector to order by when the condition holds.</param>
+    /// <param name="direction">The sort direction to use; defaults to ascending.</param>
+    /// <returns>The ordered or unchanged queryable.</returns>
     public static IQueryable<T> OrderIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, object>> expression, SortDirection direction = SortDirection.Asc)
     {
         if (!condition)

@@ -8,6 +8,9 @@ import { ComponentProps } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LinkProps = Omit<ComponentProps<typeof Link>, 'href'> & { href: any }
 
+/**
+ * Client-side wrapper around Next.js `Link` that automatically prefixes the href with the current locale segment (when not on the default locale) so navigation stays inside the active language.
+ */
 export const LocalizedLink = ({ href, children, ...props }: LinkProps) => {
   const { i18n } = useTranslation()
   const locale = i18n.language

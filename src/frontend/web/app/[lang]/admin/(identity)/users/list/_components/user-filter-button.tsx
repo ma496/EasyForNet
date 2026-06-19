@@ -4,12 +4,18 @@ import { ChevronDown, ChevronUp, Filter } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTranslation } from '@/i18n'
 
+/**
+ * Props for the UserFilterButton, describing its open state, toggle handler, and the number of active filters to display in a badge.
+ */
 interface UserFilterButtonProps {
   isOpen: boolean
   onToggle: () => void
   activeFiltersCount?: number
 }
 
+/**
+ * Interactive client-side toggle button that opens or closes the user filter panel and shows a count of currently active filters.
+ */
 export const UserFilterButton = ({ isOpen, onToggle, activeFiltersCount = 0 }: UserFilterButtonProps) => {
   const { t } = useTranslation()
 

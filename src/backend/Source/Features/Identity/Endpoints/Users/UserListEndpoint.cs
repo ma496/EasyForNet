@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>GET /users</c> to return a paginated, filterable list of users with their role assignments.
+/// </summary>
 sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListRequest, UserListResponse>
 {
     public override void Configure()
@@ -57,12 +60,18 @@ sealed class UserListEndpoint(IUserService userService) : Endpoint<UserListReque
     }
 }
 
+/// <summary>
+/// Request payload for the user list endpoint, supporting search, active/role filtering, and standard pagination/sort options.
+/// </summary>
 sealed class UserListRequest : ListRequestDto<Guid>
 {
     public bool? IsActive { get; set; }
     public Guid? RoleId { get; set; }
 }
 
+/// <summary>
+/// FluentValidation rules for the user list request, inheriting standard list-request validation rules.
+/// </summary>
 sealed class UserListValidator : Validator<UserListRequest>
 {
     public UserListValidator()
@@ -71,10 +80,16 @@ sealed class UserListValidator : Validator<UserListRequest>
     }
 }
 
+/// <summary>
+/// Response payload for the user list endpoint, wrapping a page of <see cref="UserListDto"/> items with the total count.
+/// </summary>
 public sealed class UserListResponse : ListDto<UserListDto>
 {
 }
 
+/// <summary>
+/// Per-row DTO representing a user in list responses, including profile fields and a compact role summary.
+/// </summary>
 public sealed class UserListDto : AuditableDto<Guid>
 {
     public string Username { get; set; } = null!;
@@ -87,11 +102,17 @@ public sealed class UserListDto : AuditableDto<Guid>
     public List<UserRoleDto> Roles { get; set; } = [];
 }
 
+/// <summary>
+/// Lightweight DTO exposing a role's id and name for embedding in user list rows.
+/// </summary>
 public sealed class UserRoleDto : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="User"/> entity into a <see cref="UserListDto"/>, collapsing <see cref="UserRole"/> join rows into <see cref="UserRoleDto"/> entries.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class UserListDtoMapper
 {

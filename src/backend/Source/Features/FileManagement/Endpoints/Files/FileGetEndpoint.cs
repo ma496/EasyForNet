@@ -2,6 +2,10 @@ namespace Backend.Features.FileManagement.Endpoints.Files;
 
 using Backend.Features.FileManagement.Core;
 
+/// <summary>
+/// This endpoint exposes a GET operation to stream a previously uploaded file
+/// back to the caller, identified by its stored filename.
+/// </summary>
 public class FileGetEndpoint(IFileService fileService) : Endpoint<FileGetRequest>
 {
     public override void Configure()
@@ -23,14 +27,21 @@ public class FileGetEndpoint(IFileService fileService) : Endpoint<FileGetRequest
     }
 }
 
+/// <summary>
+/// Request payload for <see cref="FileGetEndpoint"/>, identifying the file to stream
+/// by its stored filename.
+/// </summary>
 public class FileGetRequest
 {
     public string FileName { get; set; } = null!;
 }
 
-public class FileGetValidation : Validator<FileGetRequest>
+/// <summary>
+/// This validator validates the <see cref="FileGetRequest"/>.
+/// </summary>
+public class FileGetValidator : Validator<FileGetRequest>
 {
-    public FileGetValidation()
+    public FileGetValidator()
     {
         RuleFor(x => x.FileName).NotEmpty();
     }

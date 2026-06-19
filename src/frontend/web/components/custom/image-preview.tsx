@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react'
 import { useFileGetQuery } from '@/store/api/file-management/files/files-api'
 import { cn } from '@/lib/utils'
 
+/**
+ * Props for the {@link ImagePreview} component, providing the image filename, alt text, optional fallback element, and object-fit style.
+ */
 interface ImagePreviewProps {
   imageName: string
   alt?: string
@@ -12,6 +15,9 @@ interface ImagePreviewProps {
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
 }
 
+/**
+ * Client-side component that fetches a binary image blob by filename, creates a temporary object URL, and renders an `<img>` (with optional fallback) while cleaning up the URL on unmount or change.
+ */
 export const ImagePreview = ({
   imageName,
   alt = 'Image Preview',

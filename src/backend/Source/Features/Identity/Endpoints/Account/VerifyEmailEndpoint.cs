@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Anonymous POST endpoint that marks a user's email as verified after validating the
+/// verification token delivered to their inbox.
+/// </summary>
 sealed class VerifyEmailEndpoint(ITokenService tokenService, IUserService userService, AppDbContext dbContext)
     : Endpoint<VerifyEmailRequest, EmptyResponse>
 {
@@ -39,11 +43,19 @@ sealed class VerifyEmailEndpoint(ITokenService tokenService, IUserService userSe
     }
 }
 
+/// <summary>
+/// Request payload for the email verification endpoint, carrying the verification token
+/// delivered to the user's email address.
+/// </summary>
 sealed class VerifyEmailRequest
 {
     public string Token { get; set; } = null!;
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="VerifyEmailRequest"/>, requiring a non-empty
+/// verification token.
+/// </summary>
 sealed class VerifyEmailValidator : Validator<VerifyEmailRequest>
 {
     public VerifyEmailValidator()

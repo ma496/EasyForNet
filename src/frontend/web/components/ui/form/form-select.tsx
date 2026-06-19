@@ -8,12 +8,14 @@ import ScrollBar from 'react-perfect-scrollbar'
 import { Input } from './input'
 import { useAppSelector } from '@/store/hooks'
 
+/** Single label/value option used by the form select components. */
 interface Option {
   label: string
   value: string
   disabled?: boolean
 }
 
+/** Props for the Formik-aware FormSelect, a single-select combobox bound to a form field by name with optional search, clear, and icon affordances. */
 interface FormSelectProps {
   label?: string
   name: string
@@ -31,6 +33,9 @@ interface FormSelectProps {
   required?: boolean
 }
 
+/**
+ * FormSelect is a client component that uses Formik's useField/useFormikContext to bind a single-value searchable combobox (popover with options) to a form field, showing validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormSelect = ({
   label,
   name,

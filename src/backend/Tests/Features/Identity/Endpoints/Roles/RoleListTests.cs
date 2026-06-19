@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Roles;
 
 using Backend.Features.Identity.Endpoints.Roles;
 
+/// <summary>
+/// Tests for the <see cref="RoleListEndpoint"/> covering listing and pagination of roles.
+/// </summary>
 public class RoleListTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that listing roles returns a non-empty collection containing the created roles.
+    /// </summary>
     [Fact]
     public async Task List_Roles()
     {
@@ -31,6 +37,9 @@ public class RoleListTests(App app) : AppTestsBase(app)
         listRes.Items.Count.Should().BeGreaterThanOrEqualTo(3);
     }
 
+    /// <summary>
+    /// Verifies that pagination works correctly and returns different results for different pages.
+    /// </summary>
     [Fact]
     public async Task List_Roles_Pagination()
     {

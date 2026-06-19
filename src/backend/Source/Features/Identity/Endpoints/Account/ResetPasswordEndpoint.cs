@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Anonymous POST endpoint that completes the password-reset flow by validating a
+/// previously issued reset token and updating the user's password.
+/// </summary>
 sealed class ResetPasswordEndpoint(ITokenService tokenService,
                                    IUserService userService,
                                    IPasswordHasher passwordHasher,
@@ -44,8 +48,30 @@ sealed class ResetPasswordEndpoint(ITokenService tokenService,
     }
 }
 
+/// <summary>
+/// Request payload for resetting a password, supplying the reset token together with
+/// the new password value.
+/// </summary>
 sealed class ResetPasswordRequest
 {
     public string Token { get; set; } = null!;
     public string Password { get; set; } = null!;
+}
+
+/// <summary>
+/// FluentValidation rules for <see cref="ResetPasswordRequest"/>, ensuring a valid, 
+/// non-empty token and password.
+/// </summary>
+sealed class ResetPasswordRequestValidator : Validator<ResetPasswordRequest>
+{
+    public ResetPasswordRequestValidator()
+    {
+        RuleFor(x => x.Token)
+            .NotEmpty();
+
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .MinimumLength(8)
+            .MaximumLength(50);
+    }
 }

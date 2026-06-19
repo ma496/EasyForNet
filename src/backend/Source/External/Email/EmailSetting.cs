@@ -1,5 +1,9 @@
 namespace Backend.External.Email;
 
+/// <summary>
+/// Strongly-typed options bound from the <c>EmailSettings</c> configuration
+/// section that describe the SMTP server and sender used to deliver email.
+/// </summary>
 public class EmailSetting
 {
     public string SmtpServer { get; set; } = string.Empty;

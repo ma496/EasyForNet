@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Identity.Core;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Tests for <see cref="IAuthTokenService"/> and <see cref="IAuthTokenCleanService"/> covering token validation, saving, and expiration cleanup.
+/// </summary>
 public class AuthTokenServiceTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that <see cref="IAuthTokenService.IsValidRefreshTokenAsync"/> returns true when the refresh token is not expired.
+    /// </summary>
     [Fact]
     public async Task IsValidRefreshTokenAsync_ShouldReturnTrue_WhenTokenIsValid()
     {
@@ -15,6 +21,9 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
         isValid.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that <see cref="IAuthTokenService.IsValidRefreshTokenAsync"/> returns false when the refresh token has expired.
+    /// </summary>
     [Fact]
     public async Task IsValidRefreshTokenAsync_ShouldReturnFalse_WhenTokenIsInvalid()
     {
@@ -26,6 +35,9 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
         isValid.Should().BeFalse();
     }
 
+    /// <summary>
+    /// Verifies that <see cref="IAuthTokenCleanService.DeleteExpiredTokensAsync"/> removes expired tokens from the database.
+    /// </summary>
     [Fact]
     public async Task DeleteExpiredTokensAsync_ShouldDeleteExpiredTokens()
     {
@@ -45,6 +57,9 @@ public class AuthTokenServiceTests(App app) : AppTestsBase(app)
         deletedToken.Should().BeNull();
     }
 
+    /// <summary>
+    /// Creates a <see cref="TokenResponse"/> with specified expiry dates using reflection to set private properties.
+    /// </summary>
     private static TokenResponse NewToken(Guid userId, string accessToken, DateTime accessExpiry, string refreshToken, DateTime refreshExpiry)
     {
         var expiredToken = new TokenResponse

@@ -1,6 +1,9 @@
 import { forwardRef, useImperativeHandle, useState, useRef, useEffect, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
+/**
+ * Props for the {@link Dropdown} component, controlling placement, trigger content, and disabled state.
+ */
 interface DropdownProps {
   placement?: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end'
   button: ReactNode
@@ -9,10 +12,17 @@ interface DropdownProps {
   isDisabled?: boolean
 }
 
+/**
+ * Imperative ref handle for the {@link Dropdown} component, exposing a `close` method to programmatically dismiss the menu.
+ */
 export interface DropdownRef {
   close: () => void
 }
 
+/**
+ * Interactive dropdown menu that toggles its content visibility on button click and closes when clicking outside.
+ * Forwards a ref exposing a `close` method to dismiss the dropdown from parent components.
+ */
 const Dropdown = forwardRef<DropdownRef, DropdownProps>((props, ref) => {
   const [visibility, setVisibility] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)

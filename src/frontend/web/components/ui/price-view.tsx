@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 
+/** Props for the PriceView component, which formats a numeric or numeric-string amount as a localized currency string and handles empty/invalid inputs gracefully. */
 export interface PriceViewProps {
   amount?: number | string
   currency?: string
@@ -9,6 +10,9 @@ export interface PriceViewProps {
   decimals?: number
 }
 
+/**
+ * PriceView renders a localized currency-formatted amount using Intl.NumberFormat, displaying a muted placeholder when the value is missing and an "Invalid Price" label for non-numeric input.
+ */
 export const PriceView = ({
   amount,
   currency = 'USD',

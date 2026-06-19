@@ -4,8 +4,14 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
 using Backend.Tests.Seeder;
 
+/// <summary>
+/// Tests for the <see cref="UserCreateEndpoint"/> covering validation and successful user creation.
+/// </summary>
 public class UserCreateTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that invalid input returns a 400 Bad Request with validation errors for all required fields.
+    /// </summary>
     [Fact]
     public async Task Invalid_Input()
     {
@@ -27,6 +33,9 @@ public class UserCreateTests(App app) : AppTestsBase(app)
         res.Errors.Select(e => e.Name).Should().Equal("username", "email", "password", "firstName", "lastName", "roles");
     }
 
+    /// <summary>
+    /// Verifies that a valid user creation request returns 200 OK with the correct user details and assigned roles.
+    /// </summary>
     [Fact]
     public async Task Valid_Input()
     {

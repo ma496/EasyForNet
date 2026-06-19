@@ -5,10 +5,16 @@ import NotificationItem from './notification-item'
 import { LocalizedLink } from '@/components/localized-link'
 import Scrollbar from 'react-perfect-scrollbar'
 
+/**
+ * Props for the {@link NotificationPanel} component, providing a callback to close the panel when navigating away or dismissing.
+ */
 interface NotificationPanelProps {
   onClose: () => void
 }
 
+/**
+ * Dropdown panel that fetches the most recent notifications (first page, 5 items) and renders them in a scrollable list, with a header, empty/loading states, and a footer link to the full notifications page.
+ */
 const NotificationPanel = ({ onClose }: NotificationPanelProps) => {
   const { t } = useTranslation()
   const { data: notifications, isLoading: isNotificationsLoading } = useNotificationListQuery({ page: 1, pageSize: 5 })

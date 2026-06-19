@@ -3,6 +3,9 @@ namespace Backend.Features.Notifications.Endpoints.Notifications;
 using Backend.Features.Identity.Core;
 using Backend.Features.Notifications.Core;
 
+/// <summary>
+/// GET endpoint that returns the number of unread notifications for the current user.
+/// </summary>
 sealed class NotificationGetUnreadCountEndpoint(ICurrentUserService currentUserService, INotificationService notificationService) : EndpointWithoutRequest<NotificationGetUnreadCountResponse>
 {
     public override void Configure()
@@ -26,6 +29,9 @@ sealed class NotificationGetUnreadCountEndpoint(ICurrentUserService currentUserS
     }
 }
 
+/// <summary>
+/// Response payload containing the unread notification count for the current user.
+/// </summary>
 public sealed class NotificationGetUnreadCountResponse
 {
     public int Count { get; set; }

@@ -2,6 +2,10 @@ namespace Backend.Features.FileManagement.Endpoints.Files;
 
 using Backend.Features.FileManagement.Core;
 
+/// <summary>
+/// This endpoint exposes a DELETE operation to remove a previously uploaded file
+/// by its unique filename.
+/// </summary>
 public class FileDeleteEndpoint(IFileService fileService) : Endpoint<FileDeleteRequest>
 {
     public override void Configure()
@@ -17,11 +21,18 @@ public class FileDeleteEndpoint(IFileService fileService) : Endpoint<FileDeleteR
     }
 }
 
+/// <summary>
+/// Request payload for <see cref="FileDeleteEndpoint"/>, identifying the file to
+/// remove by its stored filename.
+/// </summary>
 public class FileDeleteRequest
 {
     public string FileName { get; set; } = null!;
 }
 
+/// <summary>
+/// This validator validates the <see cref="FileDeleteRequest"/>.
+/// </summary>
 public class FileDeleteRequestValidator : Validator<FileDeleteRequest>
 {
     public FileDeleteRequestValidator()

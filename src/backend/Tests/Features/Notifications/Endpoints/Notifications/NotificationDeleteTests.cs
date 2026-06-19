@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationDeleteEndpoint"/> covering deletion of user notifications, global notifications, and authorization.
+/// </summary>
 public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a user notification can be successfully deleted by its owner.
+    /// </summary>
     [Fact]
     public async Task Delete_UserNotification()
     {
@@ -24,6 +30,9 @@ public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
         deleted.Should().BeNull();
     }
 
+    /// <summary>
+    /// Verifies that deleting another user's notification returns 404 NotFound (users cannot delete others' notifications).
+    /// </summary>
     [Fact]
     public async Task Delete_OtherUserNotification_Should_NotFound()
     {
@@ -37,6 +46,9 @@ public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that deleting a non-existent notification returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Delete_NonExistent_Notification()
     {
@@ -48,6 +60,9 @@ public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that deleting a global notification returns 404 NotFound (global notifications cannot be deleted by users).
+    /// </summary>
     [Fact]
     public async Task Delete_GlobalNotification_Should_NotAllowed()
     {
@@ -61,6 +76,9 @@ public class NotificationDeleteTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated delete requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task Delete_Unauthenticated()
     {

@@ -5,8 +5,16 @@ using Mono.Cecil;
 using NetArchTest.Rules;
 using TestResult = NetArchTest.Rules.TestResult;
 
+/// <summary>
+/// Tests to verify that types decorated with <see cref="NoDirectUseAttribute"/> are not directly referenced by other types,
+/// ensuring they are only accessed through their interfaces.
+/// </summary>
 public class NoDirectUseTests()
 {
+    /// <summary>
+    /// Verifies that no type in the production assembly (except those with <see cref="BypassNoDirectUseAttribute"/>)
+    /// has a direct dependency on any type marked with <see cref="NoDirectUseAttribute"/>.
+    /// </summary>
     [Fact]
     public void ClassesWithNoDirectUseAttribute_ShouldNotBeUsedDirectly()
     {
@@ -45,6 +53,10 @@ public class NoDirectUseTests()
         Assert.True(testResult.IsSuccessful, GetFailingTypesMessage(testResult, typesWithNoDirectUseAttribute));
     }
     
+    /// <summary>
+    /// Verifies that types in the test assembly correctly reference types with <see cref="NoDirectUseAttribute"/> directly,
+    /// confirming that the detection logic in <see cref="NoDirectUseAttribute"/> enforcement works as expected.
+    /// </summary>
     [Fact]
     public void ClassesWithNoDirectUseAttribute_ShouldBeUsedDirectly()
     {
@@ -83,6 +95,9 @@ public class NoDirectUseTests()
         Assert.False(testResult.IsSuccessful);
     }
 
+    /// <summary>
+    /// Formats a detailed failure message listing types that violate the NoDirectUse rule along with their forbidden dependencies.
+    /// </summary>
     private static string GetFailingTypesMessage(TestResult result, IReadOnlyList<Type> typesWithNoDirectUseAttribute)
     {
         if (result.IsSuccessful || result.FailingTypes == null)

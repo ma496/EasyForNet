@@ -41,6 +41,12 @@ const isError = (payload: ApiErrorPayload, errorStatus: number, ignoreStatuses?:
   return false
 }
 
+/**
+ * Centralized handler that maps an RTK Query error payload to a localized
+ * user-facing alert or toast. Recognizes network errors and common HTTP
+ * statuses (400/401/403/404/413/415/500), with an optional ignoreStatuses
+ * list to suppress expected non-success codes.
+ */
 export const rtkErrorHandler = (payload: ApiErrorPayload, ignoreStatuses?: number[]) => {
   const { t } = getTranslation()
   if (payload?.status === 'FETCH_ERROR') {

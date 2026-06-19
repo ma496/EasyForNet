@@ -2,8 +2,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Roles;
 
 using Backend.Features.Identity.Endpoints.Roles;
 
+/// <summary>
+/// Tests for the <see cref="RoleGetEndpoint"/> covering retrieval of existing and non-existent roles.
+/// </summary>
 public class RoleGetTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a created role can be retrieved by ID with the correct name and description.
+    /// </summary>
     [Fact]
     public async Task Get_Role()
     {
@@ -28,6 +34,9 @@ public class RoleGetTests(App app) : AppTestsBase(app)
         getRes.Description.Should().Be(request.Description);
     }
 
+    /// <summary>
+    /// Verifies that requesting a non-existent role returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Get_NonExistent_Role()
     {

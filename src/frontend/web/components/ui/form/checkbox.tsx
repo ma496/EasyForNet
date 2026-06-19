@@ -27,6 +27,7 @@ const checkboxVariants = cva('form-checkbox cursor-pointer rounded-sm', {
   },
 })
 
+/** Props for the standalone Checkbox component, a native checkbox with an optional label, color/size variants, and external error display. */
 interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>, VariantProps<typeof checkboxVariants> {
   label?: string
   name: string
@@ -36,6 +37,9 @@ interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
   required?: boolean
 }
 
+/**
+ * Checkbox is a client component that renders a styled native checkbox with an optional label and an externally provided error message (used outside Formik contexts).
+ */
 export const Checkbox = ({ label, name, className, variant, size, error, showError = true, id, required = false, ...props }: CheckboxProps) => {
   const defaultId = useId()
   const checkboxId = id ?? defaultId

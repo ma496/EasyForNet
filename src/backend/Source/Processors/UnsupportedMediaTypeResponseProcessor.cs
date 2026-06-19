@@ -1,7 +1,16 @@
 namespace Backend.Processors;
 
+/// <summary>
+/// Global FastEndpoints post-processor that, when a request is rejected with a 415
+/// Unsupported Media Type status code, replaces the response body with a JSON
+/// payload in the project's standard error format.
+/// </summary>
 public class UnsupportedMediaTypeResponseProcessor : IGlobalPostProcessor
 {
+    /// <summary>
+    /// Detects a 415 response status and rewrites the body to the standard
+    /// JSON error envelope.
+    /// </summary>
     public async Task PostProcessAsync(IPostProcessorContext context, CancellationToken ct)
     {
         if (context.HttpContext.Response.StatusCode == StatusCodes.Status415UnsupportedMediaType)

@@ -6,6 +6,10 @@ using Backend.Features.Identity.Core.Entities;
 using Backend.Settings;
 using Microsoft.Extensions.Options;
 
+/// <summary>
+/// Anonymous POST endpoint that registers a new user, assigns the default <c>Public</c> role,
+/// and optionally triggers an email verification workflow.
+/// </summary>
 sealed class SignupEndpoint(IUserService userService,
                             ITokenService tokenService,
                             IEmailBackgroundJobs emailBackgroundJobs,
@@ -85,6 +89,10 @@ sealed class SignupEndpoint(IUserService userService,
     }
 }
 
+/// <summary>
+/// Request payload for creating a new account, including the desired username, email,
+/// password, and a password confirmation field.
+/// </summary>
 sealed class SignupRequest
 {
     public string Username { get; set; } = null!;
@@ -93,6 +101,10 @@ sealed class SignupRequest
     public string ConfirmPassword { get; set; } = null!;
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="SignupRequest"/>, enforcing username/email
+/// format, password complexity, and password/confirm-password matching.
+/// </summary>
 sealed class SignupValidator : Validator<SignupRequest>
 {
     public SignupValidator()
@@ -117,6 +129,10 @@ sealed class SignupValidator : Validator<SignupRequest>
     }
 }
 
+/// <summary>
+/// Response returned after a successful signup, indicating whether the user must
+/// verify their email before they can sign in.
+/// </summary>
 sealed class SignupResponse
 {
     public bool IsEmailVerificationRequired { get; set; }

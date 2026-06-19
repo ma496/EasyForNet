@@ -4,21 +4,34 @@ using Backend.Features.Identity.Core.Entities;
 namespace Backend.Tests;
 
 [Collection("SharedContext")]
+/// <summary>
+/// Base class for all integration tests providing common setup, authentication, and helper methods.
+/// </summary>
 public abstract class AppTestsBase(App app) : TestBase<App>
 {
     protected readonly App App = app;
     protected readonly AppDbContext DbContext = app.Services.GetRequiredService<AppDbContext>();
 
+    /// <summary>
+    /// Authenticates the HTTP client by setting a Bearer token obtained from the token endpoint.
+    /// </summary>
     protected async Task SetAuthTokenAsync(string username = "admin", string password = "Admin#123")
     {
         await TestsHelper.SetNewAuthTokenAsync(App.Client, username, password);
     }
 
+    /// <summary>
+    /// Clears the current authentication token from the HTTP client.
+    /// </summary>
     protected void ClearAuthToken()
     {
         App.Client.DefaultRequestHeaders.Authorization = null;
     }
 
+    /// <summary>
+    /// Creates a new admin user with the specified credentials, assigning the Admin role.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when the admin role does not exist or the user already exists.</exception>
     protected async Task<User> CreateAdminUserAsync(string username, string password)
     {
         var userService = App.Services.GetRequiredService<IUserService>();

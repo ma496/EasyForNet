@@ -4,6 +4,9 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Notifications.Core;
 using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// GET endpoint that returns a single notification by id, resolving its per-user read state.
+/// </summary>
 sealed class NotificationGetEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService) : Endpoint<NotificationGetRequest, NotificationGetResponse>
 {
     public override void Configure()
@@ -44,6 +47,9 @@ sealed class NotificationGetEndpoint(AppDbContext dbContext, ICurrentUserService
     }
 }
 
+/// <summary>
+/// Request payload containing the identifier of the notification to fetch.
+/// </summary>
 sealed class NotificationGetRequest : BaseDto<Guid>
 {
 }
@@ -60,6 +66,9 @@ public sealed class NotificationGetResponse : AuditableDto<Guid>
     public Guid? UserId { get; set; }
 }
 
+/// <summary>
+/// Mapper that projects a <see cref="Notification"/> query into <see cref="NotificationGetResponse"/> DTOs.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public static partial class NotificationGetResponseMapper
 {

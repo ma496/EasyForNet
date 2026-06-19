@@ -1,6 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
+/**
+ * Floating "back to top" button that becomes visible once the page has scrolled past 50px and smoothly scrolls the document back to the top on click.
+ */
 const ScrollToTop = () => {
   const [showTopButton, setShowTopButton] = useState(false)
 

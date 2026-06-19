@@ -6,6 +6,12 @@ using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Notifications.Core.Entities;
 
+/// <summary>
+/// Central EF Core <see cref="DbContext"/> for the backend. Exposes the
+/// application's entity sets and applies cross-cutting concerns such as
+/// soft-delete query filters, audit field population, and property
+/// normalization on every save.
+/// </summary>
 public class AppDbContext(DbContextOptions<AppDbContext> options,
                           ICurrentUserService currentUserService)
     : DbContext(options)
@@ -23,6 +29,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<NotificationVisit> NotificationVisits => Set<NotificationVisit>();
 
+    /// <summary>
+    /// Configures the EF Core model by applying configuration classes from the
+    /// current assembly and registering the global soft-delete query filter.
+    /// </summary>
+    /// <param name="modelBuilder">The builder being used to construct the model.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -48,6 +59,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
         }
     }
 
+    /// <summary>
+    /// Synchronous entry point for persisting changes. Applies soft-delete
+    /// rules, normalizes properties, and stamps the audit fields with the
+    /// current user and timestamp before delegating to the base implementation.
+    /// </summary>
+    /// <returns>The number of state entries written to the database.</returns>
     public override int SaveChanges()
     {
         ApplySoftDeleteRules();
@@ -85,6 +102,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
         return base.SaveChanges();
     }
 
+    /// <summary>
+    /// Asynchronous entry point for persisting changes. Applies soft-delete
+    /// rules, normalizes properties, and stamps the audit fields with the
+    /// current user and timestamp before delegating to the base implementation.
+    /// </summary>
+    /// <param name="cancellationToken">Token used to cancel the save operation.</param>
+    /// <returns>The number of state entries written to the database.</returns>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         ApplySoftDeleteRules();

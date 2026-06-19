@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Users;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Users;
 
+/// <summary>
+/// Tests for the <see cref="UserUpdateEndpoint"/> covering updating users, non-existent users, and protected default users.
+/// </summary>
 public class UserUpdateTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a created user can be successfully updated with new first name, last name, active status, and roles.
+    /// </summary>
     [Fact]
     public async Task Update_User()
     {
@@ -40,6 +46,9 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
         updateRes.Roles.Should().Equal(updateRequest.Roles);
     }
 
+    /// <summary>
+    /// Verifies that updating a non-existent user returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Update_NonExistent_User()
     {
@@ -58,6 +67,9 @@ public class UserUpdateTests(App app) : AppTestsBase(app)
         updateRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that updating the default admin user returns 400 Bad Request with <see cref="ErrorCodes.DefaultUserCannotBeUpdated"/>.
+    /// </summary>
     [Fact]
     public async Task Update_Admin_User_Should_Fail()
     {

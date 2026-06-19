@@ -1,7 +1,13 @@
 import * as XLSX from 'xlsx'
 
+/** Supported export formats for tabular data downloads. */
 export type ExportFormat = 'excel' | 'csv'
 
+/**
+ * Exports an array of row objects to an Excel (.xlsx) or CSV file using
+ * the xlsx library. Excel files are written directly via XLSX.writeFile;
+ * CSV files are downloaded through a temporary blob/object-URL link click.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function exportData(format: ExportFormat, rows: Record<string, any>[], sheetName: string, fileBaseName: string) {
   const wb = XLSX.utils.book_new()

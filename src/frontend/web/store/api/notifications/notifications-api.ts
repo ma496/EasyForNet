@@ -18,6 +18,12 @@ import {
   NotificationGetGroupsResponse,
 } from './notifications-dtos'
 
+/**
+ * RTK Query API for notifications: CRUD endpoints, listing with filters
+ * (read state, group), mark-as-read / mark-as-unread for individual
+ * notifications, mark-all-as-read, unread count, and grouped listing.
+ * Uses the 'Notifications' tag type for cache invalidation.
+ */
 export const notificationsApi = appApi
   .enhanceEndpoints({
     addTagTypes: ['Notifications'],

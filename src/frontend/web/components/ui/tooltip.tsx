@@ -5,8 +5,10 @@ import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 
+/** Allowed placements for the Tooltip relative to its trigger element. */
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
 
+/** Props for the Tooltip component, which wraps any element and shows a portal-rendered floating label on hover. */
 interface TooltipProps {
   content: React.ReactNode
   children: React.ReactNode
@@ -16,12 +18,17 @@ interface TooltipProps {
   animate?: boolean
 }
 
+/** Computed absolute coordinates (accounting for scroll) and chosen placement for a Tooltip. */
 interface TooltipCoords {
   top: number
   left: number
   position: TooltipPosition
 }
 
+/**
+ * Tooltip is a client component that displays a floating label with a directional arrow on hover, positioning itself with createPortal and recalculating on scroll and resize.
+ * It supports a configurable delay, an optional transition animation, and a placement prop (top/bottom/left/right).
+ */
 export const Tooltip = ({ content, children, position = 'top', className, delay = 200, animate = false }: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false)
   const [coords, setCoords] = useState<TooltipCoords | null>(null)

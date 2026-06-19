@@ -2,11 +2,13 @@ import { Users, Shield, Home, User, Lock, Palette, Zap, Calendar, TreePine, Form
 import type { ElementType } from 'react'
 
 
+/** A grouped section of nav items rendered together under a shared heading in the sidebar/navigation. */
 export interface NavItemGroup {
   title: string
   items: NavItem[]
 }
 
+/** Describes a single navigation entry, including its i18n title, target url, optional icon, badge, group, visibility, active state, and nested children. */
 export interface NavItem {
   title: string
   url: string
@@ -18,6 +20,7 @@ export interface NavItem {
   children?: NavItem[]
 }
 
+/** Static navigation menu used by the admin shell, mixing standalone nav items and grouped sections with i18n-keyed titles. */
 export const navItems: (NavItem | NavItemGroup)[] = [
   {
     title: 'navigation.dashboard',

@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Authenticated POST endpoint that changes the current user's password after verifying the
+/// existing one.
+/// </summary>
 sealed class ChangePasswordEndpoint(AppDbContext dbContext,
                                     ICurrentUserService currentUserService,
                                     IUserService userService)
@@ -33,12 +37,19 @@ sealed class ChangePasswordEndpoint(AppDbContext dbContext,
     }
 }
 
+/// <summary>
+/// Request payload for changing a password, containing the current and new password values.
+/// </summary>
 sealed class ChangePasswordRequest
 {
     public string CurrentPassword { get; set; } = null!;
     public string NewPassword { get; set; } = null!;
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="ChangePasswordRequest"/>, enforcing presence of
+/// the current password and a minimum/maximum length for the new password.
+/// </summary>
 sealed class ChangePasswordValidator : Validator<ChangePasswordRequest>
 {
     public ChangePasswordValidator()

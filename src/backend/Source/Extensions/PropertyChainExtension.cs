@@ -3,8 +3,20 @@ namespace Backend.Extensions;
 using System.Linq.Expressions;
 using System.Reflection;
 
+/// <summary>
+/// Extension methods that turn a LINQ <see cref="Expression"/> into a
+/// dotted/indexed property path string (for example
+/// <c>Address.Lines[0].Value</c>) for use in validation error messages.
+/// </summary>
 public static class PropertyChainExtension
 {
+    /// <summary>
+    /// Builds a dotted/indexed path string representing the property
+    /// chain described by <paramref name="expression"/>.
+    /// </summary>
+    /// <param name="expression">The expression whose path should be extracted.</param>
+    /// <returns>A property path such as <c>Address.Lines[0].Value</c>.</returns>
+    /// <exception cref="NotSupportedException">Thrown when the expression shape is not supported.</exception>
     public static string GetPropertyChain(this Expression expression)
     {
         return expression switch

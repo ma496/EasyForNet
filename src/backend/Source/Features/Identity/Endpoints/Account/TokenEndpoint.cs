@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Anonymous POST endpoint that authenticates a user by username/email and password and
+/// issues a JWT access/refresh token pair along with a refresh-token cookie.
+/// </summary>
 sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> signinSetting, IOptions<AuthSetting> authSetting) : Endpoint<TokenRequest, TokenResponse>
 {
     public override void Configure()
@@ -61,6 +65,10 @@ sealed class TokenEndpoint(IUserService userService, IOptions<SigninSetting> sig
     }
 }
 
+/// <summary>
+/// Request payload for the sign-in/token endpoint, allowing sign-in by either username
+/// or email (selected via <see cref="IsEmail"/>) together with the user's password.
+/// </summary>
 sealed class TokenRequest
 {
     public bool IsEmail { get; set; }
@@ -69,6 +77,11 @@ sealed class TokenRequest
     public string Password { get; set; } = null!;
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="TokenRequest"/> that conditionally validate the
+/// username or email field based on the <see cref="TokenRequest.IsEmail"/> flag, in
+/// addition to enforcing password length constraints.
+/// </summary>
 sealed class TokenRequestValidator : Validator<TokenRequest>
 {
     public TokenRequestValidator()

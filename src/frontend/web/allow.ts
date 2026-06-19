@@ -1,3 +1,6 @@
+/**
+ * Central registry of permission keys used throughout the app to gate access to user and role management features.
+ */
 export const Allow = {
   User_View: 'User.View',
   User_Create: 'User.Create',

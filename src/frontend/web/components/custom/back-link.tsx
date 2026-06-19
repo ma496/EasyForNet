@@ -3,10 +3,16 @@
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { ArrowLeft } from 'lucide-react'
 
+/**
+ * Props for the {@link BackLink} component, providing an optional display label for the link text.
+ */
 interface BackLinkProps {
   label?: string
 }
 
+/**
+ * Renders a client-side link with a left arrow icon that navigates the user one step back in browser history using the localized router.
+ */
 export const BackLink = ({ label }: BackLinkProps) => {
   const router = useLocalizedRouter()
 

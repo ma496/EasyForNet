@@ -8,8 +8,16 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Formatting;
 
+/// <summary>
+/// Generates a complete EasyForNet project by cloning the template repository,
+/// copying files, and customizing namespaces, settings, and project names.
+/// </summary>
 public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 {
+    /// <summary>
+    /// Generates a new project from the template repository with the specified name and options.
+    /// </summary>
+    /// <param name="argument">The create-project argument containing name, output path, and multi-language flag.</param>
     public override async Task Generate(CreateProjectArgument argument)
     {
         var version = Helpers.GetVersion();
@@ -212,6 +220,11 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Executes an external command and waits for completion, throwing on failure or timeout.
+    /// </summary>
+    /// <param name="command">The command name (e.g., "git", "dotnet").</param>
+    /// <param name="arguments">The command arguments.</param>
     private static async Task ExecuteCommand(string command, string arguments)
     {
         try
@@ -258,6 +271,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Checks whether Git is installed and accessible in the system PATH.
+    /// </summary>
     private static bool IsGitInstalled()
     {
         try
@@ -279,6 +295,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Recursively copies a directory from source to target, optionally ignoring certain subdirectory names.
+    /// </summary>
     private static void CopyDirectory(string sourceDir, string targetDir, bool recursive, string[]? ignoreDirectories = null)
     {
         var dir = new DirectoryInfo(sourceDir);
@@ -304,6 +323,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Renames a file within the specified directory.
+    /// </summary>
     private static void RenameFile(string directory, string oldName, string newName)
     {
         var filePath = Path.Combine(directory, oldName);
@@ -312,6 +334,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
             File.Move(filePath, newFilePath);
     }
 
+    /// <summary>
+    /// Replaces text matching a regular expression in a file with the specified replacement.
+    /// </summary>
     private static async Task ReplaceInFile(string filePath, string regularExpression, string replacement)
     {
         var text = await File.ReadAllTextAsync(filePath);
@@ -322,6 +347,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Replaces text matching a regular expression in all files with the given extensions within a directory.
+    /// </summary>
     private static async Task ReplaceInFiles(string directory, string regularExpression, string replacement, params string[] extensions)
     {
         foreach (var file in Directory
@@ -333,6 +361,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
 
     }
 
+    /// <summary>
+    /// Adjusts all C# namespaces in a directory from an old root namespace to a new one using Roslyn syntax rewriting.
+    /// </summary>
     public static async Task AdjustNamespaceAsync(string directory, string oldRoot, string newRoot)
     {
         foreach (var file in Directory.EnumerateFiles(directory, "*.cs", SearchOption.AllDirectories))
@@ -353,6 +384,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Copies specific files by name from a source directory to a target directory.
+    /// </summary>
     private static void CopyFiles(string sourceDirectory, string targetDirectory, params string[] fileNames)
     {
         foreach (var fileName in fileNames)
@@ -371,6 +405,9 @@ public class CreateProjectGenerator : CodeGeneratorBase<CreateProjectArgument>
         }
     }
 
+    /// <summary>
+    /// Copies a single file from a source directory to a target directory with a different name.
+    /// </summary>
     private static void CopyFrom(string sourceDirectory, string targetDirectory, string from, string to)
     {
         var sourceFilePath = Path.Combine(sourceDirectory, from);

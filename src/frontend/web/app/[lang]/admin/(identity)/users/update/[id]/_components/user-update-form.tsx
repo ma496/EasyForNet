@@ -12,6 +12,9 @@ import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
 import { successToast } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the user update form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     username: Yup.string(),
@@ -31,10 +34,16 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 
 type FormValues = Yup.InferType<ReturnType<typeof createValidationSchema>>
 
+/**
+ * Props for the UserUpdateForm, supplying the id of the user being edited.
+ */
 interface UserUpdateFormProps {
   userId: string
 }
 
+/**
+ * Interactive client-side form for editing an existing user's profile fields, role assignments, and active state, populated from the API and submitted via the user-update mutation.
+ */
 export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   const { t } = useTranslation()
   const router = useLocalizedRouter()

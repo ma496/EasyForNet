@@ -44,10 +44,16 @@ const badgeVariants = cva('badge', {
   },
 })
 
+/**
+ * Props for the Badge component, a small label-like element rendered as a span with variant and style (solid/outline) options.
+ */
 export interface IBadgeProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {
   children: React.ReactNode
 }
 
+/**
+ * Badge is a small label rendered as a span that supports color variants (primary, secondary, success, danger, warning, info, dark) and either solid or outline styles.
+ */
 export const Badge: React.FC<IBadgeProps> = ({
   children,
   variant,

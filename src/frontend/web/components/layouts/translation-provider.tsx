@@ -8,6 +8,9 @@ export const TranslationContext = createContext<Record<string, any>>({})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export let globalDictionary: Record<string, any> = {}
 
+/**
+ * Context provider that publishes the current locale's translation dictionary to descendants and updates a module-level {@link globalDictionary} reference inside an effect so non-React code can read translations.
+ */
 export const TranslationProvider = ({
   dictionary,
   children,

@@ -1,6 +1,10 @@
 import LanguageDropdown from '@/components/custom/language-dropdown'
 import { getServerTranslation } from '@/i18n'
 
+/**
+ * Server-rendered site footer used on the public landing page.
+ * Displays the brand name, current-year copyright line, and the language switcher.
+ */
 const Footer = async ({ lang }: { lang: string }) => {
   const [brandName, allRightsReserved] = await Promise.all([
     getServerTranslation(lang, 'brand.name'),

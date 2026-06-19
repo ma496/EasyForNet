@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>PUT /roles/change-permissions/{id}</c> to replace a role's permission set in a single operation.
+/// </summary>
 sealed class ChangePermissionsEndpoint(IRoleService roleService)
     : Endpoint<ChangePermissionsRequest, ChangePermissionsResponse>
 {
@@ -51,11 +54,17 @@ sealed class ChangePermissionsEndpoint(IRoleService roleService)
     }
 }
 
+/// <summary>
+/// Request payload identifying a role and the complete set of permission ids it should have after the change.
+/// </summary>
 sealed class ChangePermissionsRequest : BaseDto<Guid>
 {
     public List<Guid> Permissions { get; set; } = [];
 }
 
+/// <summary>
+/// Response payload echoing the role's id and the resulting permission ids after the change is applied.
+/// </summary>
 sealed class ChangePermissionsResponse : BaseDto<Guid>
 {
     public List<Guid> Permissions { get; set; } = [];

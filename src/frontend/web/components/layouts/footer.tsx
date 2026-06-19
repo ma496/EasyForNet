@@ -1,5 +1,8 @@
 import { useTranslation } from '@/i18n'
 
+/**
+ * Footer is the small page footer that renders the current year, the brand name, and an "all rights reserved" line using the active locale's translations.
+ */
 const Footer = () => {
   const { t } = useTranslation()
   return (

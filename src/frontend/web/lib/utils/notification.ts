@@ -2,6 +2,7 @@ import { getTranslation } from '@/i18n'
 import { SweetAlertOptions, SweetAlertResult } from 'sweetalert2'
 
 const Swal = (await import('sweetalert2')).default
+/** SweetAlert2 mixin configured as a generic, top-end toast with a 3s timer. */
 export const toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -10,6 +11,7 @@ export const toast = Swal.mixin({
   showConfirmButton: false,
   showCloseButton: true,
 })
+/** SweetAlert2 mixin for success toasts (top-end, success icon, 5s timer). */
 export const successToast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -19,6 +21,7 @@ export const successToast = Swal.mixin({
   showConfirmButton: false,
   showCloseButton: true,
 })
+/** SweetAlert2 mixin for error toasts (top-end, error icon, 7s timer). */
 export const errorToast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -29,6 +32,11 @@ export const errorToast = Swal.mixin({
   showCloseButton: true,
 })
 
+/**
+ * Wraps SweetAlert2.fire, applying localized default button labels
+ * (common.ok, common.cancel) and theme colors when the caller does not
+ * supply them. Returns the SweetAlert2 result promise.
+ */
 export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   const result = await Swal.fire({
@@ -41,6 +49,7 @@ export async function sweetAlert(params: SweetAlertOptions): Promise<SweetAlertR
   return result
 }
 
+/** Pre-configured sweetAlert call with success title/icon defaults. */
 export async function successAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('common.success')
@@ -48,6 +57,7 @@ export async function successAlert(params: SweetAlertOptions): Promise<SweetAler
   return sweetAlert(params)
 }
 
+/** Pre-configured sweetAlert call with error title/icon defaults. */
 export async function errorAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('common.error')
@@ -55,6 +65,7 @@ export async function errorAlert(params: SweetAlertOptions): Promise<SweetAlertR
   return sweetAlert(params)
 }
 
+/** Pre-configured sweetAlert call with warning title/icon defaults. */
 export async function warningAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('common.warning')
@@ -62,6 +73,7 @@ export async function warningAlert(params: SweetAlertOptions): Promise<SweetAler
   return sweetAlert(params)
 }
 
+/** Pre-configured sweetAlert call with info title/icon defaults. */
 export async function infoAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.title) params.title = t('common.info')
@@ -69,6 +81,7 @@ export async function infoAlert(params: SweetAlertOptions): Promise<SweetAlertRe
   return sweetAlert(params)
 }
 
+/** Pre-configured sweetAlert call for confirmation dialogs (question icon, default confirm/cancel labels and cancel button). */
 export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.icon) params.icon = 'question'
@@ -78,6 +91,7 @@ export async function confirmAlert(params: SweetAlertOptions): Promise<SweetAler
   return sweetAlert(params)
 }
 
+/** Pre-configured sweetAlert call for destructive confirmations (warning icon, red confirm button, localized delete/cancel labels). */
 export async function confirmDeleteAlert(params: SweetAlertOptions): Promise<SweetAlertResult<unknown>> {
   const { t } = getTranslation()
   if (!params.confirmButtonColor) params.confirmButtonColor = '#d33'

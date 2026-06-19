@@ -3,6 +3,9 @@ namespace Backend.Features.Identity;
 using Backend.Attributes;
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Feature module that registers the identity services with the DI container.
+/// </summary>
 [BypassNoDirectUse]
 public class IdentityFeature : IFeature
 {

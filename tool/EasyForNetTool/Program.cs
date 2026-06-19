@@ -4,8 +4,14 @@ using System.Reflection;
 using EasyForNetTool.Generator;
 using EasyForNetTool.Parsing;
 
+/// <summary>
+/// Main entry point for the EasyForNet CLI tool.
+/// </summary>
 internal class Program
 {
+    /// <summary>
+    /// Processes command-line arguments, parses them and invokes the appropriate code generator.
+    /// </summary>
     static async Task Main(string[] args)
     {
         try
@@ -60,6 +66,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Displays usage information for the specified command or all available commands.
+    /// </summary>
     static void ShowHelp(string? command = null)
     {
         Console.WriteLine("  use like this");

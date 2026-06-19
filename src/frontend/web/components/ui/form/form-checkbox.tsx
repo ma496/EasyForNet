@@ -30,6 +30,7 @@ const formCheckboxVariants = cva('form-checkbox cursor-pointer rounded-sm', {
 
 type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>
 
+/** Props for the Formik-aware FormCheckbox, which connects to a form field by name and shows validation errors after the field is dirty or the form has been submitted. */
 interface FormCheckboxProps extends InputAttributes, VariantProps<typeof formCheckboxVariants> {
   label?: string
   name: string
@@ -38,6 +39,9 @@ interface FormCheckboxProps extends InputAttributes, VariantProps<typeof formChe
   required?: boolean
 }
 
+/**
+ * FormCheckbox is a client component that uses Formik's useField and useFormikContext to bind a styled checkbox to a form field and display validation errors after the field is dirty or the form has been submitted.
+ */
 export const FormCheckbox = ({ label, name, id, showValidation = true, className, variant, size, required = false, ...props }: FormCheckboxProps) => {
   const [field, meta] = useField({ name, type: 'checkbox' })
   const { submitCount } = useFormikContext()

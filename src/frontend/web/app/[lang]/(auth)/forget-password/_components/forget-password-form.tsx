@@ -9,6 +9,9 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { Mail } from 'lucide-react'
 import { successAlert } from '@/lib/utils'
 
+/**
+ * Builds a Yup validation schema for the forget-password form using the supplied translation function for error messages.
+ */
 const createValidationSchema = (t: (key: string, params?: Record<string, string | number>) => string) => {
   return Yup.object().shape({
     email: Yup.string()
@@ -17,6 +20,10 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
   })
 }
 
+/**
+ * Interactive client-side form that requests a password-reset email for the supplied address.
+ * On a successful response, displays a success alert and navigates back to the sign-in page.
+ */
 export const ForgetPasswordForm = () => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)

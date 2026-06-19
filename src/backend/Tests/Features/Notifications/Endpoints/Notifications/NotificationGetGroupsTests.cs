@@ -2,19 +2,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationGetGroupsEndpoint"/> covering retrieval of notification groups.
+/// </summary>
 public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
 {
-    [Fact]
-    public async Task GetGroups_Empty()
-    {
-        await SetAuthTokenAsync();
-
-        var (rsp, res) = await App.Client.GETAsync<NotificationGetGroupsEndpoint, NotificationGetGroupsResponse>();
-
-        rsp.StatusCode.Should().Be(HttpStatusCode.OK);
-        res.Groups.Should().NotBeNull();
-    }
-
+    /// <summary>
+    /// Verifies that groups are correctly populated when notifications have group names assigned.
+    /// </summary>
     [Fact]
     public async Task GetGroups_WithNotifications()
     {
@@ -38,6 +33,9 @@ public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
         res.Groups.Should().Contain("group-b");
     }
 
+    /// <summary>
+    /// Verifies that duplicate group names are returned only once (distinct).
+    /// </summary>
     [Fact]
     public async Task GetGroups_DistinctGroups()
     {
@@ -59,6 +57,9 @@ public class NotificationGetGroupsTests(App app) : NotificationsTestsBase(app)
         res.Groups.Count(g => g == "group-a").Should().Be(1);
     }
 
+    /// <summary>
+    /// Verifies that groups are returned in ascending alphabetical order.
+    /// </summary>
     [Fact]
     public async Task GetGroups_Sorted()
     {

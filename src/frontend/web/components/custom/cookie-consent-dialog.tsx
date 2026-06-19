@@ -6,12 +6,18 @@ import { Cookie, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/i18n'
 
+/**
+ * Props for the {@link CookieConsentDialog} component, controlling visibility and exposing accept/decline callbacks.
+ */
 interface CookieConsentDialogProps {
   isOpen: boolean
   onAccept: () => void
   onDecline: () => void
 }
 
+/**
+ * Renders an animated bottom-sheet dialog prompting the user to accept or decline cookies, with localized title/description/buttons and HeadlessUI transitions.
+ */
 const CookieConsentDialog = ({ isOpen, onAccept, onDecline }: CookieConsentDialogProps) => {
   const { t } = useTranslation()
 

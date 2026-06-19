@@ -5,6 +5,9 @@ import ScrollToTop from '@/components/layouts/scroll-to-top'
 import Setting from '@/components/layouts/setting'
 import Sidebar from '@/components/layouts/sidebar'
 
+/**
+ * Server-rendered layout for the admin route group, providing the authenticated admin shell (sidebar, main container, settings panel, overlay, scroll-to-top).
+ */
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

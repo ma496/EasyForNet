@@ -10,6 +10,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
+/**
+ * Server-rendered boxed sign-in route under the auth route group.
+ * Loads the localized title/description, frames the sign-in form with a language switcher and auxiliary links, and renders the interactive form.
+ */
 const BoxedSignIn = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params
   const [title, description] = await Promise.all([

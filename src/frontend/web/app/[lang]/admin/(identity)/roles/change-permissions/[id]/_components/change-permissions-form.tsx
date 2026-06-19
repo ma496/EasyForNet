@@ -14,6 +14,9 @@ import AppLoading from '@/components/layouts/app-loading'
 import { Search } from 'lucide-react'
 import { successToast } from '@/lib/utils'
 
+/**
+ * Converts the API permission definitions plus the assigned permissions into a hierarchical list of TreeNode objects for the TreeView component.
+ */
 const toTreeNodes = (groups: PermissionGroupDefinition[], permissions: PermissionDto[]): TreeNode[] => {
   let count = 1
   const buildNode = (definePermission: PermissionDefinition): TreeNode => {
@@ -34,6 +37,9 @@ const toTreeNodes = (groups: PermissionGroupDefinition[], permissions: Permissio
   }))
 }
 
+/**
+ * Recursively checks whether a tree node with the given id has any children, used to filter out group nodes from the selected permissions payload.
+ */
 const isHaveChild = (id: string, nodes: TreeNode[]): boolean => {
   if (!nodes || nodes.length === 0) return false
 
@@ -57,10 +63,16 @@ const isHaveChild = (id: string, nodes: TreeNode[]): boolean => {
   return false
 }
 
+/**
+ * Props for the ChangePermissionsForm, supplying the id of the role whose permissions are being edited.
+ */
 interface ChangePermissionsFormProps {
   roleId: string
 }
 
+/**
+ * Interactive client-side form for editing a role's permission set, organized as selectable permission groups in a TreeView with search and submit handling.
+ */
 export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) => {
   const { data: role, isFetching: isFetchingRole } = useRoleGetQuery({ id: roleId }, { refetchOnMountOrArgChange: true })
   const { data: definePermissionsRes, isLoading: isLoadingDefinePermissions } = useGetDefinePermissionsQuery()

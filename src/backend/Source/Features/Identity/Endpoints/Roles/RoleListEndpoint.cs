@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>GET /roles</c> to return a paginated, searchable list of roles with their permissions and user counts.
+/// </summary>
 sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListRequest, RoleListResponse>
 {
     public override void Configure()
@@ -45,10 +48,16 @@ sealed class RoleListEndpoint(IRoleService roleService) : Endpoint<RoleListReque
     }
 }
 
+/// <summary>
+/// Request payload for the role list endpoint, supporting search and standard pagination/sort options.
+/// </summary>
 sealed class RoleListRequest : ListRequestDto<Guid>
 {
 }
 
+/// <summary>
+/// FluentValidation rules for the role list request, inheriting standard list-request validation rules.
+/// </summary>
 sealed class RoleListValidator : Validator<RoleListRequest>
 {
     public RoleListValidator()
@@ -57,10 +66,16 @@ sealed class RoleListValidator : Validator<RoleListRequest>
     }
 }
 
+/// <summary>
+/// Response payload for the role list endpoint, wrapping a page of <see cref="RoleListDto"/> items with the total count.
+/// </summary>
 public sealed class RoleListResponse : ListDto<RoleListDto>
 {
 }
 
+/// <summary>
+/// Per-row DTO representing a role in list responses, including its description, permission ids, and user count.
+/// </summary>
 public sealed class RoleListDto : AuditableDto<Guid>
 {
     public string Name { get; set; } = null!;
@@ -70,26 +85,9 @@ public sealed class RoleListDto : AuditableDto<Guid>
     public int UserCount { get; set; }
 }
 
-sealed class RoleListMapper : Mapper<RoleListRequest, List<RoleListDto>, List<Role>>
-{
-    public override List<RoleListDto> FromEntity(List<Role> e)
-    {
-        return [.. e.Select(entity => new RoleListDto
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            NameNormalized = entity.NameNormalized,
-            Description = entity.Description,
-            Permissions = [.. entity.RolePermissions.Select(x => x.PermissionId)],
-            UserCount = entity.UserRoles.Count,
-            CreatedAt = entity.CreatedAt,
-            CreatedBy = entity.CreatedBy,
-            UpdatedAt = entity.UpdatedAt,
-            UpdatedBy = entity.UpdatedBy,
-        })];
-    }
-}
-
+/// <summary>
+/// This mapper that projects a <see cref="Role"/> entity into a <see cref="RoleListDto"/>, collapsing <see cref="RolePermission"/> join rows into permission ids and computing the user count.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class RoleListDtoMapper
 {

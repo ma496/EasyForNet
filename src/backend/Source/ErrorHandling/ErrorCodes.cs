@@ -1,5 +1,9 @@
 namespace Backend.ErrorHandling;
 
+/// <summary>
+/// Central catalog of stable, machine-readable error codes returned to API
+/// clients as part of problem-details responses.
+/// </summary>
 public static class ErrorCodes
 {
     public const string InternalServerError = "internalServerError";

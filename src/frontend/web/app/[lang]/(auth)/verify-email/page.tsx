@@ -11,6 +11,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 }
 
 
+/**
+ * Server-routed wrapper for the email-verification page that frames the VerifyEmailView component with the shared boxed auth layout.
+ */
 const BoxedVerifyEmail = async () => {
 
   return (

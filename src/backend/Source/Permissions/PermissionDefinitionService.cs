@@ -2,15 +2,35 @@ namespace Backend.Permissions;
 
 using Backend.Attributes;
 
+/// <summary>
+/// Service that aggregates permission definitions from all registered
+/// <see cref="IPermissionDefinitionProvider"/>s and exposes them either
+/// grouped or flattened.
+/// </summary>
 public interface IPermissionDefinitionService
 {
+    /// <summary>
+    /// Returns the permissions contributed by every registered provider,
+    /// organized by their owning group.
+    /// </summary>
+    /// <returns>The list of permission groups with their permissions.</returns>
     IReadOnlyList<PermissionGroupDefinition> GetPermissionGroups();
+    /// <summary>
+    /// Returns every leaf permission across all groups, regardless of nesting.
+    /// </summary>
+    /// <returns>The flattened list of leaf permissions.</returns>
     IReadOnlyList<FlattenedPermission> GetFlattenedPermissions();
 }
 
+/// <summary>
+/// Default <see cref="IPermissionDefinitionService"/> implementation that
+/// composes permissions from all <see cref="IPermissionDefinitionProvider"/>s
+/// registered in the DI container.
+/// </summary>
 [NoDirectUse]
 public class PermissionDefinitionService(IEnumerable<IPermissionDefinitionProvider> providers) : IPermissionDefinitionService
 {
+    /// <inheritdoc/>
     public IReadOnlyList<PermissionGroupDefinition> GetPermissionGroups()
     {
         var groups = new List<PermissionGroupDefinition>();
@@ -27,6 +47,7 @@ public class PermissionDefinitionService(IEnumerable<IPermissionDefinitionProvid
         return groups.AsReadOnly();
     }
 
+    /// <inheritdoc/>
     public IReadOnlyList<FlattenedPermission> GetFlattenedPermissions()
     {
         var allPermissions = GetPermissionGroups().SelectMany(g => g.Permissions);
@@ -59,6 +80,10 @@ public class PermissionDefinitionService(IEnumerable<IPermissionDefinitionProvid
     #endregion
 }
 
+/// <summary>
+/// Lightweight representation of a permission leaf, used when only the
+/// name and display name are needed (for example for seeding).
+/// </summary>
 public class FlattenedPermission
 {
     public string Name { get; init; } = string.Empty;

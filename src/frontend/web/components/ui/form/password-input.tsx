@@ -4,6 +4,7 @@ import { useId, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Eye, EyeOff } from 'lucide-react'
 
+/** Props for the standalone PasswordInput, a password-style input with a built-in show/hide toggle and externally provided error display. */
 interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   name: string
@@ -14,6 +15,9 @@ interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement>
   required?: boolean
 }
 
+/**
+ * PasswordInput is a client component that renders a styled password input with an inline eye-icon toggle for revealing the value and an externally provided error message.
+ */
 export const PasswordInput = ({ label, name, id, className, icon, error, showError = true, autoComplete = 'off', required = false, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
   const generatedId = useId()

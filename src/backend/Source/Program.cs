@@ -183,5 +183,9 @@ app.Run();
 
 namespace Backend
 {
+    /// <summary>
+    /// Empty type marker declared so that the top-level statements host can be
+    /// referenced from integration tests (for example <c>WebApplicationFactory&lt;Program&gt;</c>).
+    /// </summary>
     public class Program { }
 }

@@ -1,6 +1,10 @@
 // ReSharper disable InconsistentNaming
 namespace Backend.Permissions;
 
+/// <summary>
+/// Centralized catalog of permission name constants used to authorize
+/// endpoint and service operations across the backend.
+/// </summary>
 public partial class Allow
 {
     public const string User_View = "User.View";

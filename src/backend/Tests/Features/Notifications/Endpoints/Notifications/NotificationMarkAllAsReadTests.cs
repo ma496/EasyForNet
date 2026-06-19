@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationMarkAllAsReadEndpoint"/> covering marking all notifications as read for the current user.
+/// </summary>
 public class NotificationMarkAllAsReadTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that marking all notifications as read updates user notifications to IsRead = true and records visits for global notifications.
+    /// </summary>
     [Fact]
     public async Task MarkAllAsRead_Success()
     {
@@ -35,6 +41,9 @@ public class NotificationMarkAllAsReadTests(App app) : NotificationsTestsBase(ap
         isGlobalNotificationVisited.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task MarkAllAsRead_Unauthenticated()
     {

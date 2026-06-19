@@ -4,12 +4,16 @@ import { cn } from '@/lib/utils'
 import { useTranslation } from '@/i18n'
 import { useDataTable } from './context'
 
+/** Props for the DataTableToolbar, the area above a data table that optionally shows a title, a global search input bound to the table's globalFilter, and additional action buttons. */
 interface DataTableToolbarProps {
   searchPlaceholder?: string
   title?: string | ReactNode
   children?: React.ReactNode
 }
 
+/**
+ * DataTableToolbar is the area above a data table that renders an optional title, a search input wired to the table's global filter, and an actions slot for buttons (e.g., "Add new").
+ */
 export function DataTableToolbar<TData>({ title, children }: DataTableToolbarProps) {
   const { t } = useTranslation()
   const { table } = useDataTable<TData>()

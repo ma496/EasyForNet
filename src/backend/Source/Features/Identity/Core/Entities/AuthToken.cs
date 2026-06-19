@@ -2,6 +2,9 @@ namespace Backend.Features.Identity.Core.Entities;
 
 using Backend.Data.Entities.Base;
 
+/// <summary>
+/// Server-side record of an issued JWT access/refresh token pair, used to validate refresh requests and revoke tokens.
+/// </summary>
 public class AuthToken : CreatableEntity<Guid>
 {
     public string AccessToken { get; set; } = null!;

@@ -8,6 +8,9 @@ import { Button } from '../button'
 import { format } from 'date-fns'
 
 // Base props interface
+/**
+ * Common props shared by all DatePicker variants, including the form field name, optional id, placeholder, label, and disabled state.
+ */
 interface BaseDatePickerProps {
   name: string
   id?: string
@@ -20,6 +23,7 @@ interface BaseDatePickerProps {
 }
 
 // Single date picker props
+/** Props for the single-date mode of DatePicker, where a single Date can be selected. */
 export interface SingleDatePickerProps extends BaseDatePickerProps {
   mode?: 'single'
   selected?: Date
@@ -27,6 +31,7 @@ export interface SingleDatePickerProps extends BaseDatePickerProps {
 }
 
 // Multiple date picker props
+/** Props for the multiple-dates mode of DatePicker, where an array of Dates can be selected. */
 export interface MultipleDatePickerProps extends BaseDatePickerProps {
   mode: 'multiple'
   selected?: Date[]
@@ -34,6 +39,7 @@ export interface MultipleDatePickerProps extends BaseDatePickerProps {
 }
 
 // Range date picker props
+/** Props for the range mode of DatePicker, where a from/to DateRange can be selected. */
 export interface RangeDatePickerProps extends BaseDatePickerProps {
   mode: 'range'
   selected?: DateRange
@@ -41,9 +47,13 @@ export interface RangeDatePickerProps extends BaseDatePickerProps {
 }
 
 // Union type for all date picker props
+/** Union of all DatePicker prop variants, discriminated by the `mode` field. */
 export type DatePickerProps = SingleDatePickerProps | MultipleDatePickerProps | RangeDatePickerProps
 
 // Helper component to handle the DayPicker with proper typing
+/**
+ * DayPickerWrapper is an internal helper that forwards to react-day-picker's DayPicker, narrowing the props to the matching `mode` for type safety.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DayPickerWrapper = ({ mode, selected, onSelect, classNames, components, ...props }: any) => {
   if (mode === 'multiple') {
@@ -57,6 +67,9 @@ const DayPickerWrapper = ({ mode, selected, onSelect, classNames, components, ..
   return <DayPicker mode="single" selected={selected as Date} onSelect={onSelect} classNames={classNames} components={components} showOutsideDays={true} {...props} />
 }
 
+/**
+ * DatePicker is a client component that wraps a button-styled trigger and a popover calendar, supporting single, multiple, and range selection modes and closing the popover automatically on single-date picks.
+ */
 export const DatePicker = (props: DatePickerProps) => {
   const { name, id, selected, onSelect, placeholder = 'Select date...', disabled = false, className, showIcon = true, mode = 'single', label, required = false } = props
 

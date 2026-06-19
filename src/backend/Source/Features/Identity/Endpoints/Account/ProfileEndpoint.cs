@@ -2,6 +2,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 
 using Backend.Features.Identity.Core;
 
+/// <summary>
+/// Authenticated GET endpoint that returns the current user's basic profile data
+/// (id, username, email, name, and profile image).
+/// </summary>
 sealed class ProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService)
     : EndpointWithoutRequest<UserProfileResponse>
 {
@@ -35,6 +39,10 @@ sealed class ProfileEndpoint(AppDbContext dbContext, ICurrentUserService current
     }
 }
 
+/// <summary>
+/// Response payload for the profile endpoint, exposing the user's identity and
+/// basic profile fields.
+/// </summary>
 sealed class UserProfileResponse
 {
     public Guid Id { get; set; }

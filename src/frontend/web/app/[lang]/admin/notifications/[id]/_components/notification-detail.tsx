@@ -8,10 +8,16 @@ import { Button } from '@/components/ui/button'
 import { NotificationType } from '@/store/api/notifications/enums'
 import { successToast } from '@/lib/utils/notification'
 
+/**
+ * Props for the NotificationDetail component, supplying the id of the notification to display.
+ */
 interface NotificationDetailProps {
   id: string
 }
 
+/**
+ * Interactive client-side view that shows the full content of a single notification along with mark-as-read/mark-as-unread actions.
+ */
 export const NotificationDetail = ({ id }: NotificationDetailProps) => {
   const { t } = useTranslation()
   const { data: notification, isLoading: isNotificationLoading, isError: isNotificationError } = useNotificationGetQuery({ id })

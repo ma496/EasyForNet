@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Endpoints.Roles;
 
+/// <summary>
+/// Tests for the <see cref="RoleDeleteEndpoint"/> covering deletion of roles, non-existent roles, and protected default roles.
+/// </summary>
 public class RoleDeleteTests(App app) : AppTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a newly created role can be successfully deleted and subsequent GET returns 404.
+    /// </summary>
     [Fact]
     public async Task Delete_Role()
     {
@@ -39,6 +45,9 @@ public class RoleDeleteTests(App app) : AppTestsBase(app)
         getRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that attempting to delete a non-existent role returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task Delete_NonExistent_Role()
     {
@@ -53,6 +62,9 @@ public class RoleDeleteTests(App app) : AppTestsBase(app)
         deleteRsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that attempting to delete the default Admin role returns 400 Bad Request with <see cref="ErrorCodes.DefaultRoleCannotBeDeleted"/>.
+    /// </summary>
     [Fact]
     public async Task Cannot_Delete_Admin_Role()
     {

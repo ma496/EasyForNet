@@ -3,6 +3,10 @@ namespace Backend.Features.Identity.Endpoints.Account;
 using Backend.Features.Identity.Core;
 using Backend.Features.FileManagement.Core;
 
+/// <summary>
+/// Authenticated POST endpoint that updates the current user's profile (email, name,
+/// and profile image) and cleans up the previously stored image when it changes.
+/// </summary>
 sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService currentUserService,
     IFileService fileService)
     : Endpoint<UserUpdateProfileRequest, UserUpdateProfileResponse>
@@ -51,6 +55,10 @@ sealed class UpdateProfileEndpoint(AppDbContext dbContext, ICurrentUserService c
     }
 }
 
+/// <summary>
+/// Request payload for updating the current user's profile, including email, optional
+/// first/last name, and an optional profile image reference.
+/// </summary>
 sealed class UserUpdateProfileRequest
 {
     public string Email { get; set; } = null!;
@@ -59,6 +67,10 @@ sealed class UserUpdateProfileRequest
     public string? Image { get; set; }
 }
 
+/// <summary>
+/// FluentValidation rules for <see cref="UserUpdateProfileRequest"/>, validating the
+/// email address and the optional length of the first/last name fields.
+/// </summary>
 sealed class UserUpdateProfileValidator : Validator<UserUpdateProfileRequest>
 {
     public UserUpdateProfileValidator()
@@ -69,6 +81,10 @@ sealed class UserUpdateProfileValidator : Validator<UserUpdateProfileRequest>
     }
 }
 
+/// <summary>
+/// Response payload for the profile update endpoint, returning the freshly saved
+/// profile fields.
+/// </summary>
 sealed class UserUpdateProfileResponse
 {
     public Guid Id { get; set; }

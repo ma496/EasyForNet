@@ -3,8 +3,14 @@ namespace Backend.Tests.Features.Notifications.Endpoints.Notifications;
 using Backend.Features.Identity.Core.Entities;
 using Backend.Features.Notifications.Endpoints.Notifications;
 
+/// <summary>
+/// Tests for the <see cref="NotificationMarkAsReadEndpoint"/> covering marking user and global notifications as read.
+/// </summary>
 public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
 {
+    /// <summary>
+    /// Verifies that a user notification can be marked as read (IsRead = true).
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_UserNotification()
     {
@@ -27,6 +33,9 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
         updated!.IsRead.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that a global notification can be marked as read by recording a visit for the current user.
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_GlobalNotification()
     {
@@ -46,6 +55,9 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
         isVisited.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that marking an already-read user notification still returns success.
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_AlreadyRead_UserNotification()
     {
@@ -63,6 +75,9 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
         res.Success.Should().BeTrue();
     }
 
+    /// <summary>
+    /// Verifies that marking another user's notification as read returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_OtherUserNotification_Should_NotFound()
     {
@@ -79,6 +94,9 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that marking a non-existent notification as read returns 404 NotFound.
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_NonExistent_Notification()
     {
@@ -90,6 +108,9 @@ public class NotificationMarkAsReadTests(App app) : NotificationsTestsBase(app)
         rsp.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>
+    /// Verifies that unauthenticated requests return 401 Unauthorized.
+    /// </summary>
     [Fact]
     public async Task MarkAsRead_Unauthenticated()
     {

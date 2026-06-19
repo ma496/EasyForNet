@@ -27,6 +27,9 @@ import Truncated from '@/components/ui/truncated'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import { parseAsString, parseAsStringEnum } from 'nuqs'
 
+/**
+ * Interactive client-side data table that lists notifications with pagination, search, read/group filters synced to the URL, and per-row mark-as-read/delete plus a bulk mark-all-as-read action.
+ */
 export const NotificationTable = () => {
   const url = useTableUrlState({
     filters: {

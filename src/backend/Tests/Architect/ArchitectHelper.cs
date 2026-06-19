@@ -3,8 +3,15 @@ namespace Backend.Tests.Architect;
 using Mono.Cecil;
 using TypeDefinition = Mono.Cecil.TypeDefinition;
 
+/// <summary>
+/// Helper for resolving type dependencies from compiled assemblies using Mono.Cecil.
+/// Used by architecture tests to analyze cross-feature references.
+/// </summary>
 public static class ArchitectHelper
 {
+    /// <summary>
+    /// Recursively resolves all type dependencies (inheritance, fields, properties, methods, parameters, and IL instructions) for a given type.
+    /// </summary>
     public static IReadOnlyList<TypeDefinition> GetDependencies(TypeDefinition type)
     {
         var dependencies = new HashSet<TypeDefinition>();

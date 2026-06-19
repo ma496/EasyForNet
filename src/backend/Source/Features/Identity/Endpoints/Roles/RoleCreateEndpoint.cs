@@ -3,6 +3,9 @@ namespace Backend.Features.Identity.Endpoints.Roles;
 using Backend.Features.Identity.Core;
 using Backend.Features.Identity.Core.Entities;
 
+/// <summary>
+/// This endpoint that handles <c>POST /roles</c> to create a new role with a unique name.
+/// </summary>
 sealed class RoleCreateEndpoint(IRoleService roleService, AppDbContext dbContext)
     : Endpoint<RoleCreateRequest, RoleCreateResponse>
 {
@@ -31,12 +34,18 @@ sealed class RoleCreateEndpoint(IRoleService roleService, AppDbContext dbContext
     }
 }
 
+/// <summary>
+/// Request payload for creating a new role, supplying a name and optional description.
+/// </summary>
 public sealed class RoleCreateRequest
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
 }
 
+/// <summary>
+/// FluentValidation rules requiring a non-empty, length-bounded name and a length-bounded optional description.
+/// </summary>
 sealed class RoleCreateValidator : Validator<RoleCreateRequest>
 {
     public RoleCreateValidator()
@@ -47,6 +56,9 @@ sealed class RoleCreateValidator : Validator<RoleCreateRequest>
     }
 }
 
+/// <summary>
+/// Response payload returned after a successful role creation, echoing the assigned identifiers and metadata.
+/// </summary>
 public sealed class RoleCreateResponse : BaseDto<Guid>
 {
     public string Name { get; set; } = null!;
@@ -54,12 +66,18 @@ public sealed class RoleCreateResponse : BaseDto<Guid>
     public string? Description { get; set; }
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="RoleCreateRequest"/> into a <see cref="Role"/> entity.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
 public partial class RoleCreateRequestMapper
 {
     public partial Role Map(RoleCreateRequest request);
 }
 
+/// <summary>
+/// This mapper that projects a <see cref="Role"/> entity into a <see cref="RoleCreateResponse"/>.
+/// </summary>
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class RoleCreateResponseMapper
 {
