@@ -38,6 +38,10 @@ export const searchableItems: SearchableItem[] = [
     title: 'search.changePassword',
     url: '/change-password',
   },
+  {
+    title: 'search.notifications',
+    url: '/admin/notifications/list',
+  },
 
   {
     title: 'search.uiFormElements',

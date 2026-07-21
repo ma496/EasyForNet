@@ -40,7 +40,6 @@ export const navItems: (NavItem | NavItemGroup)[] = [
         title: 'navigation.users',
         url: '/admin/users/list',
         icon: Users,
-
         children: [
           {
             title: 'navigation.usersList',
@@ -64,7 +63,6 @@ export const navItems: (NavItem | NavItemGroup)[] = [
         title: 'navigation.roles',
         url: '/admin/roles/list',
         icon: Shield,
-
         children: [
           {
             title: 'navigation.rolesList',
@@ -92,13 +90,12 @@ export const navItems: (NavItem | NavItemGroup)[] = [
       },
       {
         title: 'navigation.notifications',
-        url: '/admin/notifications',
+        url: '/admin/notifications/list',
         icon: Bell,
-
         children: [
           {
             title: 'navigation.notificationsList',
-            url: '/admin/notifications',
+            url: '/admin/notifications/list',
           },
           {
             title: 'navigation.notificationsDetail',
