@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import { useTranslation } from '@/i18n'
 import { Formik, Form } from 'formik'
 import { FormInput } from '@/components/ui/form/form-input'
-import { Mail, Lock, Info } from 'lucide-react'
+import { Mail, Lock, AlertCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useTokenMutation, useLazyGetUserInfoQuery, useResendVerifyEmailMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
@@ -41,7 +41,7 @@ const SigninForm = () => {
   const [resendVerifyEmailApi, { isLoading: isResending }] = useResendVerifyEmailMutation()
   const dispatch = useAppDispatch()
 
-  const [showVerificationMessage, setShowVerificationMessage] = useState(false)
+  const [showResendLink, setShowResendLink] = useState(false)
   const [registeredEmail, setRegisteredEmail] = useState('')
   const [countdown, setCountdown] = useState(0)
 
@@ -60,13 +60,15 @@ const SigninForm = () => {
   const submitForm = async (values: SigninFormValues) => {
     const tokenRes = await tokenApi(values)
     if (tokenRes.error) {
+      console.log('tokenRes.error', tokenRes.error)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorData = (tokenRes.error as any).data
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const verificationError = errorData?.errors?.find((err: any) => err.code === 'email_not_verified')
+      const verificationError = errorData?.errors?.find((err: any) => err.code === 'emailNotVerified')
       if (verificationError) {
-        setRegisteredEmail(values.username) // In this app username can be email or username
-        setShowVerificationMessage(true)
+        setRegisteredEmail(values.username)
+        setShowResendLink(true)
+        return
       }
       apiErrorAlert(tokenRes.error)
       return
@@ -101,36 +103,31 @@ const SigninForm = () => {
     setCountdown(15)
   }
 
-  if (showVerificationMessage) {
-    return (
-      <div className="flex flex-col items-center justify-center space-y-4 text-center dark:text-white">
-        <Info size={48} className="text-primary" />
-        <h2 className="text-2xl font-bold">{t('page.verifyEmail.notVerifiedTitle')}</h2>
-        <p>{t('page.verifyEmail.notVerifiedMessage')}</p>
-
-        <Button
-          type="button"
-          className="btn btn-outline-primary w-full mt-2"
-          onClick={handleResendEmail}
-          disabled={countdown > 0 || isResending}
-          isLoading={isResending}
-        >
-          {countdown > 0 ? t('page.verifyEmail.resendWait', { seconds: countdown }) : t('page.verifyEmail.resendButton')}
-        </Button>
-
-        <Button type="button" className="btn btn-primary w-full mt-2" onClick={() => setShowVerificationMessage(false)}>
-          {t('page.auth.signin.backToSignin')}
-        </Button>
-      </div>
-    )
-  }
-
   return (
     <Formik initialValues={{ username: '', password: '' }} validationSchema={validationSchema} onSubmit={submitForm}>
       {() => (
         <Form className="space-y-5 dark:text-white">
           <FormInput label={t('form.label.username')} name="username" placeholder={t('form.placeholder.username')} icon={<Mail size={16} />} autoFocus={true} required={true} />
           <FormPasswordInput label={t('form.label.password')} name="password" placeholder={t('form.placeholder.password')} icon={<Lock size={16} />} required={true} />
+
+          {showResendLink && (
+            <div role="alert" className="relative flex items-start gap-3 rounded-lg border border-danger/30 bg-danger-light p-4 text-sm dark:border-danger/40 dark:bg-danger/10">
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-danger" />
+              <div className="flex-1 space-y-2">
+                <p className="font-semibold text-danger-dark dark:text-danger">{t('page.verifyEmail.notVerifiedTitle')}</p>
+                <p className="text-danger-dark/80 dark:text-danger/80">{t('page.verifyEmail.notVerifiedMessage')}</p>
+                <Button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={handleResendEmail}
+                  disabled={countdown > 0 || isResending}
+                  isLoading={isResending}
+                >
+                  {countdown > 0 ? t('page.verifyEmail.resendWait', { seconds: countdown }) : t('page.verifyEmail.resendButton')}
+                </Button>
+              </div>
+            </div>
+          )}
 
           <div className="flex justify-between items-center">
             <div className="flex gap-2">
