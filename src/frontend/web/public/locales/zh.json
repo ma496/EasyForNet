@@ -29,6 +29,7 @@
     "yes": "是",
     "no": "否",
     "ok": "确定",
+    "retry": "重试",
     "submit": "提交",
     "actions": "操作",
     "allRightsReserved": "版权所有。",
@@ -152,6 +153,10 @@
     "connection": {
       "title": "连接错误",
       "message": "无法连接到服务器。请检查您的网络连接或稍后重试。"
+    },
+    "serviceUnavailable": {
+      "title": "服务不可用",
+      "message": "服务器当前无法访问。请稍后再试。"
     },
     "server": {
       "internalServerError": "服务器内部错误",
@@ -448,6 +453,7 @@
   },
   "notifications": {
     "noNotifications": "没有通知",
+    "notFound": "通知未找到",
     "viewAll": "查看所有通知",
     "markAllRead": "全部标为已读",
     "markAsRead": "标为已读",

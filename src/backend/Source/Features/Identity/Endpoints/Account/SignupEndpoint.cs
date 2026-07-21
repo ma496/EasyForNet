@@ -125,7 +125,8 @@ sealed class SignupValidator : Validator<SignupRequest>
             .MaximumLength(50);
 
         RuleFor(x => x.ConfirmPassword)
-            .Equal(x => x.Password);
+            .Equal(x => x.Password)
+            .WithMessage("Confirm password must match the password");
     }
 }
 

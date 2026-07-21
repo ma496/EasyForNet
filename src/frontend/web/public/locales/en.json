@@ -29,6 +29,7 @@
     "yes": "Yes",
     "no": "No",
     "ok": "OK",
+    "retry": "Retry",
     "submit": "Submit",
     "actions": "Actions",
     "allRightsReserved": "All rights reserved.",
@@ -152,6 +153,10 @@
     "connection": {
       "title": "Connection Error",
       "message": "Unable to connect to the server. Please check your connection or try again later."
+    },
+    "serviceUnavailable": {
+      "title": "Service Unavailable",
+      "message": "The server is currently unreachable. Please try again in a few moments."
     },
     "server": {
       "internalServerError": "Internal server error",
@@ -447,6 +452,7 @@
   },
   "notifications": {
     "noNotifications": "No notifications",
+    "notFound": "Notification not found",
     "viewAll": "View all notifications",
     "markAllRead": "Mark all as read",
     "markAsRead": "Mark as read",

@@ -126,5 +126,9 @@ public class DataSeeder(IUserService userService,
             dbContext.Notifications.AddRange(sampleNotifications);
             await dbContext.SaveChangesAsync();
         }
+
+        // Public role
+        var publicRole = await roleService.GetByNameAsync("Public") ??
+            await roleService.CreateAsync(new Role { Default = true, Name = "Public", Description = "Public Role" });
     }
 }

@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
-import { successToast } from '@/lib/utils'
+import { apiErrorAlert, successToast } from '@/lib/utils'
 
 /**
  * Builds a Yup validation schema for the role create form using the supplied translation function for error messages.
@@ -39,12 +39,16 @@ export const RoleCreateForm = () => {
     const result = await createRole({
       ...data,
     })
-    if (result.data) {
-      successToast.fire({
-        title: t('page.roles.createSuccess'),
-      })
-      router.push('/admin/roles/list')
+
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successToast.fire({
+      text: t('page.roles.createSuccess'),
+    })
+    router.push('/admin/roles/list')
   }
 
   return (

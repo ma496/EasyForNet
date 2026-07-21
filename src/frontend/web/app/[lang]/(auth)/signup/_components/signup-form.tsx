@@ -12,6 +12,7 @@ import { Mail, Lock } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
 import { successToast } from '@/lib/utils/notification'
+import { apiErrorAlert } from '@/lib/utils'
 
 /**
  * Interactive client-side form that registers a new user with username, email, and password.
@@ -23,8 +24,8 @@ const SignupForm = () => {
   const [registeredEmail, setRegisteredEmail] = useState<string>('')
   const [countdown, setCountdown] = useState(0)
 
-  const [signupApi, { isLoading }] = useSignupMutation()
-  const [resendVerifyEmailApi, { isLoading: isResending }] = useResendVerifyEmailMutation()
+  const [signupApi, { isLoading: isSubmittingSignup }] = useSignupMutation()
+  const [resendVerifyEmailApi, { isLoading: isResendingVerifyEmail }] = useResendVerifyEmailMutation()
 
   useEffect(() => {
     let timer: NodeJS.Timeout
@@ -61,6 +62,7 @@ const SignupForm = () => {
   const submitForm = async (values: SignupFormValues) => {
     const response = await signupApi(values)
     if (response.error) {
+      apiErrorAlert(response.error)
       return
     }
 
@@ -74,11 +76,12 @@ const SignupForm = () => {
   }
 
   const handleResendEmail = async () => {
-    if (countdown > 0 || isResending) return
+    if (countdown > 0 || isResendingVerifyEmail) return
 
     try {
       const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
       if (response.error) {
+        apiErrorAlert(response.error)
         return
       }
       successToast.fire({
@@ -104,8 +107,8 @@ const SignupForm = () => {
             type="button"
             className="btn btn-outline-primary w-full mt-2"
             onClick={handleResendEmail}
-            disabled={countdown > 0 || isResending}
-            isLoading={isResending}
+            disabled={countdown > 0 || isResendingVerifyEmail}
+            isLoading={isResendingVerifyEmail}
           >
             {countdown > 0 ? t('page.verifyEmail.resendWait', { seconds: countdown }) : t('page.verifyEmail.resendButton')}
           </Button>
@@ -134,7 +137,7 @@ const SignupForm = () => {
             </LocalizedLink>
           </div>
 
-          <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isLoading}>
+          <Button type="submit" className="btn w-full border-0 btn-gradient uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" isLoading={isSubmittingSignup}>
             {t('page.auth.signup.button')}
           </Button>
         </Form>

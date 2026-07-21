@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Upload, Trash2 } from 'lucide-react'
-import { cn, confirmDeleteAlert, errorAlert } from '@/lib/utils'
+import { apiErrorAlert, cn, confirmDeleteAlert, errorAlert } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import type { ButtonProps } from '@/components/ui/button'
 import { IconButton } from '@/components/ui/icon-button'
@@ -82,11 +82,9 @@ export const FileUpload = ({
   const [selectedFileName, setSelectedFileName] = useState<string>('')
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | undefined>(undefined)
   const [response, setResponse] = useState<FileUploadResponse | undefined>(undefined)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [error, setError] = useState<any>(undefined)
-  const [uploadFile, { isLoading }] = useFileUploadMutation()
+  const [uploadFile, { isLoading: isUploading }] = useFileUploadMutation()
   const [deleteFileTrigger, { isLoading: isDeleting }] = useFileDeleteMutation()
-  const [getFileTrigger] = useLazyFileGetQuery()
+  const [lazyFileGet] = useLazyFileGetQuery()
   const lastFileNameRef = useRef<string | undefined>(undefined)
   const resolvedIcon = useMemo(() => icon ?? <Upload className="h-4 w-4" />, [icon])
   const hasCurrent = useMemo(() => !!selectedFileName || (forceDelete && !!(fileName ?? response?.fileName)), [selectedFileName, forceDelete, fileName, response])
@@ -105,7 +103,6 @@ export const FileUpload = ({
         if (showError) {
           errorAlert({ text: t('file.tooLarge') })
         }
-        setError(err)
         onError?.(err)
         e.target.value = ''
         return
@@ -115,7 +112,6 @@ export const FileUpload = ({
         const message = validateFile(file)
         if (message) {
           const err = new Error(message)
-          setError(err)
           onError?.(err)
           e.target.value = ''
           return
@@ -137,8 +133,9 @@ export const FileUpload = ({
         lastFileNameRef.current = res.data.fileName
         setSelectedFileUrl(url)
         setResponse(res.data)
-        setError(undefined)
         onUploaded?.(res.data)
+      } else if (res.error) {
+        apiErrorAlert(res.error)
       }
       if (inputRef.current) {
         inputRef.current.value = ''
@@ -172,12 +169,16 @@ export const FileUpload = ({
   const getFileUrl = useCallback(async (): Promise<string | undefined> => {
     const current = fileName ?? response?.fileName
     if (!current) return undefined
-    const result = await getFileTrigger({ fileName: current, ignoreStatuses: [404] })
+    const result = await lazyFileGet({ fileName: current })
+    if (result.error) {
+      apiErrorAlert(result.error, [404])
+      return
+    }
     if (result.data) {
       return URL.createObjectURL(result.data as Blob)
     }
     return undefined
-  }, [fileName, response, getFileTrigger])
+  }, [fileName, response, lazyFileGet])
 
   useEffect(() => {
     return () => {
@@ -205,7 +206,11 @@ export const FileUpload = ({
         return
       }
 
-      const result = await getFileTrigger({ fileName: current, ignoreStatuses: [404] })
+      const result = await lazyFileGet({ fileName: current })
+      if (result.error) {
+        apiErrorAlert(result.error, [404])
+        return
+      }
       if (!cancelled) {
         if (result.data) {
           const url = URL.createObjectURL(result.data as Blob)
@@ -231,7 +236,7 @@ export const FileUpload = ({
         URL.revokeObjectURL(currentObjectUrl)
       }
     }
-  }, [fileName, response, getFileTrigger])
+  }, [fileName, response, lazyFileGet])
 
   const handleDeleteClick = useCallback(async () => {
     const result = await confirmDeleteAlert({
@@ -257,11 +262,10 @@ export const FileUpload = ({
     // eslint-disable-next-line react-hooks/refs
     children({
       open: handleClick,
-      isUploading: isLoading,
+      isUploading: isUploading,
       selectedFileName,
       selectedFileUrl,
       response,
-      error,
       deleteFile,
       isDeleting,
       getFileUrl,
@@ -277,7 +281,7 @@ export const FileUpload = ({
       )}
 
       <div className="flex items-center gap-3">
-        <Button type="button" onClick={handleClick} variant={variant} size={size} rounded={rounded} isLoading={isLoading} disabled={disabled || isDeleting} icon={resolvedIcon}>
+        <Button type="button" onClick={handleClick} variant={variant} size={size} rounded={rounded} isLoading={isUploading} disabled={disabled || isDeleting} icon={resolvedIcon}>
           {buttonText}
         </Button>
 
@@ -288,7 +292,7 @@ export const FileUpload = ({
             rounded="full"
             onClick={handleDeleteClick}
             isLoading={isDeleting}
-            disabled={isLoading}
+            disabled={isUploading}
             aria-label="Delete"
             title="Delete"
             icon={<Trash2 className="h-4 w-4" />}

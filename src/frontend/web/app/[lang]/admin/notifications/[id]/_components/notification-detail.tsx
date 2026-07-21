@@ -6,7 +6,10 @@ import { AlertCircle, AlertTriangle, CheckCircle, Info, Check, EyeOff } from 'lu
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { NotificationType } from '@/store/api/notifications/enums'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 import { successToast } from '@/lib/utils/notification'
+import { apiErrorAlert } from '@/lib/utils'
+import { Loading } from '@/components/ui/loading'
 
 /**
  * Props for the NotificationDetail component, supplying the id of the notification to display.
@@ -20,16 +23,19 @@ interface NotificationDetailProps {
  */
 export const NotificationDetail = ({ id }: NotificationDetailProps) => {
   const { t } = useTranslation()
-  const { data: notification, isLoading: isNotificationLoading, isError: isNotificationError } = useNotificationGetQuery({ id })
-  const [markAsRead] = useNotificationMarkAsReadMutation()
-  const [markAsUnread] = useNotificationMarkAsUnreadMutation()
+  const { data: notification, isLoading: isNotificationLoading, error: notificationError } = useNotificationGetQuery({ id })
+  const [markAsRead, { isLoading: isMarkingAsRead }] = useNotificationMarkAsReadMutation()
+  const [markAsUnread, { isLoading: isMarkingAsUnread }] = useNotificationMarkAsUnreadMutation()
 
   const handleMarkAsRead = async () => {
     if (notification) {
       const { error } = await markAsRead({ id })
-      if (!error) {
+      if (error) {
+        apiErrorAlert(error)
+        return
+      } else {
         successToast.fire({
-          title: t('notifications.markedAsRead')
+          text: t('notifications.markedAsRead')
         })
       }
     }
@@ -38,9 +44,12 @@ export const NotificationDetail = ({ id }: NotificationDetailProps) => {
   const handleMarkAsUnread = async () => {
     if (notification) {
       const { error } = await markAsUnread({ id })
-      if (!error) {
+      if (error) {
+        apiErrorAlert(error)
+        return
+      } else {
         successToast.fire({
-          title: t('notifications.markedAsUnread')
+          text: t('notifications.markedAsUnread')
         })
       }
     }
@@ -74,28 +83,37 @@ export const NotificationDetail = ({ id }: NotificationDetailProps) => {
 
   if (isNotificationLoading) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <span className="text-gray-500">{t('common.loading')}</span>
+      <div className="flex items-center justify-center">
+        <Loading />
       </div>
     )
   }
 
-  if (isNotificationError || !notification) {
+  if (notificationError) {
     return (
-      <div className="flex flex-col items-center justify-center py-8">
-        <span className="text-gray-500">{t('error.404.message')}</span>
+      <div className="flex items-center justify-center">
+        <ApiErrorMessages error={notificationError} />
+      </div>
+    )
+  }
+
+  if (!isNotificationLoading && !notificationError && !notification) {
+    return (
+      <div className="flex items-center justify-center">
+        {t('notifications.notFound')}
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       <div className="flex items-center justify-end gap-2">
         {notification.isRead ? (
           <Button
             variant="secondary"
             size="sm"
             onClick={handleMarkAsUnread}
+            isLoading={isMarkingAsUnread}
           >
             <EyeOff className="h-4 w-4" />
             {t('notifications.markAsUnread')}
@@ -105,6 +123,7 @@ export const NotificationDetail = ({ id }: NotificationDetailProps) => {
             variant="success"
             size="sm"
             onClick={handleMarkAsRead}
+            isLoading={isMarkingAsRead}
           >
             <Check className="h-4 w-4" />
             {t('notifications.markAsRead')}

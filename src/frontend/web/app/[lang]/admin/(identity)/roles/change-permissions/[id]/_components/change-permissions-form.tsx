@@ -8,11 +8,12 @@ import { useGetPermissionsQuery } from '@/store/api/identity/permissions/permiss
 import { useChangePermissionsMutation } from '@/store/api/identity/roles/roles-api'
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 import { useTranslation } from '@/i18n'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import AppLoading from '@/components/layouts/app-loading'
 import { Search } from 'lucide-react'
-import { successToast } from '@/lib/utils'
+import { apiErrorAlert, successToast } from '@/lib/utils'
 
 /**
  * Converts the API permission definitions plus the assigned permissions into a hierarchical list of TreeNode objects for the TreeView component.
@@ -75,9 +76,9 @@ interface ChangePermissionsFormProps {
  */
 export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) => {
   const { data: role, isFetching: isFetchingRole } = useRoleGetQuery({ id: roleId }, { refetchOnMountOrArgChange: true })
-  const { data: definePermissionsRes, isLoading: isLoadingDefinePermissions } = useGetDefinePermissionsQuery()
-  const { data: permissionsRes, isLoading: isLoadingPermissions } = useGetPermissionsQuery()
-  const [changePermissions, { isLoading: isChangingPermissions }] = useChangePermissionsMutation()
+  const { data: definePermissionsRes, isLoading: isLoadingDefinePermissions, error: getDefinePermissionsError } = useGetDefinePermissionsQuery()
+  const { data: permissionsRes, isLoading: isLoadingPermissions, error: getPermissionsError } = useGetPermissionsQuery()
+  const [changePermissionsApi, { isLoading: isChangingPermissions }] = useChangePermissionsMutation()
   const [changedPermissions, setChangedPermissions] = useState<string[]>([])
   const { t } = useTranslation()
   const router = useLocalizedRouter()
@@ -85,6 +86,8 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   const [activeGroup, setActiveGroup] = useState<string | null>(null)
 
   const permissionTreeNodes = useMemo(() => definePermissionsRes && permissionsRes ? toTreeNodes(definePermissionsRes.groups, permissionsRes.permissions) : [], [definePermissionsRes, permissionsRes])
+
+  const isLoading = isFetchingRole || isLoadingDefinePermissions || isLoadingPermissions
 
   useEffect(() => {
     if (permissionTreeNodes.length > 0 && !activeGroup) {
@@ -149,16 +152,19 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
   const activeGroupNode = useMemo(() => filteredTreeNodes.find(n => n.id === activeGroup), [filteredTreeNodes, activeGroup])
 
   const handleSubmit = async () => {
-    const response = await changePermissions({
+    const response = await changePermissionsApi({
       id: roleId,
       permissions: changedPermissions,
     })
-    if (!response.error) {
-      successToast.fire({
-        title: t('page.roles.permissionsUpdateSuccess'),
-      })
-      router.push('/admin/roles/list')
+    if (response.error) {
+      apiErrorAlert(response.error)
+      return
     }
+
+    successToast.fire({
+      title: t('page.roles.permissionsUpdateSuccess'),
+    })
+    router.push('/admin/roles/list')
   }
 
   const handleSelectionChange = useCallback((selectedIds: string[]) => {
@@ -166,66 +172,76 @@ export const ChangePermissionsForm = ({ roleId }: ChangePermissionsFormProps) =>
     setChangedPermissions(permissions)
   }, [permissionTreeNodes])
 
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center min-h-100">
+        <AppLoading />
+      </div>
+    )
+  }
+
+  if (!isLoading && (getDefinePermissionsError || getPermissionsError)) {
+    return (
+      <div className="flex h-full items-center justify-center min-h-100">
+        <ApiErrorMessages error={getDefinePermissionsError || getPermissionsError} />
+      </div>
+    )
+  }
+
   return (
     <div className="h-full flex justify-center">
-      {!isFetchingRole && !isLoadingDefinePermissions && !isLoadingPermissions ? (
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">
-              {role?.name} - {t('page.roles.permissions')}
-            </span>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-semibold">
+            {role?.name} - {t('page.roles.permissions')}
+          </span>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 min-h-100">
-              <div className="md:col-span-1 border-r ltr:border-r rtl:border-l rtl:border-r-0 border-gray-200 dark:border-gray-700 flex flex-col pt-2 ltr:pr-4 rtl:pl-4">
-                <div className="font-semibold mb-3 text-gray-800 dark:text-gray-100 uppercase tracking-wider text-xs">{t('page.roles.permissionGroups') || 'Groups'}</div>
-                <div className="flex flex-col space-y-1">
-                  {permissionTreeNodes.map((group) => (
-                    <button
-                      key={group.id}
-                      type="button"
-                      className={`cursor-pointer px-3 py-2 rounded-md transition-colors ${activeGroup === group.id ? 'bg-primary text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'}`}
-                      onClick={() => {
-                        setActiveGroup(group.id)
-                        setSearch('')
-                      }}
-                    >
-                      {group.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="md:col-span-3 pt-2">
-                <div className="flex justify-between items-center mb-3">
-                  <div className="font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wider text-xs">{activeGroupNode?.label || t('page.roles.permissions')} Permissions</div>
-                  <div className="relative max-w-xs w-full">
-                    <input type="text" name="searchPermissions" className="form-input w-full ltr:pl-9 rtl:pr-9 py-1.5! text-sm" placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} />
-                    <Search className="absolute top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 ltr:left-2 rtl:right-2 dark:text-gray-600" />
-                  </div>
-                </div>
-                {activeGroupNode && (
-                  <TreeView
-                    data={activeGroupNode.children ?? []}
-                    defaultSelectedIds={changedPermissions}
-                    expandAll={true}
-                    enableSelection={true}
-                    onSelectionChange={handleSelectionChange}
-                  />
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 min-h-100">
+            <div className="md:col-span-1 border-r ltr:border-r rtl:border-l rtl:border-r-0 border-gray-200 dark:border-gray-700 flex flex-col pt-2 ltr:pr-4 rtl:pl-4">
+              <div className="font-semibold mb-3 text-gray-800 dark:text-gray-100 uppercase tracking-wider text-xs">{t('page.roles.permissionGroups') || 'Groups'}</div>
+              <div className="flex flex-col space-y-1">
+                {permissionTreeNodes.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    className={`cursor-pointer px-3 py-2 rounded-md transition-colors ${activeGroup === group.id ? 'bg-primary text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'}`}
+                    onClick={() => {
+                      setActiveGroup(group.id)
+                      setSearch('')
+                    }}
+                  >
+                    {group.label}
+                  </button>
+                ))}
               </div>
             </div>
+            <div className="md:col-span-3 pt-2">
+              <div className="flex justify-between items-center mb-3">
+                <div className="font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wider text-xs">{activeGroupNode?.label || t('page.roles.permissions')} Permissions</div>
+                <div className="relative max-w-xs w-full">
+                  <input type="text" name="searchPermissions" className="form-input w-full ltr:pl-9 rtl:pr-9 py-1.5! text-sm" placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} />
+                  <Search className="absolute top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 ltr:left-2 rtl:right-2 dark:text-gray-600" />
+                </div>
+              </div>
+              {activeGroupNode && (
+                <TreeView
+                  data={activeGroupNode.children ?? []}
+                  defaultSelectedIds={changedPermissions}
+                  expandAll={true}
+                  enableSelection={true}
+                  onSelectionChange={handleSelectionChange}
+                />
+              )}
+            </div>
+          </div>
 
-          </div>
-          <div className="flex justify-end mt-4">
-            <Button variant="default" onClick={handleSubmit} isLoading={isChangingPermissions}>
-              {t('common.save')}
-            </Button>
-          </div>
         </div>
-      ) : (
-        <div className="flex h-full items-center justify-center min-h-100">
-          <AppLoading />
+        <div className="flex justify-end mt-4">
+          <Button variant="default" onClick={handleSubmit} isLoading={isChangingPermissions}>
+            {t('common.save')}
+          </Button>
         </div>
-      )}
+      </div>
     </div>
   )
 }

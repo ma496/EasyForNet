@@ -28,7 +28,7 @@ export const ImagePreview = ({
   const [imageUrl, setImageUrl] = useState<string | undefined>()
 
   const { data: blob, isSuccess } = useFileGetQuery(
-    { fileName: imageName, ignoreStatuses: [404] },
+    { fileName: imageName },
     { skip: !imageName }
   )
 

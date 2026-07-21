@@ -1,69 +1,28 @@
-import { getTranslation } from '@/i18n'
-import { errorAlert, errorToast, isTranslationKeyExist } from '@/lib/utils'
-
-interface ValidationError {
-  name: string
-  code: string | number
-  reason: string
-}
+import { i18nConfig, Locale } from "@/i18n"
 
 interface ApiErrorPayload {
   status: number | string
-  data?: {
-    errors?: ValidationError[]
-  }
-}
-
-const getValidationMessage = (errors: ValidationError[]) => {
-  const { t } = getTranslation()
-  let message = ''
-  // loop through errors array
-  errors.forEach((error: ValidationError) => {
-    // Remove the word 'Normalized' from the end of the error name, regardless of its casing.
-    const name = error.name.replace(/normalized$/i, '')
-    const localizeName = t(name)
-    message += isTranslationKeyExist(`error.server.${error.code}`) ? `${t(`error.server.${error.code}`, { propertyName: localizeName })}\n` : `${error.reason}\n`
-  })
-  return message
-}
-
-const isError = (payload: ApiErrorPayload, errorStatus: number, ignoreStatuses?: number[]): boolean => {
-  const payloadStatus = payload?.status
-
-  if (payloadStatus === errorStatus && !ignoreStatuses) {
-    return true
-  }
-  if (payloadStatus === errorStatus && ignoreStatuses) {
-    const ignoreStatus = ignoreStatuses.find((is: number) => is === errorStatus)
-    return !ignoreStatus
-  }
-
-  return false
 }
 
 /**
- * Centralized handler that maps an RTK Query error payload to a localized
- * user-facing alert or toast. Recognizes network errors and common HTTP
- * statuses (400/401/403/404/413/415/500), with an optional ignoreStatuses
- * list to suppress expected non-success codes.
+ * Extracts the current locale prefix from the URL pathname.
+ * Returns the locale segment (e.g. 'en', 'ur') or an empty string for the default locale.
  */
-export const rtkErrorHandler = (payload: ApiErrorPayload, ignoreStatuses?: number[]) => {
-  const { t } = getTranslation()
+const getLocalePrefix = (): string => {
+  const segments = window.location.pathname.split('/').filter(Boolean)
+  const supportedLocales = i18nConfig.locales
+  const currentLocale: Locale = segments[0] as Locale
+  if (segments.length > 0 && supportedLocales.includes(currentLocale)) {
+    return `/${segments[0]}`
+  }
+  return ''
+}
+
+/**
+ * Centralized handler for managing RTK Query errors and displaying appropriate user feedback.
+ */
+export const rtkErrorHandler = (payload: ApiErrorPayload) => {
   if (payload?.status === 'FETCH_ERROR') {
-    errorToast.fire({ title: t('error.connection.title'), text: t('error.connection.message') })
-  } else if (isError(payload, 400, ignoreStatuses) && payload.data?.errors) {
-    errorAlert({ title: t('error.400.title'), text: getValidationMessage(payload.data?.errors || []) })
-  } else if (isError(payload, 401, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.401.title'), text: t('error.401.message') })
-  } else if (isError(payload, 403, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.403.title'), text: t('error.403.message') })
-  } else if (isError(payload, 404, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.404.title'), text: t('error.404.message') })
-  } else if (isError(payload, 413, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.413.title'), text: t('error.413.message') })
-  } else if (isError(payload, 415, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.415.title'), text: t('error.415.message') })
-  } else if (isError(payload, 500, ignoreStatuses)) {
-    errorToast.fire({ title: t('error.500.title'), text: t('error.500.message') })
+    window.location.replace(`${getLocalePrefix()}/service-unavailable`)
   }
 }

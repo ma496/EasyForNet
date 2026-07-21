@@ -6,7 +6,8 @@ import { DataTableProvider } from '@/components/ui/data-table/context'
 import { DataTableToolbar } from '@/components/ui/data-table/toolbar'
 import { DataTablePagination } from '@/components/ui/data-table/pagination'
 import { DataTable } from '@/components/ui/data-table'
-import { confirmDeleteAlert, successToast } from '@/lib/utils'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
+import { apiErrorAlert, confirmDeleteAlert, successToast } from '@/lib/utils'
 import { NotificationDto } from '@/store/api/notifications/notifications-dtos'
 import { NotificationType } from '@/store/api/notifications/enums'
 import {
@@ -26,6 +27,7 @@ import { NotificationFilterButton } from './notification-filter-button'
 import Truncated from '@/components/ui/truncated'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import { parseAsString, parseAsStringEnum } from 'nuqs'
+import { Loading } from '@/components/ui/loading'
 
 /**
  * Interactive client-side data table that lists notifications with pagination, search, read/group filters synced to the URL, and per-row mark-as-read/delete plus a bulk mark-all-as-read action.
@@ -76,7 +78,8 @@ export const NotificationTable = () => {
 
   const {
     data: notificationResponse,
-    isFetching: isGettingNotifications
+    isFetching: isGettingNotifications,
+    error: getNotificationsError
   } = useNotificationListQuery({
     page: url.page,
     pageSize: url.pageSize,
@@ -85,9 +88,9 @@ export const NotificationTable = () => {
     group: appliedFilters.group || undefined
   })
 
-  const [markAsRead] = useNotificationMarkAsReadMutation()
-  const [markAllAsRead] = useNotificationMarkAllAsReadMutation()
-  const [deleteNotification] = useNotificationDeleteMutation()
+  const [markAsRead, { isLoading: isMarkingAsRead }] = useNotificationMarkAsReadMutation()
+  const [markAllAsRead, { isLoading: isMarkingAllAsRead }] = useNotificationMarkAllAsReadMutation()
+  const [deleteNotification, { isLoading: isDeletingNotification }] = useNotificationDeleteMutation()
 
   const handleSearch = () => {
     url.filters.setMany({
@@ -110,7 +113,10 @@ export const NotificationTable = () => {
 
   const handleMarkAsRead = async (id: string) => {
     const { error } = await markAsRead({ id })
-    if (!error) {
+    if (error) {
+      apiErrorAlert(error)
+      return
+    } else {
       successToast.fire({
         title: t('notifications.markedAsRead')
       })
@@ -124,7 +130,10 @@ export const NotificationTable = () => {
     })
     if (result.isConfirmed) {
       const { error } = await markAllAsRead({})
-      if (!error) {
+      if (error) {
+        apiErrorAlert(error)
+        return
+      } else {
         successToast.fire({
           title: t('notifications.markedAllAsRead')
         })
@@ -139,7 +148,10 @@ export const NotificationTable = () => {
     })
     if (result.isConfirmed) {
       const { error } = await deleteNotification({ id })
-      if (!error) {
+      if (error) {
+        apiErrorAlert(error)
+        return
+      } else {
         successToast.fire({
           title: t('notifications.deleted')
         })
@@ -249,8 +261,9 @@ export const NotificationTable = () => {
               className="btn cursor-pointer btn-secondary btn-sm"
               onClick={() => handleMarkAsRead(info.row.original.id)}
               title={t('notifications.markAsRead')}
+              disabled={isMarkingAsRead || isMarkingAllAsRead || isDeletingNotification}
             >
-              <Check className="h-3 w-3" />
+              {isMarkingAsRead ? <Loading className="h-3 w-3" /> : <Check className="h-3 w-3" />}
             </button>
           )}
           <button
@@ -258,13 +271,22 @@ export const NotificationTable = () => {
             className="btn cursor-pointer btn-danger btn-sm"
             onClick={() => handleDelete(info.row.original.id)}
             title={t('notifications.delete')}
+            disabled={isMarkingAsRead || isMarkingAllAsRead || isDeletingNotification}
           >
-            <Trash2 className="h-3 w-3" />
+            {isDeletingNotification ? <Loading className="h-3 w-3" /> : <Trash2 className="h-3 w-3" />}
           </button>
         </div>
       ),
     })
   ]
+
+  if (getNotificationsError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={getNotificationsError} />
+      </div>
+    )
+  }
 
   return (
     <DataTableProvider

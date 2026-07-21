@@ -5,13 +5,13 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { useAppDispatch } from '@/store/hooks'
 import { setUserInfo } from '@/store/slices/authSlice'
 import { Button } from '@/components/ui/button'
-import { useEffect } from 'react'
 import { Mail, Pencil, Trash2, User } from 'lucide-react'
 import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import { useTranslation } from '@/i18n'
 import { UpdateProfileRequest } from '@/store/api/identity/account/account-dtos'
-import { confirmDeleteAlert, successToast } from '@/lib/utils'
+import { apiErrorAlert, confirmDeleteAlert, successToast } from '@/lib/utils'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 import { FileUpload } from '@/components/ui/form/file-upload'
 import { IconButton } from '@/components/ui/icon-button'
 
@@ -40,21 +40,28 @@ const createValidationSchema = (t: (key: string, params?: Record<string, string 
 export const UpdateProfile = () => {
   const dispatch = useAppDispatch()
   const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation()
-  const { data: userProfile, isLoading: isLoadingUserProfile } = useGetUserProfileQuery()
+  const { data: userProfile, isLoading: isLoadingUserProfile, error: getUserProfileError } = useGetUserProfileQuery()
   const [getUserInfo] = useLazyGetUserInfoQuery()
   const { t } = useTranslation()
 
   const validationSchema = createValidationSchema(t)
   type UpdateProfileFormValues = Yup.InferType<typeof validationSchema>
 
-  useEffect(() => { }, [])
-
   if (isLoadingUserProfile) {
     return <div>{t('common.loading')}</div>
   }
 
+  if (getUserProfileError) {
+    return <ApiErrorMessages error={getUserProfileError} />
+  }
+
   const handleSubmit = async (values: UpdateProfileFormValues) => {
-    await updateProfile(values as UpdateProfileRequest)
+    const result = await updateProfile(values as UpdateProfileRequest)
+
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
+    }
 
     const userInfo = await getUserInfo()
     if (userInfo.data) {

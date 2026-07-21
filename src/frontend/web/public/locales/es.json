@@ -29,6 +29,7 @@
     "yes": "Sí",
     "no": "No",
     "ok": "OK",
+    "retry": "Reintentar",
     "submit": "Enviar",
     "actions": "Acciones",
     "allRightsReserved": "Todos los derechos reservados.",
@@ -152,6 +153,10 @@
     "connection": {
       "title": "Error de Conexión",
       "message": "No se puede conectar al servidor. Verifique su conexión o intente más tarde."
+    },
+    "serviceUnavailable": {
+      "title": "Servicio No Disponible",
+      "message": "El servidor no está accesible en este momento. Intente de nuevo en unos momentos."
     },
     "server": {
       "internalServerError": "Error interno del servidor",
@@ -448,6 +453,7 @@
   },
   "notifications": {
     "noNotifications": "No hay notificaciones",
+    "notFound": "Notificación no encontrada",
     "viewAll": "Ver todas las notificaciones",
     "markAllRead": "Marcar todo como leído",
     "markAsRead": "Marcar como leído",

@@ -12,7 +12,7 @@ import { FormInput } from '@/components/ui/form/form-input'
 import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
-import { successToast } from '@/lib/utils'
+import { apiErrorAlert, successToast } from '@/lib/utils'
 
 /**
  * Builds a Yup validation schema for the user create form using the supplied translation function for error messages.
@@ -63,12 +63,15 @@ export const UserCreateForm = () => {
       roles: data.roles.filter((role): role is string => role !== undefined),
     })
 
-    if (!result.error) {
-      successToast.fire({
-        title: t('page.users.createSuccess'),
-      })
-      router.push('/admin/users/list')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successToast.fire({
+      text: t('page.users.createSuccess'),
+    })
+    router.push('/admin/users/list')
   }
 
   return (

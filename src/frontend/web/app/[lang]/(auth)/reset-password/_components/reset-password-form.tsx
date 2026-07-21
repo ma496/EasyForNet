@@ -8,7 +8,7 @@ import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
 import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Lock } from 'lucide-react'
-import { errorAlert, successAlert } from '@/lib/utils'
+import { apiErrorAlert, errorAlert, successAlert } from '@/lib/utils'
 
 /**
  * Builds a Yup validation schema for the reset-password form using the supplied translation function for error messages.
@@ -51,13 +51,16 @@ export const ResetPasswordForm = () => {
       password: data.password,
     })
 
-    if (!result.error) {
-      successAlert({
-        title: t('page.auth.resetPassword.success'),
-        text: t('page.auth.resetPassword.hasBeenReset'),
-      })
-      router.push('/signin')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successAlert({
+      title: t('page.auth.resetPassword.success'),
+      text: t('page.auth.resetPassword.hasBeenReset'),
+    })
+    router.push('/signin')
   }
 
   return (

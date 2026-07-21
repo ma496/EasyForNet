@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { Mail } from 'lucide-react'
-import { successAlert } from '@/lib/utils'
+import { successAlert, apiErrorAlert } from '@/lib/utils'
 
 /**
  * Builds a Yup validation schema for the forget-password form using the supplied translation function for error messages.
@@ -36,13 +36,15 @@ export const ForgetPasswordForm = () => {
       email: data.email,
     })
 
-    if (!result.error) {
-      successAlert({
-        title: t('page.auth.forgotPassword.success'),
-        text: t('page.auth.forgotPassword.checkEmail'),
-      })
-      router.push('/signin')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+    successAlert({
+      title: t('page.auth.forgotPassword.success'),
+      text: t('page.auth.forgotPassword.checkEmail'),
+    })
+    router.push('/signin')
   }
 
   return (

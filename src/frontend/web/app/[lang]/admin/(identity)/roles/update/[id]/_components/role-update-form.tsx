@@ -7,7 +7,9 @@ import { Form, Formik } from 'formik'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { FormTextarea } from '@/components/ui/form/form-textarea'
-import { successToast } from '@/lib/utils'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
+import { apiErrorAlert, successToast } from '@/lib/utils'
+import { Loading } from '@/components/ui/loading'
 
 /**
  * Builds a Yup validation schema for the role update form using the supplied translation function for error messages.
@@ -40,15 +42,31 @@ export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
   const { t } = useTranslation()
   const validationSchema = createValidationSchema(t)
   const [updateRole, { isLoading: isSavingRole }] = useRoleUpdateMutation()
-  const { data: roleData, isLoading: isLoadingRole } = useRoleGetQuery({ id: roleId })
+  const { data: roleData, isLoading: isLoadingRole, error: roleGetError } = useRoleGetQuery({ id: roleId })
   const router = useLocalizedRouter()
 
   if (isLoadingRole) {
-    return <div>{t('common.loading')}</div>
+    return (
+      <div className="flex justify-center items-center">
+        <Loading />
+      </div>
+    )
   }
 
-  if (!roleData) {
-    return <div>{t('page.roles.notFound')}</div>
+  if (roleGetError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={roleGetError} />
+      </div>
+    )
+  }
+
+  if (!isLoadingRole && !roleGetError && !roleData) {
+    return (
+      <div className="flex justify-center items-center">
+        {t('page.roles.notFound')}
+      </div>
+    )
   }
 
   const onSubmit = async (data: FormValues) => {
@@ -57,12 +75,15 @@ export const RoleUpdateForm = ({ roleId }: RoleUpdateFormProps) => {
       id: roleId,
     })
 
-    if (!result.error) {
-      successToast.fire({
-        title: t('page.roles.updateSuccess'),
-      })
-      router.push('/admin/roles/list')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successToast.fire({
+      text: t('page.roles.updateSuccess'),
+    })
+    router.push('/admin/roles/list')
   }
 
   return (

@@ -1,7 +1,7 @@
 'use client'
 import React, { useId, useState, useCallback, useEffect } from 'react'
 import { Plus, Trash2, Loader2, Pencil } from 'lucide-react'
-import { cn, confirmDeleteAlert } from '@/lib/utils'
+import { apiErrorAlert, cn, confirmDeleteAlert } from '@/lib/utils'
 import { useTranslation } from '@/i18n'
 import { IconButton } from '@/components/ui/icon-button'
 import { useFileUploadMutation, useLazyFileGetQuery, useFileDeleteMutation } from '@/store/api/file-management/files/files-api'
@@ -34,7 +34,7 @@ export const MultiFileUpload = ({
   const inputId = useId()
   const [uploadFile, { isLoading: isUploading }] = useFileUploadMutation()
   const [deleteFile] = useFileDeleteMutation()
-  const [getFileTrigger] = useLazyFileGetQuery()
+  const [lazyFileGet] = useLazyFileGetQuery()
   const [fileUrls, setFileUrls] = useState<{ [key: string]: string }>({})
   const [replacingIndex, setReplacingIndex] = useState<number | null>(null)
   const replaceInputRef = React.useRef<HTMLInputElement>(null)
@@ -44,7 +44,11 @@ export const MultiFileUpload = ({
     const urls: { [key: string]: string } = {}
     for (const fileName of names) {
       if (!fileUrlsRef.current[fileName]) {
-        const result = await getFileTrigger({ fileName, ignoreStatuses: [404] })
+        const result = await lazyFileGet({ fileName })
+        if (result.error) {
+          apiErrorAlert(result.error, [404])
+          continue
+        }
         if (result.data) {
           const blob = result.data as Blob
           const url = URL.createObjectURL(blob)
@@ -55,7 +59,7 @@ export const MultiFileUpload = ({
     if (Object.keys(urls).length > 0) {
       setFileUrls((prev: { [key: string]: string }) => ({ ...prev, ...urls }))
     }
-  }, [getFileTrigger])
+  }, [lazyFileGet])
 
   useEffect(() => {
     loadFileUrls(fileNames)
@@ -88,6 +92,10 @@ export const MultiFileUpload = ({
       }
 
       const res = await uploadFile({ file })
+      if (res.error) {
+        apiErrorAlert(res.error)
+        continue
+      }
       if (res.data) {
         newFileNames.push(res.data.fileName)
         const url = URL.createObjectURL(file)
@@ -115,6 +123,9 @@ export const MultiFileUpload = ({
 
     const oldFileName = fileNames[replacingIndex]
     const res = await uploadFile({ file })
+    if (res.error) {
+      apiErrorAlert(res.error)
+    }
     if (res.data) {
       if (forceDelete && oldFileName) {
         await deleteFile({ fileName: oldFileName })

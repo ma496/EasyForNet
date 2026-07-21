@@ -16,7 +16,7 @@ export const rtkErrorMiddleware: Middleware = (_api) => (next) => (action: unkno
     if (ignoreEndpoints.includes(rejectedAction.meta?.arg?.endpointName)) return next(action)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const payload: any = rejectedAction.payload ?? rejectedAction.error
-    rtkErrorHandler(payload, rejectedAction.meta?.arg?.originalArgs?.ignoreStatuses)
+    rtkErrorHandler(payload)
   }
   return next(action)
 }

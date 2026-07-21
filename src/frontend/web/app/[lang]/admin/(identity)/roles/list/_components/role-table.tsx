@@ -10,11 +10,12 @@ import { SortDirection } from '@/store/api/base/sort-direction'
 import { RoleListDto } from '@/store/api/identity/roles/roles-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil, Shield } from 'lucide-react'
 import { useTranslation } from '@/i18n'
-import { exportData, ExportFormat, isAllowed } from '@/lib/utils'
+import { apiErrorAlert, exportData, ExportFormat, isAllowed } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { Badge } from '@/components/ui/badge'
 import { useAppSelector } from '@/store/hooks'
 import { LocalizedLink } from '@/components/localized-link'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 import { Allow } from '@/allow'
 import { confirmDeleteAlert, errorAlert, successToast } from '@/lib/utils'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
@@ -33,6 +34,7 @@ export const RoleTable = () => {
   const {
     data: roleListResponse,
     isFetching: isGettingRoles,
+    error: roleListError
   } = useRoleListQuery({
     page: url.page,
     pageSize: url.pageSize,
@@ -42,7 +44,7 @@ export const RoleTable = () => {
   })
 
   const [fetchRoles] = useLazyRoleListQuery()
-  const [deleteRole] = useRoleDeleteMutation()
+  const [deleteRole, { isLoading: isDeletingRole }] = useRoleDeleteMutation()
 
   const authState = useAppSelector((state) => state.auth)
   const canCreate = isAllowed(authState, [Allow.Role_Create])
@@ -91,9 +93,13 @@ export const RoleTable = () => {
 
     if (result.isConfirmed) {
       const response = await deleteRole({ id: roleId })
+      if (response.error) {
+        apiErrorAlert(response.error)
+        return
+      }
       if (response.data?.success) {
         successToast.fire({
-          title: t('page.roles.deleteSuccess'),
+          text: t('page.roles.deleteSuccess'),
         })
       } else if (response.data?.message) {
         await errorAlert({
@@ -133,8 +139,12 @@ export const RoleTable = () => {
             </LocalizedLink>
           )}
           {canDelete && (
-            <button type="button" className="btn cursor-pointer btn-danger btn-sm" onClick={() => handleDelete(info.row.original.id)}>
-              <Trash2 className="h-3 w-3" />
+            <button
+              type="button"
+              className="btn cursor-pointer btn-danger btn-sm"
+              disabled={isDeletingRole}
+              onClick={() => handleDelete(info.row.original.id)}>
+              { isDeletingRole ? <Loader2 className="animate-spin h-3 w-3" /> : <Trash2 className="h-3 w-3" /> }
             </button>
           )}
           {canChangePermissions && (
@@ -146,6 +156,14 @@ export const RoleTable = () => {
       ),
     }),
   ]
+
+  if (roleListError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={roleListError} />
+      </div>
+    )
+  }
 
   return (
     <DataTableProvider

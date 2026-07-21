@@ -5,7 +5,7 @@ import { useLocalizedRouter } from '@/hooks/use-localized-router'
 import { useChangePasswordMutation } from '@/store/api/identity/account/account-api'
 import { useAppDispatch } from '@/store/hooks'
 import { signout } from '@/store/slices/authSlice'
-import { successToast } from '@/lib/utils'
+import { apiErrorAlert, successToast } from '@/lib/utils'
 import { Form, Formik } from 'formik'
 import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { Button } from '@/components/ui/button'
@@ -46,13 +46,16 @@ export const ChangePasswordForm = () => {
       newPassword: data.newPassword,
     })
 
-    if (!result.error) {
-      successToast.fire({
-        title: t('page.profile.changePasswordSuccess'),
-      })
-      dispatch(signout())
-      router.push('/signin')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successToast.fire({
+      title: t('page.profile.changePasswordSuccess'),
+    })
+    dispatch(signout())
+    router.push('/signin')
   }
 
   return (

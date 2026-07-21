@@ -10,7 +10,9 @@ import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form/form-input'
 import { FormCheckbox } from '@/components/ui/form/form-checkbox'
 import { FormLazyMultiSelect } from '@/components/ui/form/form-lazy-multi-select'
-import { successToast } from '@/lib/utils'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
+import { apiErrorAlert, successToast } from '@/lib/utils'
+import { Loading } from '@/components/ui/loading'
 
 /**
  * Builds a Yup validation schema for the user update form using the supplied translation function for error messages.
@@ -48,15 +50,31 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
   const { t } = useTranslation()
   const router = useLocalizedRouter()
   const validationSchema = createValidationSchema(t)
-  const { data: userData, isLoading: isLoadingUser } = useUserGetQuery({ id: userId })
+  const { data: userData, isLoading: isLoadingUser, error: getUserError } = useUserGetQuery({ id: userId })
   const [updateUser, { isLoading: isUserSaving }] = useUserUpdateMutation()
 
   if (isLoadingUser) {
-    return <div>{t('common.loading')}</div>
+    return (
+      <div className="flex justify-center items-center">
+        <Loading />
+      </div>
+    )
   }
 
-  if (!userData) {
-    return <div>{t('error.server.userNotFound')}</div>
+  if (getUserError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={getUserError} />
+      </div>
+    )
+  }
+
+  if (!isLoadingUser && !getUserError && !userData) {
+    return (
+      <div className="flex justify-center items-center">
+        {t('error.server.userNotFound')}
+      </div>
+    )
   }
 
   const onSubmit = async (data: FormValues) => {
@@ -67,12 +85,15 @@ export const UserUpdateForm = ({ userId }: UserUpdateFormProps) => {
       roles: data.roles.filter((role): role is string => role !== undefined),
     })
 
-    if (!result.error) {
-      successToast.fire({
-        title: t('page.users.updateSuccess'),
-      })
-      router.push('/admin/users/list')
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
     }
+
+    successToast.fire({
+      text: t('page.users.updateSuccess'),
+    })
+    router.push('/admin/users/list')
   }
 
   return (

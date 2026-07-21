@@ -5,6 +5,8 @@ import { Select } from '@/components/ui/form/select'
 import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useNotificationGetGroupsQuery } from '@/store/api/notifications/notifications-api'
+import { Loading } from '@/components/ui/loading'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 
 /**
  * Filter values accepted by the notification list filter panel, representing read-status and group selection as strings.
@@ -29,7 +31,7 @@ interface NotificationFilterPanelProps {
  */
 export const NotificationFilterPanel = ({ filters, onChange, onSearch, onClear }: NotificationFilterPanelProps) => {
   const { t } = useTranslation()
-  const { data: groupsData } = useNotificationGetGroupsQuery({})
+  const { data: groupsData, isLoading: isGroupsLoading, error: groupsError } = useNotificationGetGroupsQuery({})
 
   const isReadOptions = [
     { label: t('notifications.all') || 'All', value: '' },
@@ -46,6 +48,22 @@ export const NotificationFilterPanel = ({ filters, onChange, onSearch, onClear }
   ]
 
   const activeFiltersCount = [filters.isRead, filters.group].filter(Boolean).length
+
+  if (isGroupsLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <Loading />
+      </div>
+    )
+  }
+
+  if (groupsError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={groupsError} />
+      </div>
+    )
+  }
 
   return (
     <div className="mb-4 panel-2">

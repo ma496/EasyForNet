@@ -5,6 +5,8 @@ import { Select } from '@/components/ui/form/select'
 import { useRoleListQuery } from '@/store/api/identity/roles/roles-api'
 import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Loading } from '@/components/ui/loading'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 
 /**
  * Filter values accepted by the user list filter panel, representing active status and role selection as strings.
@@ -30,7 +32,7 @@ interface UserFilterPanelProps {
 export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFilterPanelProps) => {
   const { t } = useTranslation()
 
-  const { data: rolesData } = useRoleListQuery({ all: true })
+  const { data: rolesData, isLoading: isRolesLoading, error: rolesError } = useRoleListQuery({ all: true })
 
   const activeFilterOptions = [
     { label: t('table.filter.all') || 'All', value: '' },
@@ -47,6 +49,22 @@ export const UserFilterPanel = ({ filters, onChange, onSearch, onClear }: UserFi
   ]
 
   const activeFiltersCount = [filters.isActive, filters.roleId].filter(Boolean).length
+
+  if (isRolesLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <Loading />
+      </div>
+    )
+  }
+
+  if (rolesError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={rolesError} />
+      </div>
+    )
+  }
 
   return (
     <div className="mb-4 panel-2">

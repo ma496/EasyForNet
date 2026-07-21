@@ -13,6 +13,7 @@ import { FormPasswordInput } from '@/components/ui/form/form-password-input'
 import { LocalizedLink } from '@/components/localized-link'
 import { successToast } from '@/lib/utils/notification'
 import { useLocalizedRouter } from '@/hooks/use-localized-router'
+import { apiErrorAlert } from '@/lib/utils'
 
 /**
  * Interactive client-side form that authenticates a user with username/password and routes them to the appropriate landing page.
@@ -67,12 +68,15 @@ const SigninForm = () => {
         setRegisteredEmail(values.username) // In this app username can be email or username
         setShowVerificationMessage(true)
       }
+      apiErrorAlert(tokenRes.error)
       return
     }
 
-    if (tokenRes.error) return
-
     const userInfoRes = await getUserInfo()
+    if (userInfoRes.error) {
+      apiErrorAlert(userInfoRes.error)
+      return
+    }
     if (userInfoRes.data) {
       dispatch(setUserInfo(userInfoRes.data))
       if (userInfoRes.data.roles.find((role) => role.name === 'Public')) {
@@ -88,6 +92,7 @@ const SigninForm = () => {
 
     const response = await resendVerifyEmailApi({ emailOrUsername: registeredEmail })
     if (response.error) {
+      apiErrorAlert(response.error)
       return
     }
     successToast.fire({

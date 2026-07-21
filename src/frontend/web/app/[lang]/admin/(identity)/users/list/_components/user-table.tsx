@@ -5,10 +5,11 @@ import { SortDirection } from '@/store/api/base/sort-direction'
 import { UserListDto, UserRoleDto } from '@/store/api/identity/users/users-dtos'
 import { Download, Loader2, Trash2, Plus, Pencil } from 'lucide-react'
 import { useTranslation } from '@/i18n'
-import { ExportFormat, successToast, exportData, isAllowed } from '@/lib/utils'
+import { ExportFormat, successToast, exportData, isAllowed, apiErrorAlert } from '@/lib/utils'
 import Dropdown from '@/components/dropdown'
 import { useAppSelector } from '@/store/hooks'
 import { LocalizedLink } from '@/components/localized-link'
+import { ApiErrorMessages } from '@/components/ui/api-error-messages'
 import { Allow } from '@/allow'
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table'
 import { DataTableProvider } from '@/components/ui/data-table/context'
@@ -77,6 +78,7 @@ export const UserTable = () => {
   const {
     data: userListResponse,
     isFetching: isGettingUsers,
+    error: getUsersApiError,
   } = useUserListQuery({
     page: url.page,
     pageSize: url.pageSize,
@@ -88,7 +90,7 @@ export const UserTable = () => {
   })
 
   const [fetchUsers] = useLazyUserListQuery()
-  const [deleteUser] = useUserDeleteMutation()
+  const [deleteUser, { isLoading: isDeletingUser }] = useUserDeleteMutation()
 
   const authState = useAppSelector((state) => state.auth)
   const canCreate = isAllowed(authState, [Allow.User_Create])
@@ -159,9 +161,13 @@ export const UserTable = () => {
 
     if (result.isConfirmed) {
       const response = await deleteUser({ id: userId })
+      if (response.error) {
+        apiErrorAlert(response.error)
+        return
+      }
       if (response.data?.success) {
         successToast.fire({
-          title: t('page.users.deleteSuccess'),
+          text: t('page.users.deleteSuccess'),
         })
       } else if (response.data?.message) {
         await errorAlert({
@@ -223,14 +229,27 @@ export const UserTable = () => {
             </LocalizedLink>
           )}
           {canDelete && (
-            <button type="button" className="btn cursor-pointer btn-danger btn-sm" onClick={() => handleDelete(info.row.original.id)}>
-              <Trash2 className="h-3 w-3" />
+            <button
+              type="button"
+              className="btn cursor-pointer btn-danger btn-sm"
+              onClick={() => handleDelete(info.row.original.id)}
+              disabled={isDeletingUser}
+            >
+              {isDeletingUser ? <Loader2 className="animate-spin h-3 w-3" /> : <Trash2 className="h-3 w-3" />}
             </button>
           )}
         </div>
       ),
     }),
   ]
+
+  if (getUsersApiError) {
+    return (
+      <div className="flex justify-center items-center">
+        <ApiErrorMessages error={getUsersApiError} />
+      </div>
+    )
+  }
 
   return (
     <DataTableProvider

@@ -8,6 +8,8 @@ import Dropdown, { DropdownRef } from '../dropdown'
 import { useRef } from 'react'
 import { ImagePreview } from './image-preview'
 import { useSignoutMutation } from '@/store/api/identity/account/account-api'
+import { apiErrorAlert } from '@/lib/utils'
+import { Loading } from '../ui/loading'
 
 /**
  * Header dropdown that shows the signed-in user avatar, profile/change-password links, and a sign-out action that hits the logout API and redirects to the sign-in page.
@@ -25,10 +27,18 @@ const NavUser = () => {
     }
   }
 
-  const [logoutApi] = useSignoutMutation()
+  const [signoutApi, { isLoading: isSigningOut }] = useSignoutMutation()
 
   const signoutAction = async () => {
-    await logoutApi()
+    if (isSigningOut) {
+      return
+    }
+
+    const result = await signoutApi()
+    if (result.error) {
+      apiErrorAlert(result.error)
+      return
+    }
     dispatch(signout())
     router.push('/signin')
   }
@@ -92,8 +102,14 @@ const NavUser = () => {
             </LocalizedLink>
           </li>
           <li className="cursor-pointer border-t border-white-light dark:border-white-light/10">
-            <a className="py-3! text-danger" onClick={signoutAction}>
-              <LogOut className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
+            <a
+              className="py-3! text-danger"
+              onClick={signoutAction}>
+              {isSigningOut ? (
+                <Loading className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
+              ) : (
+                <LogOut className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
+              )}
               {t('page.auth.signout')}
             </a>
           </li>
